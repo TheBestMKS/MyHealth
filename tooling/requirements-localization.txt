@@ -1,0 +1,5 @@
+argostranslate==1.11.0
+duckdb==1.5.4
+huggingface-hub==0.36.2
+requests>=2.32,<3
+transformers==4.57.6
