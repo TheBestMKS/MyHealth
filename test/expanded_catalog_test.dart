@@ -24,7 +24,8 @@ void main() {
         (item) =>
             item.image.startsWith('https://') &&
             item.sourceUrl.startsWith('http') &&
-            item.dataLicense.isNotEmpty,
+            item.dataLicense.isNotEmpty &&
+            item.doctorReview.contains('не персональный отзыв врача'),
       ),
       isTrue,
     );
@@ -36,8 +37,15 @@ void main() {
             item.dataLicense.isNotEmpty &&
             item.description.isNotEmpty &&
             item.steps.isNotEmpty &&
-            item.warnings.isNotEmpty,
+            item.warnings.isNotEmpty &&
+            item.doctorReview.contains('не персональное заключение врача'),
       ),
+      isTrue,
+    );
+    expect(
+      foods
+          .where((item) => item.kind == 'meal')
+          .every((item) => item.preparation.isNotEmpty),
       isTrue,
     );
   });

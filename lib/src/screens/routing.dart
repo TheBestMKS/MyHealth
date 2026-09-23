@@ -37,6 +37,11 @@ Widget buildSectionScreen(
     AppSection.labs => LabsScreen(state: state, onChanged: onChanged),
     AppSection.medicines => MedicinesScreen(state: state, onChanged: onChanged),
     AppSection.symptoms => SymptomsScreen(state: state, onChanged: onChanged),
+    AppSection.knowledge => KnowledgeScreen(
+      state: state,
+      onChanged: onChanged,
+      onSelect: onSelect,
+    ),
     AppSection.workouts => WorkoutsScreen(state: state, onChanged: onChanged),
     AppSection.exercises => ExercisesScreen(state: state),
     AppSection.nutrition => NutritionScreen(state: state, onChanged: onChanged),

@@ -26,6 +26,7 @@ class HealthDailySample {
     required this.activeCalories,
     required this.basalCalories,
     required this.distanceMeters,
+    required this.workoutMinutes,
     this.weightKg,
   });
 
@@ -34,6 +35,7 @@ class HealthDailySample {
   final int activeCalories;
   final int basalCalories;
   final double distanceMeters;
+  final int workoutMinutes;
   final double? weightKg;
 }
 
@@ -185,6 +187,11 @@ class HealthPlatformService {
         case HealthDataType.DISTANCE_DELTA:
         case HealthDataType.DISTANCE_WALKING_RUNNING:
           day.distanceMeters += numeric;
+        case HealthDataType.WORKOUT:
+          day.workoutMinutes += point.dateTo
+              .difference(point.dateFrom)
+              .inMinutes
+              .clamp(0, 24 * 60);
         case HealthDataType.WEIGHT:
           if (day.weightAt == null || point.dateTo.isAfter(day.weightAt!)) {
             day.weightKg = numeric;
@@ -203,6 +210,15 @@ class HealthPlatformService {
         case HealthDataType.BLOOD_PRESSURE_DIASTOLIC:
         case HealthDataType.BLOOD_OXYGEN:
         case HealthDataType.BODY_TEMPERATURE:
+        case HealthDataType.BLOOD_GLUCOSE:
+        case HealthDataType.BODY_FAT_PERCENTAGE:
+        case HealthDataType.LEAN_BODY_MASS:
+        case HealthDataType.BODY_MASS_INDEX:
+        case HealthDataType.BODY_WATER_MASS:
+        case HealthDataType.HEART_RATE_VARIABILITY_RMSSD:
+        case HealthDataType.HEART_RATE_VARIABILITY_SDNN:
+        case HealthDataType.RESPIRATORY_RATE:
+        case HealthDataType.INSULIN_DELIVERY:
           final previous = latestMeasurements[point.type];
           if (previous == null || point.dateTo.isAfter(previous.dateTo)) {
             latestMeasurements[point.type] = point;
@@ -221,6 +237,7 @@ class HealthPlatformService {
                   sample.activeCalories > 0 ||
                   sample.basalCalories > 0 ||
                   sample.distanceMeters > 0 ||
+                  sample.workoutMinutes > 0 ||
                   sample.weightKg != null,
             )
             .toList()
@@ -258,6 +275,12 @@ class HealthPlatformService {
       HealthDataType.BLOOD_PRESSURE_DIASTOLIC,
       HealthDataType.BLOOD_OXYGEN,
       HealthDataType.BODY_TEMPERATURE,
+      HealthDataType.BLOOD_GLUCOSE,
+      HealthDataType.BODY_FAT_PERCENTAGE,
+      HealthDataType.LEAN_BODY_MASS,
+      HealthDataType.BODY_MASS_INDEX,
+      HealthDataType.RESPIRATORY_RATE,
+      HealthDataType.WORKOUT,
       HealthDataType.SLEEP_ASLEEP,
       HealthDataType.SLEEP_DEEP,
       HealthDataType.SLEEP_LIGHT,
@@ -269,9 +292,16 @@ class HealthPlatformService {
         HealthDataType.DISTANCE_DELTA,
         HealthDataType.SLEEP_SESSION,
         HealthDataType.RESTING_HEART_RATE,
+        HealthDataType.BODY_WATER_MASS,
+        HealthDataType.HEART_RATE_VARIABILITY_RMSSD,
       ];
     }
-    return [...common, HealthDataType.DISTANCE_WALKING_RUNNING];
+    return [
+      ...common,
+      HealthDataType.DISTANCE_WALKING_RUNNING,
+      HealthDataType.INSULIN_DELIVERY,
+      HealthDataType.HEART_RATE_VARIABILITY_SDNN,
+    ];
   }
 }
 
@@ -282,6 +312,7 @@ class _DailySampleBuilder {
   int activeCalories = 0;
   int basalCalories = 0;
   double distanceMeters = 0;
+  int workoutMinutes = 0;
   double? weightKg;
   DateTime? weightAt;
 
@@ -291,6 +322,7 @@ class _DailySampleBuilder {
     activeCalories: activeCalories,
     basalCalories: basalCalories,
     distanceMeters: distanceMeters,
+    workoutMinutes: workoutMinutes,
     weightKg: weightKg,
   );
 }
@@ -333,6 +365,15 @@ HealthMeasurement _measurementFromPoint(HealthDataPoint point) {
     HealthDataType.BLOOD_PRESSURE_DIASTOLIC => 'Давление диастолическое',
     HealthDataType.BLOOD_OXYGEN => 'Насыщение крови кислородом',
     HealthDataType.BODY_TEMPERATURE => 'Температура тела',
+    HealthDataType.BLOOD_GLUCOSE => 'Глюкоза крови',
+    HealthDataType.BODY_FAT_PERCENTAGE => 'Жировая масса',
+    HealthDataType.LEAN_BODY_MASS => 'Безжировая масса',
+    HealthDataType.BODY_MASS_INDEX => 'Индекс массы тела',
+    HealthDataType.BODY_WATER_MASS => 'Вода в организме',
+    HealthDataType.HEART_RATE_VARIABILITY_RMSSD ||
+    HealthDataType.HEART_RATE_VARIABILITY_SDNN => 'Вариабельность пульса',
+    HealthDataType.RESPIRATORY_RATE => 'Частота дыхания',
+    HealthDataType.INSULIN_DELIVERY => 'Введено инсулина',
     _ => point.type.name,
   };
   final unit = switch (point.type) {
@@ -341,11 +382,23 @@ HealthMeasurement _measurementFromPoint(HealthDataPoint point) {
     HealthDataType.BLOOD_PRESSURE_DIASTOLIC => 'мм рт. ст.',
     HealthDataType.BLOOD_OXYGEN => '%',
     HealthDataType.BODY_TEMPERATURE => '°C',
+    HealthDataType.BLOOD_GLUCOSE => 'ммоль/л',
+    HealthDataType.BODY_FAT_PERCENTAGE => '%',
+    HealthDataType.LEAN_BODY_MASS => 'кг',
+    HealthDataType.BODY_MASS_INDEX => 'кг/м²',
+    HealthDataType.BODY_WATER_MASS => 'кг',
+    HealthDataType.HEART_RATE_VARIABILITY_RMSSD ||
+    HealthDataType.HEART_RATE_VARIABILITY_SDNN => 'мс',
+    HealthDataType.RESPIRATORY_RATE => 'дых/мин',
+    HealthDataType.INSULIN_DELIVERY => 'Ед',
     _ => point.unitString,
   };
-  final normalized = point.type == HealthDataType.BLOOD_OXYGEN && value <= 1
-      ? value * 100
-      : value;
+  final normalized = switch (point.type) {
+    HealthDataType.BLOOD_OXYGEN when value <= 1 => value * 100,
+    HealthDataType.BODY_FAT_PERCENTAGE when value <= 1 => value * 100,
+    HealthDataType.BLOOD_GLUCOSE => value / 18.01559,
+    _ => value,
+  };
   final needsAttention = switch (point.type) {
     HealthDataType.HEART_RATE ||
     HealthDataType.RESTING_HEART_RATE => normalized < 40 || normalized > 140,
@@ -355,6 +408,8 @@ HealthMeasurement _measurementFromPoint(HealthDataPoint point) {
       normalized < 45 || normalized > 120,
     HealthDataType.BLOOD_OXYGEN => normalized < 92,
     HealthDataType.BODY_TEMPERATURE => normalized < 34 || normalized >= 39,
+    HealthDataType.BLOOD_GLUCOSE => normalized < 3.9 || normalized > 10,
+    HealthDataType.RESPIRATORY_RATE => normalized < 8 || normalized > 30,
     _ => false,
   };
   return HealthMeasurement(
@@ -372,7 +427,11 @@ HealthMeasurement _measurementFromPoint(HealthDataPoint point) {
 
 double _numericValue(HealthDataPoint point) {
   final value = point.value;
-  return value is NumericHealthValue ? value.numericValue.toDouble() : 0;
+  return switch (value) {
+    NumericHealthValue(:final numericValue) => numericValue.toDouble(),
+    InsulinDeliveryHealthValue(:final units) => units,
+    _ => 0,
+  };
 }
 
 String _clock(DateTime value) =>

@@ -3,8 +3,9 @@ part of '../screens.dart';
 Future<void> _showFoodCatalogDetails(
   BuildContext context,
   FoodCatalogItem item,
-  String locale,
-) async {
+  String locale, {
+  required bool offlineOnly,
+}) async {
   await showDialog<void>(
     context: context,
     builder: (dialogContext) => AlertDialog(
@@ -16,7 +17,7 @@ Future<void> _showFoodCatalogDetails(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              _catalogImage(item.image),
+              _catalogImage(item.image, offlineOnly: offlineOnly),
               const SizedBox(height: 12),
               Wrap(
                 spacing: 8,
@@ -66,7 +67,10 @@ Future<void> _showFoodCatalogDetails(
                   'Приготовление',
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
-                ..._catalogTextBlocks(item.preparation),
+                ..._catalogTextBlocks(
+                  item.preparation,
+                  offlineOnly: offlineOnly,
+                ),
               ],
               if (item.sourceUrl.isNotEmpty) ...[
                 const SizedBox(height: 12),
@@ -96,15 +100,16 @@ Future<void> _showFoodCatalogDetails(
           ),
         if (item.doctorReview.isNotEmpty)
           LocalizedIconButton(
-            tooltip: 'Отзывы врачей',
+            tooltip: 'Медицинская справка',
             onPressed: () => _showCatalogTextDialog(
               context,
-              'Отзывы врачей',
+              'Медицинская справка',
               item.doctorReview,
             ),
             icon: const Icon(Icons.medical_information_outlined),
           ),
-        if (item.video.isNotEmpty)
+        if (item.video.isNotEmpty &&
+            (!offlineOnly || !_isRemoteCatalogSource(item.video)))
           LocalizedIconButton(
             tooltip: 'Видео приготовления',
             onPressed: () => _showCatalogVideo(context, item.video),
@@ -122,8 +127,9 @@ Future<void> _showFoodCatalogDetails(
 Future<void> _showWorkoutCatalogDetails(
   BuildContext context,
   WorkoutCatalogItem item,
-  String locale,
-) async {
+  String locale, {
+  required bool offlineOnly,
+}) async {
   await showDialog<void>(
     context: context,
     builder: (dialogContext) => AlertDialog(
@@ -135,7 +141,7 @@ Future<void> _showWorkoutCatalogDetails(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              _catalogImage(item.image),
+              _catalogImage(item.image, offlineOnly: offlineOnly),
               const SizedBox(height: 12),
               Wrap(
                 spacing: 8,
@@ -171,7 +177,7 @@ Future<void> _showWorkoutCatalogDetails(
                 AppText.get(locale, 'howToDo'),
                 style: Theme.of(context).textTheme.titleMedium,
               ),
-              ..._catalogTextBlocks(item.steps),
+              ..._catalogTextBlocks(item.steps, offlineOnly: offlineOnly),
               const SizedBox(height: 12),
               Text(
                 AppText.get(locale, 'warning'),
@@ -206,15 +212,16 @@ Future<void> _showWorkoutCatalogDetails(
           ),
         if (item.doctorReview.isNotEmpty)
           LocalizedIconButton(
-            tooltip: 'Отзывы врачей',
+            tooltip: 'Медицинская справка',
             onPressed: () => _showCatalogTextDialog(
               context,
-              'Отзывы врачей',
+              'Медицинская справка',
               item.doctorReview,
             ),
             icon: const Icon(Icons.medical_information_outlined),
           ),
-        if (item.video.isNotEmpty)
+        if (item.video.isNotEmpty &&
+            (!offlineOnly || !_isRemoteCatalogSource(item.video)))
           LocalizedIconButton(
             tooltip: 'Видео',
             onPressed: () => _showCatalogVideo(context, item.video),
@@ -229,9 +236,17 @@ Future<void> _showWorkoutCatalogDetails(
   );
 }
 
-Widget _catalogImage(String asset) {
+Widget _catalogImage(String asset, {required bool offlineOnly}) {
   if (asset.trim().isEmpty) {
     return const SizedBox.shrink();
+  }
+  if (offlineOnly && _isRemoteCatalogSource(asset)) {
+    return const InfoTile(
+      icon: Icons.cloud_off_outlined,
+      title: 'Сетевое изображение скрыто',
+      subtitle:
+          'Режим «Полностью офлайн» не загружает медиа из внешнего источника.',
+    );
   }
   final image = asset.toLowerCase().contains('.svg')
       ? asset.startsWith('https://') || asset.startsWith('http://')
@@ -277,7 +292,7 @@ Widget _catalogImage(String asset) {
   return ClipRRect(borderRadius: BorderRadius.circular(8), child: image);
 }
 
-List<Widget> _catalogTextBlocks(String text) {
+List<Widget> _catalogTextBlocks(String text, {required bool offlineOnly}) {
   final result = <Widget>[];
   final mediaPattern = RegExp(r'^\[(.*?);"(.*?)"\]$|^\[(.*?);(.*?)\]$');
   for (final rawLine in text.split('\n')) {
@@ -289,13 +304,35 @@ List<Widget> _catalogTextBlocks(String text) {
     if (match != null) {
       final caption = (match.group(1) ?? match.group(3) ?? '').trim();
       final asset = (match.group(2) ?? match.group(4) ?? '').trim();
+      if (_isCatalogVideo(asset)) {
+        final blocked = offlineOnly && _isRemoteCatalogSource(asset);
+        result.add(
+          Builder(
+            builder: (context) => ListTile(
+              contentPadding: EdgeInsets.zero,
+              leading: Icon(
+                blocked ? Icons.cloud_off_outlined : Icons.play_circle_outline,
+              ),
+              title: Text(caption.isEmpty ? 'Видео этапа' : caption),
+              subtitle: Text(
+                blocked
+                    ? 'Сетевое видео отключено офлайн-режимом'
+                    : 'Открыть видео этапа',
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+              onTap: blocked ? null : () => _showCatalogVideo(context, asset),
+            ),
+          ),
+        );
+        continue;
+      }
       result.add(
         Padding(
           padding: const EdgeInsets.only(top: 8, bottom: 6),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _catalogImage(asset),
+              _catalogImage(asset, offlineOnly: offlineOnly),
               if (caption.isNotEmpty)
                 Padding(
                   padding: const EdgeInsets.only(top: 4),
@@ -340,43 +377,84 @@ Future<void> _showCatalogTextDialog(
 Future<void> _showCatalogVideo(BuildContext context, String source) async {
   await _activeCatalogVideoController?.pause();
   await _activeCatalogVideoController?.dispose();
-  final controller = source.startsWith('http')
+  _activeCatalogVideoController = null;
+  final controller = _isRemoteCatalogSource(source)
       ? VideoPlayerController.networkUrl(Uri.parse(source))
+      : File(source).existsSync()
+      ? VideoPlayerController.file(File(source))
       : VideoPlayerController.asset(source);
   _activeCatalogVideoController = controller;
-  await controller.initialize();
-  await controller.play();
+  try {
+    await controller.initialize();
+    await controller.play();
+  } catch (error) {
+    if (identical(_activeCatalogVideoController, controller)) {
+      _activeCatalogVideoController = null;
+    }
+    await controller.dispose();
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Не удалось открыть видео: $error')),
+      );
+    }
+    return;
+  }
   if (!context.mounted) {
+    if (identical(_activeCatalogVideoController, controller)) {
+      _activeCatalogVideoController = null;
+    }
+    await controller.dispose();
     return;
   }
   await showDialog<void>(
     context: context,
-    builder: (dialogContext) => AlertDialog(
-      title: const Text('Видео'),
-      content: AspectRatio(
-        aspectRatio: controller.value.aspectRatio,
-        child: VideoPlayer(controller),
+    builder: (dialogContext) => StatefulBuilder(
+      builder: (context, setDialogState) => AlertDialog(
+        title: const Text('Видео'),
+        content: AspectRatio(
+          aspectRatio: controller.value.aspectRatio,
+          child: VideoPlayer(controller),
+        ),
+        actions: [
+          LocalizedIconButton(
+            tooltip: controller.value.isPlaying ? 'Пауза' : 'Воспроизвести',
+            onPressed: () async {
+              if (controller.value.isPlaying) {
+                await controller.pause();
+              } else {
+                await controller.play();
+              }
+              setDialogState(() {});
+            },
+            icon: Icon(
+              controller.value.isPlaying
+                  ? Icons.pause_circle_outline
+                  : Icons.play_circle_outline,
+            ),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext),
+            child: const Text('Закрыть'),
+          ),
+        ],
       ),
-      actions: [
-        LocalizedIconButton(
-          tooltip: controller.value.isPlaying ? 'Пауза' : 'Воспроизвести',
-          onPressed: () {
-            if (controller.value.isPlaying) {
-              controller.pause();
-            } else {
-              controller.play();
-            }
-          },
-          icon: const Icon(Icons.pause_circle_outline),
-        ),
-        TextButton(
-          onPressed: () => Navigator.pop(dialogContext),
-          child: const Text('Закрыть'),
-        ),
-      ],
     ),
   );
   await controller.pause();
+  if (identical(_activeCatalogVideoController, controller)) {
+    _activeCatalogVideoController = null;
+  }
+  await controller.dispose();
+}
+
+bool _isRemoteCatalogSource(String source) {
+  final lower = source.trim().toLowerCase();
+  return lower.startsWith('https://') || lower.startsWith('http://');
+}
+
+bool _isCatalogVideo(String source) {
+  final path = Uri.tryParse(source)?.path.toLowerCase() ?? source.toLowerCase();
+  return const ['.mp4', '.m4v', '.mov', '.webm', '.m3u8'].any(path.endsWith);
 }
 
 Future<void> _showExerciseDetails(

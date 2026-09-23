@@ -10,6 +10,7 @@ import 'package:pdfrx/pdfrx.dart';
 
 import 'food_recognition_service.dart';
 import 'model.dart';
+import 'prescription_parser.dart';
 
 class ImportedMedia {
   const ImportedMedia({
@@ -178,6 +179,25 @@ class MediaImportService {
         metadata: metadata,
         confidence: confidence,
       ),
+    ];
+  }
+
+  Future<List<RecognitionCandidate>> importPrescriptionBatch({
+    bool camera = false,
+  }) async {
+    final media = camera ? await captureCameraImage() : await pickImageFile();
+    if (media == null) return const [];
+    final extractedText = await _extractLocalText(media);
+    final drafts = parsePrescriptionText(extractedText);
+    return [
+      for (final draft in drafts)
+        _candidate(
+          media: media,
+          source: 'рецепт',
+          requiresMedicalReview: true,
+          metadata: draft.toMetadata(),
+          confidence: draft.confidence,
+        ),
     ];
   }
 

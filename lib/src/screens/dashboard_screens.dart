@@ -120,6 +120,7 @@ class TodayScreen extends StatelessWidget {
           ],
         ),
         const MedicalDisclaimerBanner(),
+        IntegratedPlanPanel(state: state, onSelect: onSelect),
         SectionTitle('Мотивация'),
         InfoTile(
           icon: Icons.emoji_events_outlined,
@@ -423,6 +424,15 @@ class ProfileScreen extends StatelessWidget {
               'влажность: ${profile.humidityPercent}%',
           ].where((item) => item.isNotEmpty).join(' · '),
           onTap: () => onSelect(AppSection.climate),
+        ),
+        InfoTile(
+          icon: Icons.location_on_outlined,
+          title: 'Контекст дома и работы',
+          subtitle:
+              'Дом: ${profile.homeLatitude == null ? 'не задан' : 'сохранён'} · '
+              'работа: ${profile.workLatitude == null ? 'не задана' : 'сохранена'} · '
+              'радиус ${profile.placeRadiusMeters} м',
+          onTap: () => _editActivityPlaces(context, state, onChanged),
         ),
         SectionTitle('Напоминания активности'),
         InfoTile(

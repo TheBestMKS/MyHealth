@@ -107,6 +107,7 @@ const _ru = <String, String>{
   'labs': 'Анализы',
   'medicines': 'Лекарства',
   'symptoms': 'Симптомы',
+  'knowledge': 'Справочник',
   'workouts': 'Тренировки',
   'exercises': 'База упражнений',
   'nutrition': 'Питание',
@@ -189,6 +190,7 @@ const _en = <String, String>{
   'labs': 'Labs',
   'medicines': 'Medicines',
   'symptoms': 'Symptoms',
+  'knowledge': 'Health guide',
   'workouts': 'Workouts',
   'exercises': 'Exercise base',
   'nutrition': 'Nutrition',
@@ -304,6 +306,7 @@ final _localized = <String, Map<String, String>>{
     'calendar': '日历',
     'more': '更多',
     'assistant': '助手',
+    'knowledge': '健康知识库',
     'settings': '设置',
   },
   'ja': {
@@ -318,6 +321,7 @@ final _localized = <String, Map<String, String>>{
     'calendar': 'カレンダー',
     'more': 'その他',
     'assistant': 'アシスタント',
+    'knowledge': '健康ガイド',
     'settings': '設定',
   },
   'be': {
@@ -333,6 +337,7 @@ final _localized = <String, Map<String, String>>{
     'calendar': 'Каляндар',
     'more': 'Яшчэ',
     'assistant': 'Асістэнт',
+    'knowledge': 'Даведнік',
     'settings': 'Налады',
   },
   'kk': {
@@ -348,6 +353,7 @@ final _localized = <String, Map<String, String>>{
     'calendar': 'Күнтізбе',
     'more': 'Тағы',
     'assistant': 'Ассистент',
+    'knowledge': 'Анықтамалық',
     'settings': 'Баптаулар',
   },
   'de': {
@@ -363,6 +369,7 @@ final _localized = <String, Map<String, String>>{
     'calendar': 'Kalender',
     'more': 'Mehr',
     'assistant': 'Assistent',
+    'knowledge': 'Gesundheitswissen',
     'settings': 'Einstellungen',
   },
   'fr': {
@@ -378,6 +385,7 @@ final _localized = <String, Map<String, String>>{
     'calendar': 'Calendrier',
     'more': 'Plus',
     'assistant': 'Assistant',
+    'knowledge': 'Guide santé',
     'settings': 'Réglages',
   },
   'es': {
@@ -393,6 +401,7 @@ final _localized = <String, Map<String, String>>{
     'calendar': 'Calendario',
     'more': 'Más',
     'assistant': 'Asistente',
+    'knowledge': 'Guía de salud',
     'settings': 'Ajustes',
   },
   'it': {
@@ -407,6 +416,7 @@ final _localized = <String, Map<String, String>>{
     'calendar': 'Calendario',
     'more': 'Altro',
     'assistant': 'Assistente',
+    'knowledge': 'Guida alla salute',
     'settings': 'Impostazioni',
   },
   'pt': {
@@ -421,6 +431,7 @@ final _localized = <String, Map<String, String>>{
     'calendar': 'Calendário',
     'more': 'Mais',
     'assistant': 'Assistente',
+    'knowledge': 'Guia de saúde',
     'settings': 'Definições',
   },
   'tr': {
@@ -435,6 +446,7 @@ final _localized = <String, Map<String, String>>{
     'calendar': 'Takvim',
     'more': 'Daha fazla',
     'assistant': 'Asistan',
+    'knowledge': 'Sağlık rehberi',
     'settings': 'Ayarlar',
   },
   'ko': {
@@ -448,6 +460,7 @@ final _localized = <String, Map<String, String>>{
     'calendar': '달력',
     'more': '더보기',
     'assistant': '도우미',
+    'knowledge': '건강 정보',
     'settings': '설정',
   },
   'ar': {
@@ -462,6 +475,7 @@ final _localized = <String, Map<String, String>>{
     'calendar': 'التقويم',
     'more': 'المزيد',
     'assistant': 'المساعد',
+    'knowledge': 'الدليل الصحي',
     'settings': 'الإعدادات',
   },
   'hi': {
@@ -476,6 +490,7 @@ final _localized = <String, Map<String, String>>{
     'calendar': 'कैलेंडर',
     'more': 'अधिक',
     'assistant': 'सहायक',
+    'knowledge': 'स्वास्थ्य मार्गदर्शिका',
     'settings': 'सेटिंग्स',
   },
 };

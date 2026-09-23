@@ -49,7 +49,11 @@ def translate_locale(
     cache: dict[str, dict[str, str]],
     cache_path: Path,
 ) -> None:
-    tokenizer = AutoTokenizer.from_pretrained(model_dir, src_lang="rus_Cyrl")
+    tokenizer = AutoTokenizer.from_pretrained(
+        model_dir,
+        src_lang="rus_Cyrl",
+        use_fast=False,
+    )
     translator = ctranslate2.Translator(
         str(model_dir),
         device="cpu",

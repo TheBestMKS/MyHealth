@@ -53,6 +53,13 @@ void main() {
     expect(restored.steps, 8120);
   });
 
+  test('date parser rejects impossible dates instead of rolling them over', () {
+    expect(parseDateKey('29.02.2024'), DateTime(2024, 2, 29));
+    expect(parseDateKey('2024-02-29'), DateTime(2024, 2, 29));
+    expect(parseDateKey('31.02.2026'), isNull);
+    expect(parseDateKey('2026-13-01'), isNull);
+  });
+
   test('formats configured imperial units without changing stored values', () {
     const settings = AppSettings(
       bodyWeightUnit: 'lb',

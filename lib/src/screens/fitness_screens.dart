@@ -175,8 +175,12 @@ class _ExercisesScreenState extends State<ExercisesScreen> {
                         '${item.titleFor(locale)} · ${item.minutes} ${AppText.get(locale, 'minShort')}',
                     subtitle:
                         '${item.focus} · ${item.equipment} · ${item.level}\n${item.description}',
-                    onTap: () =>
-                        _showWorkoutCatalogDetails(context, item, locale),
+                    onTap: () => _showWorkoutCatalogDetails(
+                      context,
+                      item,
+                      locale,
+                      offlineOnly: widget.state.settings.offlineOnly,
+                    ),
                   ),
                 ),
               ],

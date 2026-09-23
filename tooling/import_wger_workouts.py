@@ -105,6 +105,21 @@ def estimate_calories(category: str, minutes: int) -> int:
     return round(met * 70 * minutes / 60)
 
 
+def workout_review(level: str, equipment: str, calories: int, minutes: int) -> str:
+    load = (
+        "начните с облегчённой техники и оставляйте запас повторов"
+        if level == "начальный"
+        else "повышайте объём постепенно и прекращайте подход при потере техники"
+    )
+    return (
+        f"Справочная проверка безопасности: {load}. Инвентарь: {equipment}. "
+        f"Расход {calories} ккал за {minutes} мин рассчитан ориентировочно для массы 70 кг и меняется "
+        "с интенсивностью и индивидуальными особенностями. При травмах, боли, беременности, "
+        "сердечно-сосудистых или иных ограничениях согласуйте нагрузку со специалистом. "
+        "Это автоматическая справка, не персональное заключение врача."
+    )
+
+
 def base_row(item: dict[str, object], variant: bool) -> dict[str, object]:
     english = translation(item, 2)
     russian = translation(item, 5)
@@ -138,6 +153,7 @@ def base_row(item: dict[str, object], variant: bool) -> dict[str, object]:
     license_data = item.get("license") or {}
     license_name = license_data.get("short_name") or license_data.get("full_name") or ""
     author = item.get("license_author") or "wger community"
+    calories = estimate_calories(category, minutes)
     return {
         "id": f"wger-{exercise_id}{'-easy' if variant else ''}",
         "title_ru": f"{name_ru}{suffix_ru} [wger-{exercise_id}]",
@@ -146,7 +162,7 @@ def base_row(item: dict[str, object], variant: bool) -> dict[str, object]:
         "equipment": equipment,
         "level": level,
         "minutes": minutes,
-        "calories": estimate_calories(category, minutes),
+        "calories": calories,
         "sets": sets,
         "description": description or f"Техника упражнения {name_ru}.",
         "requirements": f"Инвентарь: {equipment}. Освободите безопасное место и подготовьте воду.",
@@ -158,7 +174,7 @@ def base_row(item: dict[str, object], variant: bool) -> dict[str, object]:
         "image": image_url(item),
         "video": video_url(item),
         "history": "",
-        "doctor_review": "",
+        "doctor_review": workout_review(level, equipment, calories, minutes),
         "source_url": f"https://wger.de/en/exercise/{exercise_id}/view",
         "data_license": f"wger · {license_name} · {author}".strip(" ·"),
     }
@@ -176,7 +192,7 @@ def main() -> int:
     args = parser.parse_args()
     response = requests.get(
         API_URL,
-        headers={"User-Agent": "MyHealth/1.6.0", "Accept": "application/json"},
+        headers={"User-Agent": "MyHealth/1.7.0", "Accept": "application/json"},
         timeout=120,
     )
     response.raise_for_status()

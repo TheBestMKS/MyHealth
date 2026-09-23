@@ -852,9 +852,31 @@ List<LabResult> _bleLabResults(
         unit: 'ммоль/л',
         reference: 'см. назначение врача',
         date: date,
-        needsAttention: true,
+        needsAttention: result.glucoseMmolL! < 3.9 || result.glucoseMmolL! > 10,
         notes:
-            'Получено по Bluetooth LE от $deviceTitle; проверьте единицы датчика.',
+            'Получено по Bluetooth LE от $deviceTitle. Целевой диапазон индивидуален; при симптомах гипо- или гипергликемии следуйте плану врача.',
+      ),
+    if (result.bodyFatPercent != null)
+      LabResult(
+        id: newId(),
+        marker: 'Жировая масса',
+        value: result.bodyFatPercent!.toStringAsFixed(1),
+        unit: '%',
+        reference: 'зависит от пола и возраста',
+        date: date,
+        needsAttention: false,
+        notes: 'Получено по Bluetooth LE от $deviceTitle.',
+      ),
+    if (result.muscleMassKg != null)
+      LabResult(
+        id: newId(),
+        marker: 'Мышечная масса',
+        value: result.muscleMassKg!.toStringAsFixed(1),
+        unit: 'кг',
+        reference: 'индивидуальная динамика',
+        date: date,
+        needsAttention: false,
+        notes: 'Получено по Bluetooth LE от $deviceTitle.',
       ),
     if (result.spo2Percent != null)
       LabResult(

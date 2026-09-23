@@ -21,7 +21,14 @@ DateTime? parseDateKey(String value) {
   if (year == null || month == null || day == null) {
     return null;
   }
-  return DateTime(year, month, day);
+  if (year < 1 || year > 9999 || month < 1 || month > 12 || day < 1) {
+    return null;
+  }
+  final date = DateTime(year, month, day);
+  if (date.year != year || date.month != month || date.day != day) {
+    return null;
+  }
+  return date;
 }
 
 String displayDateKey(String value) {
@@ -265,7 +272,7 @@ class HealthAppState {
   }
 
   Map<String, dynamic> toJson() => {
-    'schema': 7,
+    'schema': 8,
     'onboardingComplete': onboardingComplete,
     'localeCode': localeCode,
     'profile': profile.toJson(),
@@ -565,6 +572,11 @@ class UserProfile {
     this.airQuality = '',
     this.regionalAllergens = const [],
     this.climateReactions = const [],
+    this.homeLatitude,
+    this.homeLongitude,
+    this.workLatitude,
+    this.workLongitude,
+    this.placeRadiusMeters = 200,
   });
 
   final String name;
@@ -597,6 +609,11 @@ class UserProfile {
   final String airQuality;
   final List<String> regionalAllergens;
   final List<String> climateReactions;
+  final double? homeLatitude;
+  final double? homeLongitude;
+  final double? workLatitude;
+  final double? workLongitude;
+  final int placeRadiusMeters;
 
   int get age {
     final birth = parseDateKey(birthDate);
@@ -722,6 +739,18 @@ class UserProfile {
         json['climateReactions'],
         fallback.climateReactions,
       ),
+      homeLatitude:
+          _nullableDouble(json['homeLatitude']) ?? fallback.homeLatitude,
+      homeLongitude:
+          _nullableDouble(json['homeLongitude']) ?? fallback.homeLongitude,
+      workLatitude:
+          _nullableDouble(json['workLatitude']) ?? fallback.workLatitude,
+      workLongitude:
+          _nullableDouble(json['workLongitude']) ?? fallback.workLongitude,
+      placeRadiusMeters: _int(
+        json['placeRadiusMeters'],
+        fallback.placeRadiusMeters,
+      ).clamp(50, 2000),
     );
   }
 
@@ -757,6 +786,11 @@ class UserProfile {
     'airQuality': airQuality,
     'regionalAllergens': regionalAllergens,
     'climateReactions': climateReactions,
+    'homeLatitude': homeLatitude,
+    'homeLongitude': homeLongitude,
+    'workLatitude': workLatitude,
+    'workLongitude': workLongitude,
+    'placeRadiusMeters': placeRadiusMeters,
   };
 
   UserProfile copyWith({
@@ -790,6 +824,11 @@ class UserProfile {
     String? airQuality,
     List<String>? regionalAllergens,
     List<String>? climateReactions,
+    double? homeLatitude,
+    double? homeLongitude,
+    double? workLatitude,
+    double? workLongitude,
+    int? placeRadiusMeters,
   }) {
     return UserProfile(
       name: name ?? this.name,
@@ -822,6 +861,14 @@ class UserProfile {
       airQuality: airQuality ?? this.airQuality,
       regionalAllergens: regionalAllergens ?? this.regionalAllergens,
       climateReactions: climateReactions ?? this.climateReactions,
+      homeLatitude: homeLatitude ?? this.homeLatitude,
+      homeLongitude: homeLongitude ?? this.homeLongitude,
+      workLatitude: workLatitude ?? this.workLatitude,
+      workLongitude: workLongitude ?? this.workLongitude,
+      placeRadiusMeters: (placeRadiusMeters ?? this.placeRadiusMeters).clamp(
+        50,
+        2000,
+      ),
     );
   }
 }

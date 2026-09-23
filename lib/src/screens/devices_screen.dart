@@ -55,6 +55,7 @@ class _DevicesScreenState extends State<DevicesScreen> {
       ),
       children: [
         HealthPlatformPanel(state: state, onChanged: widget.onChanged),
+        _DeviceCompatibilityPanel(state: state),
         InfoTile(
           icon: Icons.bluetooth_outlined,
           title: 'Bluetooth',
@@ -289,6 +290,23 @@ class _DevicesScreenState extends State<DevicesScreen> {
       var metricsChanged = false;
       if (result.weightKg != null) {
         syncedMetrics = syncedMetrics.copyWith(weightKg: result.weightKg);
+        metricsChanged = true;
+      }
+      if (result.energyKcal != null) {
+        syncedMetrics = syncedMetrics.copyWith(
+          activeCalories: result.energyKcal! > syncedMetrics.activeCalories
+              ? result.energyKcal!
+              : syncedMetrics.activeCalories,
+        );
+        metricsChanged = true;
+      }
+      if (result.elapsedSeconds != null) {
+        final minutes = (result.elapsedSeconds! / 60).ceil();
+        syncedMetrics = syncedMetrics.copyWith(
+          workoutMinutes: minutes > syncedMetrics.workoutMinutes
+              ? minutes
+              : syncedMetrics.workoutMinutes,
+        );
         metricsChanged = true;
       }
       for (final measurement in result.mappedMeasurements) {
@@ -679,6 +697,78 @@ class _DevicesScreenState extends State<DevicesScreen> {
             ),
           );
         },
+      ),
+    );
+  }
+}
+
+class _DeviceCompatibilityPanel extends StatelessWidget {
+  const _DeviceCompatibilityPanel({required this.state});
+
+  final HealthAppState state;
+
+  @override
+  Widget build(BuildContext context) {
+    final connectedServices = state.devices
+        .expand((item) => item.services)
+        .map((item) => item.toLowerCase())
+        .toSet();
+    bool has(String uuid) => connectedServices.any(
+      (item) => item.replaceAll('-', '').contains(uuid),
+    );
+    final directProfiles = <String>[
+      if (has('180d')) 'пульс',
+      if (has('1810')) 'давление',
+      if (has('181d')) 'вес',
+      if (has('181b')) 'состав тела',
+      if (has('1822')) 'SpO₂',
+      if (has('1808') || has('181f')) 'глюкоза',
+      if (has('1826')) 'тренажёр FTMS',
+      if (has('1814')) 'бег/каденс',
+      if (has('1818')) 'веломощность',
+    ];
+    return Card(
+      child: ExpansionTile(
+        leading: const Icon(Icons.fact_check_outlined),
+        title: const Text('Совместимость и безопасность'),
+        subtitle: Text(
+          directProfiles.isEmpty
+              ? 'Проверьте поддерживаемый путь подключения перед покупкой устройства'
+              : 'Обнаружены профили: ${directProfiles.join(', ')}',
+        ),
+        childrenPadding: const EdgeInsets.fromLTRB(14, 0, 14, 14),
+        children: [
+          const InfoTile(
+            icon: Icons.health_and_safety_outlined,
+            title: 'Часы и фитнес-браслеты',
+            subtitle:
+                'Samsung, Fitbit, Garmin, Xiaomi, Huawei, Oura, WHOOP и Withings обычно передают данные через фирменное приложение в Health Connect или Apple Health. Прямой BLE доступен только при открытом стандартном профиле.',
+          ),
+          const InfoTile(
+            icon: Icons.fitness_center_outlined,
+            title: 'Тренажёры',
+            subtitle:
+                'Поддерживаются стандартные FTMS-беговые дорожки, велотренажёры и гребные тренажёры, а также Running Speed and Cadence и Cycling Power.',
+          ),
+          const InfoTile(
+            icon: Icons.bloodtype_outlined,
+            title: 'Глюкометры и CGM',
+            subtitle:
+                'Чтение Bluetooth Glucose и CGM, а также глюкозы из Health Connect/Apple Health. Значения нормализуются в ммоль/л и отмечаются для проверки.',
+          ),
+          const InfoTile(
+            icon: Icons.lock_outline,
+            title: 'Инсулиновые помпы — только безопасный журнал',
+            subtitle:
+                'BLE-команды к CGM и системам доставки инсулина заблокированы. Дозу и управление помпой выполняют только сертифицированное устройство и назначивший специалист.',
+          ),
+          const InfoTile(
+            icon: Icons.bluetooth_outlined,
+            title: 'Другие медицинские датчики',
+            subtitle:
+                'Поддерживаются стандартные профили пульса, давления, веса, состава тела, термометра и пульсоксиметра. Для открытого UUID производителя можно настроить чтение и масштабирование вручную.',
+          ),
+        ],
       ),
     );
   }

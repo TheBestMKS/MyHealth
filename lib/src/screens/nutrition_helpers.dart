@@ -588,8 +588,12 @@ Future<void> _showNutritionSuggestions(
                         _addCatalogFoodToDiary(context, state, onChanged, item),
                     icon: const Icon(Icons.add_circle_outline),
                   ),
-                  onTap: () =>
-                      _showFoodCatalogDetails(context, item, state.localeCode),
+                  onTap: () => _showFoodCatalogDetails(
+                    context,
+                    item,
+                    state.localeCode,
+                    offlineOnly: state.settings.offlineOnly,
+                  ),
                 ),
               )
               .toList(),

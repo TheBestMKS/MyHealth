@@ -284,7 +284,10 @@ class LabsScreen extends StatelessWidget {
         ),
         SectionTitle('OCR и ручное подтверждение'),
         ...state.confirmationQueue
-            .where((item) => item.requiresMedicalReview)
+            .where(
+              (item) =>
+                  item.requiresMedicalReview && !_isPrescriptionCandidate(item),
+            )
             .map((item) => _confirmationTile(item, state, onChanged)),
       ],
     );
@@ -303,12 +306,27 @@ class MedicinesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final prescriptionCandidates = state.confirmationQueue
+        .where(_isPrescriptionCandidate)
+        .toList(growable: false);
     return PageBand(
       title: AppText.get(state.localeCode, 'medicines'),
       subtitle: 'Расписание, отметки приёма и напоминания',
       trailing: Wrap(
         spacing: 8,
         children: [
+          LocalizedIconButton.filledTonal(
+            tooltip: 'Сфотографировать рецепт',
+            onPressed: () =>
+                _importPrescription(context, state, onChanged, camera: true),
+            icon: const Icon(Icons.document_scanner_outlined),
+          ),
+          LocalizedIconButton.filledTonal(
+            tooltip: 'Импортировать рецепт или назначение',
+            onPressed: () =>
+                _importPrescription(context, state, onChanged, camera: false),
+            icon: const Icon(Icons.upload_file_outlined),
+          ),
           FilledButton.tonalIcon(
             onPressed: () => _addMedicationIntake(context, state, onChanged),
             icon: const Icon(Icons.check_circle_outline),
@@ -323,6 +341,13 @@ class MedicinesScreen extends StatelessWidget {
       ),
       children: [
         const MedicalDisclaimerBanner(),
+        if (prescriptionCandidates.isNotEmpty) ...[
+          SectionTitle('Назначения для проверки'),
+          ...prescriptionCandidates.map(
+            (item) =>
+                _prescriptionCandidateTile(context, item, state, onChanged),
+          ),
+        ],
         if (state.medicationIntakes.isNotEmpty) ...[
           SectionTitle('Журнал приёма'),
           ...state.medicationIntakes

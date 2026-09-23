@@ -12,7 +12,10 @@ import math
 import re
 from pathlib import Path
 
-import duckdb
+try:
+    import duckdb
+except ImportError:  # Enrichment can reuse helpers without the remote importer.
+    duckdb = None
 
 
 EXPORT_URL = "https://static.openfoodfacts.org/data/en.openfoodfacts.org.products.csv.gz"
@@ -114,7 +117,63 @@ def product_title(name: object, brand: object, quantity: object, code: str) -> s
     return f"{title} [{code}]"
 
 
+def nutrition_review(
+    *,
+    kind: str,
+    health: int,
+    calories: int,
+    protein: int,
+    sugar: int,
+    fiber: int,
+    salt: float,
+    alcohol: float,
+) -> str:
+    if health >= 8:
+        frequency = "может регулярно входить в разнообразный рацион при подходящем размере порции"
+    elif health >= 6:
+        frequency = "обычно подходит для периодического употребления с учётом порции и остального рациона"
+    elif health >= 4:
+        frequency = "лучше употреблять умеренно и сравнивать с менее сладкими или солёными вариантами"
+    else:
+        frequency = "лучше оставить для редкого употребления, если врач или диетолог не рекомендовал иначе"
+    observations: list[str] = []
+    if sugar >= 20:
+        observations.append(f"много сахара ({sugar} г на 100 г/мл)")
+    elif sugar <= 5:
+        observations.append("мало сахара по данным карточки")
+    if salt >= 1.5:
+        observations.append(f"много соли ({salt:g} г на 100 г/мл)")
+    if fiber >= 6:
+        observations.append(f"есть значимое количество клетчатки ({fiber} г)")
+    if protein >= 20:
+        observations.append(f"высокое содержание белка ({protein} г)")
+    if calories >= 400:
+        observations.append(f"высокая энергетическая плотность ({calories} ккал)")
+    if alcohol > 0:
+        observations.append("содержит алкоголь; безопасной универсальной дозы приложение не определяет")
+    if kind == "drink" and sugar >= 10:
+        observations.append("сладкие напитки легче дают избыток сахара без насыщения")
+    details = "; ".join(observations) or "выраженные пищевые факторы по заполненным полям не выделены"
+    return (
+        f"Справочная нутриционная оценка по опубликованному составу и Nutri-Score: {details}. "
+        f"Ориентир по частоте: {frequency}. Проверяйте фактическую порцию, аллергены и этикетку. "
+        "Это автоматическая справка, не персональный отзыв врача и не назначение лечения."
+    )
+
+
+def preparation_note(kind: str) -> str:
+    if kind != "meal":
+        return ""
+    return (
+        "Источник не содержит проверенного рецепта этого готового блюда. "
+        "Следуйте способу приготовления, температуре и условиям хранения на упаковке; "
+        "не используйте эту карточку как замену инструкции производителя."
+    )
+
+
 def query_products(limit: int) -> list[tuple[object, ...]]:
+    if duckdb is None:
+        raise RuntimeError("Install duckdb to download the Open Food Facts export")
     connection = duckdb.connect()
     connection.execute("SET threads TO 4")
     query = """
@@ -187,32 +246,47 @@ def build_rows(products: list[tuple[object, ...]]) -> list[dict[str, object]]:
         carbs = rounded(carbs_value, 100)
         sugar = rounded(sugar_value, 100)
         alcohol = number(alcohol_value, 100)
+        calories = rounded(calories_value, 1000)
+        protein = rounded(protein_value, 100)
+        fiber = rounded(fiber_value, 100)
+        salt = number(salt_value, 100)
+        kind = kind_for(category_text, title)
+        score = health_level(grade)
         rows.append(
             {
                 "id": f"off-{code_text or index}",
                 "title_ru": title,
                 "title_en": title,
                 "category": category_text.split(",")[0] if category_text else "food",
-                "kind": kind_for(category_text, title),
-                "calories": rounded(calories_value, 1000),
-                "protein": rounded(protein_value, 100),
+                "kind": kind,
+                "calories": calories,
+                "protein": protein,
                 "fat": rounded(fat_value, 100),
                 "carbs": carbs,
                 "sugar": sugar,
                 "carb_type": carb_type(carbs, sugar),
-                "fiber": rounded(fiber_value, 100),
+                "fiber": fiber,
                 "alcohol": decimal(alcohol, 100) if alcohol > 0 else "",
                 "salt": decimal(salt_value, 100),
-                "health_level": health_level(grade),
+                "health_level": score,
                 "composition": ingredients_text or category_text,
                 "ingredients": ingredients_text,
-                "preparation": "",
+                "preparation": preparation_note(kind),
                 "minutes": 0,
                 "cost": 0,
                 "image": clean(image, 500),
                 "video": "",
                 "history": "",
-                "doctor_review": "",
+                "doctor_review": nutrition_review(
+                    kind=kind,
+                    health=score,
+                    calories=calories,
+                    protein=protein,
+                    sugar=sugar,
+                    fiber=fiber,
+                    salt=salt,
+                    alcohol=alcohol,
+                ),
                 "source_url": clean(source_url, 500),
                 "data_license": "Open Food Facts — ODbL 1.0",
             }

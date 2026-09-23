@@ -23,9 +23,8 @@ android {
     defaultConfig {
         multiDexEnabled = true
         applicationId = "ru.thebestmks.myhealth"
-        // You can update the following values to match your application needs.
-        // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = 26
+        // Local llama.cpp inference uses APIs available from Android 9.
+        minSdk = 28
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName

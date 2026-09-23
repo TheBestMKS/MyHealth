@@ -59,6 +59,14 @@ class HealthBleSyncResult {
     this.bodyTemperatureC,
     this.bloodPressureSystolic,
     this.bloodPressureDiastolic,
+    this.bodyFatPercent,
+    this.muscleMassKg,
+    this.speedKmh,
+    this.distanceMeters,
+    this.cadenceRpm,
+    this.powerWatts,
+    this.energyKcal,
+    this.elapsedSeconds,
     this.rssi,
     this.mappedMeasurements = const [],
     this.readServices = const [],
@@ -73,6 +81,14 @@ class HealthBleSyncResult {
   final double? bodyTemperatureC;
   final int? bloodPressureSystolic;
   final int? bloodPressureDiastolic;
+  final double? bodyFatPercent;
+  final double? muscleMassKg;
+  final double? speedKmh;
+  final double? distanceMeters;
+  final double? cadenceRpm;
+  final int? powerWatts;
+  final int? energyKcal;
+  final int? elapsedSeconds;
   final int? rssi;
   final List<HealthBleMappedMeasurement> mappedMeasurements;
   final List<String> readServices;
@@ -87,6 +103,14 @@ class HealthBleSyncResult {
       bodyTemperatureC != null ||
       bloodPressureSystolic != null ||
       bloodPressureDiastolic != null ||
+      bodyFatPercent != null ||
+      muscleMassKg != null ||
+      speedKmh != null ||
+      distanceMeters != null ||
+      cadenceRpm != null ||
+      powerWatts != null ||
+      energyKcal != null ||
+      elapsedSeconds != null ||
       rssi != null ||
       mappedMeasurements.isNotEmpty;
 
@@ -102,6 +126,15 @@ class HealthBleSyncResult {
         'температура ${bodyTemperatureC!.toStringAsFixed(1)} °C',
       if (bloodPressureSystolic != null && bloodPressureDiastolic != null)
         'АД $bloodPressureSystolic/$bloodPressureDiastolic',
+      if (bodyFatPercent != null) 'жир ${bodyFatPercent!.toStringAsFixed(1)}%',
+      if (muscleMassKg != null) 'мышцы ${muscleMassKg!.toStringAsFixed(1)} кг',
+      if (speedKmh != null) 'скорость ${speedKmh!.toStringAsFixed(1)} км/ч',
+      if (distanceMeters != null)
+        'дистанция ${(distanceMeters! / 1000).toStringAsFixed(2)} км',
+      if (cadenceRpm != null) 'каденс ${cadenceRpm!.toStringAsFixed(0)} об/мин',
+      if (powerWatts != null) 'мощность $powerWatts Вт',
+      if (energyKcal != null) 'энергия $energyKcal ккал',
+      if (elapsedSeconds != null) 'время ${(elapsedSeconds! / 60).round()} мин',
       if (rssi != null) 'RSSI $rssi',
       ...mappedMeasurements.take(4).map((item) => item.summary),
     ];
@@ -224,8 +257,35 @@ class HealthBleService {
     double? bodyTemperatureC;
     int? bloodPressureSystolic;
     int? bloodPressureDiastolic;
+    double? bodyFatPercent;
+    double? muscleMassKg;
+    double? speedKmh;
+    double? distanceMeters;
+    double? cadenceRpm;
+    int? powerWatts;
+    int? energyKcal;
+    int? elapsedSeconds;
     int? rssi;
     final mappedMeasurements = <HealthBleMappedMeasurement>[];
+
+    void includeStandard(HealthBleSyncResult value) {
+      heartRate ??= value.heartRate;
+      weightKg ??= value.weightKg;
+      glucoseMmolL ??= value.glucoseMmolL;
+      spo2Percent ??= value.spo2Percent;
+      bodyTemperatureC ??= value.bodyTemperatureC;
+      bloodPressureSystolic ??= value.bloodPressureSystolic;
+      bloodPressureDiastolic ??= value.bloodPressureDiastolic;
+      bodyFatPercent ??= value.bodyFatPercent;
+      muscleMassKg ??= value.muscleMassKg;
+      speedKmh ??= value.speedKmh;
+      distanceMeters ??= value.distanceMeters;
+      cadenceRpm ??= value.cadenceRpm;
+      powerWatts ??= value.powerWatts;
+      energyKcal ??= value.energyKcal;
+      elapsedSeconds ??= value.elapsedSeconds;
+      errors.addAll(value.errors);
+    }
 
     Future<Uint8List?> readCharacteristic(
       String service,
@@ -328,6 +388,17 @@ class HealthBleService {
       glucoseMmolL = _parseGlucoseMmolL(glucoseBytes);
     }
 
+    final cgmBytes = await readMeasurement(
+      _continuousGlucoseService,
+      _continuousGlucoseMeasurement,
+      'непрерывная глюкоза',
+    );
+    if (cgmBytes != null) {
+      includeStandard(
+        HealthBleDecoder.decode(_continuousGlucoseMeasurement, cgmBytes),
+      );
+    }
+
     final spo2Bytes = await readMeasurement(
       _pulseOximeterService,
       _pulseOximeterSpotCheck,
@@ -335,6 +406,17 @@ class HealthBleService {
     );
     if (spo2Bytes != null) {
       spo2Percent = _parseSpo2(spo2Bytes);
+    } else {
+      final continuousSpo2 = await readMeasurement(
+        _pulseOximeterService,
+        _pulseOximeterContinuous,
+        'непрерывный SpO2',
+      );
+      if (continuousSpo2 != null) {
+        includeStandard(
+          HealthBleDecoder.decode(_pulseOximeterContinuous, continuousSpo2),
+        );
+      }
     }
 
     final temperatureBytes = await readMeasurement(
@@ -355,6 +437,58 @@ class HealthBleService {
       final pressure = _parseBloodPressure(pressureBytes);
       bloodPressureSystolic = pressure?.systolic;
       bloodPressureDiastolic = pressure?.diastolic;
+    }
+
+    final bodyCompositionBytes = await readMeasurement(
+      _bodyCompositionService,
+      _bodyCompositionMeasurement,
+      'состав тела',
+    );
+    if (bodyCompositionBytes != null) {
+      includeStandard(
+        HealthBleDecoder.decode(
+          _bodyCompositionMeasurement,
+          bodyCompositionBytes,
+        ),
+      );
+    }
+
+    for (final characteristic in const [
+      _treadmillData,
+      _indoorBikeData,
+      _rowerData,
+    ]) {
+      final fitnessBytes = await readMeasurement(
+        _fitnessMachineService,
+        characteristic,
+        'данные тренажёра',
+      );
+      if (fitnessBytes != null) {
+        includeStandard(HealthBleDecoder.decode(characteristic, fitnessBytes));
+        break;
+      }
+    }
+
+    final runningBytes = await readMeasurement(
+      _runningSpeedCadenceService,
+      _runningSpeedCadenceMeasurement,
+      'датчик бега',
+    );
+    if (runningBytes != null) {
+      includeStandard(
+        HealthBleDecoder.decode(_runningSpeedCadenceMeasurement, runningBytes),
+      );
+    }
+
+    final cyclingPowerBytes = await readMeasurement(
+      _cyclingPowerService,
+      _cyclingPowerMeasurement,
+      'веломощность',
+    );
+    if (cyclingPowerBytes != null) {
+      includeStandard(
+        HealthBleDecoder.decode(_cyclingPowerMeasurement, cyclingPowerBytes),
+      );
     }
 
     for (final mapping in device.bleMappings.where((item) => item.enabled)) {
@@ -398,6 +532,14 @@ class HealthBleService {
       bodyTemperatureC: bodyTemperatureC,
       bloodPressureSystolic: bloodPressureSystolic,
       bloodPressureDiastolic: bloodPressureDiastolic,
+      bodyFatPercent: bodyFatPercent,
+      muscleMassKg: muscleMassKg,
+      speedKmh: speedKmh,
+      distanceMeters: distanceMeters,
+      cadenceRpm: cadenceRpm,
+      powerWatts: powerWatts,
+      energyKcal: energyKcal,
+      elapsedSeconds: elapsedSeconds,
       rssi: rssi,
       mappedMeasurements: mappedMeasurements,
       readServices: serviceIds,
@@ -412,11 +554,32 @@ class HealthBleService {
     if (device.deviceId.isEmpty) {
       throw StateError('У устройства нет BLE deviceId');
     }
+    if (isProtectedMedicalWrite(device, command)) {
+      throw UnsupportedError(
+        'Команды для CGM и систем доставки инсулина заблокированы. '
+        'MyHealth использует эти устройства только для чтения и журнала.',
+      );
+    }
     final services = await UniversalBle.discoverServices(
       device.deviceId,
       withDescriptors: true,
     );
     await _writeBleCommand(device.deviceId, services, command);
+  }
+
+  static bool isProtectedMedicalWrite(
+    DeviceConnection device,
+    BleWriteCommand command,
+  ) {
+    final service = _shortUuid(command.serviceUuid);
+    final description =
+        '${device.type} ${device.title} ${device.features.join(' ')}'
+            .toLowerCase();
+    return service == _continuousGlucoseService ||
+        service == '183a' ||
+        description.contains('инсулин') ||
+        description.contains('insulin pump') ||
+        description.contains('cgm');
   }
 
   Future<void> disconnect(DeviceConnection device) async {
@@ -460,10 +623,341 @@ const _glucoseService = '1808';
 const _glucoseMeasurement = '2a18';
 const _pulseOximeterService = '1822';
 const _pulseOximeterSpotCheck = '2a5e';
+const _pulseOximeterContinuous = '2a5f';
 const _healthThermometerService = '1809';
 const _temperatureMeasurement = '2a1c';
 const _bloodPressureService = '1810';
 const _bloodPressureMeasurement = '2a35';
+const _continuousGlucoseService = '181f';
+const _continuousGlucoseMeasurement = '2aa7';
+const _bodyCompositionService = '181b';
+const _bodyCompositionMeasurement = '2a9c';
+const _fitnessMachineService = '1826';
+const _treadmillData = '2acd';
+const _rowerData = '2ad1';
+const _indoorBikeData = '2ad2';
+const _runningSpeedCadenceService = '1814';
+const _runningSpeedCadenceMeasurement = '2a53';
+const _cyclingPowerService = '1818';
+const _cyclingPowerMeasurement = '2a63';
+
+/// Decodes Bluetooth SIG adopted health and fitness characteristics.
+///
+/// Vendor-specific devices can still be handled through user mappings, while
+/// this decoder keeps adopted profiles deterministic and unit-tested.
+class HealthBleDecoder {
+  const HealthBleDecoder._();
+
+  static HealthBleSyncResult decode(
+    String characteristicUuid,
+    Uint8List bytes,
+  ) {
+    final uuid = _shortUuid(characteristicUuid);
+    try {
+      return switch (uuid) {
+        _continuousGlucoseMeasurement => _decodeContinuousGlucose(bytes),
+        _bodyCompositionMeasurement => _decodeBodyComposition(bytes),
+        _treadmillData => _decodeTreadmill(bytes),
+        _indoorBikeData => _decodeIndoorBike(bytes),
+        _rowerData => _decodeRower(bytes),
+        _runningSpeedCadenceMeasurement => _decodeRunning(bytes),
+        _cyclingPowerMeasurement => _decodeCyclingPower(bytes),
+        _pulseOximeterContinuous => _decodeContinuousSpo2(bytes),
+        _ => HealthBleSyncResult(
+          errors: ['Неизвестная стандартная характеристика $uuid'],
+        ),
+      };
+    } on FormatException catch (error) {
+      return HealthBleSyncResult(errors: ['$uuid: ${error.message}']);
+    } on RangeError {
+      return HealthBleSyncResult(errors: ['$uuid: пакет короче заявленного']);
+    }
+  }
+
+  static HealthBleSyncResult _decodeContinuousGlucose(Uint8List bytes) {
+    if (bytes.length < 6) {
+      throw const FormatException('некорректная CGM-запись');
+    }
+    double? latest;
+    final warnings = <String>[];
+    var offset = 0;
+    while (offset + 6 <= bytes.length) {
+      final size = bytes[offset];
+      if (size < 6 || offset + size > bytes.length) {
+        throw const FormatException('ошибка размера CGM-записи');
+      }
+      final mgDl = _sfloatToDouble(
+        ByteData.sublistView(
+          bytes,
+          offset + 2,
+          offset + 4,
+        ).getUint16(0, Endian.little),
+      );
+      if (mgDl >= 20 && mgDl <= 600) {
+        latest = mgDl / 18.01559;
+      } else {
+        warnings.add('CGM передал неправдоподобное значение $mgDl мг/дл');
+      }
+      offset += size;
+    }
+    return HealthBleSyncResult(glucoseMmolL: latest, errors: warnings);
+  }
+
+  static HealthBleSyncResult _decodeBodyComposition(Uint8List bytes) {
+    if (bytes.length < 4) {
+      throw const FormatException('некорректный пакет состава тела');
+    }
+    final cursor = _BleCursor(bytes);
+    final flags = cursor.u16();
+    final imperial = (flags & 0x0001) != 0;
+    final bodyFat = cursor.u16() / 10.0;
+    if ((flags & 0x0002) != 0) cursor.skip(7); // timestamp
+    if ((flags & 0x0004) != 0) cursor.skip(1); // user id
+    if ((flags & 0x0008) != 0) cursor.skip(2); // basal metabolism
+    if ((flags & 0x0010) != 0) cursor.skip(2); // muscle percentage
+    double? muscleMass;
+    if ((flags & 0x0020) != 0) {
+      final value = cursor.u16() / 100.0;
+      muscleMass = imperial ? value * 0.45359237 : value;
+    }
+    if ((flags & 0x0040) != 0) cursor.skip(2); // fat free mass
+    if ((flags & 0x0080) != 0) cursor.skip(2); // soft lean mass
+    if ((flags & 0x0100) != 0) cursor.skip(2); // body water mass
+    if ((flags & 0x0200) != 0) cursor.skip(2); // impedance
+    double? weight;
+    if ((flags & 0x0400) != 0) {
+      final value = imperial ? cursor.u16() / 100.0 : cursor.u16() / 200.0;
+      weight = imperial ? value * 0.45359237 : value;
+    }
+    return HealthBleSyncResult(
+      bodyFatPercent: bodyFat,
+      muscleMassKg: muscleMass,
+      weightKg: weight,
+    );
+  }
+
+  static HealthBleSyncResult _decodeIndoorBike(Uint8List bytes) {
+    final cursor = _BleCursor(bytes);
+    final flags = cursor.u16();
+    double? speed;
+    double? cadence;
+    double? distance;
+    int? power;
+    int? energy;
+    int? heartRate;
+    int? elapsed;
+    if ((flags & 0x0001) == 0) speed = cursor.u16() / 100.0;
+    if ((flags & 0x0002) != 0) cursor.skip(2); // average speed
+    if ((flags & 0x0004) != 0) cadence = cursor.u16() / 2.0;
+    if ((flags & 0x0008) != 0) cursor.skip(2); // average cadence
+    if ((flags & 0x0010) != 0) distance = cursor.u24().toDouble();
+    if ((flags & 0x0020) != 0) cursor.skip(2); // resistance
+    if ((flags & 0x0040) != 0) power = cursor.i16();
+    if ((flags & 0x0080) != 0) cursor.skip(2); // average power
+    if ((flags & 0x0100) != 0) {
+      energy = cursor.u16();
+      cursor.skip(3); // energy/hour and energy/minute
+    }
+    if ((flags & 0x0200) != 0) heartRate = cursor.u8();
+    if ((flags & 0x0400) != 0) cursor.skip(1); // MET
+    if ((flags & 0x0800) != 0) elapsed = cursor.u16();
+    if ((flags & 0x1000) != 0) cursor.skip(2); // remaining time
+    return HealthBleSyncResult(
+      heartRate: heartRate,
+      speedKmh: speed,
+      cadenceRpm: cadence,
+      distanceMeters: distance,
+      powerWatts: power,
+      energyKcal: _validEnergy(energy),
+      elapsedSeconds: elapsed,
+    );
+  }
+
+  static HealthBleSyncResult _decodeTreadmill(Uint8List bytes) {
+    final cursor = _BleCursor(bytes);
+    final flags = cursor.u16();
+    double? speed;
+    double? distance;
+    int? power;
+    int? energy;
+    int? heartRate;
+    int? elapsed;
+    if ((flags & 0x0001) == 0) speed = cursor.u16() / 100.0;
+    if ((flags & 0x0002) != 0) cursor.skip(2); // average speed
+    if ((flags & 0x0004) != 0) distance = cursor.u24().toDouble();
+    if ((flags & 0x0008) != 0) cursor.skip(4); // inclination and ramp
+    if ((flags & 0x0010) != 0) cursor.skip(4); // elevation gain
+    if ((flags & 0x0020) != 0) cursor.skip(1); // instantaneous pace
+    if ((flags & 0x0040) != 0) cursor.skip(1); // average pace
+    if ((flags & 0x0080) != 0) {
+      energy = cursor.u16();
+      cursor.skip(3);
+    }
+    if ((flags & 0x0100) != 0) heartRate = cursor.u8();
+    if ((flags & 0x0200) != 0) cursor.skip(1); // MET
+    if ((flags & 0x0400) != 0) elapsed = cursor.u16();
+    if ((flags & 0x0800) != 0) cursor.skip(2); // remaining time
+    if ((flags & 0x1000) != 0) {
+      cursor.skip(2); // force on belt
+      power = cursor.i16();
+    }
+    return HealthBleSyncResult(
+      heartRate: heartRate,
+      speedKmh: speed,
+      distanceMeters: distance,
+      powerWatts: power,
+      energyKcal: _validEnergy(energy),
+      elapsedSeconds: elapsed,
+    );
+  }
+
+  static HealthBleSyncResult _decodeRower(Uint8List bytes) {
+    final cursor = _BleCursor(bytes);
+    final flags = cursor.u16();
+    double? cadence;
+    double? distance;
+    int? power;
+    int? energy;
+    int? heartRate;
+    int? elapsed;
+    if ((flags & 0x0001) == 0) {
+      cadence = cursor.u8() / 2.0;
+      cursor.skip(2); // stroke count
+    }
+    if ((flags & 0x0002) != 0) cursor.skip(1); // average stroke rate
+    if ((flags & 0x0004) != 0) distance = cursor.u24().toDouble();
+    if ((flags & 0x0008) != 0) cursor.skip(2); // instantaneous pace
+    if ((flags & 0x0010) != 0) cursor.skip(2); // average pace
+    if ((flags & 0x0020) != 0) power = cursor.i16();
+    if ((flags & 0x0040) != 0) cursor.skip(2); // average power
+    if ((flags & 0x0080) != 0) cursor.skip(2); // resistance
+    if ((flags & 0x0100) != 0) {
+      energy = cursor.u16();
+      cursor.skip(3);
+    }
+    if ((flags & 0x0200) != 0) heartRate = cursor.u8();
+    if ((flags & 0x0400) != 0) cursor.skip(1); // MET
+    if ((flags & 0x0800) != 0) elapsed = cursor.u16();
+    if ((flags & 0x1000) != 0) cursor.skip(2); // remaining time
+    return HealthBleSyncResult(
+      heartRate: heartRate,
+      cadenceRpm: cadence,
+      distanceMeters: distance,
+      powerWatts: power,
+      energyKcal: _validEnergy(energy),
+      elapsedSeconds: elapsed,
+    );
+  }
+
+  static HealthBleSyncResult _decodeRunning(Uint8List bytes) {
+    final cursor = _BleCursor(bytes);
+    final flags = cursor.u8();
+    final speed = cursor.u16() / 256.0 * 3.6;
+    final cadence = cursor.u8().toDouble();
+    if ((flags & 0x01) != 0) cursor.skip(2); // stride length
+    final distance = (flags & 0x02) != 0 ? cursor.u32() / 10.0 : null;
+    return HealthBleSyncResult(
+      speedKmh: speed,
+      cadenceRpm: cadence,
+      distanceMeters: distance,
+    );
+  }
+
+  static HealthBleSyncResult _decodeCyclingPower(Uint8List bytes) {
+    final cursor = _BleCursor(bytes);
+    cursor.skip(2); // flags
+    return HealthBleSyncResult(powerWatts: cursor.i16());
+  }
+
+  static HealthBleSyncResult _decodeContinuousSpo2(Uint8List bytes) {
+    if (bytes.length < 5) {
+      throw const FormatException('некорректный пакет SpO2');
+    }
+    final value = _sfloatToDouble(
+      ByteData.sublistView(bytes, 1, 3).getUint16(0, Endian.little),
+    ).round();
+    final heartRate = _sfloatToDouble(
+      ByteData.sublistView(bytes, 3, 5).getUint16(0, Endian.little),
+    ).round();
+    return HealthBleSyncResult(
+      spo2Percent: value.clamp(0, 100),
+      heartRate: heartRate > 0 ? heartRate : null,
+    );
+  }
+}
+
+class _BleCursor {
+  _BleCursor(this.bytes);
+
+  final Uint8List bytes;
+  int offset = 0;
+
+  void require(int count) {
+    if (offset + count > bytes.length) {
+      throw const FormatException('пакет короче заявленного');
+    }
+  }
+
+  void skip(int count) {
+    require(count);
+    offset += count;
+  }
+
+  int u8() {
+    require(1);
+    return bytes[offset++];
+  }
+
+  int u16() {
+    require(2);
+    final value = ByteData.sublistView(
+      bytes,
+      offset,
+      offset + 2,
+    ).getUint16(0, Endian.little);
+    offset += 2;
+    return value;
+  }
+
+  int i16() {
+    require(2);
+    final value = ByteData.sublistView(
+      bytes,
+      offset,
+      offset + 2,
+    ).getInt16(0, Endian.little);
+    offset += 2;
+    return value;
+  }
+
+  int u24() {
+    require(3);
+    final value =
+        bytes[offset] | (bytes[offset + 1] << 8) | (bytes[offset + 2] << 16);
+    offset += 3;
+    return value;
+  }
+
+  int u32() {
+    require(4);
+    final value = ByteData.sublistView(
+      bytes,
+      offset,
+      offset + 4,
+    ).getUint32(0, Endian.little);
+    offset += 4;
+    return value;
+  }
+}
+
+String _shortUuid(String uuid) {
+  final normalized = uuid.toLowerCase().replaceAll('-', '');
+  final match = RegExp(r'(2[0-9a-f]{3})').firstMatch(normalized);
+  return match?.group(1) ?? normalized;
+}
+
+int? _validEnergy(int? value) =>
+    value == null || value == 0xffff ? null : value;
 
 Future<void> _writeBleCommand(
   String deviceId,
@@ -631,7 +1125,7 @@ double? _parseWeightKg(Uint8List bytes) {
 }
 
 double? _parseGlucoseMmolL(Uint8List bytes) {
-  if (bytes.length < 14) {
+  if (bytes.length < 13) {
     return null;
   }
   final flags = bytes[0];
@@ -639,12 +1133,22 @@ double? _parseGlucoseMmolL(Uint8List bytes) {
   if (!hasConcentration) {
     return null;
   }
-  final raw = ByteData.sublistView(bytes, 12, 14).getUint16(0, Endian.little);
-  final kgPerLiter = _sfloatToDouble(raw);
-  if (kgPerLiter <= 0) {
+  final hasTimeOffset = (flags & 0x01) != 0;
+  final concentrationOffset = hasTimeOffset ? 12 : 10;
+  if (bytes.length < concentrationOffset + 3) {
     return null;
   }
-  return kgPerLiter * 100000;
+  final raw = ByteData.sublistView(
+    bytes,
+    concentrationOffset,
+    concentrationOffset + 2,
+  ).getUint16(0, Endian.little);
+  final concentration = _sfloatToDouble(raw);
+  if (concentration <= 0) {
+    return null;
+  }
+  final molPerLiter = (flags & 0x04) != 0;
+  return molPerLiter ? concentration * 1000 : concentration * 100000 / 18.01559;
 }
 
 int? _parseSpo2(Uint8List bytes) {
@@ -834,23 +1338,35 @@ List<String> _featuresForServices(List<String> services) {
   if (normalized.any((item) => item.contains('1808'))) {
     result.add('глюкоза');
   }
+  if (normalized.any((item) => item.contains('181f'))) {
+    result.add('непрерывный мониторинг глюкозы');
+  }
   if (normalized.any((item) => item.contains('1809'))) {
     result.add('температура тела');
   }
   if (normalized.any((item) => item.contains('1810'))) {
     result.add('давление');
   }
-  if (normalized.any((item) => item.contains('1819'))) {
-    result.add('здоровье окружения');
+  if (normalized.any((item) => item.contains('1818'))) {
+    result.add('веломощность');
+  }
+  if (normalized.any((item) => item.contains('181a'))) {
+    result.add('датчики окружающей среды');
+  }
+  if (normalized.any((item) => item.contains('181b'))) {
+    result.add('состав тела');
   }
   if (normalized.any((item) => item.contains('181d'))) {
     result.add('вес');
   }
-  if (normalized.any((item) => item.contains('181e'))) {
-    result.add('велотренажёр');
+  if (normalized.any((item) => item.contains('1826'))) {
+    result.add('фитнес-тренажёр FTMS');
   }
   if (normalized.any((item) => item.contains('1822'))) {
     result.add('пульсоксиметрия');
+  }
+  if (normalized.any((item) => item.contains('183a'))) {
+    result.add('инсулиновая помпа через стандарт IDS');
   }
   if (result.isEmpty && services.isNotEmpty) {
     result.add('пользовательские BLE-сервисы');

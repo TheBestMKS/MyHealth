@@ -38,6 +38,8 @@ migrate_working_dir/
 /tooling/flutter/
 /tooling/flutter_clean/
 /tooling/geonames_cache/
+/tooling/nllb_ct2_int8/
+/tooling/translation_models/
 /tooling/__pycache__/
 /tooling/.venv/
 

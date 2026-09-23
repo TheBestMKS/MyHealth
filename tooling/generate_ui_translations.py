@@ -42,7 +42,7 @@ TRANSLATION_OVERRIDES = {
     "kk": {
         "Факты из приложения:": "Қолданбадағы фактілер:",
         "Не удалось защитить исходный анализ:": "Бастапқы талдауды қорғау мүмкін болмады:",
-        "Версия: 1.6.0+7": "Нұсқа: 1.6.0+7",
+        "Версия: 1.7.0+8": "Нұсқа: 1.7.0+8",
     },
     "de": {
         "Факты из приложения:": "Fakten aus der App:",
@@ -108,6 +108,14 @@ def project_sources(root: Path) -> list[Path]:
             "health_platform_service.dart",
             "ble_service.dart",
             "offline_map_service.dart",
+            "activity_context_service.dart",
+            "assistant_tools.dart",
+            "health_plan_engine.dart",
+            "local_llm_service.dart",
+            "medical_knowledge.dart",
+            "model.dart",
+            "prescription_parser.dart",
+            "speech_input_service.dart",
         )
     )
     return files

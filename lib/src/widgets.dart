@@ -69,6 +69,7 @@ class LocalizedTextField extends StatelessWidget {
     this.minLines,
     this.obscureText = false,
     this.readOnly = false,
+    this.enabled,
     this.autofocus = false,
     this.onChanged,
     this.onSubmitted,
@@ -83,6 +84,7 @@ class LocalizedTextField extends StatelessWidget {
   final int? minLines;
   final bool obscureText;
   final bool readOnly;
+  final bool? enabled;
   final bool autofocus;
   final ValueChanged<String>? onChanged;
   final ValueChanged<String>? onSubmitted;
@@ -99,6 +101,7 @@ class LocalizedTextField extends StatelessWidget {
       minLines: minLines,
       obscureText: obscureText,
       readOnly: readOnly,
+      enabled: enabled,
       autofocus: autofocus,
       onChanged: onChanged,
       onSubmitted: onSubmitted,

@@ -59,6 +59,10 @@ class _GeoWorkoutPanelState extends State<GeoWorkoutPanel> {
               pack.country == widget.state.profile.country,
         )
         .firstOrNull;
+    final canShowMap =
+        widget.state.settings.openStreetMapEnabled &&
+        pathPoints.isNotEmpty &&
+        (!widget.state.settings.offlineOnly || offlinePack != null);
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(14),
@@ -153,8 +157,7 @@ class _GeoWorkoutPanelState extends State<GeoWorkoutPanel> {
                 style: TextStyle(color: Theme.of(context).colorScheme.error),
               ),
             ],
-            if (widget.state.settings.openStreetMapEnabled &&
-                pathPoints.isNotEmpty) ...[
+            if (canShowMap) ...[
               const SizedBox(height: 12),
               SizedBox(
                 height: 260,
@@ -203,6 +206,16 @@ class _GeoWorkoutPanelState extends State<GeoWorkoutPanel> {
                 ),
               ),
             ],
+            if (widget.state.settings.openStreetMapEnabled &&
+                pathPoints.isNotEmpty &&
+                widget.state.settings.offlineOnly &&
+                offlinePack == null)
+              const InfoTile(
+                icon: Icons.map_outlined,
+                title: 'Карта маршрута недоступна офлайн',
+                subtitle:
+                    'Загрузите пакет города, региона или страны либо отключите режим «Полностью офлайн». Маршрут и дистанция продолжают записываться.',
+              ),
             const SizedBox(height: 12),
             if (offlinePack != null)
               LocalizedText(

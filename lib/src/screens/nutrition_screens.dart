@@ -211,7 +211,12 @@ class _RecipesScreenState extends State<RecipesScreen> {
                         '${item.titleFor(locale)} · ${item.calories} ${AppText.get(locale, 'kcalShort')}',
                     subtitle:
                         '${item.kind} · полезность ${item.healthLevel}/10 · Б ${item.protein} / Ж ${item.fat} / У ${item.carbs}, сахар ${item.sugar}\n${item.composition}',
-                    onTap: () => _showFoodCatalogDetails(context, item, locale),
+                    onTap: () => _showFoodCatalogDetails(
+                      context,
+                      item,
+                      locale,
+                      offlineOnly: widget.state.settings.offlineOnly,
+                    ),
                     trailing: LocalizedIconButton(
                       tooltip: 'Добавить в дневник',
                       onPressed: () => _addCatalogFoodToDiary(
@@ -285,9 +290,9 @@ class FoodPhotoScreen extends StatelessWidget {
       ),
       children: [
         const MedicalDisclaimerBanner(),
-        ...state.confirmationQueue.map(
-          (item) => _confirmationTile(item, state, onChanged),
-        ),
+        ...state.confirmationQueue
+            .where((item) => !_isPrescriptionCandidate(item))
+            .map((item) => _confirmationTile(item, state, onChanged)),
       ],
     );
   }

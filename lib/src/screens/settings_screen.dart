@@ -529,7 +529,7 @@ class SettingsScreen extends StatelessWidget {
           icon: Icons.info_outline,
           title: 'О программе',
           subtitle:
-              'Версия 1.6.0+7 · создатель: Редин Максим Юрьевич · info@thebestmks.ru',
+              'Версия 1.7.0+8 · создатель: Редин Максим Юрьевич · info@thebestmks.ru',
           onTap: () => _showAboutProgram(context),
         ),
         Card(
@@ -903,7 +903,10 @@ Future<void> _downloadOfflineMapPack(
             child: const Text('Закрыть'),
           ),
           FilledButton.icon(
-            onPressed: running || !state.settings.offlineMapDownloadEnabled
+            onPressed:
+                running ||
+                    !state.settings.offlineMapDownloadEnabled ||
+                    state.settings.offlineOnly
                 ? null
                 : () async {
                     setDialogState(() {

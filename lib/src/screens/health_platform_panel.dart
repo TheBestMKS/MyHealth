@@ -122,6 +122,9 @@ class _HealthPlatformPanelState extends State<HealthPlatformPanel> {
           activeCalories: sample.activeCalories > 0
               ? sample.activeCalories
               : current.activeCalories,
+          workoutMinutes: sample.workoutMinutes > 0
+              ? sample.workoutMinutes
+              : current.workoutMinutes,
           weightKg: sample.weightKg ?? current.weightKg,
         );
         next = next.updateMetricsFor(sample.date, updated);
@@ -152,11 +155,15 @@ class _HealthPlatformPanelState extends State<HealthPlatformPanel> {
         features: const [
           'шаги',
           'активные калории',
+          'тренировки',
           'вес',
+          'состав тела',
           'сон',
           'пульс',
+          'вариабельность пульса',
           'давление',
           'SpO2',
+          'глюкоза',
         ],
       );
       final devices = [
@@ -189,6 +196,8 @@ LabResult _healthMeasurementToLab(HealthMeasurement item) {
     'Давление диастолическое' => '60-89',
     'Насыщение крови кислородом' => '95-100',
     'Температура тела' => '35.5-37.5',
+    'Глюкоза крови' => '3.9-10.0',
+    'Индекс массы тела' => '18.5-24.9',
     _ => '',
   };
   return LabResult(

@@ -138,7 +138,7 @@ Future<void> _showAboutProgram(BuildContext context) async {
         children: [
           Text('Моё здоровье'),
           SizedBox(height: 8),
-          Text('Версия: 1.6.0+7'),
+          Text('Версия: 1.7.0+8'),
           Text('Создатель: Редин Максим Юрьевич'),
           Text('Контактная информация: info@thebestmks.ru'),
           SizedBox(height: 12),
@@ -1192,6 +1192,141 @@ Future<void> _editActivityReminders(
           ),
         ],
       ),
+    ),
+  );
+}
+
+Future<void> _editActivityPlaces(
+  BuildContext context,
+  HealthAppState state,
+  HealthStateChanged onChanged,
+) async {
+  var homeLatitude = state.profile.homeLatitude;
+  var homeLongitude = state.profile.homeLongitude;
+  var workLatitude = state.profile.workLatitude;
+  var workLongitude = state.profile.workLongitude;
+  var radius = state.profile.placeRadiusMeters.toDouble();
+  var loading = false;
+  var status = state.settings.geolocationEnabled
+      ? 'Координаты используются только на устройстве для определения контекста.'
+      : 'Геолокация отключена в настройках.';
+  const service = ActivityContextService();
+
+  await showDialog<void>(
+    context: context,
+    builder: (dialogContext) => StatefulBuilder(
+      builder: (context, setDialogState) {
+        Future<void> capture({required bool home}) async {
+          if (!state.settings.geolocationEnabled) {
+            setDialogState(
+              () => status = 'Сначала включите геолокацию в настройках.',
+            );
+            return;
+          }
+          setDialogState(() {
+            loading = true;
+            status = 'Получаем текущую позицию...';
+          });
+          final position = await service.currentPosition();
+          if (!dialogContext.mounted) return;
+          setDialogState(() {
+            loading = false;
+            if (position == null) {
+              status =
+                  'Позиция не получена. Проверьте разрешение и системную геолокацию.';
+              return;
+            }
+            if (home) {
+              homeLatitude = position.latitude;
+              homeLongitude = position.longitude;
+              status = 'Текущая точка сохранена как дом после подтверждения.';
+            } else {
+              workLatitude = position.latitude;
+              workLongitude = position.longitude;
+              status =
+                  'Текущая точка сохранена как место работы после подтверждения.';
+            }
+          });
+        }
+
+        String coordinate(double? latitude, double? longitude) =>
+            latitude == null || longitude == null
+            ? 'не задано'
+            : '${latitude.toStringAsFixed(5)}, ${longitude.toStringAsFixed(5)}';
+
+        return AlertDialog(
+          title: const Text('Дом и работа'),
+          content: SizedBox(
+            width: 560,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                InfoTile(
+                  icon: Icons.home_outlined,
+                  title: 'Дом',
+                  subtitle: coordinate(homeLatitude, homeLongitude),
+                  trailing: LocalizedIconButton.filledTonal(
+                    tooltip: 'Запомнить текущую точку как дом',
+                    onPressed: loading ? null : () => capture(home: true),
+                    icon: const Icon(Icons.my_location),
+                  ),
+                ),
+                InfoTile(
+                  icon: Icons.work_outline,
+                  title: 'Работа',
+                  subtitle: coordinate(workLatitude, workLongitude),
+                  trailing: LocalizedIconButton.filledTonal(
+                    tooltip: 'Запомнить текущую точку как работу',
+                    onPressed: loading ? null : () => capture(home: false),
+                    icon: const Icon(Icons.my_location),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                Text('Радиус места: ${radius.round()} м'),
+                Slider(
+                  value: radius,
+                  min: 50,
+                  max: 1000,
+                  divisions: 19,
+                  label: '${radius.round()} м',
+                  onChanged: loading
+                      ? null
+                      : (value) => setDialogState(() => radius = value),
+                ),
+                if (loading) const LinearProgressIndicator(),
+                const SizedBox(height: 8),
+                Text(status, style: Theme.of(context).textTheme.bodySmall),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(dialogContext),
+              child: const Text('Отмена'),
+            ),
+            FilledButton(
+              onPressed: loading
+                  ? null
+                  : () {
+                      onChanged(
+                        state.copyWith(
+                          profile: state.profile.copyWith(
+                            homeLatitude: homeLatitude,
+                            homeLongitude: homeLongitude,
+                            workLatitude: workLatitude,
+                            workLongitude: workLongitude,
+                            placeRadiusMeters: radius.round(),
+                          ),
+                        ),
+                      );
+                      Navigator.pop(dialogContext);
+                    },
+              child: const Text('Сохранить'),
+            ),
+          ],
+        );
+      },
     ),
   );
 }
