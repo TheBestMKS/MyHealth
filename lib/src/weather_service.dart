@@ -129,7 +129,7 @@ class WeatherService {
     final client = HttpClient()..connectionTimeout = const Duration(seconds: 8);
     try {
       final request = await client.getUrl(uri);
-      request.headers.set(HttpHeaders.userAgentHeader, 'MyHealth/1.3');
+      request.headers.set(HttpHeaders.userAgentHeader, 'MyHealth/1.8');
       final response = await request.close().timeout(
         const Duration(seconds: 10),
       );

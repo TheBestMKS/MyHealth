@@ -30,6 +30,12 @@ class FoodCatalogItem {
     required this.doctorReview,
     required this.sourceUrl,
     required this.dataLicense,
+    this.categoryRu = '',
+    this.kindRu = '',
+    this.compositionRu = '',
+    this.ingredientsRu = '',
+    this.preparationRu = '',
+    this.historyRu = '',
   });
 
   final String id;
@@ -58,8 +64,32 @@ class FoodCatalogItem {
   final String doctorReview;
   final String sourceUrl;
   final String dataLicense;
+  final String categoryRu;
+  final String kindRu;
+  final String compositionRu;
+  final String ingredientsRu;
+  final String preparationRu;
+  final String historyRu;
 
   String titleFor(String locale) => locale.startsWith('ru') ? titleRu : titleEn;
+  String categoryFor(String locale) =>
+      locale.startsWith('ru') && categoryRu.isNotEmpty ? categoryRu : category;
+  String kindFor(String locale) =>
+      locale.startsWith('ru') && kindRu.isNotEmpty ? kindRu : kind;
+  String compositionFor(String locale) =>
+      locale.startsWith('ru') && compositionRu.isNotEmpty
+      ? compositionRu
+      : composition;
+  String ingredientsFor(String locale) =>
+      locale.startsWith('ru') && ingredientsRu.isNotEmpty
+      ? ingredientsRu
+      : ingredients;
+  String preparationFor(String locale) =>
+      locale.startsWith('ru') && preparationRu.isNotEmpty
+      ? preparationRu
+      : preparation;
+  String historyFor(String locale) =>
+      locale.startsWith('ru') && historyRu.isNotEmpty ? historyRu : history;
 }
 
 class WorkoutCatalogItem {
@@ -83,6 +113,13 @@ class WorkoutCatalogItem {
     required this.doctorReview,
     required this.sourceUrl,
     required this.dataLicense,
+    this.focusRu = '',
+    this.equipmentRu = '',
+    this.descriptionRu = '',
+    this.requirementsRu = '',
+    this.stepsRu = '',
+    this.warningsRu = '',
+    this.historyRu = '',
   });
 
   final String id;
@@ -104,8 +141,35 @@ class WorkoutCatalogItem {
   final String doctorReview;
   final String sourceUrl;
   final String dataLicense;
+  final String focusRu;
+  final String equipmentRu;
+  final String descriptionRu;
+  final String requirementsRu;
+  final String stepsRu;
+  final String warningsRu;
+  final String historyRu;
 
   String titleFor(String locale) => locale.startsWith('ru') ? titleRu : titleEn;
+  String focusFor(String locale) =>
+      locale.startsWith('ru') && focusRu.isNotEmpty ? focusRu : focus;
+  String equipmentFor(String locale) =>
+      locale.startsWith('ru') && equipmentRu.isNotEmpty
+      ? equipmentRu
+      : equipment;
+  String descriptionFor(String locale) =>
+      locale.startsWith('ru') && descriptionRu.isNotEmpty
+      ? descriptionRu
+      : description;
+  String requirementsFor(String locale) =>
+      locale.startsWith('ru') && requirementsRu.isNotEmpty
+      ? requirementsRu
+      : requirements;
+  String stepsFor(String locale) =>
+      locale.startsWith('ru') && stepsRu.isNotEmpty ? stepsRu : steps;
+  String warningsFor(String locale) =>
+      locale.startsWith('ru') && warningsRu.isNotEmpty ? warningsRu : warnings;
+  String historyFor(String locale) =>
+      locale.startsWith('ru') && historyRu.isNotEmpty ? historyRu : history;
 }
 
 class ExpandedCatalogRepository {
@@ -153,6 +217,12 @@ class ExpandedCatalogRepository {
             doctorReview: row['doctor_review'] ?? '',
             sourceUrl: row['source_url'] ?? '',
             dataLicense: row['data_license'] ?? '',
+            categoryRu: row['category_ru'] ?? '',
+            kindRu: row['kind_ru'] ?? '',
+            compositionRu: row['composition_ru'] ?? '',
+            ingredientsRu: row['ingredients_ru'] ?? '',
+            preparationRu: row['preparation_ru'] ?? '',
+            historyRu: row['history_ru'] ?? '',
           );
         })
         .toList(growable: false);
@@ -182,6 +252,13 @@ class ExpandedCatalogRepository {
             doctorReview: row['doctor_review'] ?? '',
             sourceUrl: row['source_url'] ?? '',
             dataLicense: row['data_license'] ?? '',
+            focusRu: row['focus_ru'] ?? '',
+            equipmentRu: row['equipment_ru'] ?? '',
+            descriptionRu: row['description_ru'] ?? '',
+            requirementsRu: row['requirements_ru'] ?? '',
+            stepsRu: row['steps_ru'] ?? '',
+            warningsRu: row['warnings_ru'] ?? '',
+            historyRu: row['history_ru'] ?? '',
           );
         })
         .toList(growable: false);

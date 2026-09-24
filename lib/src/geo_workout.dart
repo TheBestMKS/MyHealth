@@ -4,8 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:url_launcher/url_launcher.dart';
 
+import 'error_log_service.dart';
 import 'model.dart';
+import 'offline_vector_map.dart';
 import 'unit_format.dart';
 import 'widgets.dart';
 
@@ -169,15 +172,18 @@ class _GeoWorkoutPanelState extends State<GeoWorkoutPanel> {
                       initialZoom: 15,
                     ),
                     children: [
-                      TileLayer(
-                        urlTemplate: offlinePack == null
-                            ? 'https://tile.openstreetmap.org/{z}/{x}/{y}.png'
-                            : '${offlinePack.storagePath}/{z}/{x}/{y}.png',
-                        userAgentPackageName: 'ru.thebestmks.my_health',
-                        tileProvider: offlinePack == null
-                            ? null
-                            : FileTileProvider(),
-                      ),
+                      if (offlinePack?.format == 'mvt')
+                        OfflineVectorMapLayer(pack: offlinePack!)
+                      else
+                        TileLayer(
+                          urlTemplate: offlinePack == null
+                              ? 'https://tile.openstreetmap.org/{z}/{x}/{y}.png'
+                              : '${offlinePack.storagePath}/{z}/{x}/{y}.png',
+                          userAgentPackageName: 'ru.thebestmks.my_health',
+                          tileProvider: offlinePack == null
+                              ? null
+                              : FileTileProvider(),
+                        ),
                       PolylineLayer(
                         polylines: [
                           Polyline(
@@ -199,6 +205,25 @@ class _GeoWorkoutPanelState extends State<GeoWorkoutPanel> {
                               size: 36,
                             ),
                           ),
+                        ],
+                      ),
+                      RichAttributionWidget(
+                        attributions: [
+                          TextSourceAttribution(
+                            'OpenStreetMap',
+                            onTap: () => launchUrl(
+                              Uri.parse(
+                                'https://www.openstreetmap.org/copyright',
+                              ),
+                            ),
+                          ),
+                          if (offlinePack?.format == 'mvt')
+                            TextSourceAttribution(
+                              'Protomaps',
+                              onTap: () => launchUrl(
+                                Uri.parse('https://protomaps.com/'),
+                              ),
+                            ),
                         ],
                       ),
                     ],
@@ -364,6 +389,13 @@ class _GeoWorkoutPanelState extends State<GeoWorkoutPanel> {
   }
 
   void _handleLocationError(Object error) {
+    unawaited(
+      ErrorLogService.instance.recordError(
+        error,
+        StackTrace.current,
+        source: 'Workout geolocation stream',
+      ),
+    );
     setState(() {
       _status = 'ошибка геолокации';
       _error = '$error';

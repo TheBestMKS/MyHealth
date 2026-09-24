@@ -63,7 +63,7 @@ def translate_locale(
     )
     locale_cache = cache.setdefault(locale, {})
     missing = [phrase for phrase in phrases if not locale_cache.get(phrase, "").strip()]
-    batch_size = 24
+    batch_size = 64
     for offset in range(0, len(missing), batch_size):
         batch = missing[offset : offset + batch_size]
         sources = [

@@ -815,50 +815,6 @@ HealthAppState _deleteMedicationIntakeFromState(
   );
 }
 
-HealthAppState _toggleMedicationIntakeToday(
-  HealthAppState state,
-  Medication medication,
-  bool? value,
-) {
-  final date = state.today.date;
-  final nextIntakes = [...state.medicationIntakes];
-  if (value == true) {
-    if (!_medicationTakenInList(medication, nextIntakes, date)) {
-      nextIntakes.insert(
-        0,
-        MedicationIntake(
-          id: newId(),
-          medicationId: medication.id,
-          medicationName: medication.name,
-          dose: medication.dose,
-          date: date,
-          time: '',
-          status: 'принято',
-          notes: 'Отмечено из карточки препарата.',
-        ),
-      );
-    }
-  } else {
-    nextIntakes.removeWhere(
-      (item) =>
-          item.date == date &&
-          (item.medicationId == medication.id ||
-              item.medicationName == medication.name),
-    );
-  }
-
-  return state.copyWith(
-    medicationIntakes: nextIntakes,
-    today: state.today.copyWith(
-      medicationTaken: _allMedicationTakenOnDate(
-        state.medications,
-        nextIntakes,
-        date,
-      ),
-    ),
-  );
-}
-
 HealthAppState _setMedicationIntakeStatusToday(
   HealthAppState state,
   Medication medication,

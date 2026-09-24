@@ -22,7 +22,10 @@ class SettingsScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Язык', style: Theme.of(context).textTheme.titleMedium),
+                LocalizedText(
+                  'Язык',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
                 const SizedBox(height: 8),
                 LocalizedDropdownButtonFormField<String>(
                   initialValue: state.localeCode,
@@ -45,13 +48,14 @@ class SettingsScreen extends StatelessWidget {
             ),
           ),
         ),
+        _CapabilityCenter(state: state),
         Card(
           child: Padding(
             padding: const EdgeInsets.all(14),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                LocalizedText(
                   'Языки содержимого',
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
@@ -94,7 +98,7 @@ class SettingsScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                LocalizedText(
                   'Единицы и форматы',
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
@@ -189,7 +193,7 @@ class SettingsScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                LocalizedText(
                   'Уведомления',
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
@@ -247,6 +251,33 @@ class SettingsScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+                _switchTile(
+                  title: 'Фоновый анализ',
+                  subtitle:
+                      'Периодически проверять локальные напоминания и расписание без отправки данных в сеть',
+                  value: state.settings.backgroundAnalysisEnabled,
+                  onChanged: (value) => onChanged(
+                    state.copyWith(
+                      settings: state.settings.copyWith(
+                        backgroundAnalysisEnabled: value,
+                      ),
+                    ),
+                  ),
+                ),
+                if (Platform.isWindows || Platform.isLinux || Platform.isMacOS)
+                  _switchTile(
+                    title: 'Автозапуск вместе с системой',
+                    subtitle:
+                        'Запускать приложение после входа в систему для локального фонового анализа',
+                    value: state.settings.launchAtStartup,
+                    onChanged: (value) => onChanged(
+                      state.copyWith(
+                        settings: state.settings.copyWith(
+                          launchAtStartup: value,
+                        ),
+                      ),
+                    ),
+                  ),
                 FutureBuilder<int>(
                   future: HealthNotificationService.instance.pendingCount(),
                   builder: (context, snapshot) => InfoTile(
@@ -273,7 +304,7 @@ class SettingsScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                LocalizedText(
                   'Внешний вид',
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
@@ -302,6 +333,17 @@ class SettingsScreen extends StatelessWidget {
           onChanged: (value) => onChanged(
             state.copyWith(
               settings: state.settings.copyWith(advancedMode: value),
+            ),
+          ),
+        ),
+        _switchTile(
+          title: 'Компактный интерфейс',
+          subtitle:
+              'Уменьшает отступы и группирует действия, сохраняя удобные области нажатия',
+          value: state.settings.compactMode,
+          onChanged: (value) => onChanged(
+            state.copyWith(
+              settings: state.settings.copyWith(compactMode: value),
             ),
           ),
         ),
@@ -379,7 +421,9 @@ class SettingsScreen extends StatelessWidget {
           onChanged: (value) async {
             if (value && !state.settings.pinEnabled) {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Сначала установите PIN-код.')),
+                const SnackBar(
+                  content: LocalizedText('Сначала установите PIN-код.'),
+                ),
               );
               return;
             }
@@ -388,7 +432,7 @@ class SettingsScreen extends StatelessWidget {
               if (context.mounted) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
-                    content: Text(
+                    content: LocalizedText(
                       'Системная биометрия недоступна или отменена.',
                     ),
                   ),
@@ -427,6 +471,17 @@ class SettingsScreen extends StatelessWidget {
           ),
         ),
         _switchTile(
+          title: 'Подтверждать выход',
+          subtitle:
+              'Спрашивать перед закрытием; сворачивание приложения остаётся без подтверждения',
+          value: state.settings.confirmBeforeExit,
+          onChanged: (value) => onChanged(
+            state.copyWith(
+              settings: state.settings.copyWith(confirmBeforeExit: value),
+            ),
+          ),
+        ),
+        _switchTile(
           title: 'Геолокация для тренировок',
           subtitle:
               'Бег, ходьба и велосипед считают маршрут, скорость и дистанцию',
@@ -449,7 +504,8 @@ class SettingsScreen extends StatelessWidget {
         ),
         _switchTile(
           title: 'Загрузка офлайн-карт',
-          subtitle: 'Разрешает скачивание тайлов города, региона или страны',
+          subtitle:
+              'Разрешает скачивание векторного пакета города, региона или страны',
           value: state.settings.offlineMapDownloadEnabled,
           onChanged: (value) => onChanged(
             state.copyWith(
@@ -474,20 +530,32 @@ class SettingsScreen extends StatelessWidget {
                 icon: Icons.map,
                 title: pack.title,
                 subtitle:
-                    '${pack.scope} · zoom ${pack.minZoom}-${pack.maxZoom} · ${pack.tileCount} тайлов\n${pack.storagePath}',
+                    '${pack.scope} · ${pack.format.toUpperCase()} · zoom ${pack.minZoom}-${pack.maxZoom} · ${pack.tileCount} тайлов\n${pack.storagePath}',
                 onLongPress: () => _confirmDelete(
                   context,
                   title: pack.title,
-                  onDelete: () => onChanged(
-                    state.copyWith(
-                      offlineMapPacks: state.offlineMapPacks
-                          .where((item) => item.id != pack.id)
-                          .toList(),
-                    ),
-                  ),
+                  onDelete: () {
+                    unawaited(OfflineMapService().deletePack(pack));
+                    onChanged(
+                      state.copyWith(
+                        offlineMapPacks: state.offlineMapPacks
+                            .where((item) => item.id != pack.id)
+                            .toList(),
+                      ),
+                    );
+                  },
                 ),
               ),
             ),
+        const SectionTitle('Диагностика'),
+        InfoTile(
+          icon: Icons.article_outlined,
+          title: 'Журнал ошибок',
+          subtitle:
+              'Ошибки Flutter, фоновых задач, уведомлений и запуска сохраняются только на этом устройстве.',
+          trailing: const Icon(Icons.chevron_right),
+          onTap: () => showErrorLogDialog(context),
+        ),
         const SectionTitle('Резервные копии и перенос данных'),
         InfoTile(
           icon: Icons.backup_outlined,
@@ -529,7 +597,7 @@ class SettingsScreen extends StatelessWidget {
           icon: Icons.info_outline,
           title: 'О программе',
           subtitle:
-              'Версия 1.7.0+8 · создатель: Редин Максим Юрьевич · info@thebestmks.ru',
+              'Версия 1.8.1+10 · создатель: Редин Максим Юрьевич · info@thebestmks.ru',
           onTap: () => _showAboutProgram(context),
         ),
         Card(
@@ -538,7 +606,7 @@ class SettingsScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                LocalizedText(
                   'Масштаб интерфейса',
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
@@ -555,7 +623,7 @@ class SettingsScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 12),
-                Text(
+                LocalizedText(
                   'Строгость мотивации',
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
@@ -589,18 +657,324 @@ class SettingsScreen extends StatelessWidget {
   }
 }
 
+class _CapabilityCenter extends StatefulWidget {
+  const _CapabilityCenter({required this.state});
+
+  final HealthAppState state;
+
+  @override
+  State<_CapabilityCenter> createState() => _CapabilityCenterState();
+}
+
+class _CapabilityCenterState extends State<_CapabilityCenter> {
+  late Future<_CapabilitySnapshot> _future = _load();
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                const Icon(Icons.admin_panel_settings_outlined),
+                const SizedBox(width: 9),
+                Expanded(
+                  child: LocalizedText(
+                    'Возможности и разрешения',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                ),
+                LocalizedIconButton(
+                  tooltip: 'Проверить снова',
+                  onPressed: () => setState(() => _future = _load()),
+                  icon: const Icon(Icons.refresh),
+                ),
+              ],
+            ),
+            FutureBuilder<_CapabilitySnapshot>(
+              future: _future,
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return const Padding(
+                    padding: EdgeInsets.all(16),
+                    child: LinearProgressIndicator(),
+                  );
+                }
+                final data = snapshot.data!;
+                return Column(
+                  children: [
+                    for (final permission in data.permissions)
+                      ListTile(
+                        dense: true,
+                        contentPadding: EdgeInsets.zero,
+                        leading: Icon(permission.icon),
+                        title: LocalizedText(permission.title),
+                        subtitle: LocalizedText(permission.statusText),
+                        trailing: permission.permission == null
+                            ? const Icon(Icons.check_circle_outline)
+                            : LocalizedIconButton(
+                                tooltip: 'Запросить разрешение повторно',
+                                onPressed: () =>
+                                    _request(permission.permission!),
+                                icon: const Icon(Icons.refresh),
+                              ),
+                      ),
+                    const Divider(),
+                    ListTile(
+                      dense: true,
+                      contentPadding: EdgeInsets.zero,
+                      leading: const Icon(Icons.memory_outlined),
+                      title: const LocalizedText('Локальная языковая модель'),
+                      subtitle: LocalizedText(
+                        data.model.isInstalled
+                            ? '${data.model.name} · ${data.model.sizeLabel} · ${data.model.isMultimodal ? 'vision включён' : 'только текст'} · ${data.model.isBundled ? 'Full' : 'импорт/загрузка'}'
+                            : 'Не установлена; доступен быстрый режим и установка в разделе «Помощник».',
+                      ),
+                      trailing: Icon(
+                        data.model.isInstalled
+                            ? Icons.check_circle_outline
+                            : Icons.info_outline,
+                      ),
+                    ),
+                    ListTile(
+                      dense: true,
+                      contentPadding: EdgeInsets.zero,
+                      leading: const Icon(Icons.health_and_safety_outlined),
+                      title: LocalizedText(data.health.provider),
+                      subtitle: LocalizedText(data.health.message),
+                      trailing: data.health.supported
+                          ? const Icon(Icons.check_circle_outline)
+                          : const Icon(Icons.info_outline),
+                    ),
+                    ListTile(
+                      dense: true,
+                      contentPadding: EdgeInsets.zero,
+                      leading: const Icon(Icons.autorenew_outlined),
+                      title: const LocalizedText('Фоновая работа'),
+                      subtitle: LocalizedText(
+                        '${data.runtime.backgroundScheduled ? 'задача запланирована' : 'задача не запланирована'}'
+                        '${data.runtime.lastBackgroundRun == null ? '' : ' · последняя проверка ${_compactDateTime(data.runtime.lastBackgroundRun!.toIso8601String())}'}'
+                        '${data.runtime.lastBackgroundResult.isEmpty ? '' : '\n${data.runtime.lastBackgroundResult}'}',
+                      ),
+                      trailing: Icon(
+                        data.runtime.backgroundScheduled
+                            ? Icons.check_circle_outline
+                            : Icons.pause_circle_outline,
+                      ),
+                    ),
+                    if (AppRuntimeService.instance.supportsDesktopStartup)
+                      ListTile(
+                        dense: true,
+                        contentPadding: EdgeInsets.zero,
+                        leading: const Icon(Icons.power_settings_new_outlined),
+                        title: const LocalizedText('Автозапуск'),
+                        subtitle: LocalizedText(
+                          data.runtime.launchAtStartupEnabled
+                              ? 'Включён в системном профиле пользователя'
+                              : 'Выключен',
+                        ),
+                      ),
+                    ListTile(
+                      dense: true,
+                      contentPadding: EdgeInsets.zero,
+                      leading: const Icon(Icons.notifications_outlined),
+                      title: const LocalizedText('Системные уведомления'),
+                      subtitle: LocalizedText(
+                        'Запланировано: ${data.pendingNotifications}',
+                      ),
+                      trailing: LocalizedIconButton(
+                        tooltip: 'Проверить уведомление',
+                        onPressed: () async {
+                          await HealthNotificationService.instance
+                              .requestPermissions();
+                          await HealthNotificationService.instance.showTest();
+                          if (mounted) setState(() => _future = _load());
+                        },
+                        icon: const Icon(Icons.notification_add_outlined),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: TextButton.icon(
+                        onPressed: openAppSettings,
+                        icon: const Icon(Icons.settings_outlined),
+                        label: const LocalizedText(
+                          'Системные настройки доступа',
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future<void> _request(Permission permission) async {
+    await permission.request();
+    if (mounted) setState(() => _future = _load());
+  }
+
+  Future<_CapabilitySnapshot> _load() async {
+    final permissions = <_PermissionCapability>[];
+    if (Platform.isAndroid || Platform.isIOS) {
+      final definitions = <(String, IconData, Permission)>[
+        ('Камера', Icons.photo_camera_outlined, Permission.camera),
+        (
+          'Микрофон и голосовой ввод',
+          Icons.mic_none_outlined,
+          Permission.microphone,
+        ),
+        (
+          'Геолокация',
+          Icons.location_on_outlined,
+          Permission.locationWhenInUse,
+        ),
+        ('Уведомления', Icons.notifications_outlined, Permission.notification),
+        (
+          'Физическая активность',
+          Icons.directions_walk_outlined,
+          Permission.activityRecognition,
+        ),
+        if (Platform.isAndroid)
+          (
+            'Bluetooth: поиск устройств',
+            Icons.bluetooth_outlined,
+            Permission.bluetoothScan,
+          ),
+        if (Platform.isAndroid)
+          (
+            'Bluetooth: подключение',
+            Icons.bluetooth_connected_outlined,
+            Permission.bluetoothConnect,
+          ),
+        if (Platform.isAndroid)
+          (
+            'Точные будильники',
+            Icons.alarm_outlined,
+            Permission.scheduleExactAlarm,
+          ),
+      ];
+      for (final definition in definitions) {
+        PermissionStatus status;
+        try {
+          status = await definition.$3.status;
+        } catch (_) {
+          status = PermissionStatus.denied;
+        }
+        permissions.add(
+          _PermissionCapability(
+            title: definition.$1,
+            icon: definition.$2,
+            permission: definition.$3,
+            statusText: _permissionStatusText(status),
+          ),
+        );
+      }
+    } else {
+      permissions.addAll(const [
+        _PermissionCapability(
+          title: 'Камера и микрофон',
+          icon: Icons.perm_camera_mic_outlined,
+          statusText:
+              'Доступ запрашивается операционной системой при использовании.',
+        ),
+        _PermissionCapability(
+          title: 'Файлы',
+          icon: Icons.folder_open_outlined,
+          statusText: 'Доступ только к файлам, которые выбрал пользователь.',
+        ),
+      ]);
+    }
+    HealthPlatformAvailability health;
+    try {
+      health = await HealthPlatformService().checkAvailability();
+    } catch (error, stackTrace) {
+      await ErrorLogService.instance.recordError(
+        error,
+        stackTrace,
+        source: 'Health capability check',
+      );
+      health = HealthPlatformAvailability(
+        supported: false,
+        provider: 'Health Connect / Apple Health',
+        message: 'Проверка недоступна: ${_shortAssistantError(error)}',
+      );
+    }
+    return _CapabilitySnapshot(
+      permissions: permissions,
+      model: await LocalLlmService.instance.status(),
+      health: health,
+      runtime: await AppRuntimeService.instance.status(),
+      pendingNotifications: await HealthNotificationService.instance
+          .pendingCount(),
+    );
+  }
+}
+
+class _PermissionCapability {
+  const _PermissionCapability({
+    required this.title,
+    required this.icon,
+    required this.statusText,
+    this.permission,
+  });
+
+  final String title;
+  final IconData icon;
+  final String statusText;
+  final Permission? permission;
+}
+
+class _CapabilitySnapshot {
+  const _CapabilitySnapshot({
+    required this.permissions,
+    required this.model,
+    required this.health,
+    required this.runtime,
+    required this.pendingNotifications,
+  });
+
+  final List<_PermissionCapability> permissions;
+  final LocalModelStatus model;
+  final HealthPlatformAvailability health;
+  final RuntimeStatus runtime;
+  final int pendingNotifications;
+}
+
+String _permissionStatusText(PermissionStatus status) {
+  if (status.isGranted || status.isLimited || status.isProvisional) {
+    return 'Разрешено';
+  }
+  if (status.isPermanentlyDenied || status.isRestricted) {
+    return 'Запрещено системой; откройте системные настройки';
+  }
+  return 'Не разрешено; нажмите для повторного запроса';
+}
+
 Future<void> _exportBackup(BuildContext context, HealthAppState state) async {
   final messenger = ScaffoldMessenger.of(context);
   try {
     final file = await BackupService().exportJson(state);
     if (!context.mounted) return;
     messenger.showSnackBar(
-      SnackBar(content: Text('Резервная копия создана: ${file.path}')),
+      SnackBar(content: LocalizedText('Резервная копия создана: ${file.path}')),
     );
-  } catch (error) {
+  } catch (error, stackTrace) {
+    await ErrorLogService.instance.recordError(
+      error,
+      stackTrace,
+      source: 'JSON backup export',
+    );
     if (context.mounted) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Не удалось создать копию: $error')),
+        SnackBar(content: LocalizedText('Не удалось создать копию: $error')),
       );
     }
   }
@@ -616,15 +990,22 @@ Future<void> _exportCsvTables(
     if (!context.mounted) return;
     messenger.showSnackBar(
       SnackBar(
-        content: Text(
+        content: LocalizedText(
           'Создано ${files.length} CSV-файла. Папка: ${files.first.parent.path}',
         ),
       ),
     );
-  } catch (error) {
+  } catch (error, stackTrace) {
+    await ErrorLogService.instance.recordError(
+      error,
+      stackTrace,
+      source: 'CSV export',
+    );
     if (context.mounted) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Не удалось экспортировать CSV: $error')),
+        SnackBar(
+          content: LocalizedText('Не удалось экспортировать CSV: $error'),
+        ),
       );
     }
   }
@@ -642,19 +1023,19 @@ Future<void> _importBackup(
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: const Text('Восстановить резервную копию?'),
-        content: Text(
+        title: const LocalizedText('Восстановить резервную копию?'),
+        content: LocalizedText(
           'Текущий профиль «${state.profile.name}» будет заменён профилем '
           '«${imported.profile.name}». Перед продолжением рекомендуется сделать копию текущих данных.',
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogContext, false),
-            child: const Text('Отмена'),
+            child: const LocalizedText('Отмена'),
           ),
           FilledButton(
             onPressed: () => Navigator.pop(dialogContext, true),
-            child: const Text('Восстановить'),
+            child: const LocalizedText('Восстановить'),
           ),
         ],
       ),
@@ -663,14 +1044,23 @@ Future<void> _importBackup(
       onChanged(imported);
       if (context.mounted) {
         messenger.showSnackBar(
-          const SnackBar(content: Text('Резервная копия восстановлена.')),
+          const SnackBar(
+            content: LocalizedText('Резервная копия восстановлена.'),
+          ),
         );
       }
     }
-  } catch (error) {
+  } catch (error, stackTrace) {
+    await ErrorLogService.instance.recordError(
+      error,
+      stackTrace,
+      source: 'JSON backup import',
+    );
     if (context.mounted) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Не удалось восстановить копию: $error')),
+        SnackBar(
+          content: LocalizedText('Не удалось восстановить копию: $error'),
+        ),
       );
     }
   }
@@ -688,11 +1078,11 @@ Future<void> _resetAllData(
     barrierDismissible: false,
     builder: (dialogContext) => StatefulBuilder(
       builder: (context, setDialogState) => AlertDialog(
-        title: const Text('Удалить все локальные данные?'),
+        title: const LocalizedText('Удалить все локальные данные?'),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text(
+            const LocalizedText(
               'Операцию нельзя отменить без ранее созданной резервной копии. Введите УДАЛИТЬ для подтверждения.',
             ),
             const SizedBox(height: 12),
@@ -709,7 +1099,7 @@ Future<void> _resetAllData(
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogContext, false),
-            child: const Text('Отмена'),
+            child: const LocalizedText('Отмена'),
           ),
           FilledButton(
             onPressed: () {
@@ -719,7 +1109,7 @@ Future<void> _resetAllData(
               }
               Navigator.pop(dialogContext, true);
             },
-            child: const Text('Удалить данные'),
+            child: const LocalizedText('Удалить данные'),
           ),
         ],
       ),
@@ -745,7 +1135,9 @@ Future<void> _configurePin(
     context: context,
     builder: (dialogContext) => StatefulBuilder(
       builder: (context, setDialogState) => AlertDialog(
-        title: Text(enable ? 'Установить PIN-код' : 'Отключить PIN-код'),
+        title: LocalizedText(
+          enable ? 'Установить PIN-код' : 'Отключить PIN-код',
+        ),
         content: SizedBox(
           width: 420,
           child: Column(
@@ -778,7 +1170,7 @@ Future<void> _configurePin(
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogContext, false),
-            child: const Text('Отмена'),
+            child: const LocalizedText('Отмена'),
           ),
           FilledButton(
             onPressed: () async {
@@ -804,7 +1196,7 @@ Future<void> _configurePin(
               }
               if (dialogContext.mounted) Navigator.pop(dialogContext, true);
             },
-            child: const Text('Подтвердить'),
+            child: const LocalizedText('Подтвердить'),
           ),
         ],
       ),
@@ -860,7 +1252,7 @@ Future<void> _downloadOfflineMapPack(
     barrierDismissible: false,
     builder: (dialogContext) => StatefulBuilder(
       builder: (context, setDialogState) => AlertDialog(
-        title: const Text('Загрузить офлайн-карту'),
+        title: const LocalizedText('Загрузить офлайн-карту'),
         content: SizedBox(
           width: 520,
           child: Column(
@@ -870,9 +1262,18 @@ Future<void> _downloadOfflineMapPack(
                 initialValue: scope,
                 decoration: const InputDecoration(labelText: 'Область'),
                 items: const [
-                  DropdownMenuItem(value: 'city', child: Text('город')),
-                  DropdownMenuItem(value: 'region', child: Text('регион')),
-                  DropdownMenuItem(value: 'country', child: Text('страна')),
+                  DropdownMenuItem(
+                    value: 'city',
+                    child: LocalizedText('город'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'region',
+                    child: LocalizedText('регион'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'country',
+                    child: LocalizedText('страна'),
+                  ),
                 ],
                 onChanged: running
                     ? null
@@ -883,12 +1284,16 @@ Future<void> _downloadOfflineMapPack(
                       },
               ),
               const SizedBox(height: 10),
-              Text(
+              LocalizedText(
                 'Локация профиля: ${state.profile.country} · ${state.profile.city}\nКоординаты: ${state.profile.latitude}, ${state.profile.longitude}',
+              ),
+              const SizedBox(height: 8),
+              const LocalizedText(
+                'Векторная карта Protomaps на основе OpenStreetMap сохраняется только для выбранной области.',
               ),
               if (status.isNotEmpty) ...[
                 const SizedBox(height: 10),
-                Text(status),
+                LocalizedText(status),
               ],
               if (running) ...[
                 const SizedBox(height: 14),
@@ -900,7 +1305,7 @@ Future<void> _downloadOfflineMapPack(
         actions: [
           TextButton(
             onPressed: running ? null : () => Navigator.pop(dialogContext),
-            child: const Text('Закрыть'),
+            child: const LocalizedText('Закрыть'),
           ),
           FilledButton.icon(
             onPressed:
@@ -911,7 +1316,7 @@ Future<void> _downloadOfflineMapPack(
                 : () async {
                     setDialogState(() {
                       running = true;
-                      status = 'Скачиваем тайлы OpenStreetMap...';
+                      status = 'Скачиваем векторный пакет карты...';
                     });
                     try {
                       final result = await OfflineMapService()
@@ -922,7 +1327,7 @@ Future<void> _downloadOfflineMapPack(
                               if (!dialogContext.mounted) return;
                               setDialogState(
                                 () => status =
-                                    'Скачано и проверено $completed из $total тайлов...',
+                                    'Сохранено и проверено $completed из $total тайлов...',
                               );
                             },
                           );
@@ -937,9 +1342,14 @@ Future<void> _downloadOfflineMapPack(
                       setDialogState(() {
                         running = false;
                         status =
-                            'Готово: скачано ${result.downloaded}, уже было/пропущено ${result.skipped}.';
+                            'Готово: сохранено ${result.downloaded}, пустых тайлов ${result.skipped}.';
                       });
-                    } catch (error) {
+                    } catch (error, stackTrace) {
+                      await ErrorLogService.instance.recordError(
+                        error,
+                        stackTrace,
+                        source: 'Offline map download',
+                      );
                       setDialogState(() {
                         running = false;
                         status = 'Не удалось загрузить карту: $error';
@@ -947,7 +1357,7 @@ Future<void> _downloadOfflineMapPack(
                     }
                   },
             icon: const Icon(Icons.download_outlined),
-            label: const Text('Загрузить'),
+            label: const LocalizedText('Загрузить'),
           ),
         ],
       ),

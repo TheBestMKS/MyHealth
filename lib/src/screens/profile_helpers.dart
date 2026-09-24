@@ -138,7 +138,7 @@ Future<void> _showAboutProgram(BuildContext context) async {
         children: [
           Text('Моё здоровье'),
           SizedBox(height: 8),
-          Text('Версия: 1.7.0+8'),
+          Text('Версия: 1.8.1+10'),
           Text('Создатель: Редин Максим Юрьевич'),
           Text('Контактная информация: info@thebestmks.ru'),
           SizedBox(height: 12),

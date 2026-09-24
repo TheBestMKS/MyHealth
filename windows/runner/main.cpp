@@ -27,7 +27,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE instance, _In_opt_ HINSTANCE prev,
   FlutterWindow window(project);
   Win32Window::Point origin(10, 10);
   Win32Window::Size size(1280, 720);
-  if (!window.Create(L"my_health", origin, size)) {
+  if (!window.Create(L"\u041c\u043e\u0451 \u0437\u0434\u043e\u0440\u043e\u0432\u044c\u0435", origin, size)) {
     return EXIT_FAILURE;
   }
   window.SetQuitOnClose(true);

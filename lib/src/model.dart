@@ -272,7 +272,7 @@ class HealthAppState {
   }
 
   Map<String, dynamic> toJson() => {
-    'schema': 8,
+    'schema': 9,
     'onboardingComplete': onboardingComplete,
     'localeCode': localeCode,
     'profile': profile.toJson(),
@@ -879,6 +879,7 @@ class AppSettings {
     this.advancedMode = true,
     this.largeText = false,
     this.highContrast = false,
+    this.compactMode = true,
     this.aiEnabled = true,
     this.requireRecognitionConfirmation = true,
     this.showMedicalDisclaimer = true,
@@ -904,6 +905,9 @@ class AppSettings {
     this.medicationNotifications = true,
     this.activityNotifications = true,
     this.alarmNotifications = true,
+    this.backgroundAnalysisEnabled = false,
+    this.launchAtStartup = false,
+    this.confirmBeforeExit = true,
     this.pinHash = '',
     this.pinSalt = '',
   });
@@ -912,6 +916,7 @@ class AppSettings {
   final bool advancedMode;
   final bool largeText;
   final bool highContrast;
+  final bool compactMode;
   final bool aiEnabled;
   final bool requireRecognitionConfirmation;
   final bool showMedicalDisclaimer;
@@ -937,6 +942,9 @@ class AppSettings {
   final bool medicationNotifications;
   final bool activityNotifications;
   final bool alarmNotifications;
+  final bool backgroundAnalysisEnabled;
+  final bool launchAtStartup;
+  final bool confirmBeforeExit;
   final String pinHash;
   final String pinSalt;
 
@@ -949,6 +957,7 @@ class AppSettings {
       advancedMode: _bool(json['advancedMode'], fallback.advancedMode),
       largeText: _bool(json['largeText'], fallback.largeText),
       highContrast: _bool(json['highContrast'], fallback.highContrast),
+      compactMode: _bool(json['compactMode'], fallback.compactMode),
       aiEnabled: _bool(json['aiEnabled'], fallback.aiEnabled),
       requireRecognitionConfirmation: _bool(
         json['requireRecognitionConfirmation'],
@@ -1019,6 +1028,15 @@ class AppSettings {
         json['alarmNotifications'],
         fallback.alarmNotifications,
       ),
+      backgroundAnalysisEnabled: _bool(
+        json['backgroundAnalysisEnabled'],
+        fallback.backgroundAnalysisEnabled,
+      ),
+      launchAtStartup: _bool(json['launchAtStartup'], fallback.launchAtStartup),
+      confirmBeforeExit: _bool(
+        json['confirmBeforeExit'],
+        fallback.confirmBeforeExit,
+      ),
       pinHash: _string(json['pinHash'], fallback.pinHash),
       pinSalt: _string(json['pinSalt'], fallback.pinSalt),
     );
@@ -1029,6 +1047,7 @@ class AppSettings {
     'advancedMode': advancedMode,
     'largeText': largeText,
     'highContrast': highContrast,
+    'compactMode': compactMode,
     'aiEnabled': aiEnabled,
     'requireRecognitionConfirmation': requireRecognitionConfirmation,
     'showMedicalDisclaimer': showMedicalDisclaimer,
@@ -1054,6 +1073,9 @@ class AppSettings {
     'medicationNotifications': medicationNotifications,
     'activityNotifications': activityNotifications,
     'alarmNotifications': alarmNotifications,
+    'backgroundAnalysisEnabled': backgroundAnalysisEnabled,
+    'launchAtStartup': launchAtStartup,
+    'confirmBeforeExit': confirmBeforeExit,
     'pinHash': pinHash,
     'pinSalt': pinSalt,
   };
@@ -1063,6 +1085,7 @@ class AppSettings {
     bool? advancedMode,
     bool? largeText,
     bool? highContrast,
+    bool? compactMode,
     bool? aiEnabled,
     bool? requireRecognitionConfirmation,
     bool? showMedicalDisclaimer,
@@ -1088,6 +1111,9 @@ class AppSettings {
     bool? medicationNotifications,
     bool? activityNotifications,
     bool? alarmNotifications,
+    bool? backgroundAnalysisEnabled,
+    bool? launchAtStartup,
+    bool? confirmBeforeExit,
     String? pinHash,
     String? pinSalt,
   }) {
@@ -1096,6 +1122,7 @@ class AppSettings {
       advancedMode: advancedMode ?? this.advancedMode,
       largeText: largeText ?? this.largeText,
       highContrast: highContrast ?? this.highContrast,
+      compactMode: compactMode ?? this.compactMode,
       aiEnabled: aiEnabled ?? this.aiEnabled,
       requireRecognitionConfirmation:
           requireRecognitionConfirmation ?? this.requireRecognitionConfirmation,
@@ -1127,6 +1154,10 @@ class AppSettings {
       activityNotifications:
           activityNotifications ?? this.activityNotifications,
       alarmNotifications: alarmNotifications ?? this.alarmNotifications,
+      backgroundAnalysisEnabled:
+          backgroundAnalysisEnabled ?? this.backgroundAnalysisEnabled,
+      launchAtStartup: launchAtStartup ?? this.launchAtStartup,
+      confirmBeforeExit: confirmBeforeExit ?? this.confirmBeforeExit,
       pinHash: pinHash ?? this.pinHash,
       pinSalt: pinSalt ?? this.pinSalt,
     );
@@ -2862,6 +2893,8 @@ class OfflineMapPack {
     required this.downloadedAt,
     required this.tileCount,
     required this.storagePath,
+    this.format = 'mvt',
+    this.source = '',
   });
 
   final String id;
@@ -2875,6 +2908,8 @@ class OfflineMapPack {
   final String downloadedAt;
   final int tileCount;
   final String storagePath;
+  final String format;
+  final String source;
 
   factory OfflineMapPack.fromJson(Map<String, dynamic> json) => OfflineMapPack(
     id: _string(json['id'], newId()),
@@ -2888,6 +2923,8 @@ class OfflineMapPack {
     downloadedAt: _string(json['downloadedAt'], ''),
     tileCount: _int(json['tileCount'], 0),
     storagePath: _string(json['storagePath'], ''),
+    format: _string(json['format'], 'raster'),
+    source: _string(json['source'], ''),
   );
 
   Map<String, dynamic> toJson() => {
@@ -2902,6 +2939,8 @@ class OfflineMapPack {
     'downloadedAt': downloadedAt,
     'tileCount': tileCount,
     'storagePath': storagePath,
+    'format': format,
+    'source': source,
   };
 }
 
@@ -3390,6 +3429,15 @@ class AssistantMessage {
     required this.role,
     required this.text,
     this.relatedSection = '',
+    this.kind = 'text',
+    this.transcript = '',
+    this.attachmentPath = '',
+    this.thumbnailPath = '',
+    this.attachmentName = '',
+    this.mimeType = '',
+    this.analysis = '',
+    this.actionSummary = '',
+    this.durationSeconds = 0,
   });
 
   final String id;
@@ -3397,6 +3445,23 @@ class AssistantMessage {
   final String role;
   final String text;
   final String relatedSection;
+  final String kind;
+  final String transcript;
+  final String attachmentPath;
+  final String thumbnailPath;
+  final String attachmentName;
+  final String mimeType;
+  final String analysis;
+  final String actionSummary;
+  final int durationSeconds;
+
+  DateTime? get timestamp => DateTime.tryParse(createdAt);
+
+  String get dateKey => timestamp == null ? '' : todayKey(timestamp!);
+
+  bool get hasAttachment => attachmentPath.trim().isNotEmpty;
+
+  bool get isImage => kind == 'image' || mimeType.startsWith('image/');
 
   factory AssistantMessage.fromJson(Map<String, dynamic> json) =>
       AssistantMessage(
@@ -3405,6 +3470,15 @@ class AssistantMessage {
         role: _string(json['role'], 'assistant'),
         text: _string(json['text'], ''),
         relatedSection: _string(json['relatedSection'], ''),
+        kind: _string(json['kind'], 'text'),
+        transcript: _string(json['transcript'], ''),
+        attachmentPath: _string(json['attachmentPath'], ''),
+        thumbnailPath: _string(json['thumbnailPath'], ''),
+        attachmentName: _string(json['attachmentName'], ''),
+        mimeType: _string(json['mimeType'], ''),
+        analysis: _string(json['analysis'], ''),
+        actionSummary: _string(json['actionSummary'], ''),
+        durationSeconds: _int(json['durationSeconds'], 0),
       );
 
   Map<String, dynamic> toJson() => {
@@ -3413,6 +3487,15 @@ class AssistantMessage {
     'role': role,
     'text': text,
     'relatedSection': relatedSection,
+    'kind': kind,
+    'transcript': transcript,
+    'attachmentPath': attachmentPath,
+    'thumbnailPath': thumbnailPath,
+    'attachmentName': attachmentName,
+    'mimeType': mimeType,
+    'analysis': analysis,
+    'actionSummary': actionSummary,
+    'durationSeconds': durationSeconds,
   };
 }
 

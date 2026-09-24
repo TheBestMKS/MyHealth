@@ -1,0 +1,19 @@
+{
+  "edition": "MyHealth Full",
+  "model": "Qwen3.5-0.8B uncensored opus distill",
+  "quantization": "Q4_K_M",
+  "license": "Apache-2.0",
+  "source": "https://huggingface.co/amkkk/Qwen3.5-0.8B-GGUF-uncensored-opus-distill",
+  "files": [
+    {
+      "name": "qwen3.5-0.8b-ablate-e2-opus46-postopus-runtime.Q4_K_M.gguf",
+      "size": 527502816,
+      "sha256": "3b1c1d041bd370fdcc742cf68b66dc2af8d45c8581d2e408949e8130fa2ad757"
+    },
+    {
+      "name": "mmproj-Qwen3.5-0.8B-F16.gguf",
+      "size": 204987104,
+      "sha256": "d149f5a48fa7a0051ee9143e731d69ca82ffe43aa75bec63b18ea340709887f8"
+    }
+  ]
+}

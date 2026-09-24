@@ -42,6 +42,10 @@ migrate_working_dir/
 /tooling/translation_models/
 /tooling/__pycache__/
 /tooling/.venv/
+/tooling/catalog_ru_translation_cache.json
+/tooling/model_smoke_runtime*.log
+/assets/models/*.gguf
+/assets/models/*.gguf.part
 
 # Symbolication related
 app.*.symbols

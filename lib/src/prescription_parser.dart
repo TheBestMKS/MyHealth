@@ -172,7 +172,8 @@ bool _ignoreLine(String line) {
   return lower.isEmpty ||
       lower.startsWith('пациент') ||
       lower.startsWith('дата рожд') ||
-      lower.startsWith('врач') ||
+      lower == 'врач' ||
+      RegExp(r'^врач\s*[:№]').hasMatch(lower) ||
       lower.startsWith('медицинск') ||
       lower.startsWith('диагноз') ||
       lower == 'рецепт' ||

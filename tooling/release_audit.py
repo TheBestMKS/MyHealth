@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import csv
+import hashlib
 import json
 import os
 import sys
@@ -101,6 +102,18 @@ def csv_rows(path: Path) -> list[dict[str, str]]:
         return list(csv.DictReader(source))
 
 
+def has_cyrillic(value: str) -> bool:
+    return any("\u0400" <= character <= "\u04ff" for character in value)
+
+
+def sha256_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as source:
+        for block in iter(lambda: source.read(1024 * 1024), b""):
+            digest.update(block)
+    return digest.hexdigest()
+
+
 def main() -> int:
     errors: list[str] = []
     text_files = audit_utf8(errors)
@@ -113,10 +126,94 @@ def main() -> int:
     profile = (ROOT / "lib/src/screens/profile_helpers.dart").read_text(
         encoding="utf-8"
     )
-    check("version: 1.7.0+8" in pubspec, "pubspec version is not 1.7.0+8", errors)
-    check("1.7.0+8" in readme, "README release version is missing", errors)
-    check("1.7.0+8" in settings, "Settings about version is stale", errors)
-    check("1.7.0+8" in profile, "Profile about version is stale", errors)
+    main_entry = (ROOT / "lib/main.dart").read_text(encoding="utf-8")
+    error_log = (ROOT / "lib/src/error_log_service.dart").read_text(
+        encoding="utf-8"
+    )
+    error_log_dialog = (ROOT / "lib/src/screens/error_log_dialog.dart").read_text(
+        encoding="utf-8"
+    )
+    offline_maps = (ROOT / "lib/src/offline_map_service.dart").read_text(
+        encoding="utf-8"
+    )
+    check("version: 1.8.1+10" in pubspec, "pubspec version is not 1.8.1+10", errors)
+    check("1.8.1+10" in readme, "README release version is missing", errors)
+    check("1.8.1+10" in settings, "Settings about version is stale", errors)
+    check("1.8.1+10" in profile, "Profile about version is stale", errors)
+    check(
+        "FlutterError.onError" in main_entry
+        and "PlatformDispatcher.instance.onError" in main_entry
+        and "runZonedGuarded" in main_entry,
+        "global Flutter/Dart error capture is incomplete",
+        errors,
+    )
+    check(
+        "myhealth-errors.log" in error_log
+        and "myhealth-errors.previous.log" in error_log
+        and "maxFileBytes" in error_log,
+        "rotating local error log is incomplete",
+        errors,
+    )
+    check(
+        "showErrorLogDialog" in settings
+        and "Clipboard.setData" in error_log_dialog
+        and "error_log_copy_button" in error_log_dialog,
+        "in-app error log viewer or copy action is missing",
+        errors,
+    )
+    check(
+        "tile.openstreetmap.org" not in offline_maps,
+        "offline map downloader still bulk-downloads standard OSM tiles",
+        errors,
+    )
+    check(
+        "PmTilesArchive" in offline_maps and "source.coop" in offline_maps,
+        "offline PMTiles vector downloader is missing",
+        errors,
+    )
+    check(
+        (ROOT / "assets/maps/myhealth_offline_style.json").is_file(),
+        "offline vector map style is missing",
+        errors,
+    )
+    check(
+        (ROOT / "assets/country_names.json").stat().st_size > 10000,
+        "localized country database is missing",
+        errors,
+    )
+    check(
+        "localized_names" in (ROOT / "assets/world_cities.tsv").open(
+            encoding="utf-8"
+        ).readline(),
+        "localized city name column is missing",
+        errors,
+    )
+
+    model_manifest = json.loads(
+        (ROOT / "assets/models/bundled_model_manifest.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    expected_models = {
+        item["name"]: (int(item["size"]), item["sha256"].lower())
+        for item in model_manifest.get("files", [])
+    }
+    check(len(expected_models) == 2, "bundled model manifest is incomplete", errors)
+    for name, (expected_size, expected_sha256) in expected_models.items():
+        model_path = ROOT / "assets/models" / name
+        check(model_path.is_file(), f"missing bundled model: {name}", errors)
+        if model_path.is_file():
+            check(
+                model_path.stat().st_size == expected_size,
+                f"bundled model size mismatch: {name}",
+                errors,
+            )
+            check(
+                sha256_file(model_path) == expected_sha256,
+                f"bundled model checksum mismatch: {name}",
+                errors,
+            )
+        check(len(expected_sha256) == 64, f"invalid model checksum: {name}", errors)
 
     for relative in (
         "icon/logo.png",
@@ -138,6 +235,26 @@ def main() -> int:
         errors,
     )
     check(
+        sum(has_cyrillic(row.get("title_ru", "")) for row in foods) >= 8000,
+        "Russian food title coverage is below 80%",
+        errors,
+    )
+    check(
+        all(
+            not row.get(source_field, "").strip()
+            or row.get(target_field, "").strip()
+            for row in foods
+            for source_field, target_field in (
+                ("composition", "composition_ru"),
+                ("ingredients", "ingredients_ru"),
+                ("preparation", "preparation_ru"),
+                ("history", "history_ru"),
+            )
+        ),
+        "some food details have no Russian counterpart",
+        errors,
+    )
+    check(
         all(row.get("image", "").startswith("https://") for row in foods),
         "some foods have no attributed image URL",
         errors,
@@ -150,6 +267,32 @@ def main() -> int:
     check(
         all(row.get("doctor_review", "").strip() for row in workouts),
         "some workouts have no safety note",
+        errors,
+    )
+    check(
+        len({row.get("title_ru", "") for row in workouts}) == len(workouts),
+        "workout names are not unique",
+        errors,
+    )
+    check(
+        sum(has_cyrillic(row.get("title_ru", "")) for row in workouts) >= 900,
+        "Russian workout title coverage is below 90%",
+        errors,
+    )
+    check(
+        all(
+            row.get(field, "").strip()
+            for row in workouts
+            for field in (
+                "focus_ru",
+                "equipment_ru",
+                "description_ru",
+                "requirements_ru",
+                "steps_ru",
+                "warnings_ru",
+            )
+        ),
+        "some workouts have incomplete Russian instructions",
         errors,
     )
 

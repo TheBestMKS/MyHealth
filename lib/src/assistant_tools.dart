@@ -2,6 +2,7 @@ import 'expanded_catalog.dart';
 import 'health_plan_engine.dart';
 import 'medical_knowledge.dart';
 import 'model.dart';
+import 'prescription_parser.dart';
 
 class AssistantToolResult {
   const AssistantToolResult({
@@ -119,6 +120,49 @@ class AssistantToolEngine {
           relatedSection: 'labs',
         );
       }
+    }
+
+    final genericLab = _genericLabMatch(lower);
+    if (genericLab != null) {
+      final marker = _sentenceCase(genericLab.marker.trim());
+      final normalizedValue = genericLab.value
+          .replaceFirst(RegExp(r'^[<>]\s*'), '')
+          .replaceAll(',', '.');
+      final value = _number(normalizedValue);
+      final reference = genericLab.reference.trim().replaceAll('–', '-');
+      final bounds = RegExp(
+        r'([<>]?)\s*(\d+(?:[\.,]\d+)?)\s*(?:[-–]\s*(\d+(?:[\.,]\d+)?))?',
+      ).firstMatch(reference);
+      final minimum = bounds == null || bounds.group(1) == '>'
+          ? null
+          : _number(bounds.group(2));
+      final maximum = bounds?.group(3) == null
+          ? bounds?.group(1) == '<'
+                ? _number(bounds?.group(2))
+                : null
+          : _number(bounds?.group(3));
+      final attention =
+          (minimum != null && value < minimum) ||
+          (maximum != null && value > maximum);
+      final item = LabResult(
+        id: newId(),
+        marker: marker,
+        value: normalizedValue,
+        unit: genericLab.unit,
+        reference: reference,
+        date: state.today.date,
+        needsAttention: attention,
+        notes:
+            'Внесено голосом или командой помощника; проверьте единицы и референс лаборатории.',
+      );
+      return AssistantToolResult(
+        state: state.copyWith(labResults: [item, ...state.labResults]),
+        message:
+            'Записал анализ «$marker»: ${item.value} ${item.unit}'
+            '${reference.isEmpty ? '' : ', референс $reference'}.'
+            '${attention ? ' Значение отмечено для проверки врачом.' : ' Проверьте запись перед медицинской интерпретацией.'}',
+        relatedSection: 'labs',
+      );
     }
 
     final pressure = RegExp(
@@ -319,6 +363,168 @@ class AssistantToolEngine {
       }
     }
 
+    final alarm = RegExp(
+      r'(?:будильник|разбуди|подъ[её]м).*?(?:в|на)?\s*((?:[01]?\d|2[0-3])[:\.]\d{2})',
+      caseSensitive: false,
+    ).firstMatch(lower);
+    if (alarm != null &&
+        (lower.contains('постав') ||
+            lower.contains('созда') ||
+            lower.contains('завед') ||
+            lower.contains('будильник') ||
+            lower.contains('разбуди'))) {
+      final wakeTime = alarm.group(1)!.replaceAll('.', ':').padLeft(5, '0');
+      final days = lower.contains('будн')
+          ? 'пн, вт, ср, чт, пт'
+          : lower.contains('выходн')
+          ? 'сб, вс'
+          : 'ежедневно';
+      var title = query
+          .replaceAll(
+            RegExp(
+              r'(?:поставь|создай|заведи|добавь|разбуди(?:\s+меня)?|будильник|подъ[её]м)',
+              caseSensitive: false,
+            ),
+            '',
+          )
+          .replaceAll(RegExp(r'\b(?:в|на)\s*\d{1,2}[:\.]\d{2}\b'), '')
+          .trim();
+      if (title.isEmpty || title.length > 80) title = 'Будильник';
+      final item = AlarmGroup(
+        id: newId(),
+        title: _sentenceCase(title),
+        wakeTime: wakeTime,
+        bedTime: '',
+        days: days,
+        adaptive: lower.contains('умн') || lower.contains('цикл сна'),
+        context: lower.contains('дежур')
+            ? 'дежурство'
+            : lower.contains('отпуск')
+            ? 'отпуск'
+            : 'обычный',
+        priority: lower.contains('важн') || lower.contains('высок') ? 3 : 2,
+        unlockMode: lower.contains('задач') || lower.contains('математ')
+            ? 'math'
+            : 'simple',
+        dutyAware: lower.contains('дежур'),
+        vacationAware: lower.contains('отпуск'),
+        smartWakeWindowMinutes: lower.contains('цикл сна') ? 30 : 0,
+        useWearableSleepCycle:
+            lower.contains('браслет') || lower.contains('цикл сна'),
+      );
+      return AssistantToolResult(
+        state: state.copyWith(alarmGroups: [item, ...state.alarmGroups]),
+        message:
+            'Создал будильник «${item.title}» на $wakeTime ($days). '
+            '${item.unlockMode == 'math' ? 'Для отключения потребуется решить задачу.' : 'Обычное отключение.'}',
+        relatedSection: 'calendar',
+      );
+    }
+
+    final workoutMinutes = RegExp(
+      r'(?:тренировк[а-яё]*|пробежал[а-яё]*|бегал[а-яё]*|занимал[а-яё]*).*?(\d{1,3})\s*(?:мин|минут)',
+      caseSensitive: false,
+    ).firstMatch(lower);
+    if (workoutMinutes != null &&
+        (lower.contains('запиш') ||
+            lower.contains('закончил') ||
+            lower.contains('пров[её]л') ||
+            lower.contains('пробеж') ||
+            lower.contains('тренировал') ||
+            lower.contains('занимал'))) {
+      final minutes = int.parse(workoutMinutes.group(1)!);
+      final distanceMatch = RegExp(
+        r'(\d{1,3}(?:[\.,]\d+)?)\s*(?:км|km)',
+        caseSensitive: false,
+      ).firstMatch(lower);
+      final calorieMatch = RegExp(
+        r'(\d{2,4})\s*(?:ккал|kcal)',
+        caseSensitive: false,
+      ).firstMatch(lower);
+      final distanceKm = _number(distanceMatch?.group(1));
+      final calories =
+          int.tryParse(calorieMatch?.group(1) ?? '') ??
+          (minutes *
+              (lower.contains('бег') || lower.contains('пробеж') ? 9 : 6));
+      if (minutes > 0 && minutes <= 720 && distanceKm <= 200) {
+        final title = lower.contains('бег') || lower.contains('пробеж')
+            ? 'Бег'
+            : lower.contains('ход')
+            ? 'Ходьба'
+            : 'Тренировка';
+        final item = WorkoutSession(
+          id: newId(),
+          title: title,
+          focus: 'Записано помощником',
+          minutes: minutes,
+          intensity: 'по факту',
+          scheduledDate: state.today.date,
+          exerciseIds: const [],
+          notes: 'Внесено голосом или командой помощника.',
+          mode: distanceKm > 0 ? 'geo-manual' : 'manual',
+          distanceMeters: distanceKm * 1000,
+          elapsedSeconds: minutes * 60,
+          averageSpeedKmh: distanceKm <= 0 ? 0 : distanceKm / (minutes / 60),
+          caloriesBurned: calories.clamp(0, 10000),
+          status: 'completed',
+          completedAt: DateTime.now().toIso8601String(),
+        );
+        return AssistantToolResult(
+          state: state.copyWith(
+            workouts: [item, ...state.workouts],
+            today: state.today.copyWith(
+              workoutMinutes: state.today.workoutMinutes + minutes,
+              activeCalories: state.today.activeCalories + item.caloriesBurned,
+            ),
+          ),
+          message:
+              'Записал: $title, $minutes мин, ${item.caloriesBurned} ккал'
+              '${distanceKm > 0 ? ', ${distanceKm.toStringAsFixed(2)} км' : ''}.',
+          relatedSection: 'workouts',
+        );
+      }
+    }
+
+    final activity = RegExp(
+      r'(?:запиш[а-яё]*|добав[а-яё]*|был[а-яё]*\s+актив[а-яё]*|активност[а-яё]*)\s*(?:активност[а-яё]*)?.*?(\d{1,3})\s*(?:мин|минут)',
+      caseSensitive: false,
+    ).firstMatch(lower);
+    if (activity != null &&
+        (lower.contains('актив') || lower.contains('размин'))) {
+      final minutes = int.parse(activity.group(1)!);
+      if (minutes > 0 && minutes <= 720) {
+        final calories = (minutes * 4).clamp(0, 5000);
+        final item = WorkoutSession(
+          id: newId(),
+          title: lower.contains('размин') ? 'Разминка' : 'Активность',
+          focus: 'Повседневная активность',
+          minutes: minutes,
+          intensity: 'по факту',
+          scheduledDate: state.today.date,
+          exerciseIds: const [],
+          notes:
+              'Внесено голосом или командой помощника; расход калорий является оценкой.',
+          mode: 'manual-activity',
+          elapsedSeconds: minutes * 60,
+          caloriesBurned: calories,
+          status: 'completed',
+          completedAt: DateTime.now().toIso8601String(),
+        );
+        return AssistantToolResult(
+          state: state.copyWith(
+            workouts: [item, ...state.workouts],
+            today: state.today.copyWith(
+              workoutMinutes: state.today.workoutMinutes + minutes,
+              activeCalories: state.today.activeCalories + calories,
+            ),
+          ),
+          message:
+              'Записал активность: $minutes мин, ориентировочный расход $calories ккал.',
+          relatedSection: 'workouts',
+        );
+      }
+    }
+
     final reminder = RegExp(
       r'(?:напомни|напоминание|remind).*?(\d{1,2})[:\.](\d{2})',
       caseSensitive: false,
@@ -350,6 +556,51 @@ class AssistantToolEngine {
           state: state.copyWith(reminders: [item, ...state.reminders]),
           message: 'Создал напоминание «$title» на $time сегодня.',
           relatedSection: 'calendar',
+        );
+      }
+    }
+
+    if ((lower.contains('назнач') ||
+            lower.contains('рецепт') ||
+            lower.contains('принимать') ||
+            lower.contains('приём') ||
+            lower.contains('прием')) &&
+        RegExp(
+          r'\d+(?:[\.,]\d+)?\s*(?:мкг|мг|г|мл|ед\.?|ме)',
+          caseSensitive: false,
+        ).hasMatch(lower)) {
+      final prescriptionText = query
+          .replaceFirst(
+            RegExp(
+              r'^(?:врач\s+)?(?:мне\s+)?(?:назначил(?:а|и)?|назначение|рецепт|принимать)\s*[:\-]?\s*',
+              caseSensitive: false,
+            ),
+            '',
+          )
+          .trim();
+      final drafts = parsePrescriptionText(prescriptionText);
+      if (drafts.isNotEmpty) {
+        final candidates = [
+          for (final draft in drafts)
+            RecognitionCandidate(
+              id: newId(),
+              source: 'голосовое назначение',
+              title:
+                  '${draft.name}${draft.dose.isEmpty ? '' : ' · ${draft.dose}'}',
+              confidence: draft.confidence,
+              requiresMedicalReview: true,
+              kind: 'voice-prescription',
+              createdAt: todayKey(),
+              metadata: draft.toMetadata(),
+            ),
+        ];
+        return AssistantToolResult(
+          state: state.copyWith(
+            confirmationQueue: [...candidates, ...state.confirmationQueue],
+          ),
+          message:
+              'Распознал назначений: ${candidates.length}. Добавил их на проверку; после подтверждения приложение создаст расписание и напоминания. Дозировки автоматически не меняются.',
+          relatedSection: 'medicines',
         );
       }
     }
@@ -403,6 +654,34 @@ class AssistantToolEngine {
   }
 }
 
+({String marker, String value, String unit, String reference})?
+_genericLabMatch(String source) {
+  const unit =
+      r'(ммоль/л|мкмоль/л|мг/дл|мг/л|г/л|г/дл|мкг/л|нг/мл|пг/мл|мед/л|ме/л|ед/л|%|mmol/l|umol/l|µmol/l|mg/dl|mg/l|g/l|g/dl|µg/l|ug/l|ng/ml|pg/ml|iu/l|u/l)';
+  final prefixed = RegExp(
+    r'(?:анализ|показатель|результат(?:\s+анализа)?)\s+([a-zа-яё][a-zа-яё0-9 ()+._-]{1,60}?)\s*[:=-]?\s*([<>]?\s*\d+(?:[\.,]\d+)?)\s*' +
+        unit +
+        r'(?:.*?(?:референс|норма)\s*[:=-]?\s*([<>]?\s*\d+(?:[\.,]\d+)?(?:\s*[-–]\s*\d+(?:[\.,]\d+)?)?))?',
+    caseSensitive: false,
+  ).firstMatch(source);
+  final known =
+      prefixed ??
+      RegExp(
+        r'\b(гемоглобин|ферритин|холестерин|триглицериды|креатинин|мочевина|билирубин|алт|аст|ттг|витамин\s+[a-zа-яё0-9]+|с-?реактивный\s+белок)\s*[:=-]?\s*([<>]?\s*\d+(?:[\.,]\d+)?)\s*' +
+            unit +
+            r'(?:.*?(?:референс|норма)\s*[:=-]?\s*([<>]?\s*\d+(?:[\.,]\d+)?(?:\s*[-–]\s*\d+(?:[\.,]\d+)?)?))?',
+        caseSensitive: false,
+      ).firstMatch(source);
+  if (known == null) return null;
+  final marker = known.group(1)?.trim() ?? '';
+  final value = (known.group(2) ?? '').replaceAll(' ', '');
+  final parsedUnit = known.group(3)?.trim() ?? '';
+  final reference = known.group(4)?.trim() ?? '';
+  final numeric = _number(value.replaceFirst(RegExp(r'^[<>]\s*'), ''));
+  if (marker.length < 2 || numeric <= 0 || numeric > 1000000) return null;
+  return (marker: marker, value: value, unit: parsedUnit, reference: reference);
+}
+
 Future<String> buildLocalAssistantContext(
   HealthAppState state,
   String query, {
@@ -447,14 +726,14 @@ Future<String> buildLocalAssistantContext(
     final matches = foods
         .where((item) {
           final haystack =
-              '${item.titleRu} ${item.titleEn} ${item.category} ${item.composition}'
+              '${item.titleRu} ${item.titleEn} ${item.category} ${item.categoryRu} ${item.composition} ${item.compositionRu}'
                   .toLowerCase();
           return words.any(haystack.contains);
         })
         .take(5);
     if (matches.isNotEmpty) {
       lines.add(
-        'Найдено в локальном каталоге еды: ${matches.map((item) => '${item.titleRu}: ${item.calories} ккал, Б/Ж/У ${item.protein}/${item.fat}/${item.carbs}, полезность ${item.healthLevel}/10; ${item.doctorReview}').join(' | ')}.',
+        'Найдено в локальном каталоге еды: ${matches.map((item) => '${item.titleFor(state.localeCode)}: ${item.calories} ккал, Б/Ж/У ${item.protein}/${item.fat}/${item.carbs}, полезность ${item.healthLevel}/10; ${item.doctorReview}').join(' | ')}.',
       );
     }
   }
@@ -463,14 +742,14 @@ Future<String> buildLocalAssistantContext(
     final matches = workouts
         .where((item) {
           final haystack =
-              '${item.titleRu} ${item.titleEn} ${item.focus} ${item.equipment}'
+              '${item.titleRu} ${item.titleEn} ${item.focus} ${item.focusRu} ${item.equipment} ${item.equipmentRu}'
                   .toLowerCase();
           return words.any(haystack.contains);
         })
         .take(5);
     if (matches.isNotEmpty) {
       lines.add(
-        'Найдено в локальном каталоге тренировок: ${matches.map((item) => '${item.titleRu}: ${item.focus}, ${item.minutes} мин, ${item.calories} ккал; предупреждения: ${item.warnings}').join(' | ')}.',
+        'Найдено в локальном каталоге тренировок: ${matches.map((item) => '${item.titleFor(state.localeCode)}: ${item.focusFor(state.localeCode)}, ${item.minutes} мин, ${item.calories} ккал; предупреждения: ${item.warningsFor(state.localeCode)}').join(' | ')}.',
       );
     }
   }

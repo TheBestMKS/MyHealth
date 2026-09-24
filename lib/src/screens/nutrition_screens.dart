@@ -191,8 +191,8 @@ class _RecipesScreenState extends State<RecipesScreen> {
                   (item) =>
                       query.isEmpty ||
                       item.titleFor(locale).toLowerCase().contains(query) ||
-                      item.kind.toLowerCase().contains(query) ||
-                      item.category.toLowerCase().contains(query),
+                      item.kindFor(locale).toLowerCase().contains(query) ||
+                      item.categoryFor(locale).toLowerCase().contains(query),
                 )
                 .take(120)
                 .toList();
@@ -210,7 +210,7 @@ class _RecipesScreenState extends State<RecipesScreen> {
                     title:
                         '${item.titleFor(locale)} · ${item.calories} ${AppText.get(locale, 'kcalShort')}',
                     subtitle:
-                        '${item.kind} · полезность ${item.healthLevel}/10 · Б ${item.protein} / Ж ${item.fat} / У ${item.carbs}, сахар ${item.sugar}\n${item.composition}',
+                        '${item.kindFor(locale)} · полезность ${item.healthLevel}/10 · Б ${item.protein} / Ж ${item.fat} / У ${item.carbs}, сахар ${item.sugar}\n${item.compositionFor(locale)}',
                     onTap: () => _showFoodCatalogDetails(
                       context,
                       item,

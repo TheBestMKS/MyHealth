@@ -24,57 +24,59 @@ class TodayScreen extends StatelessWidget {
       subtitle:
           '${state.profile.name}, ${formatDisplayDate(state.today.date, state.settings)} · ${state.profile.goal}',
       trailing: FilledButton.icon(
-        onPressed: () => showQuickAddDialog(context, state, onChanged),
+        onPressed: () =>
+            showUniversalCaptureSheet(context, state, onChanged, onSelect),
         icon: const Icon(Icons.add),
-        label: Text(AppText.get(locale, 'quickAdd')),
+        label: const Text('Добавить'),
       ),
       children: [
-        ResponsiveGrid(
+        CompactGaugeStrip(
           children: [
-            MetricCard(
-              title: AppText.get(locale, 'readiness'),
+            CompactGauge(
+              label: AppText.get(locale, 'readiness'),
               value: '${state.readinessScore}/100',
-              subtitle: _readinessText(state.readinessScore),
               icon: Icons.bolt_outlined,
               color: Colors.teal,
               progress: state.readinessScore / 100,
               onTap: () => onSelect(AppSection.analytics),
             ),
-            MetricCard(
-              title: AppText.get(locale, 'energy'),
+            CompactGauge(
+              label: AppText.get(locale, 'energy'),
               value: '${state.energyScore}/100',
-              subtitle: 'сон, питание, активность',
               icon: Icons.battery_charging_full_outlined,
               color: Colors.indigo,
               progress: state.energyScore / 100,
               onTap: () => onSelect(AppSection.analytics),
             ),
-            MetricCard(
-              title: AppText.get(locale, 'sleepHours'),
+            CompactGauge(
+              label: AppText.get(locale, 'sleepHours'),
               value: '${state.today.sleepHours.toStringAsFixed(1)} ч',
-              subtitle: 'цель 7.5-8.5 ч',
               icon: Icons.bedtime_outlined,
               color: Colors.blue,
               progress: state.today.sleepHours / 8,
               onTap: () => onSelect(AppSection.sleep),
             ),
-            MetricCard(
-              title: AppText.get(locale, 'steps'),
+            CompactGauge(
+              label: AppText.get(locale, 'steps'),
               value: '${state.today.steps}',
-              subtitle: 'цель 9000',
               icon: Icons.directions_walk_outlined,
               color: Colors.green,
               progress: state.today.steps / 9000,
               onTap: () => onSelect(AppSection.workouts),
             ),
-            MetricCard(
-              title: AppText.get(locale, 'water'),
+            CompactGauge(
+              label: AppText.get(locale, 'water'),
               value: '${state.today.waterLiters.toStringAsFixed(1)} л',
-              subtitle: 'цель 2.4 л',
               icon: Icons.water_drop_outlined,
               color: Colors.cyan,
               progress: state.today.waterLiters / 2.4,
             ),
+          ],
+        ),
+        const SizedBox(height: 10),
+        ResponsiveGrid(
+          minTileWidth: 190,
+          children: [
             MetricCard(
               title: 'Активный расход',
               value: '${state.today.activeCalories} ккал',

@@ -15,6 +15,9 @@ void main() {
 
       expect(murmansk.country, 'Russia');
       expect(murmansk.latitude, greaterThan(68));
+      expect(murmansk.displayName('ru'), 'Мурманск');
+      expect(murmansk.displayName('en'), 'Murmansk');
+      expect(murmansk.displayCountry('de'), 'Russland');
 
       final climate = murmansk.toCityClimate();
       expect(climate.solarPhenomena, contains('полярный день'));
@@ -50,4 +53,31 @@ void main() {
       );
     },
   );
+
+  test('derives compact country bounds including the antimeridian', () async {
+    final russia = await WorldCityDatabase.instance.countryMapBounds('Россия');
+    expect(russia, isNotNull);
+    expect(russia!.south, lessThan(45));
+    expect(russia.north, greaterThan(70));
+
+    final unitedStates = await WorldCityDatabase.instance.countryMapBounds(
+      'United States',
+    );
+    expect(unitedStates, isNotNull);
+    final span = unitedStates!.crossesAntimeridian
+        ? 360 - unitedStates.west + unitedStates.east
+        : unitedStates.east - unitedStates.west;
+    expect(span, lessThan(300));
+  });
+
+  test('finds and displays localized city names offline', () async {
+    final russian = await WorldCityDatabase.instance.search('Мурманск');
+    expect(russian.map((city) => city.ascii), contains('Murmansk'));
+
+    final tokyo = (await WorldCityDatabase.instance.search(
+      'Tokyo',
+    )).firstWhere((city) => city.ascii == 'Tokyo');
+    expect(tokyo.displayName('ja'), anyOf('東京', '東京都'));
+    expect(tokyo.displayCountry('fr'), 'Japon');
+  });
 }

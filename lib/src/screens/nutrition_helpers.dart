@@ -506,7 +506,7 @@ List<FoodCatalogItem> _nutritionSuggestions(
   };
   final filtered = foods.where((item) {
     final blob =
-        '${item.titleRu} ${item.titleEn} ${item.composition} ${item.ingredients}'
+        '${item.titleRu} ${item.titleEn} ${item.composition} ${item.compositionRu} ${item.ingredients} ${item.ingredientsRu}'
             .toLowerCase();
     if (blocked.any(blob.contains)) return false;
     if (state.profile.maxCookingMinutes > 0 &&
@@ -580,7 +580,7 @@ Future<void> _showNutritionSuggestions(
                     '${item.titleFor(state.localeCode)} · ${item.calories} ккал',
                   ),
                   subtitle: Text(
-                    '${item.kind} · ${item.minutes} мин · полезность ${item.healthLevel}/10 · Б ${item.protein} / Ж ${item.fat} / У ${item.carbs}',
+                    '${item.kindFor(state.localeCode)} · ${item.minutes} мин · полезность ${item.healthLevel}/10 · Б ${item.protein} / Ж ${item.fat} / У ${item.carbs}',
                   ),
                   trailing: LocalizedIconButton(
                     tooltip: 'Добавить в дневник',
@@ -622,7 +622,7 @@ Future<void> _addCatalogFoodToDiary(
     meal: MealEntry(
       id: newId(),
       title: item.titleFor(state.localeCode),
-      kind: item.kind,
+      kind: item.kindFor(state.localeCode),
       calories: item.calories,
       protein: item.protein,
       carbs: item.carbs,

@@ -220,23 +220,36 @@ class PageBand extends StatelessWidget {
     return ListView(
       padding: const EdgeInsets.fromLTRB(16, 14, 16, 96),
       children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: Column(
+        LayoutBuilder(
+          builder: (context, constraints) {
+            final heading = Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(localizedTitle, style: textTheme.headlineMedium),
+                if (localizedSubtitle != null) ...[
+                  const SizedBox(height: 4),
+                  Text(localizedSubtitle, style: textTheme.bodyMedium),
+                ],
+              ],
+            );
+            if (trailing != null && constraints.maxWidth < 560) {
+              return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(localizedTitle, style: textTheme.headlineMedium),
-                  if (localizedSubtitle != null) ...[
-                    const SizedBox(height: 4),
-                    Text(localizedSubtitle, style: textTheme.bodyMedium),
-                  ],
+                  heading,
+                  const SizedBox(height: 8),
+                  Align(alignment: Alignment.centerRight, child: trailing),
                 ],
-              ),
-            ),
-            ?trailing,
-          ],
+              );
+            }
+            return Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(child: heading),
+                ?trailing,
+              ],
+            );
+          },
         ),
         const SizedBox(height: 16),
         ...children,
@@ -360,6 +373,117 @@ class MetricCard extends StatelessWidget {
                 ),
               ],
             ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class CompactGauge extends StatelessWidget {
+  const CompactGauge({
+    super.key,
+    required this.label,
+    required this.value,
+    required this.progress,
+    required this.icon,
+    required this.color,
+    this.onTap,
+  });
+
+  final String label;
+  final String value;
+  final double progress;
+  final IconData icon;
+  final Color color;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final normalized = progress.clamp(0, 1).toDouble();
+    return Semantics(
+      button: onTap != null,
+      label: '${AppText.phrase(context, label)}: $value',
+      value: '${(normalized * 100).round()}%',
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(8),
+        child: SizedBox(
+          width: 118,
+          height: 132,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox.square(
+                dimension: 86,
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    SizedBox.square(
+                      dimension: 80,
+                      child: CircularProgressIndicator(
+                        value: normalized,
+                        strokeWidth: 7,
+                        strokeCap: StrokeCap.round,
+                        color: color,
+                        backgroundColor: scheme.surfaceContainerHighest,
+                      ),
+                    ),
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(icon, color: color, size: 19),
+                        const SizedBox(height: 2),
+                        FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            value,
+                            maxLines: 1,
+                            style: Theme.of(context).textTheme.labelLarge
+                                ?.copyWith(fontWeight: FontWeight.w800),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 5),
+              Text(
+                AppText.phrase(context, label),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.labelMedium,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class CompactGaugeStrip extends StatelessWidget {
+  const CompactGaugeStrip({super.key, required this.children});
+
+  final List<CompactGauge> children;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Theme.of(context).colorScheme.surfaceContainerLow,
+      borderRadius: BorderRadius.circular(8),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+        child: LayoutBuilder(
+          builder: (context, constraints) => Wrap(
+            alignment: WrapAlignment.spaceEvenly,
+            runAlignment: WrapAlignment.center,
+            spacing: 2,
+            runSpacing: 2,
+            children: children,
           ),
         ),
       ),

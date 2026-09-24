@@ -18,11 +18,10 @@ class AssistantScreen extends StatefulWidget {
 
 class _AssistantScreenState extends State<AssistantScreen> {
   final _controller = TextEditingController();
-  final _tools = const AssistantToolEngine();
   final _activityService = const ActivityContextService();
-  final _media = MediaImportService();
   final _llm = LocalLlmService.instance;
   final _speech = SpeechInputService.instance;
+  final _conversation = AssistantConversationService();
 
   LocalModelStatus? _modelStatus;
   ActivityContextSnapshot? _activityContext;
@@ -32,6 +31,9 @@ class _AssistantScreenState extends State<AssistantScreen> {
   bool _listening = false;
   String _speechStatus = '';
   String _voicePrefix = '';
+  String _selectedDate = todayKey();
+  bool _voiceInput = false;
+  DateTime? _voiceStartedAt;
 
   @override
   void initState() {
@@ -65,7 +67,21 @@ class _AssistantScreenState extends State<AssistantScreen> {
         ],
       );
     }
-    final messages = state.assistantMessages.take(20).toList();
+    final dates =
+        state.assistantMessages
+            .map((message) => message.dateKey)
+            .where((date) => date.isNotEmpty)
+            .toSet()
+            .toList()
+          ..sort((a, b) => b.compareTo(a));
+    if (dates.isNotEmpty && !dates.contains(_selectedDate)) {
+      _selectedDate = dates.first;
+    }
+    final messages = state.assistantMessages
+        .where((message) => message.dateKey == _selectedDate)
+        .toList()
+        .reversed
+        .toList();
     final lowStock = state.medications.where((item) => item.stockIsLow).length;
     return PageBand(
       title: AppText.get(state.localeCode, 'assistant'),
@@ -74,16 +90,13 @@ class _AssistantScreenState extends State<AssistantScreen> {
       trailing: state.assistantMessages.isEmpty
           ? null
           : LocalizedIconButton.filledTonal(
-              tooltip: 'Очистить диалог',
-              onPressed: _busy
-                  ? null
-                  : () => widget.onChanged(
-                      state.copyWith(assistantMessages: const []),
-                    ),
+              tooltip: 'Очистить выбранный день',
+              onPressed: _busy ? null : _clearSelectedDay,
               icon: const Icon(Icons.delete_sweep_outlined),
             ),
       children: [
         const MedicalDisclaimerBanner(),
+        if (dates.isNotEmpty) _buildHistorySelector(context, dates, messages),
         _buildModelCard(context),
         _buildContextCard(context),
         ResponsiveGrid(
@@ -131,7 +144,7 @@ class _AssistantScreenState extends State<AssistantScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                LocalizedText(
                   'Быстрые запросы',
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
@@ -163,14 +176,9 @@ class _AssistantScreenState extends State<AssistantScreen> {
           )
         else
           ...messages.map(
-            (message) => InfoTile(
-              icon: message.role == 'user'
-                  ? Icons.person_outline
-                  : Icons.psychology_outlined,
-              title: message.role == 'user' ? 'Вы' : 'Ассистент',
-              subtitle:
-                  '${_compactDateTime(message.createdAt)}\n${message.text}',
-              onTap: message.role == 'assistant'
+            (message) => _AssistantMessageBubble(
+              message: message,
+              onOpenSection: message.role == 'assistant'
                   ? () => widget.onSelect(
                       _assistantSection(message.relatedSection),
                     )
@@ -182,6 +190,64 @@ class _AssistantScreenState extends State<AssistantScreen> {
     );
   }
 
+  Widget _buildHistorySelector(
+    BuildContext context,
+    List<String> dates,
+    List<AssistantMessage> messages,
+  ) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+        child: Row(
+          children: [
+            const Icon(Icons.history_outlined),
+            const SizedBox(width: 10),
+            Expanded(
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton<String>(
+                  isExpanded: true,
+                  value: _selectedDate,
+                  items: [
+                    for (final date in dates)
+                      DropdownMenuItem(
+                        value: date,
+                        child: LocalizedText(
+                          date == todayKey()
+                              ? 'Сегодня · ${displayDateKey(date)}'
+                              : displayDateKey(date),
+                        ),
+                      ),
+                  ],
+                  onChanged: (value) {
+                    if (value != null) setState(() => _selectedDate = value);
+                  },
+                ),
+              ),
+            ),
+            Pill(label: '${messages.length}', icon: Icons.forum_outlined),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future<void> _clearSelectedDay() async {
+    if (_busy) return;
+    final removed = widget.state.assistantMessages
+        .where((message) => message.dateKey == _selectedDate)
+        .toList();
+    await _conversation.deleteMediaForMessages(removed);
+    if (!mounted) return;
+    widget.onChanged(
+      widget.state.copyWith(
+        assistantMessages: widget.state.assistantMessages
+            .where((message) => message.dateKey != _selectedDate)
+            .toList(),
+      ),
+    );
+    setState(() => _selectedDate = todayKey());
+  }
+
   Widget _buildModelCard(BuildContext context) {
     final status = _modelStatus;
     final installed = status?.isInstalled == true;
@@ -189,8 +255,8 @@ class _AssistantScreenState extends State<AssistantScreen> {
     final subtitle = status == null
         ? 'Проверяем локальную модель...'
         : installed
-        ? '${status.name} · ${status.sizeLabel}. Модель загружается в память только на время ответа.'
-        : 'Быстрый анализ уже работает без модели. Для свободного диалога установите Qwen2.5 0.5B Q4_K_M (около 491 MB) или импортируйте совместимый GGUF.';
+        ? '${status.name} · ${status.sizeLabel} · ${status.isBundled ? 'встроена в Full' : 'установлена пользователем'} · ${status.isMultimodal ? 'текст и изображения' : 'только текст'}. Загружается в память только на время ответа.'
+        : 'Быстрые инструменты работают без модели. Установите Qwen3.5 0.8B Q4_K_M с vision-projector (около 700 МБ) или импортируйте совместимые GGUF.';
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(14),
@@ -204,7 +270,7 @@ class _AssistantScreenState extends State<AssistantScreen> {
                 ),
                 const SizedBox(width: 10),
                 Expanded(
-                  child: Text(
+                  child: LocalizedText(
                     installed
                         ? 'Локальная языковая модель готова'
                         : 'Локальная языковая модель',
@@ -212,18 +278,20 @@ class _AssistantScreenState extends State<AssistantScreen> {
                   ),
                 ),
                 Pill(
-                  label: installed ? 'офлайн' : 'быстрый режим',
+                  label: installed
+                      ? (status!.isMultimodal ? 'офлайн · vision' : 'офлайн')
+                      : 'быстрый режим',
                   icon: installed ? Icons.offline_bolt_outlined : Icons.bolt,
                 ),
               ],
             ),
             const SizedBox(height: 8),
-            Text(subtitle),
+            LocalizedText(subtitle),
             if (downloading) ...[
               const SizedBox(height: 12),
               LinearProgressIndicator(value: _downloadProgress),
               const SizedBox(height: 6),
-              Text(
+              LocalizedText(
                 _downloadProgress == null
                     ? 'Подготовка загрузки'
                     : 'Загружено ${(_downloadProgress! * 100).toStringAsFixed(0)}%',
@@ -237,14 +305,14 @@ class _AssistantScreenState extends State<AssistantScreen> {
                   FilledButton.icon(
                     onPressed: downloading ? null : _downloadModel,
                     icon: const Icon(Icons.download_outlined),
-                    label: const Text('Установить'),
+                    label: const LocalizedText('Установить'),
                   ),
                 FilledButton.tonalIcon(
                   onPressed: downloading || _busy ? null : _importModel,
                   icon: const Icon(Icons.file_open_outlined),
-                  label: const Text('Импорт GGUF'),
+                  label: const LocalizedText('Импорт GGUF'),
                 ),
-                if (installed)
+                if (installed && status?.isBundled != true)
                   LocalizedIconButton(
                     tooltip: 'Удалить локальную модель',
                     onPressed: _busy ? null : _removeModel,
@@ -276,7 +344,7 @@ class _AssistantScreenState extends State<AssistantScreen> {
                 const Icon(Icons.sensors_outlined),
                 const SizedBox(width: 10),
                 Expanded(
-                  child: Text(
+                  child: LocalizedText(
                     'Контекст телефона',
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
@@ -295,13 +363,13 @@ class _AssistantScreenState extends State<AssistantScreen> {
               ],
             ),
             const SizedBox(height: 8),
-            Text(
+            LocalizedText(
               snapshot?.summary ??
                   'Движение и местоположение проверяются только по нажатию. Фоновое слежение не используется.',
             ),
             if (snapshot != null && snapshot.notes.isNotEmpty) ...[
               const SizedBox(height: 6),
-              Text(
+              LocalizedText(
                 snapshot.notes.join(' · '),
                 style: Theme.of(context).textTheme.bodySmall,
               ),
@@ -320,7 +388,7 @@ class _AssistantScreenState extends State<AssistantScreen> {
                   label: hasWork ? 'работа сохранена' : 'работа не задана',
                   icon: Icons.work_outline,
                 ),
-                Text('радиус ${profile.placeRadiusMeters} м'),
+                LocalizedText('радиус ${profile.placeRadiusMeters} м'),
               ],
             ),
             const SizedBox(height: 10),
@@ -331,14 +399,14 @@ class _AssistantScreenState extends State<AssistantScreen> {
                       ? null
                       : () => _saveCurrentPlace(home: true),
                   icon: const Icon(Icons.home_outlined),
-                  label: const Text('Это дом'),
+                  label: const LocalizedText('Это дом'),
                 ),
                 FilledButton.tonalIcon(
                   onPressed: snapshot?.latitude == null
                       ? null
                       : () => _saveCurrentPlace(home: false),
                   icon: const Icon(Icons.work_outline),
-                  label: const Text('Это работа'),
+                  label: const LocalizedText('Это работа'),
                 ),
               ],
             ),
@@ -369,14 +437,41 @@ class _AssistantScreenState extends State<AssistantScreen> {
                       ? 'Все данные остаются на устройстве'
                       : _speechStatus,
                 ),
+                onChanged: (_) {
+                  if (_voiceInput) unawaited(_speech.cancel());
+                  _voiceInput = false;
+                },
                 onSubmitted: (_) => _send(),
               ),
             ),
             const SizedBox(width: 8),
-            LocalizedIconButton.filledTonal(
-              tooltip: 'Заполнить по фото',
-              onPressed: _busy ? null : _captureFromPhoto,
-              icon: const Icon(Icons.add_a_photo_outlined),
+            PopupMenuButton<UniversalCaptureStart>(
+              tooltip: 'Камера или файл',
+              enabled: !_busy,
+              icon: const Icon(Icons.attach_file),
+              onSelected: (start) => showUniversalCaptureSheet(
+                context,
+                widget.state,
+                widget.onChanged,
+                widget.onSelect,
+                start: start,
+              ),
+              itemBuilder: (context) => const [
+                PopupMenuItem(
+                  value: UniversalCaptureStart.camera,
+                  child: ListTile(
+                    leading: Icon(Icons.photo_camera_outlined),
+                    title: LocalizedText('Сфотографировать'),
+                  ),
+                ),
+                PopupMenuItem(
+                  value: UniversalCaptureStart.file,
+                  child: ListTile(
+                    leading: Icon(Icons.attach_file),
+                    title: LocalizedText('Приложить файл'),
+                  ),
+                ),
+              ],
             ),
             const SizedBox(width: 8),
             LocalizedIconButton.filledTonal(
@@ -410,164 +505,62 @@ class _AssistantScreenState extends State<AssistantScreen> {
   Widget _assistantPromptChip(String text) {
     return ActionChip(
       avatar: const Icon(Icons.bolt_outlined),
-      label: Text(text),
+      label: LocalizedText(text),
       onPressed: _busy
           ? null
           : () {
+              _voiceInput = false;
               _controller.text = text;
               unawaited(_send());
             },
     );
   }
 
-  Future<void> _captureFromPhoto() async {
-    final kind = await showModalBottomSheet<_AssistantCaptureKind>(
-      context: context,
-      showDragHandle: true,
-      builder: (sheetContext) => SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ListTile(
-              leading: const Icon(Icons.restaurant_outlined),
-              title: const Text('Еда и напитки'),
-              subtitle: const Text('Фото, название, калории и БЖУ'),
-              onTap: () =>
-                  Navigator.pop(sheetContext, _AssistantCaptureKind.food),
-            ),
-            ListTile(
-              leading: const Icon(Icons.biotech_outlined),
-              title: const Text('Результаты анализов'),
-              subtitle: const Text('OCR показателей с обязательной проверкой'),
-              onTap: () =>
-                  Navigator.pop(sheetContext, _AssistantCaptureKind.lab),
-            ),
-            ListTile(
-              leading: const Icon(Icons.medication_outlined),
-              title: const Text('Рецепт или назначение'),
-              subtitle: const Text('Препараты, дозы и расписание приёма'),
-              onTap: () => Navigator.pop(
-                sheetContext,
-                _AssistantCaptureKind.prescription,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-    if (kind == null || !mounted) return;
-    setState(() => _busy = true);
-    try {
-      final candidates = switch (kind) {
-        _AssistantCaptureKind.food => await _media.importForRecognitionBatch(
-          source: 'фото еды',
-          requiresMedicalReview: false,
-          camera: true,
-        ),
-        _AssistantCaptureKind.lab => await _media.importForRecognitionBatch(
-          source: 'OCR анализа',
-          requiresMedicalReview: true,
-          camera: true,
-        ),
-        _AssistantCaptureKind.prescription =>
-          await _media.importPrescriptionBatch(camera: true),
-      };
-      if (!mounted || candidates.isEmpty) return;
-      widget.onChanged(
-        widget.state.copyWith(
-          confirmationQueue: [...candidates, ...widget.state.confirmationQueue],
-        ),
-      );
-      final section = switch (kind) {
-        _AssistantCaptureKind.food => AppSection.nutrition,
-        _AssistantCaptureKind.lab => AppSection.labs,
-        _AssistantCaptureKind.prescription => AppSection.medicines,
-      };
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            candidates.length == 1
-                ? 'Фото распознано и ожидает подтверждения.'
-                : 'Распознано записей: ${candidates.length}. Проверьте каждую перед сохранением.',
-          ),
-        ),
-      );
-      widget.onSelect(section);
-    } catch (error) {
-      if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Не удалось обработать фото: $error')),
-      );
-    } finally {
-      if (mounted) setState(() => _busy = false);
-    }
-  }
-
   Future<void> _send() async {
     final query = _controller.text.trim();
     if (query.isEmpty || _busy) return;
-    if (_listening) await _speech.stop();
+    if (_voiceInput) await _speech.stop();
+    final voicePath = _voiceInput ? _speech.takeRecordedAudio() : '';
     setState(() {
       _busy = true;
       _listening = false;
       _speechStatus = '';
     });
-
-    final initial = widget.state;
-    final now = DateTime.now().toIso8601String();
-    final toolResult = _tools.execute(initial, query);
-    var effectiveState = toolResult?.state ?? initial;
-    final deterministic = buildAssistantAnswer(effectiveState, query);
-    var answerText = toolResult?.message ?? deterministic.text;
-    var answerSource = toolResult == null
-        ? 'Быстрый локальный анализ'
-        : 'Инструмент дневника';
-
-    if (toolResult == null && _modelStatus?.isInstalled == true) {
-      try {
-        final localContext = await buildLocalAssistantContext(
-          effectiveState,
-          query,
-          activityContext: _activityContext?.summary ?? '',
-        );
-        answerText = await _llm.answer(
-          query: query,
-          localContext: localContext,
-          localeCode: effectiveState.localeCode,
-        );
-        answerSource = 'Локальная языковая модель';
-      } catch (error) {
-        answerText =
-            '${deterministic.text}\n\nЛокальная модель не ответила, поэтому использован быстрый анализ: ${_shortAssistantError(error)}';
-      }
+    try {
+      final duration = _voiceStartedAt == null
+          ? 0
+          : DateTime.now().difference(_voiceStartedAt!).inSeconds;
+      final result = await _conversation.submit(
+        state: widget.state,
+        query: query,
+        kind: _voiceInput ? 'voice' : 'text',
+        transcript: _voiceInput ? query : '',
+        durationSeconds: duration,
+        attachmentPath: voicePath,
+        attachmentName: voicePath.isEmpty
+            ? ''
+            : File(voicePath).uri.pathSegments.last,
+        mimeType: voicePath.isEmpty ? '' : 'audio/mp4',
+        activityContext: _activityContext?.summary ?? '',
+      );
+      if (!mounted) return;
+      _controller.clear();
+      widget.onChanged(result.state);
+      setState(() {
+        _selectedDate = todayKey();
+        _voiceInput = false;
+        _voiceStartedAt = null;
+      });
+    } catch (error, stackTrace) {
+      await ErrorLogService.instance.recordError(
+        error,
+        stackTrace,
+        source: 'Assistant request',
+      );
+      _showError('Не удалось обработать запрос: $error');
+    } finally {
+      if (mounted) setState(() => _busy = false);
     }
-
-    final related = toolResult?.relatedSection ?? deterministic.relatedSection;
-    final userMessage = AssistantMessage(
-      id: newId(),
-      createdAt: now,
-      role: 'user',
-      text: query,
-      relatedSection: related,
-    );
-    final assistantMessage = AssistantMessage(
-      id: '${newId()}-assistant',
-      createdAt: DateTime.now().toIso8601String(),
-      role: 'assistant',
-      text: '$answerSource\n$answerText',
-      relatedSection: related,
-    );
-    effectiveState = effectiveState.copyWith(
-      assistantMessages: [
-        assistantMessage,
-        userMessage,
-        ...effectiveState.assistantMessages,
-      ].take(80).toList(),
-    );
-    if (!mounted) return;
-    _controller.clear();
-    widget.onChanged(effectiveState);
-    setState(() => _busy = false);
   }
 
   Future<void> _toggleSpeech() async {
@@ -582,6 +575,7 @@ class _AssistantScreenState extends State<AssistantScreen> {
       return;
     }
     _voicePrefix = _controller.text.trim();
+    _voiceStartedAt = DateTime.now();
     try {
       await _speech.startRussian(
         onWords: (words, isFinal) {
@@ -596,6 +590,7 @@ class _AssistantScreenState extends State<AssistantScreen> {
             );
             if (isFinal) {
               _listening = false;
+              _voiceInput = true;
               _speechStatus = 'Распознано локально';
             }
           });
@@ -617,10 +612,16 @@ class _AssistantScreenState extends State<AssistantScreen> {
       if (mounted) {
         setState(() {
           _listening = true;
+          _voiceInput = true;
           _speechStatus = 'Слушаю по-русски на устройстве...';
         });
       }
-    } catch (error) {
+    } catch (error, stackTrace) {
+      await ErrorLogService.instance.recordError(
+        error,
+        stackTrace,
+        source: 'Russian voice input',
+      );
       if (!mounted) return;
       setState(() {
         _listening = false;
@@ -657,7 +658,9 @@ class _AssistantScreenState extends State<AssistantScreen> {
     widget.onChanged(widget.state.copyWith(profile: profile));
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(home ? 'Точка дома сохранена' : 'Точка работы сохранена'),
+        content: LocalizedText(
+          home ? 'Точка дома сохранена' : 'Точка работы сохранена',
+        ),
       ),
     );
   }
@@ -672,7 +675,12 @@ class _AssistantScreenState extends State<AssistantScreen> {
       final status = await _llm.importModel();
       if (!mounted || status == null) return;
       setState(() => _modelStatus = status);
-    } catch (error) {
+    } catch (error, stackTrace) {
+      await ErrorLogService.instance.recordError(
+        error,
+        stackTrace,
+        source: 'Local model import',
+      );
       _showError('Не удалось импортировать модель: $error');
     }
   }
@@ -696,7 +704,12 @@ class _AssistantScreenState extends State<AssistantScreen> {
         _modelStatus = status;
         _downloadProgress = null;
       });
-    } catch (error) {
+    } catch (error, stackTrace) {
+      await ErrorLogService.instance.recordError(
+        error,
+        stackTrace,
+        source: 'Local model download',
+      );
       if (mounted) setState(() => _downloadProgress = null);
       _showError('Не удалось загрузить модель: $error');
     }
@@ -706,18 +719,18 @@ class _AssistantScreenState extends State<AssistantScreen> {
     final accepted = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: const Text('Удалить локальную модель?'),
-        content: const Text(
+        title: const LocalizedText('Удалить локальную модель?'),
+        content: const LocalizedText(
           'Быстрый помощник и инструменты продолжат работать, но свободный диалог станет недоступен.',
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogContext, false),
-            child: const Text('Отмена'),
+            child: const LocalizedText('Отмена'),
           ),
           FilledButton(
             onPressed: () => Navigator.pop(dialogContext, true),
-            child: const Text('Удалить'),
+            child: const LocalizedText('Удалить'),
           ),
         ],
       ),
@@ -731,11 +744,410 @@ class _AssistantScreenState extends State<AssistantScreen> {
     if (!mounted) return;
     ScaffoldMessenger.of(
       context,
-    ).showSnackBar(SnackBar(content: Text(message)));
+    ).showSnackBar(SnackBar(content: LocalizedText(message)));
   }
 }
 
-enum _AssistantCaptureKind { food, lab, prescription }
+class _AssistantMessageBubble extends StatelessWidget {
+  const _AssistantMessageBubble({required this.message, this.onOpenSection});
+
+  final AssistantMessage message;
+  final VoidCallback? onOpenSection;
+
+  @override
+  Widget build(BuildContext context) {
+    final isUser = message.role == 'user';
+    final scheme = Theme.of(context).colorScheme;
+    final attachmentExists =
+        message.attachmentPath.isNotEmpty &&
+        File(message.attachmentPath).existsSync();
+    return Align(
+      alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          maxWidth: MediaQuery.sizeOf(context).width < 720 ? 620 : 720,
+        ),
+        child: Card(
+          color: isUser
+              ? scheme.primaryContainer.withValues(alpha: 0.62)
+              : scheme.surfaceContainerLow,
+          margin: EdgeInsets.only(
+            left: isUser ? 38 : 0,
+            right: isUser ? 0 : 38,
+            bottom: 8,
+          ),
+          child: InkWell(
+            onTap: onOpenSection,
+            borderRadius: BorderRadius.circular(8),
+            child: Padding(
+              padding: const EdgeInsets.all(12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Icon(
+                        _messageIcon(message),
+                        size: 18,
+                        color: isUser ? scheme.primary : scheme.secondary,
+                      ),
+                      const SizedBox(width: 7),
+                      Expanded(
+                        child: LocalizedText(
+                          isUser ? 'Вы' : 'Ассистент',
+                          style: Theme.of(context).textTheme.labelLarge,
+                        ),
+                      ),
+                      Text(
+                        _compactDateTime(message.createdAt),
+                        style: Theme.of(context).textTheme.labelSmall,
+                      ),
+                    ],
+                  ),
+                  if (message.kind == 'voice') ...[
+                    const SizedBox(height: 9),
+                    if (attachmentExists)
+                      _AssistantVoicePlayer(message: message)
+                    else
+                      Row(
+                        children: [
+                          const Icon(Icons.graphic_eq, size: 22),
+                          const SizedBox(width: 7),
+                          Expanded(
+                            child: LocalizedText(
+                              'Голосовое сообщение${message.durationSeconds > 0 ? ' · ${message.durationSeconds} с' : ''}',
+                              style: Theme.of(context).textTheme.labelMedium,
+                            ),
+                          ),
+                        ],
+                      ),
+                  ],
+                  if (message.isImage && attachmentExists) ...[
+                    const SizedBox(height: 9),
+                    Semantics(
+                      button: true,
+                      label: 'Открыть изображение на весь экран',
+                      child: InkWell(
+                        onTap: () => _showAssistantImage(context, message),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(6),
+                          child: Image.file(
+                            File(
+                              message.thumbnailPath.isNotEmpty &&
+                                      File(message.thumbnailPath).existsSync()
+                                  ? message.thumbnailPath
+                                  : message.attachmentPath,
+                            ),
+                            width: double.infinity,
+                            height: 220,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) =>
+                                const SizedBox(
+                                  height: 80,
+                                  child: Center(
+                                    child: Icon(Icons.broken_image_outlined),
+                                  ),
+                                ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                  if (message.hasAttachment &&
+                      !message.isImage &&
+                      message.kind != 'voice') ...[
+                    const SizedBox(height: 8),
+                    Row(
+                      children: [
+                        const Icon(Icons.description_outlined),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            message.attachmentName.isEmpty
+                                ? 'Вложенный файл'
+                                : message.attachmentName,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        LocalizedIconButton(
+                          tooltip: 'Открыть файл',
+                          onPressed: attachmentExists
+                              ? () => OpenFilex.open(message.attachmentPath)
+                              : null,
+                          icon: const Icon(Icons.open_in_new),
+                        ),
+                        LocalizedIconButton(
+                          tooltip: 'Поделиться файлом',
+                          onPressed: attachmentExists
+                              ? () => _shareAssistantAttachment(message)
+                              : null,
+                          icon: const Icon(Icons.share_outlined),
+                        ),
+                      ],
+                    ),
+                  ],
+                  if (message.text.trim().isNotEmpty) ...[
+                    const SizedBox(height: 8),
+                    SelectableText(message.text.trim()),
+                  ],
+                  if (message.transcript.isNotEmpty &&
+                      message.transcript.trim() != message.text.trim()) ...[
+                    const SizedBox(height: 6),
+                    LocalizedText(
+                      'Расшифровка: ${message.transcript}',
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                  ],
+                  if (message.analysis.isNotEmpty) ...[
+                    const SizedBox(height: 8),
+                    ExpansionTile(
+                      tilePadding: EdgeInsets.zero,
+                      childrenPadding: EdgeInsets.zero,
+                      dense: true,
+                      leading: const Icon(Icons.visibility_outlined, size: 19),
+                      title: const LocalizedText('Описание и распознавание'),
+                      children: [
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: SelectableText(
+                            message.analysis,
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                  if (message.actionSummary.isNotEmpty) ...[
+                    const SizedBox(height: 8),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Icon(
+                          Icons.check_circle_outline,
+                          size: 18,
+                          color: scheme.primary,
+                        ),
+                        const SizedBox(width: 7),
+                        Expanded(
+                          child: LocalizedText(
+                            message.actionSummary,
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                  if (message.isImage && attachmentExists) ...[
+                    const SizedBox(height: 6),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: Wrap(
+                        spacing: 2,
+                        children: [
+                          LocalizedIconButton(
+                            tooltip: 'На весь экран',
+                            onPressed: () =>
+                                _showAssistantImage(context, message),
+                            icon: const Icon(Icons.fullscreen),
+                          ),
+                          LocalizedIconButton(
+                            tooltip: 'Поделиться изображением',
+                            onPressed: () => _shareAssistantAttachment(message),
+                            icon: const Icon(Icons.share_outlined),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _AssistantVoicePlayer extends StatefulWidget {
+  const _AssistantVoicePlayer({required this.message});
+
+  final AssistantMessage message;
+
+  @override
+  State<_AssistantVoicePlayer> createState() => _AssistantVoicePlayerState();
+}
+
+class _AssistantVoicePlayerState extends State<_AssistantVoicePlayer> {
+  static final AudioPlayer _player = AudioPlayer();
+  static final ValueNotifier<String?> _activePath = ValueNotifier(null);
+
+  @override
+  Widget build(BuildContext context) {
+    return ValueListenableBuilder<String?>(
+      valueListenable: _activePath,
+      builder: (context, activePath, _) {
+        final active = activePath == widget.message.attachmentPath;
+        return StreamBuilder<PlayerState>(
+          stream: _player.playerStateStream,
+          builder: (context, playerSnapshot) {
+            final playerState = playerSnapshot.data;
+            final playing = active && playerState?.playing == true;
+            return Row(
+              children: [
+                LocalizedIconButton.filledTonal(
+                  tooltip: playing ? 'Пауза' : 'Воспроизвести',
+                  onPressed: _toggle,
+                  icon: Icon(playing ? Icons.pause : Icons.play_arrow),
+                ),
+                const SizedBox(width: 9),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      LocalizedText(
+                        'Голосовое сообщение${widget.message.durationSeconds > 0 ? ' · ${widget.message.durationSeconds} с' : ''}',
+                        style: Theme.of(context).textTheme.labelMedium,
+                      ),
+                      const SizedBox(height: 5),
+                      StreamBuilder<Duration>(
+                        stream: _player.positionStream,
+                        builder: (context, positionSnapshot) {
+                          final totalMilliseconds = active
+                              ? (_player.duration?.inMilliseconds ??
+                                    widget.message.durationSeconds * 1000)
+                              : widget.message.durationSeconds * 1000;
+                          final positionMilliseconds = active
+                              ? (positionSnapshot.data?.inMilliseconds ?? 0)
+                              : 0;
+                          final progress = totalMilliseconds <= 0
+                              ? 0.0
+                              : (positionMilliseconds / totalMilliseconds)
+                                    .clamp(0.0, 1.0);
+                          return LinearProgressIndicator(value: progress);
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 4),
+                LocalizedIconButton(
+                  tooltip: 'Поделиться голосовым',
+                  onPressed: () => _shareAssistantAttachment(widget.message),
+                  icon: const Icon(Icons.share_outlined),
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Future<void> _toggle() async {
+    final path = widget.message.attachmentPath;
+    if (!File(path).existsSync()) return;
+    try {
+      if (_activePath.value == path) {
+        if (_player.playing) {
+          await _player.pause();
+        } else {
+          if (_player.processingState == ProcessingState.completed) {
+            await _player.seek(Duration.zero);
+          }
+          unawaited(_player.play());
+        }
+        return;
+      }
+      await _player.stop();
+      await _player.setFilePath(path);
+      _activePath.value = path;
+      unawaited(
+        _player.play().whenComplete(() {
+          if (_activePath.value == path &&
+              _player.processingState == ProcessingState.completed) {
+            _activePath.value = null;
+          }
+        }),
+      );
+    } catch (error, stackTrace) {
+      await ErrorLogService.instance.recordError(
+        error,
+        stackTrace,
+        source: 'Voice message playback',
+      );
+      if (_activePath.value == path) _activePath.value = null;
+    }
+  }
+}
+
+IconData _messageIcon(AssistantMessage message) {
+  if (message.kind == 'voice') return Icons.mic_none_outlined;
+  if (message.kind == 'image') return Icons.image_outlined;
+  if (message.kind == 'file') return Icons.attach_file;
+  if (message.kind == 'action') return Icons.check_circle_outline;
+  return message.role == 'user'
+      ? Icons.person_outline
+      : Icons.psychology_outlined;
+}
+
+Future<void> _shareAssistantAttachment(AssistantMessage message) async {
+  if (message.attachmentPath.isEmpty ||
+      !File(message.attachmentPath).existsSync()) {
+    return;
+  }
+  await SharePlus.instance.share(
+    ShareParams(
+      files: [XFile(message.attachmentPath, mimeType: message.mimeType)],
+      text: message.analysis.isEmpty ? null : message.analysis,
+      subject: message.attachmentName,
+    ),
+  );
+}
+
+Future<void> _showAssistantImage(
+  BuildContext context,
+  AssistantMessage message,
+) async {
+  if (!File(message.attachmentPath).existsSync()) return;
+  await showDialog<void>(
+    context: context,
+    builder: (dialogContext) => Dialog.fullscreen(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            message.attachmentName.isEmpty
+                ? 'Изображение'
+                : message.attachmentName,
+          ),
+          actions: [
+            LocalizedIconButton(
+              tooltip: 'Поделиться',
+              onPressed: () => _shareAssistantAttachment(message),
+              icon: const Icon(Icons.share_outlined),
+            ),
+            LocalizedIconButton(
+              tooltip: 'Закрыть',
+              onPressed: () => Navigator.pop(dialogContext),
+              icon: const Icon(Icons.close),
+            ),
+          ],
+        ),
+        body: InteractiveViewer(
+          minScale: 0.5,
+          maxScale: 6,
+          child: Center(
+            child: Image.file(
+              File(message.attachmentPath),
+              fit: BoxFit.contain,
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
+}
 
 AppSection _assistantSection(String value) {
   return switch (value) {

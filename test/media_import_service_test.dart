@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:archive/archive.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:image_picker/image_picker.dart';
@@ -183,6 +184,44 @@ void main() {
       expect(result.confidence, closeTo(0.82, 0.0001));
     },
   );
+
+  test('extracts readable text from DOCX and RTF attachments', () async {
+    final root = await Directory.systemTemp.createTemp(
+      'my_health_documents_test_',
+    );
+    addTearDown(() async {
+      if (await root.exists()) await root.delete(recursive: true);
+    });
+    final archive = Archive()
+      ..addFile(
+        ArchiveFile.string(
+          'word/document.xml',
+          '<?xml version="1.0" encoding="UTF-8"?>'
+              '<w:document xmlns:w="urn:test"><w:body><w:p>'
+              '<w:r><w:t>Принимать после еды</w:t></w:r>'
+              '</w:p></w:body></w:document>',
+        ),
+      );
+    final docx = File('${root.path}/recipe.docx');
+    await docx.writeAsBytes(ZipEncoder().encode(archive), flush: true);
+    final rtf = File('${root.path}/note.rtf');
+    await rtf.writeAsString(
+      r"{\rtf1\ansi Назначение\par Доза 5 мг}",
+      flush: true,
+    );
+    final service = MediaImportService(supportDirectory: () async => root);
+
+    final docxText = await service.extractLocalText(
+      ImportedMedia(path: docx.path, name: 'recipe.docx', kind: 'attachment'),
+    );
+    final rtfText = await service.extractLocalText(
+      ImportedMedia(path: rtf.path, name: 'note.rtf', kind: 'attachment'),
+    );
+
+    expect(docxText, contains('Принимать после еды'));
+    expect(rtfText, contains('Назначение'));
+    expect(rtfText, contains('Доза 5 мг'));
+  });
 }
 
 class _UnsupportedCameraPicker extends ImagePicker {

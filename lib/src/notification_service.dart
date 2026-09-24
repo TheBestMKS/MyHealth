@@ -6,6 +6,7 @@ import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:timezone/data/latest.dart' as tz_data;
 import 'package:timezone/timezone.dart' as tz;
 
+import 'error_log_service.dart';
 import 'model.dart';
 
 class HealthNotificationService {
@@ -58,9 +59,14 @@ class HealthNotificationService {
       }
       _initialized = true;
       lastError = '';
-    } catch (error) {
+    } catch (error, stackTrace) {
       lastError = '$error';
       debugPrint('Notification initialization failed: $error');
+      await ErrorLogService.instance.recordError(
+        error,
+        stackTrace,
+        source: 'Notification initialization',
+      );
     }
   }
 
@@ -96,8 +102,13 @@ class HealthNotificationService {
       return notificationAllowed &&
           (iosAllowed ?? true) &&
           (macAllowed ?? true);
-    } catch (error) {
+    } catch (error, stackTrace) {
       lastError = '$error';
+      await ErrorLogService.instance.recordError(
+        error,
+        stackTrace,
+        source: 'Notification permissions',
+      );
       return false;
     }
   }
@@ -123,9 +134,14 @@ class HealthNotificationService {
         await _scheduleActivityReminders(state, now);
       }
       lastError = '';
-    } catch (error) {
+    } catch (error, stackTrace) {
       lastError = '$error';
       debugPrint('Notification sync failed: $error');
+      await ErrorLogService.instance.recordError(
+        error,
+        stackTrace,
+        source: 'Notification synchronization',
+      );
     }
   }
 
@@ -134,7 +150,12 @@ class HealthNotificationService {
     if (!_initialized) return 0;
     try {
       return (await _plugin.pendingNotificationRequests()).length;
-    } catch (_) {
+    } catch (error, stackTrace) {
+      await ErrorLogService.instance.recordError(
+        error,
+        stackTrace,
+        source: 'Pending notifications',
+      );
       return 0;
     }
   }

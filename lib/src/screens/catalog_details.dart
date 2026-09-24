@@ -52,23 +52,24 @@ Future<void> _showFoodCatalogDetails(
               ),
               const SizedBox(height: 14),
               Text('Состав', style: Theme.of(context).textTheme.titleMedium),
-              Text(item.composition),
+              Text(item.compositionFor(locale)),
               const SizedBox(height: 12),
               Text(
                 'Ингредиенты',
                 style: Theme.of(context).textTheme.titleMedium,
               ),
-              ...item.ingredients
+              ...item
+                  .ingredientsFor(locale)
                   .split(';')
                   .map((value) => Text('• ${value.trim()}')),
               const SizedBox(height: 12),
-              if (item.preparation.isNotEmpty) ...[
+              if (item.preparationFor(locale).isNotEmpty) ...[
                 Text(
                   'Приготовление',
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 ..._catalogTextBlocks(
-                  item.preparation,
+                  item.preparationFor(locale),
                   offlineOnly: offlineOnly,
                 ),
               ],
@@ -88,13 +89,13 @@ Future<void> _showFoodCatalogDetails(
         ),
       ),
       actions: [
-        if (item.history.isNotEmpty)
+        if (item.historyFor(locale).isNotEmpty)
           LocalizedIconButton(
             tooltip: 'Историческая справка',
             onPressed: () => _showCatalogTextDialog(
               context,
               'Историческая справка',
-              item.history,
+              item.historyFor(locale),
             ),
             icon: const Icon(Icons.history_edu_outlined),
           ),
@@ -147,9 +148,12 @@ Future<void> _showWorkoutCatalogDetails(
                 spacing: 8,
                 runSpacing: 8,
                 children: [
-                  Pill(label: item.focus, icon: Icons.center_focus_strong),
                   Pill(
-                    label: item.equipment,
+                    label: item.focusFor(locale),
+                    icon: Icons.center_focus_strong,
+                  ),
+                  Pill(
+                    label: item.equipmentFor(locale),
                     icon: Icons.home_repair_service_outlined,
                   ),
                   Pill(label: item.level, icon: Icons.speed_outlined),
@@ -165,25 +169,28 @@ Future<void> _showWorkoutCatalogDetails(
                 ],
               ),
               const SizedBox(height: 14),
-              Text(item.description),
+              Text(item.descriptionFor(locale)),
               const SizedBox(height: 12),
               Text(
                 'Что требуется',
                 style: Theme.of(context).textTheme.titleMedium,
               ),
-              Text(item.requirements),
+              Text(item.requirementsFor(locale)),
               const SizedBox(height: 12),
               Text(
                 AppText.get(locale, 'howToDo'),
                 style: Theme.of(context).textTheme.titleMedium,
               ),
-              ..._catalogTextBlocks(item.steps, offlineOnly: offlineOnly),
+              ..._catalogTextBlocks(
+                item.stepsFor(locale),
+                offlineOnly: offlineOnly,
+              ),
               const SizedBox(height: 12),
               Text(
                 AppText.get(locale, 'warning'),
                 style: Theme.of(context).textTheme.titleMedium,
               ),
-              Text(item.warnings),
+              Text(item.warningsFor(locale)),
               if (item.sourceUrl.isNotEmpty) ...[
                 const SizedBox(height: 12),
                 Text(
@@ -200,13 +207,13 @@ Future<void> _showWorkoutCatalogDetails(
         ),
       ),
       actions: [
-        if (item.history.isNotEmpty)
+        if (item.historyFor(locale).isNotEmpty)
           LocalizedIconButton(
             tooltip: 'Историческая справка',
             onPressed: () => _showCatalogTextDialog(
               context,
               'Историческая справка',
-              item.history,
+              item.historyFor(locale),
             ),
             icon: const Icon(Icons.history_edu_outlined),
           ),

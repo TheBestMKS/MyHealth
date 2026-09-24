@@ -1,10 +1,12 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter/services.dart';
 import 'package:my_health/src/app.dart';
 import 'package:my_health/src/model.dart';
 import 'package:my_health/src/repository.dart';
 import 'package:my_health/src/screens.dart' hide Text;
+import 'package:my_health/src/widgets.dart';
 
 void main() {
   testWidgets('shows first-run setup when onboarding is not complete', (
@@ -40,9 +42,154 @@ void main() {
     expect(find.text('Сегодня'), findsWidgets);
     expect(find.text('Готовность'), findsOneWidget);
     expect(find.text('Базовый расход'), findsOneWidget);
-    await tester.drag(find.byType(ListView).first, const Offset(0, -650));
+    await tester.scrollUntilVisible(
+      find.textContaining('справочная информация'),
+      420,
+      scrollable: find.byType(Scrollable).first,
+    );
     await tester.pumpAndSettle();
     expect(find.textContaining('справочная информация'), findsOneWidget);
+  });
+
+  testWidgets('Today keeps five compact gauges on a narrow screen', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    final state = HealthAppState.seed().copyWith(onboardingComplete: true);
+
+    await tester.pumpWidget(
+      MyHealthApp(
+        repository: InMemoryHealthRepository(state),
+        initialState: state,
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.byType(CompactGauge), findsNWidgets(5));
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('medicine names remain horizontal on a narrow screen', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(320, 720);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    var state = HealthAppState.seed().copyWith(
+      onboardingComplete: true,
+      medications: const [
+        Medication(
+          id: 'medicine-layout',
+          name: 'Метформин пролонгированного действия',
+          dose: '500 мг',
+          schedule: '08:00',
+          takenToday: false,
+          notes: '',
+        ),
+      ],
+    );
+
+    await tester.pumpWidget(
+      MaterialApp(
+        locale: const Locale('ru'),
+        supportedLocales: const [Locale('ru')],
+        localizationsDelegates: const [
+          GlobalMaterialLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
+        home: Scaffold(
+          body: MedicinesScreen(
+            state: state,
+            onChanged: (updated) => state = updated,
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    final title = find.textContaining('Метформин пролонгированного действия');
+    expect(title, findsOneWidget);
+    expect(tester.getSize(title).width, greaterThan(100));
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('back restores the previous section before requesting exit', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(430, 900);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    final state = HealthAppState.seed().copyWith(onboardingComplete: true);
+    var exitRequested = false;
+
+    await tester.pumpWidget(
+      MaterialApp(
+        locale: const Locale('ru'),
+        supportedLocales: const [Locale('ru')],
+        localizationsDelegates: const [
+          GlobalMaterialLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
+        home: MyHealthShell(
+          state: state,
+          onChanged: (_) {},
+          onExitRequested: () async => exitRequested = true,
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(find.byTooltip('Добавить или спросить'), findsOneWidget);
+
+    await tester.tap(find.text('Здоровье').last);
+    await tester.pumpAndSettle();
+    expect(find.textContaining('справочная информация'), findsOneWidget);
+    expect(find.byTooltip('Добавить или спросить'), findsOneWidget);
+
+    await tester.tap(find.byTooltip('Добавить или спросить'));
+    await tester.pumpAndSettle();
+    expect(find.text('Добавить информацию или спросить'), findsOneWidget);
+    expect(find.byTooltip('Голосовой ввод на русском'), findsOneWidget);
+    expect(find.byTooltip('Сфотографировать'), findsOneWidget);
+    expect(find.byTooltip('Приложить файл'), findsOneWidget);
+    await tester.sendKeyEvent(LogicalKeyboardKey.escape);
+    await tester.pumpAndSettle();
+
+    await tester.binding.handlePopRoute();
+    await tester.pumpAndSettle();
+    expect(find.text('Готовность'), findsOneWidget);
+    expect(exitRequested, isFalse);
+
+    await tester.binding.handlePopRoute();
+    await tester.pumpAndSettle();
+    expect(exitRequested, isTrue);
+  });
+
+  testWidgets('root back asks before exiting the application', (tester) async {
+    final state = HealthAppState.seed().copyWith(onboardingComplete: true);
+    await tester.pumpWidget(
+      MyHealthApp(
+        repository: InMemoryHealthRepository(state),
+        initialState: state,
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.binding.handlePopRoute();
+    await tester.pumpAndSettle();
+    expect(find.text('Выйти из приложения?'), findsOneWidget);
+    expect(find.textContaining('Обычное сворачивание'), findsOneWidget);
+
+    await tester.tap(find.text('Остаться'));
+    await tester.pumpAndSettle();
+    expect(find.text('Выйти из приложения?'), findsNothing);
+    expect(find.text('Готовность'), findsOneWidget);
   });
 
   testWidgets('onboarding steps do not overflow on a narrow screen', (

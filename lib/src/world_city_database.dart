@@ -1,8 +1,13 @@
 import 'dart:convert';
+import 'dart:math' as math;
 
 import 'package:flutter/services.dart';
 
 import 'location_catalog.dart';
+
+const _localizedNameSeparator = '\u001f';
+const _localizedCityLocales = <String>['ru', 'zh', 'ja', 'ko', 'ar', 'hi'];
+Map<String, Map<String, String>> _localizedCountryNames = const {};
 
 class WorldCityEntry {
   const WorldCityEntry({
@@ -14,6 +19,7 @@ class WorldCityEntry {
     required this.population,
     required this.timezone,
     required this.searchIndex,
+    this.localizedNames = '',
   });
 
   final String country;
@@ -24,9 +30,24 @@ class WorldCityEntry {
   final int population;
   final String timezone;
   final String searchIndex;
+  final String localizedNames;
 
   String displayName(String localeCode) {
-    if (localeCode.toLowerCase().startsWith('ru')) {
+    final locale = _languageCode(localeCode);
+    if (locale == 'ru') {
+      final known =
+          _ruCityNames['$country|$ascii'] ?? _ruCityNames['$country|$city'];
+      if (known != null) return known;
+    }
+    final lookupLocale = locale == 'be' || locale == 'kk' ? 'ru' : locale;
+    final index = _localizedCityLocales.indexOf(lookupLocale);
+    if (index >= 0) {
+      final names = localizedNames.split(_localizedNameSeparator);
+      if (index < names.length && names[index].trim().isNotEmpty) {
+        return names[index].trim();
+      }
+    }
+    if (locale == 'ru') {
       return _ruCityNames['$country|$ascii'] ??
           _ruCityNames['$country|$city'] ??
           city;
@@ -35,7 +56,10 @@ class WorldCityEntry {
   }
 
   String displayCountry(String localeCode) {
-    if (localeCode.toLowerCase().startsWith('ru')) {
+    final locale = _languageCode(localeCode);
+    final localized = _localizedCountryNames[country]?[locale];
+    if (localized != null && localized.isNotEmpty) return localized;
+    if (locale == 'ru') {
       return _ruCountryNames[country] ?? country;
     }
     return country;
@@ -48,6 +72,14 @@ class WorldCityEntry {
     longitude: longitude,
   );
 }
+
+typedef CountryMapBounds = ({
+  double south,
+  double west,
+  double north,
+  double east,
+  bool crossesAntimeridian,
+});
 
 class WorldCityDatabase {
   WorldCityDatabase._();
@@ -69,6 +101,72 @@ class WorldCityDatabase {
     final cities = await load();
     final values = cities.map((item) => item.country).toSet().toList()..sort();
     return values;
+  }
+
+  String displayCountryName(String country, String localeCode) {
+    final locale = _languageCode(localeCode);
+    return _localizedCountryNames[country]?[locale] ??
+        (locale == 'ru' ? _ruCountryNames[country] : null) ??
+        country;
+  }
+
+  Future<CountryMapBounds?> countryMapBounds(String country) async {
+    final cities = await load();
+    final normalizedCountry = _normalize(_countrySearchName(country));
+    final matches = cities
+        .where((city) => _normalize(city.country) == normalizedCountry)
+        .toList(growable: false);
+    if (matches.isEmpty) return null;
+
+    var south = matches.first.latitude;
+    var north = matches.first.latitude;
+    final longitudes = <double>[];
+    for (final city in matches) {
+      south = math.min(south, city.latitude);
+      north = math.max(north, city.latitude);
+      longitudes.add((city.longitude + 360) % 360);
+    }
+    longitudes.sort();
+    var largestGap = -1.0;
+    var gapIndex = 0;
+    for (var index = 0; index < longitudes.length; index++) {
+      final current = longitudes[index];
+      final next = index + 1 < longitudes.length
+          ? longitudes[index + 1]
+          : longitudes.first + 360;
+      final gap = next - current;
+      if (gap > largestGap) {
+        largestGap = gap;
+        gapIndex = index;
+      }
+    }
+    var west360 = longitudes[(gapIndex + 1) % longitudes.length];
+    var east360 = longitudes[gapIndex];
+    if (east360 < west360) east360 += 360;
+    final latitudePadding = math.max(1.0, (north - south) * 0.06);
+    final longitudePadding = math.max(1.0, (east360 - west360) * 0.04);
+    south = (south - latitudePadding).clamp(-85.0, 85.0);
+    north = (north + latitudePadding).clamp(-85.0, 85.0);
+    west360 -= longitudePadding;
+    east360 += longitudePadding;
+    if (east360 - west360 >= 359) {
+      return (
+        south: south,
+        west: -180.0,
+        north: north,
+        east: 180.0,
+        crossesAntimeridian: false,
+      );
+    }
+    final west = _normalizeLongitude(west360);
+    final east = _normalizeLongitude(east360);
+    return (
+      south: south,
+      west: west,
+      north: north,
+      east: east,
+      crossesAntimeridian: west > east,
+    );
   }
 
   Future<List<WorldCityEntry>> search(
@@ -117,7 +215,22 @@ class WorldCityDatabase {
   }
 
   Future<List<WorldCityEntry>> _load() async {
-    final raw = await rootBundle.loadString('assets/world_cities.tsv');
+    final sources = await Future.wait([
+      rootBundle.loadString('assets/world_cities.tsv'),
+      rootBundle.loadString('assets/country_names.json'),
+    ]);
+    final raw = sources[0];
+    final countryJson = jsonDecode(sources[1]);
+    if (countryJson is Map<String, dynamic>) {
+      _localizedCountryNames = countryJson.map(
+        (country, names) => MapEntry(
+          country,
+          names is Map<String, dynamic>
+              ? names.map((locale, name) => MapEntry(locale, '$name'))
+              : const <String, String>{},
+        ),
+      );
+    }
     final result = <WorldCityEntry>[];
     var first = true;
     for (final line in const LineSplitter().convert(raw)) {
@@ -126,7 +239,7 @@ class WorldCityDatabase {
         continue;
       }
       final parts = line.split('\t');
-      if (parts.length < 7) {
+      if (parts.length < 8) {
         continue;
       }
       final country = parts[0];
@@ -136,6 +249,7 @@ class WorldCityDatabase {
       final longitude = double.tryParse(parts[4]) ?? 0;
       final population = int.tryParse(parts[5]) ?? 0;
       final timezone = parts[6];
+      final localizedNames = parts[7];
       result.add(
         WorldCityEntry(
           country: country,
@@ -145,7 +259,10 @@ class WorldCityDatabase {
           longitude: longitude,
           population: population,
           timezone: timezone,
-          searchIndex: _normalize('$city $ascii $country $timezone'),
+          searchIndex: _normalize(
+            '$city $ascii $country $timezone $localizedNames',
+          ),
+          localizedNames: localizedNames,
         ),
       );
     }
@@ -184,9 +301,23 @@ class WorldCityDatabase {
   }
 }
 
+double _normalizeLongitude(double longitude) {
+  var value = (longitude + 180) % 360;
+  if (value < 0) value += 360;
+  return value - 180;
+}
+
 String _countrySearchName(String value) {
   if (value.isEmpty) {
     return value;
+  }
+  final normalized = WorldCityDatabase._normalize(value);
+  for (final entry in _localizedCountryNames.entries) {
+    if (entry.value.values.any(
+      (name) => WorldCityDatabase._normalize(name) == normalized,
+    )) {
+      return entry.key;
+    }
   }
   return _ruCountryNames.entries
           .where((entry) => entry.value == value)
@@ -194,6 +325,9 @@ String _countrySearchName(String value) {
           .firstOrNull ??
       value;
 }
+
+String _languageCode(String localeCode) =>
+    localeCode.toLowerCase().split(RegExp('[-_]')).first;
 
 class _ScoredCity {
   const _ScoredCity(this.city, this.score);

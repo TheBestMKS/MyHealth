@@ -13,6 +13,10 @@ void main() {
           distanceUnit: 'km',
           temperatureUnit: 'celsius',
           bodyWeightUnit: 'kg',
+          compactMode: false,
+          backgroundAnalysisEnabled: true,
+          launchAtStartup: true,
+          confirmBeforeExit: false,
         ),
         careProviders: const [
           CareProvider(
@@ -79,9 +83,17 @@ void main() {
           AssistantMessage(
             id: 'msg-1',
             createdAt: '2026-01-02T10:00:00',
-            role: 'assistant',
-            text: 'Check hydration.',
+            role: 'user',
+            text: 'Голосовое сообщение',
             relatedSection: 'today',
+            kind: 'voice',
+            transcript: 'Выпил 250 мл воды',
+            attachmentPath: 'media/voice-1.m4a',
+            attachmentName: 'voice-1.m4a',
+            mimeType: 'audio/mp4',
+            analysis: 'Распознан русский текст',
+            actionSummary: 'Вода добавлена',
+            durationSeconds: 7,
           ),
         ],
       );
@@ -89,11 +101,19 @@ void main() {
       final restored = HealthAppState.fromJson(state.toJson());
 
       expect(restored.settings.unitSystem, 'mixed');
+      expect(restored.settings.compactMode, isFalse);
+      expect(restored.settings.backgroundAnalysisEnabled, isTrue);
+      expect(restored.settings.launchAtStartup, isTrue);
+      expect(restored.settings.confirmBeforeExit, isFalse);
       expect(restored.careProviders.single.clinic, 'City clinic');
       expect(restored.medicalEvents.single.bodyArea, 'knee');
       expect(restored.medications.single.stockIsLow, isTrue);
       expect(restored.documents.single.tags, contains('cardio'));
       expect(restored.assistantMessages.single.relatedSection, 'today');
+      expect(restored.assistantMessages.single.kind, 'voice');
+      expect(restored.assistantMessages.single.transcript, 'Выпил 250 мл воды');
+      expect(restored.assistantMessages.single.durationSeconds, 7);
+      expect(restored.assistantMessages.single.hasAttachment, isTrue);
     },
   );
 }

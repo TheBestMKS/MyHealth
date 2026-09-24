@@ -155,8 +155,8 @@ class _ExercisesScreenState extends State<ExercisesScreen> {
                   (item) =>
                       query.isEmpty ||
                       item.titleFor(locale).toLowerCase().contains(query) ||
-                      item.focus.toLowerCase().contains(query) ||
-                      item.equipment.toLowerCase().contains(query),
+                      item.focusFor(locale).toLowerCase().contains(query) ||
+                      item.equipmentFor(locale).toLowerCase().contains(query),
                 )
                 .take(120)
                 .toList();
@@ -174,7 +174,7 @@ class _ExercisesScreenState extends State<ExercisesScreen> {
                     title:
                         '${item.titleFor(locale)} · ${item.minutes} ${AppText.get(locale, 'minShort')}',
                     subtitle:
-                        '${item.focus} · ${item.equipment} · ${item.level}\n${item.description}',
+                        '${item.focusFor(locale)} · ${item.equipmentFor(locale)} · ${item.level}\n${item.descriptionFor(locale)}',
                     onTap: () => _showWorkoutCatalogDetails(
                       context,
                       item,

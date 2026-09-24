@@ -12,6 +12,9 @@ include: package:flutter_lints/flutter.yaml
 analyzer:
   exclude:
     - tooling/**
+    # This is a separately maintained package with its own analyzer/test setup.
+    # The application imports its library code through a path dependency.
+    - third_party/lib_llama_cpp/test/**
 
 linter:
   # The lint rules applied to this project can be customized in the

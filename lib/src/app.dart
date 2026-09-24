@@ -1,16 +1,20 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/services.dart';
+import 'package:window_manager/window_manager.dart';
 
 import 'date_input.dart';
+import 'error_log_service.dart';
 import 'localization.dart';
 import 'location_catalog.dart';
 import 'model.dart';
 import 'navigation.dart';
 import 'notification_service.dart';
 import 'repository.dart';
+import 'runtime_service.dart';
 import 'screens.dart' hide Text;
 import 'vault_unlock_screen.dart';
 import 'widgets.dart';
@@ -26,21 +30,26 @@ class MyHealthApp extends StatefulWidget {
   State<MyHealthApp> createState() => _MyHealthAppState();
 }
 
-class _MyHealthAppState extends State<MyHealthApp> with WidgetsBindingObserver {
+class _MyHealthAppState extends State<MyHealthApp>
+    with WidgetsBindingObserver, WindowListener {
   HealthAppState? _state;
   Object? _loadError;
   bool _unlocked = false;
+  bool _closingWindow = false;
+  final _navigatorKey = GlobalKey<NavigatorState>();
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    if (_isDesktop) windowManager.addListener(this);
     _load();
   }
 
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    if (_isDesktop) windowManager.removeListener(this);
     super.dispose();
   }
 
@@ -70,8 +79,14 @@ class _MyHealthAppState extends State<MyHealthApp> with WidgetsBindingObserver {
         _state = normalized;
         _unlocked = !normalized.settings.pinEnabled;
       });
+      unawaited(AppRuntimeService.instance.apply(normalized.settings));
       unawaited(HealthNotificationService.instance.sync(normalized));
-    } catch (error) {
+    } catch (error, stackTrace) {
+      await ErrorLogService.instance.recordError(
+        error,
+        stackTrace,
+        source: 'Application state loading',
+      );
       if (!mounted) {
         return;
       }
@@ -85,7 +100,55 @@ class _MyHealthAppState extends State<MyHealthApp> with WidgetsBindingObserver {
   void _update(HealthAppState state) {
     setState(() => _state = state);
     unawaited(widget.repository.save(state));
+    unawaited(AppRuntimeService.instance.apply(state.settings));
     unawaited(HealthNotificationService.instance.sync(state));
+  }
+
+  bool get _isDesktop =>
+      Platform.isWindows || Platform.isLinux || Platform.isMacOS;
+
+  @override
+  void onWindowClose() {
+    if (!_closingWindow) unawaited(_requestExit(desktop: true));
+  }
+
+  Future<void> _requestExit({bool desktop = false}) async {
+    if (_closingWindow) return;
+    final settings = _state?.settings;
+    var accepted = settings?.confirmBeforeExit == false;
+    final dialogContext = _navigatorKey.currentContext;
+    if (!accepted && dialogContext != null) {
+      accepted =
+          await showDialog<bool>(
+            context: dialogContext,
+            builder: (context) => AlertDialog(
+              title: const LocalizedText('Выйти из приложения?'),
+              content: const LocalizedText(
+                'Напоминания останутся запланированными. Обычное сворачивание приложения подтверждения не требует.',
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context, false),
+                  child: const LocalizedText('Остаться'),
+                ),
+                FilledButton(
+                  onPressed: () => Navigator.pop(context, true),
+                  child: const LocalizedText('Выйти'),
+                ),
+              ],
+            ),
+          ) ??
+          false;
+    }
+    if (!accepted) return;
+    _closingWindow = true;
+    if (desktop && _isDesktop) {
+      await windowManager.setPreventClose(false);
+      await windowManager.destroy();
+      return;
+    }
+    await SystemNavigator.pop();
+    _closingWindow = false;
   }
 
   @override
@@ -93,6 +156,7 @@ class _MyHealthAppState extends State<MyHealthApp> with WidgetsBindingObserver {
     final state = _state;
     final localeCode = state?.localeCode ?? 'ru';
     return MaterialApp(
+      navigatorKey: _navigatorKey,
       title: AppText.get(localeCode, 'appName'),
       debugShowCheckedModeBanner: false,
       locale: Locale(localeCode),
@@ -106,11 +170,13 @@ class _MyHealthAppState extends State<MyHealthApp> with WidgetsBindingObserver {
         Brightness.light,
         state?.settings.highContrast ?? false,
         state?.settings.uiScale ?? 1,
+        state?.settings.compactMode ?? true,
       ),
       darkTheme: _theme(
         Brightness.dark,
         state?.settings.highContrast ?? false,
         state?.settings.uiScale ?? 1,
+        state?.settings.compactMode ?? true,
       ),
       themeMode: _themeMode(state?.settings.themeMode ?? 'system'),
       builder: (context, child) {
@@ -127,20 +193,26 @@ class _MyHealthAppState extends State<MyHealthApp> with WidgetsBindingObserver {
         );
       },
       home: state == null
-          ? LoadingScreen(localeCode: localeCode)
+          ? LoadingScreen(
+              localeCode: localeCode,
+              onExitRequested: () => _requestExit(),
+            )
           : state.onboardingComplete
           ? state.settings.pinEnabled && !_unlocked
                 ? VaultUnlockScreen(
                     state: state,
                     onUnlocked: () => setState(() => _unlocked = true),
+                    onExitRequested: () => _requestExit(),
                   )
                 : MyHealthShell(
                     state: state,
                     onChanged: _update,
+                    onExitRequested: () => _requestExit(),
                     loadError: _loadError,
                   )
           : OnboardingFlow(
               state: state,
+              onExitRequested: () => _requestExit(),
               onComplete: (updated) =>
                   _update(updated.copyWith(onboardingComplete: true)),
             ),
@@ -149,27 +221,38 @@ class _MyHealthAppState extends State<MyHealthApp> with WidgetsBindingObserver {
 }
 
 class LoadingScreen extends StatelessWidget {
-  const LoadingScreen({super.key, required this.localeCode});
+  const LoadingScreen({
+    super.key,
+    required this.localeCode,
+    required this.onExitRequested,
+  });
 
   final String localeCode;
+  final Future<void> Function() onExitRequested;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 360),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const CircularProgressIndicator(),
-              const SizedBox(height: 18),
-              LocalizedText(
-                AppText.get(localeCode, 'loading'),
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-            ],
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop) unawaited(onExitRequested());
+      },
+      child: Scaffold(
+        body: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 360),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const CircularProgressIndicator(),
+                const SizedBox(height: 18),
+                LocalizedText(
+                  AppText.get(localeCode, 'loading'),
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -182,11 +265,13 @@ class MyHealthShell extends StatefulWidget {
     super.key,
     required this.state,
     required this.onChanged,
+    required this.onExitRequested,
     this.loadError,
   });
 
   final HealthAppState state;
   final HealthStateChanged onChanged;
+  final Future<void> Function() onExitRequested;
   final Object? loadError;
 
   @override
@@ -195,6 +280,7 @@ class MyHealthShell extends StatefulWidget {
 
 class _MyHealthShellState extends State<MyHealthShell> {
   AppSection _selected = AppSection.today;
+  final List<AppSection> _sectionHistory = [];
   final _reportService = ReportService();
 
   @override
@@ -249,7 +335,20 @@ class _MyHealthShellState extends State<MyHealthShell> {
   }
 
   void _select(AppSection section) {
-    setState(() => _selected = section);
+    if (section == _selected) return;
+    setState(() {
+      _sectionHistory.add(_selected);
+      if (_sectionHistory.length > 80) _sectionHistory.removeAt(0);
+      _selected = section;
+    });
+  }
+
+  Future<void> _goBack() async {
+    if (_sectionHistory.isNotEmpty) {
+      setState(() => _selected = _sectionHistory.removeLast());
+      return;
+    }
+    await widget.onExitRequested();
   }
 
   @override
@@ -265,98 +364,148 @@ class _MyHealthShellState extends State<MyHealthShell> {
       _select,
     );
 
-    return Scaffold(
-      appBar: AppBar(
-        title: LocalizedText(sectionInfo(_selected).label(locale)),
-        actions: [
-          LocalizedIconButton(
-            tooltip: AppText.get(locale, 'search'),
-            onPressed: () => showGlobalSearch(context, state, _select),
-            icon: const Icon(Icons.search),
-          ),
-          LocalizedIconButton(
-            tooltip: AppText.get(locale, 'quickAdd'),
-            onPressed: () =>
-                showQuickAddDialog(context, state, widget.onChanged),
-            icon: const Icon(Icons.add_circle_outline),
-          ),
-          LocalizedIconButton(
-            tooltip: AppText.get(locale, 'exportPdf'),
-            onPressed: () => _exportPdf(context),
-            icon: const Icon(Icons.picture_as_pdf_outlined),
-          ),
-          LocalizedIconButton(
-            tooltip: AppText.get(locale, 'theme'),
-            onPressed: () {
-              final next = state.settings.themeMode == 'dark'
-                  ? 'light'
-                  : 'dark';
-              widget.onChanged(
-                state.copyWith(
-                  settings: state.settings.copyWith(themeMode: next),
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop) unawaited(_goBack());
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: LocalizedText(sectionInfo(_selected).label(locale)),
+          actions: [
+            if (useRail)
+              LocalizedIconButton.filledTonal(
+                tooltip: 'Добавить или спросить',
+                onPressed: () => showUniversalCaptureSheet(
+                  context,
+                  state,
+                  widget.onChanged,
+                  _select,
                 ),
-              );
-            },
-            icon: Icon(
-              state.settings.themeMode == 'dark'
-                  ? Icons.light_mode_outlined
-                  : Icons.dark_mode_outlined,
+                icon: const Icon(Icons.add),
+              ),
+            PopupMenuButton<_ShellAction>(
+              tooltip: 'Инструменты',
+              icon: const Icon(Icons.more_vert),
+              onSelected: (action) => _handleShellAction(context, action),
+              itemBuilder: (context) => [
+                PopupMenuItem(
+                  value: _ShellAction.search,
+                  child: ListTile(
+                    leading: const Icon(Icons.search),
+                    title: LocalizedText(AppText.get(locale, 'search')),
+                  ),
+                ),
+                PopupMenuItem(
+                  value: _ShellAction.manualEntry,
+                  child: ListTile(
+                    leading: const Icon(Icons.tune_outlined),
+                    title: LocalizedText(AppText.get(locale, 'quickAdd')),
+                  ),
+                ),
+                PopupMenuItem(
+                  value: _ShellAction.exportPdf,
+                  child: ListTile(
+                    leading: const Icon(Icons.picture_as_pdf_outlined),
+                    title: LocalizedText(AppText.get(locale, 'exportPdf')),
+                  ),
+                ),
+                PopupMenuItem(
+                  value: _ShellAction.theme,
+                  child: ListTile(
+                    leading: Icon(
+                      state.settings.themeMode == 'dark'
+                          ? Icons.light_mode_outlined
+                          : Icons.dark_mode_outlined,
+                    ),
+                    title: LocalizedText(AppText.get(locale, 'theme')),
+                  ),
+                ),
+              ],
             ),
-          ),
-          const SizedBox(width: 6),
-        ],
-      ),
-      body: Row(
-        children: [
-          if (useRail)
-            _DesktopNavigation(
-              state: state,
-              selected: _selected,
-              onSelect: _select,
-            ),
-          Expanded(
-            child: Stack(
-              children: [
-                Positioned.fill(child: body),
-                if (widget.loadError != null)
-                  Positioned(
-                    left: 16,
-                    right: 16,
-                    bottom: 16,
-                    child: Material(
-                      color: Theme.of(context).colorScheme.errorContainer,
-                      borderRadius: BorderRadius.circular(8),
-                      child: Padding(
-                        padding: const EdgeInsets.all(12),
-                        child: LocalizedText(
-                          'Vault был восстановлен из безопасного начального состояния.',
-                          style: Theme.of(context).textTheme.bodySmall,
+            const SizedBox(width: 6),
+          ],
+        ),
+        body: Row(
+          children: [
+            if (useRail)
+              _DesktopNavigation(
+                state: state,
+                selected: _selected,
+                onSelect: _select,
+              ),
+            Expanded(
+              child: Stack(
+                children: [
+                  Positioned.fill(child: body),
+                  if (widget.loadError != null)
+                    Positioned(
+                      left: 16,
+                      right: 16,
+                      bottom: 16,
+                      child: Material(
+                        color: Theme.of(context).colorScheme.errorContainer,
+                        borderRadius: BorderRadius.circular(8),
+                        child: Padding(
+                          padding: const EdgeInsets.all(12),
+                          child: LocalizedText(
+                            'Vault был восстановлен из безопасного начального состояния.',
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
+        bottomNavigationBar: useRail
+            ? null
+            : _MobileNavigation(
+                state: state,
+                selected: _selected,
+                onSelect: _select,
+                onMore: () => _showMoreSheet(context),
+              ),
+        floatingActionButton: useRail
+            ? null
+            : FloatingActionButton(
+                tooltip: 'Добавить или спросить',
+                onPressed: () => showUniversalCaptureSheet(
+                  context,
+                  state,
+                  widget.onChanged,
+                  _select,
+                ),
+                child: const Icon(Icons.add),
+              ),
       ),
-      bottomNavigationBar: useRail
-          ? null
-          : _MobileNavigation(
-              state: state,
-              selected: _selected,
-              onSelect: _select,
-              onMore: () => _showMoreSheet(context),
-            ),
-      floatingActionButton: useRail
-          ? null
-          : FloatingActionButton(
-              tooltip: AppText.get(locale, 'quickAdd'),
-              onPressed: () =>
-                  showQuickAddDialog(context, state, widget.onChanged),
-              child: const Icon(Icons.add),
-            ),
     );
+  }
+
+  Future<void> _handleShellAction(
+    BuildContext context,
+    _ShellAction action,
+  ) async {
+    switch (action) {
+      case _ShellAction.search:
+        await showGlobalSearch(context, widget.state, _select);
+        return;
+      case _ShellAction.manualEntry:
+        await showQuickAddDialog(context, widget.state, widget.onChanged);
+        return;
+      case _ShellAction.exportPdf:
+        await _exportPdf(context);
+        return;
+      case _ShellAction.theme:
+        final state = widget.state;
+        final next = state.settings.themeMode == 'dark' ? 'light' : 'dark';
+        widget.onChanged(
+          state.copyWith(settings: state.settings.copyWith(themeMode: next)),
+        );
+        return;
+    }
   }
 
   Future<void> _exportPdf(BuildContext context) async {
@@ -369,7 +518,12 @@ class _MyHealthShellState extends State<MyHealthShell> {
       messenger.showSnackBar(
         SnackBar(content: LocalizedText('PDF-отчёт создан: ${file.path}')),
       );
-    } catch (error) {
+    } catch (error, stackTrace) {
+      await ErrorLogService.instance.recordError(
+        error,
+        stackTrace,
+        source: 'PDF report export',
+      );
       if (!context.mounted) {
         return;
       }
@@ -412,6 +566,8 @@ class _MyHealthShellState extends State<MyHealthShell> {
     );
   }
 }
+
+enum _ShellAction { search, manualEntry, exportPdf, theme }
 
 class _DesktopNavigation extends StatelessWidget {
   const _DesktopNavigation({
@@ -535,10 +691,12 @@ class OnboardingFlow extends StatefulWidget {
     super.key,
     required this.state,
     required this.onComplete,
+    required this.onExitRequested,
   });
 
   final HealthAppState state;
   final HealthStateChanged onComplete;
+  final Future<void> Function() onExitRequested;
 
   @override
   State<OnboardingFlow> createState() => _OnboardingFlowState();
@@ -632,81 +790,92 @@ class _OnboardingFlowState extends State<OnboardingFlow> {
   @override
   Widget build(BuildContext context) {
     final locale = _draft.localeCode;
-    return Scaffold(
-      appBar: AppBar(
-        title: LocalizedText(AppText.get(locale, 'onboardingTitle')),
-        actions: [
-          TextButton(
-            onPressed: () => widget.onComplete(_commitControllers(_draft)),
-            child: LocalizedText(AppText.get(locale, 'skipOptional')),
-          ),
-        ],
-      ),
-      body: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 760),
-          child: ListView(
-            padding: const EdgeInsets.fromLTRB(18, 12, 18, 32),
-            children: [
-              LocalizedText(
-                AppText.get(locale, 'onboardingSubtitle'),
-                style: Theme.of(context).textTheme.bodyLarge,
-              ),
-              const SizedBox(height: 16),
-              LinearProgressIndicator(
-                value: (_step + 1) / _steps.length,
-                minHeight: 8,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              const SizedBox(height: 16),
-              LocalizedText(
-                '${_step + 1}/${_steps.length} · ${_steps[_step]}',
-                style: Theme.of(context).textTheme.headlineSmall,
-              ),
-              const SizedBox(height: 18),
-              AnimatedSwitcher(
-                duration: const Duration(milliseconds: 180),
-                child: KeyedSubtree(
-                  key: ValueKey(_step),
-                  child: _stepContent(context),
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        if (didPop) return;
+        if (_step > 0) {
+          setState(() => _step--);
+        } else {
+          unawaited(widget.onExitRequested());
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: LocalizedText(AppText.get(locale, 'onboardingTitle')),
+          actions: [
+            TextButton(
+              onPressed: () => widget.onComplete(_commitControllers(_draft)),
+              child: LocalizedText(AppText.get(locale, 'skipOptional')),
+            ),
+          ],
+        ),
+        body: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 760),
+            child: ListView(
+              padding: const EdgeInsets.fromLTRB(18, 12, 18, 32),
+              children: [
+                LocalizedText(
+                  AppText.get(locale, 'onboardingSubtitle'),
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
-              ),
-              const SizedBox(height: 24),
-              Row(
-                children: [
-                  if (_step > 0)
-                    OutlinedButton.icon(
-                      onPressed: () => setState(() => _step--),
-                      icon: const Icon(Icons.arrow_back),
-                      label: LocalizedText(AppText.get(locale, 'back')),
-                    ),
-                  const Spacer(),
-                  FilledButton.icon(
-                    onPressed: () {
-                      final committed = _commitControllers(_draft);
-                      if (_step == _steps.length - 1) {
-                        widget.onComplete(committed);
-                        return;
-                      }
-                      setState(() {
-                        _draft = committed;
-                        _step++;
-                      });
-                    },
-                    icon: Icon(
-                      _step == _steps.length - 1
-                          ? Icons.check
-                          : Icons.arrow_forward,
-                    ),
-                    label: LocalizedText(
-                      _step == _steps.length - 1
-                          ? AppText.get(locale, 'finish')
-                          : AppText.get(locale, 'next'),
-                    ),
+                const SizedBox(height: 16),
+                LinearProgressIndicator(
+                  value: (_step + 1) / _steps.length,
+                  minHeight: 8,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                const SizedBox(height: 16),
+                LocalizedText(
+                  '${_step + 1}/${_steps.length} · ${_steps[_step]}',
+                  style: Theme.of(context).textTheme.headlineSmall,
+                ),
+                const SizedBox(height: 18),
+                AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 180),
+                  child: KeyedSubtree(
+                    key: ValueKey(_step),
+                    child: _stepContent(context),
                   ),
-                ],
-              ),
-            ],
+                ),
+                const SizedBox(height: 24),
+                Row(
+                  children: [
+                    if (_step > 0)
+                      OutlinedButton.icon(
+                        onPressed: () => setState(() => _step--),
+                        icon: const Icon(Icons.arrow_back),
+                        label: LocalizedText(AppText.get(locale, 'back')),
+                      ),
+                    const Spacer(),
+                    FilledButton.icon(
+                      onPressed: () {
+                        final committed = _commitControllers(_draft);
+                        if (_step == _steps.length - 1) {
+                          widget.onComplete(committed);
+                          return;
+                        }
+                        setState(() {
+                          _draft = committed;
+                          _step++;
+                        });
+                      },
+                      icon: Icon(
+                        _step == _steps.length - 1
+                            ? Icons.check
+                            : Icons.arrow_forward,
+                      ),
+                      label: LocalizedText(
+                        _step == _steps.length - 1
+                            ? AppText.get(locale, 'finish')
+                            : AppText.get(locale, 'next'),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -1828,6 +1997,7 @@ class _WorldCityPickerDialogState extends State<_WorldCityPickerDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final localeCode = Localizations.localeOf(context).languageCode;
     return AlertDialog(
       title: const LocalizedText('Мировая база городов'),
       content: SizedBox(
@@ -1852,7 +2022,12 @@ class _WorldCityPickerDialogState extends State<_WorldCityPickerDialog> {
                 for (final country in _countries)
                   DropdownMenuItem(
                     value: country,
-                    child: LocalizedText(country),
+                    child: LocalizedText(
+                      WorldCityDatabase.instance.displayCountryName(
+                        country,
+                        localeCode,
+                      ),
+                    ),
                   ),
               ],
               onChanged: (value) {
@@ -1899,11 +2074,13 @@ class _WorldCityPickerDialogState extends State<_WorldCityPickerDialog> {
                 itemCount: _results.length,
                 itemBuilder: (context, index) {
                   final city = _results[index];
-                  final climate = city.toCityClimate();
+                  final climate = city.toCityClimate(localeCode: localeCode);
                   final profile = climateProfileFor(city.latitude);
                   return ListTile(
                     leading: const Icon(Icons.location_city_outlined),
-                    title: LocalizedText('${city.city}, ${city.country}'),
+                    title: LocalizedText(
+                      '${city.displayName(localeCode)}, ${city.displayCountry(localeCode)}',
+                    ),
                     subtitle: LocalizedText(
                       'Население ${city.population} · ${city.latitude.toStringAsFixed(3)}, ${city.longitude.toStringAsFixed(3)} · ${city.timezone}\n${profile.solarPhenomena.join(', ')} · день ${profile.shortestDay}-${profile.longestDay}',
                     ),
@@ -1947,7 +2124,12 @@ extension on NavigationDrawerDestination {
   }
 }
 
-ThemeData _theme(Brightness brightness, bool highContrast, double uiScale) {
+ThemeData _theme(
+  Brightness brightness,
+  bool highContrast,
+  double uiScale,
+  bool compactMode,
+) {
   final scheme = ColorScheme.fromSeed(
     seedColor: Colors.teal,
     brightness: brightness,
@@ -1958,15 +2140,17 @@ ThemeData _theme(Brightness brightness, bool highContrast, double uiScale) {
     scaffoldBackgroundColor: brightness == Brightness.dark
         ? const Color(0xFF111715)
         : const Color(0xFFF6F8F7),
-    visualDensity: VisualDensity.standard,
+    visualDensity: compactMode ? VisualDensity.compact : VisualDensity.standard,
   );
   final radius = BorderRadius.circular(8 * uiScale);
   return base.copyWith(
     dividerColor: highContrast ? scheme.outline : scheme.outlineVariant,
     iconTheme: IconThemeData(size: 24 * uiScale),
     listTileTheme: ListTileThemeData(
-      minVerticalPadding: 4 * uiScale,
-      contentPadding: EdgeInsets.symmetric(horizontal: 16 * uiScale),
+      minVerticalPadding: (compactMode ? 1 : 4) * uiScale,
+      contentPadding: EdgeInsets.symmetric(
+        horizontal: (compactMode ? 12 : 16) * uiScale,
+      ),
     ),
     filledButtonTheme: FilledButtonThemeData(
       style: FilledButton.styleFrom(

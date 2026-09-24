@@ -312,30 +312,49 @@ class MedicinesScreen extends StatelessWidget {
     return PageBand(
       title: AppText.get(state.localeCode, 'medicines'),
       subtitle: 'Расписание, отметки приёма и напоминания',
-      trailing: Wrap(
-        spacing: 8,
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          LocalizedIconButton.filledTonal(
-            tooltip: 'Сфотографировать рецепт',
-            onPressed: () =>
-                _importPrescription(context, state, onChanged, camera: true),
-            icon: const Icon(Icons.document_scanner_outlined),
+          PopupMenuButton<String>(
+            tooltip: 'Действия с лекарствами',
+            icon: const Icon(Icons.more_horiz),
+            onSelected: (value) {
+              if (value == 'camera') {
+                _importPrescription(context, state, onChanged, camera: true);
+              } else if (value == 'file') {
+                _importPrescription(context, state, onChanged, camera: false);
+              } else if (value == 'intake') {
+                _addMedicationIntake(context, state, onChanged);
+              }
+            },
+            itemBuilder: (context) => const [
+              PopupMenuItem(
+                value: 'camera',
+                child: ListTile(
+                  leading: Icon(Icons.document_scanner_outlined),
+                  title: Text('Сфотографировать рецепт'),
+                ),
+              ),
+              PopupMenuItem(
+                value: 'file',
+                child: ListTile(
+                  leading: Icon(Icons.upload_file_outlined),
+                  title: Text('Импортировать назначение'),
+                ),
+              ),
+              PopupMenuItem(
+                value: 'intake',
+                child: ListTile(
+                  leading: Icon(Icons.check_circle_outline),
+                  title: Text('Отметить приём'),
+                ),
+              ),
+            ],
           ),
-          LocalizedIconButton.filledTonal(
-            tooltip: 'Импортировать рецепт или назначение',
-            onPressed: () =>
-                _importPrescription(context, state, onChanged, camera: false),
-            icon: const Icon(Icons.upload_file_outlined),
-          ),
-          FilledButton.tonalIcon(
-            onPressed: () => _addMedicationIntake(context, state, onChanged),
-            icon: const Icon(Icons.check_circle_outline),
-            label: const Text('Приём'),
-          ),
-          FilledButton.icon(
+          LocalizedIconButton.filled(
+            tooltip: 'Добавить лекарство',
             onPressed: () => _addMedication(context, state, onChanged),
             icon: const Icon(Icons.add),
-            label: const Text('Лекарство'),
           ),
         ],
       ),
@@ -398,36 +417,37 @@ class MedicinesScreen extends StatelessWidget {
                 );
               },
             ),
-            trailing: Wrap(
-              spacing: 2,
-              crossAxisAlignment: WrapCrossAlignment.center,
-              children: [
-                LocalizedIconButton(
-                  tooltip: 'Принято',
-                  onPressed: () => onChanged(
-                    _setMedicationIntakeStatusToday(state, item, 'принято'),
+            trailing: PopupMenuButton<String>(
+              tooltip: 'Статус приёма',
+              icon: Icon(
+                state.medicationTakenOnDate(item, state.today.date)
+                    ? Icons.check_circle
+                    : Icons.more_vert,
+              ),
+              onSelected: (status) => onChanged(
+                _setMedicationIntakeStatusToday(state, item, status),
+              ),
+              itemBuilder: (context) => const [
+                PopupMenuItem(
+                  value: 'принято',
+                  child: ListTile(
+                    leading: Icon(Icons.check_circle_outline),
+                    title: Text('Принято'),
                   ),
-                  icon: const Icon(Icons.check_circle_outline),
                 ),
-                LocalizedIconButton(
-                  tooltip: 'Перенесено',
-                  onPressed: () => onChanged(
-                    _setMedicationIntakeStatusToday(state, item, 'перенесено'),
+                PopupMenuItem(
+                  value: 'перенесено',
+                  child: ListTile(
+                    leading: Icon(Icons.schedule_send_outlined),
+                    title: Text('Перенесено'),
                   ),
-                  icon: const Icon(Icons.schedule_send_outlined),
                 ),
-                LocalizedIconButton(
-                  tooltip: 'Пропущено',
-                  onPressed: () => onChanged(
-                    _setMedicationIntakeStatusToday(state, item, 'пропущено'),
+                PopupMenuItem(
+                  value: 'пропущено',
+                  child: ListTile(
+                    leading: Icon(Icons.remove_circle_outline),
+                    title: Text('Пропущено'),
                   ),
-                  icon: const Icon(Icons.remove_circle_outline),
-                ),
-                Checkbox(
-                  value: state.medicationTakenOnDate(item, state.today.date),
-                  onChanged: (value) {
-                    onChanged(_toggleMedicationIntakeToday(state, item, value));
-                  },
                 ),
               ],
             ),

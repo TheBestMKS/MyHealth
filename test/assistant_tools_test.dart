@@ -84,4 +84,81 @@ void main() {
     expect(result.state.meals.single.carbs, 55);
     expect(result.state.today.calories, 350);
   });
+
+  test('Russian alarm command creates a smart math alarm', () {
+    final result = engine.execute(
+      HealthAppState.seed(),
+      'Поставь важный будильник на 06:45 по будням с математической задачей',
+    );
+
+    expect(result, isNotNull);
+    expect(result!.state.alarmGroups.single.wakeTime, '06:45');
+    expect(result.state.alarmGroups.single.days, 'пн, вт, ср, чт, пт');
+    expect(result.state.alarmGroups.single.priority, 3);
+    expect(result.state.alarmGroups.single.unlockMode, 'math');
+  });
+
+  test('generic Russian lab command stores value, unit and reference', () {
+    final state = HealthAppState.seed();
+    final result = const AssistantToolEngine().execute(
+      state,
+      'Запиши анализ гемоглобин 108 г/л, норма 120-160',
+    );
+
+    expect(result, isNotNull);
+    expect(result!.relatedSection, 'labs');
+    expect(result.state.labResults.single.marker, 'Гемоглобин');
+    expect(result.state.labResults.single.value, '108');
+    expect(result.state.labResults.single.unit, 'г/л');
+    expect(result.state.labResults.single.reference, '120-160');
+    expect(result.state.labResults.single.needsAttention, isTrue);
+  });
+
+  test('voice activity command updates the day and completed sessions', () {
+    final state = HealthAppState.seed();
+    final result = const AssistantToolEngine().execute(
+      state,
+      'Запиши активность 35 минут',
+    );
+
+    expect(result, isNotNull);
+    expect(result!.relatedSection, 'workouts');
+    expect(result.state.today.workoutMinutes, 35);
+    expect(result.state.today.activeCalories, 140);
+    expect(result.state.workouts.single.status, 'completed');
+    expect(result.state.workouts.single.mode, 'manual-activity');
+  });
+
+  test('Russian completed workout command updates activity totals', () {
+    final result = engine.execute(
+      HealthAppState.seed(),
+      'Запиши: пробежал 5 км, тренировка 30 минут, 320 ккал',
+    );
+
+    expect(result, isNotNull);
+    expect(result!.state.workouts.single.status, 'completed');
+    expect(result.state.workouts.single.distanceMeters, 5000);
+    expect(result.state.workouts.single.caloriesBurned, 320);
+    expect(result.state.today.workoutMinutes, 30);
+    expect(result.state.today.activeCalories, 320);
+  });
+
+  test(
+    'Russian prescription command queues confirmation before scheduling',
+    () {
+      final result = engine.execute(
+        HealthAppState.seed(),
+        'Врач назначил метформин 500 мг 2 раза в день после еды',
+      );
+
+      expect(result, isNotNull);
+      expect(result!.state.confirmationQueue, isNotEmpty);
+      expect(
+        result.state.confirmationQueue.first.requiresMedicalReview,
+        isTrue,
+      );
+      expect(result.state.confirmationQueue.first.kind, 'voice-prescription');
+      expect(result.relatedSection, 'medicines');
+    },
+  );
 }

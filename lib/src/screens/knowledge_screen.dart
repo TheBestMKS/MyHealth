@@ -215,7 +215,7 @@ class _KnowledgeScreenState extends State<KnowledgeScreen> {
         final query = _query.toLowerCase();
         final matches = foods.where((item) {
           if (query.isEmpty) return true;
-          return '${item.titleRu} ${item.titleEn} ${item.category} ${item.kind} ${item.composition}'
+          return '${item.titleRu} ${item.titleEn} ${item.categoryFor(widget.state.localeCode)} ${item.kindFor(widget.state.localeCode)} ${item.compositionFor(widget.state.localeCode)}'
               .toLowerCase()
               .contains(query);
         }).toList();
@@ -236,7 +236,7 @@ class _KnowledgeScreenState extends State<KnowledgeScreen> {
                     : Icons.warning_amber_outlined,
                 title: item.titleFor(widget.state.localeCode),
                 subtitle:
-                    '${item.category} · ${item.calories} ккал · Б/Ж/У ${item.protein}/${item.fat}/${item.carbs}'
+                    '${item.categoryFor(widget.state.localeCode)} · ${item.calories} ккал · Б/Ж/У ${item.protein}/${item.fat}/${item.carbs}'
                     '${allergen.isEmpty ? '' : '\nВозможное совпадение с аллергией: $allergen'}',
                 trailing: Pill(
                   label: '${item.healthLevel}/10',
@@ -274,7 +274,7 @@ class _KnowledgeScreenState extends State<KnowledgeScreen> {
         final query = _query.toLowerCase();
         final matches = workouts.where((item) {
           if (query.isEmpty) return true;
-          return '${item.titleRu} ${item.titleEn} ${item.focus} ${item.equipment} ${item.description}'
+          return '${item.titleRu} ${item.titleEn} ${item.focusFor(widget.state.localeCode)} ${item.equipmentFor(widget.state.localeCode)} ${item.descriptionFor(widget.state.localeCode)}'
               .toLowerCase()
               .contains(query);
         }).toList();
@@ -295,7 +295,7 @@ class _KnowledgeScreenState extends State<KnowledgeScreen> {
                     : Icons.warning_amber_outlined,
                 title: item.titleFor(widget.state.localeCode),
                 subtitle:
-                    '${item.focus} · ${item.equipment} · ${item.minutes} мин · ${item.calories} ккал'
+                    '${item.focusFor(widget.state.localeCode)} · ${item.equipmentFor(widget.state.localeCode)} · ${item.minutes} мин · ${item.calories} ккал'
                     '${warning.isEmpty ? '' : '\n$warning'}',
                 onTap: () => _showWorkoutCatalogDetails(
                   context,
@@ -410,7 +410,7 @@ class _KnowledgeScreenState extends State<KnowledgeScreen> {
 
   String _foodAllergy(FoodCatalogItem item) {
     final text =
-        '${item.titleRu} ${item.titleEn} ${item.composition} ${item.ingredients}'
+        '${item.titleRu} ${item.titleEn} ${item.composition} ${item.compositionRu} ${item.ingredients} ${item.ingredientsRu}'
             .toLowerCase();
     return widget.state.allergies.firstWhere((allergy) {
       final value = allergy.toLowerCase().trim();
@@ -419,8 +419,9 @@ class _KnowledgeScreenState extends State<KnowledgeScreen> {
   }
 
   String _workoutPersonalWarning(WorkoutCatalogItem item) {
-    final text = '${item.focus} ${item.requirements} ${item.warnings}'
-        .toLowerCase();
+    final text =
+        '${item.focus} ${item.focusRu} ${item.requirements} ${item.requirementsRu} ${item.warnings} ${item.warningsRu}'
+            .toLowerCase();
     final match = widget.state.contraindications.firstWhere((value) {
       final term = value.toLowerCase().trim();
       return term.length >= 4 && text.contains(term);

@@ -102,7 +102,12 @@ class _HealthPlatformPanelState extends State<HealthPlatformPanel> {
         _error = null;
         _availability = _service.checkAvailability();
       });
-    } catch (error) {
+    } catch (error, stackTrace) {
+      await ErrorLogService.instance.recordError(
+        error,
+        stackTrace,
+        source: 'Health platform authorization',
+      );
       if (mounted) setState(() => _error = '$error');
     }
   }
@@ -181,7 +186,12 @@ class _HealthPlatformPanelState extends State<HealthPlatformPanel> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Данные ${result.provider} синхронизированы.')),
       );
-    } catch (error) {
+    } catch (error, stackTrace) {
+      await ErrorLogService.instance.recordError(
+        error,
+        stackTrace,
+        source: 'Health platform synchronization',
+      );
       if (mounted) setState(() => _error = _healthErrorText(error));
     } finally {
       if (mounted) setState(() => _syncing = false);

@@ -1,13 +1,18 @@
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:archive/archive.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_tesseract_ocr/flutter_tesseract_ocr.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image/image.dart' as image_lib;
+import 'package:mime/mime.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdfrx/pdfrx.dart';
+import 'package:xml/xml.dart';
 
+import 'error_log_service.dart';
 import 'food_recognition_service.dart';
 import 'model.dart';
 import 'prescription_parser.dart';
@@ -22,6 +27,28 @@ class ImportedMedia {
   final String path;
   final String name;
   final String kind;
+}
+
+class AttachmentAnalysis {
+  const AttachmentAnalysis({
+    required this.media,
+    required this.mimeType,
+    required this.extractedText,
+    required this.description,
+    required this.thumbnailPath,
+    required this.originalBytes,
+    required this.storedBytes,
+  });
+
+  final ImportedMedia media;
+  final String mimeType;
+  final String extractedText;
+  final String description;
+  final String thumbnailPath;
+  final int originalBytes;
+  final int storedBytes;
+
+  bool get isImage => mimeType.startsWith('image/');
 }
 
 class MediaImportService {
@@ -85,6 +112,25 @@ class MediaImportService {
     return _persistBytes(bytes, file.name, kind);
   }
 
+  Future<ImportedMedia?> pickAnyFile({String kind = 'attachment'}) async {
+    final override = _filePicker;
+    if (override != null) return override(kind: kind);
+    final result = await FilePicker.platform.pickFiles(
+      type: FileType.any,
+      allowMultiple: false,
+      withData: kIsWeb,
+    );
+    final file = result?.files.single;
+    if (file == null) return null;
+    if (file.path != null && file.path!.isNotEmpty) {
+      return _persist(File(file.path!), file.name, kind);
+    }
+    if (file.bytes != null) {
+      return _persistBytes(file.bytes!, file.name, kind);
+    }
+    return null;
+  }
+
   Future<ImportedMedia?> captureCameraImage() async {
     try {
       final image = await _picker.pickImage(source: ImageSource.camera);
@@ -92,10 +138,50 @@ class MediaImportService {
         return null;
       }
       return _persist(File(image.path), image.name, 'camera');
-    } catch (_) {
+    } catch (error, stackTrace) {
+      await ErrorLogService.instance.recordError(
+        error,
+        stackTrace,
+        source: 'Camera capture; falling back to file picker',
+      );
       return pickImageFile(kind: 'camera-fallback');
     }
   }
+
+  Future<AttachmentAnalysis> prepareAttachment(ImportedMedia source) async {
+    final originalBytes = await File(source.path).length();
+    final optimized = _isLikelyImage(source.name)
+        ? await _optimizeImage(source)
+        : source;
+    final mimeType =
+        lookupMimeType(
+          optimized.name,
+          headerBytes: await _headerBytes(optimized.path),
+        ) ??
+        'application/octet-stream';
+    final extractedText = await _extractLocalText(optimized);
+    final thumbnailPath = _isLikelyImage(optimized.name)
+        ? await _createThumbnail(optimized)
+        : '';
+    final storedBytes = await File(optimized.path).length();
+    final description = _attachmentDescription(
+      optimized,
+      mimeType,
+      extractedText,
+    );
+    return AttachmentAnalysis(
+      media: optimized,
+      mimeType: mimeType,
+      extractedText: extractedText,
+      description: description,
+      thumbnailPath: thumbnailPath,
+      originalBytes: originalBytes,
+      storedBytes: storedBytes,
+    );
+  }
+
+  Future<String> extractLocalText(ImportedMedia media) =>
+      _extractLocalText(media);
 
   Future<RecognitionCandidate?> importForRecognition({
     required String source,
@@ -119,6 +205,18 @@ class MediaImportService {
     if (media == null) {
       return const [];
     }
+    return recognizeExistingMedia(
+      media,
+      source: source,
+      requiresMedicalReview: requiresMedicalReview,
+    );
+  }
+
+  Future<List<RecognitionCandidate>> recognizeExistingMedia(
+    ImportedMedia media, {
+    required String source,
+    required bool requiresMedicalReview,
+  }) async {
     final extractedText = await _extractLocalText(media);
     final parsedMetadata = requiresMedicalReview
         ? _labMetadataList(extractedText)
@@ -156,7 +254,12 @@ class MediaImportService {
                 ),
           };
         }
-      } catch (error) {
+      } catch (error, stackTrace) {
+        await ErrorLogService.instance.recordError(
+          error,
+          stackTrace,
+          source: 'Food image recognition',
+        );
         metadata['visualStatus'] =
             'Визуальный анализ не выполнен: ${_shortError(error)}';
       }
@@ -187,6 +290,12 @@ class MediaImportService {
   }) async {
     final media = camera ? await captureCameraImage() : await pickImageFile();
     if (media == null) return const [];
+    return recognizeExistingPrescription(media);
+  }
+
+  Future<List<RecognitionCandidate>> recognizeExistingPrescription(
+    ImportedMedia media,
+  ) async {
     final extractedText = await _extractLocalText(media);
     final drafts = parsePrescriptionText(extractedText);
     return [
@@ -261,15 +370,167 @@ class MediaImportService {
     );
   }
 
+  Future<List<int>> _headerBytes(String path) async {
+    final file = File(path);
+    if (!await file.exists()) return const [];
+    final reader = await file.open();
+    try {
+      return reader.read(32);
+    } finally {
+      await reader.close();
+    }
+  }
+
+  Future<ImportedMedia> _optimizeImage(ImportedMedia media) async {
+    final source = File(media.path);
+    try {
+      final original = await source.readAsBytes();
+      var decoded = image_lib.decodeImage(original);
+      if (decoded == null) return media;
+      decoded = image_lib.bakeOrientation(decoded);
+      const maxSide = 2048;
+      if (decoded.width > maxSide || decoded.height > maxSide) {
+        final landscape = decoded.width >= decoded.height;
+        decoded = image_lib.copyResize(
+          decoded,
+          width: landscape ? maxSide : null,
+          height: landscape ? null : maxSide,
+          interpolation: image_lib.Interpolation.average,
+        );
+      }
+      final extension = media.name.split('.').last.toLowerCase();
+      final preservePng =
+          extension == 'png' && original.length < 3 * 1024 * 1024;
+      final encoded = preservePng
+          ? image_lib.encodePng(decoded, level: 9)
+          : image_lib.encodeJpg(decoded, quality: 86);
+      if (encoded.length >= original.length &&
+          original.length < 3 * 1024 * 1024) {
+        return media;
+      }
+      final outputExtension = preservePng ? 'png' : 'jpg';
+      final baseName = media.name.replaceAll(RegExp(r'\.[^.]+$'), '');
+      final output = File(
+        '${source.parent.path}${Platform.pathSeparator}'
+        '${DateTime.now().microsecondsSinceEpoch}_${_safeMediaName(baseName)}_optimized.$outputExtension',
+      );
+      await output.writeAsBytes(encoded, flush: true);
+      if (await source.exists()) await source.delete();
+      return ImportedMedia(
+        path: output.path,
+        name: '$baseName.$outputExtension',
+        kind: media.kind,
+      );
+    } catch (error, stackTrace) {
+      await ErrorLogService.instance.recordError(
+        error,
+        stackTrace,
+        source: 'Image optimization',
+      );
+      return media;
+    }
+  }
+
+  Future<String> _createThumbnail(ImportedMedia media) async {
+    try {
+      var decoded = image_lib.decodeImage(await File(media.path).readAsBytes());
+      if (decoded == null) return '';
+      decoded = image_lib.bakeOrientation(decoded);
+      const maxSide = 560;
+      final landscape = decoded.width >= decoded.height;
+      final thumbnail = image_lib.copyResize(
+        decoded,
+        width: landscape ? maxSide : null,
+        height: landscape ? null : maxSide,
+        interpolation: image_lib.Interpolation.average,
+      );
+      final target = File(
+        '${File(media.path).parent.path}${Platform.pathSeparator}'
+        '${DateTime.now().microsecondsSinceEpoch}_thumbnail.jpg',
+      );
+      await target.writeAsBytes(
+        image_lib.encodeJpg(thumbnail, quality: 72),
+        flush: true,
+      );
+      return target.path;
+    } catch (error, stackTrace) {
+      await ErrorLogService.instance.recordError(
+        error,
+        stackTrace,
+        source: 'Image thumbnail creation',
+      );
+      return '';
+    }
+  }
+
+  String _attachmentDescription(
+    ImportedMedia media,
+    String mimeType,
+    String extractedText,
+  ) {
+    final type = mimeType.startsWith('image/')
+        ? 'Изображение'
+        : mimeType == 'application/pdf'
+        ? 'PDF-документ'
+        : 'Файл';
+    final cleanText = extractedText.replaceAll(RegExp(r'\s+'), ' ').trim();
+    final excerpt = cleanText.length > 700
+        ? '${cleanText.substring(0, 700)}…'
+        : cleanText;
+    return excerpt.isEmpty
+        ? '$type «${media.name}». Текст для анализа не найден.'
+        : '$type «${media.name}». Извлечённый текст: $excerpt';
+  }
+
+  String _safeMediaName(String value) =>
+      value.replaceAll(RegExp(r'[^a-zA-Z0-9А-Яа-яЁё._-]+'), '_');
+
   Future<String> _extractLocalText(ImportedMedia media) async {
     final extension = media.name.split('.').last.toLowerCase();
     final fileNameText = media.name
         .replaceAll(RegExp(r'\.[^.]+$'), '')
         .replaceAll(RegExp(r'[_-]+'), ' ');
-    if (extension == 'txt' || extension == 'csv') {
+    if (const {
+      'txt',
+      'csv',
+      'md',
+      'json',
+      'xml',
+      'yaml',
+      'yml',
+      'log',
+    }.contains(extension)) {
       try {
-        final text = await File(media.path).readAsString();
+        final text = await _readTextFile(media.path);
         return '$fileNameText\n$text';
+      } catch (_) {
+        return fileNameText;
+      }
+    }
+    if (extension == 'docx') {
+      final text = await _extractZippedXmlText(media.path, const [
+        'word/document.xml',
+        'word/header1.xml',
+        'word/footer1.xml',
+      ]);
+      return text.isEmpty ? fileNameText : '$fileNameText\n$text';
+    }
+    if (extension == 'odt') {
+      final text = await _extractZippedXmlText(media.path, const [
+        'content.xml',
+      ]);
+      return text.isEmpty ? fileNameText : '$fileNameText\n$text';
+    }
+    if (extension == 'xlsx') {
+      final text = await _extractZippedXmlText(media.path, const [
+        'xl/sharedStrings.xml',
+      ]);
+      return text.isEmpty ? fileNameText : '$fileNameText\n$text';
+    }
+    if (extension == 'rtf') {
+      try {
+        final text = _rtfToText(await _readTextFile(media.path));
+        return text.isEmpty ? fileNameText : '$fileNameText\n$text';
       } catch (_) {
         return fileNameText;
       }
@@ -283,6 +544,101 @@ class MediaImportService {
       return '$fileNameText\n$ocrText';
     }
     return fileNameText;
+  }
+
+  Future<String> _readTextFile(String path) async {
+    const limit = 4 * 1024 * 1024;
+    final file = File(path);
+    final reader = await file.open();
+    try {
+      final bytes = await reader.read((await file.length()).clamp(0, limit));
+      return utf8.decode(bytes, allowMalformed: true).trim();
+    } finally {
+      await reader.close();
+    }
+  }
+
+  Future<String> _extractZippedXmlText(
+    String path,
+    List<String> acceptedEntries,
+  ) async {
+    try {
+      final source = File(path);
+      if (await source.length() > 80 * 1024 * 1024) return '';
+      final archive = ZipDecoder().decodeBytes(
+        await source.readAsBytes(),
+        verify: true,
+      );
+      final parts = <String>[];
+      for (final entryName in acceptedEntries) {
+        final entries = archive.files.where((item) => item.name == entryName);
+        for (final entry in entries) {
+          if (!entry.isFile || entry.size > 12 * 1024 * 1024) continue;
+          final xmlSource = utf8.decode(entry.content, allowMalformed: true);
+          final document = XmlDocument.parse(xmlSource);
+          final paragraphs = document.descendants
+              .whereType<XmlElement>()
+              .where(
+                (element) => const {'p', 'si'}.contains(element.name.local),
+              )
+              .map(
+                (element) => element.descendants
+                    .whereType<XmlElement>()
+                    .where((child) => child.name.local == 't')
+                    .map((child) => child.innerText)
+                    .join(),
+              )
+              .map((value) => value.trim())
+              .where((value) => value.isNotEmpty)
+              .toList();
+          if (paragraphs.isNotEmpty) {
+            parts.addAll(paragraphs);
+          } else {
+            parts.addAll(
+              document.descendants
+                  .whereType<XmlElement>()
+                  .where((element) => element.name.local == 't')
+                  .map((element) => element.innerText.trim())
+                  .where((value) => value.isNotEmpty),
+            );
+          }
+        }
+      }
+      final text = parts.join('\n');
+      return text.length <= 24000 ? text : text.substring(0, 24000);
+    } catch (_) {
+      return '';
+    }
+  }
+
+  String _rtfToText(String source) {
+    var text = source;
+    text = text.replaceAllMapped(
+      RegExp(r"\\'([0-9a-fA-F]{2})"),
+      (match) => _cp1251Char(int.parse(match.group(1)!, radix: 16)),
+    );
+    text = text.replaceAllMapped(RegExp(r'\\u(-?\d+)\??'), (match) {
+      var value = int.parse(match.group(1)!);
+      if (value < 0) value += 65536;
+      return String.fromCharCode(value);
+    });
+    text = text
+        .replaceAll(RegExp(r'\\(?:par|line)\b\s?'), '\n')
+        .replaceAll(RegExp(r'\\tab\b\s?'), '\t')
+        .replaceAll(RegExp(r'\\[a-zA-Z]+-?\d*\s?'), '')
+        .replaceAll(RegExp(r'\\[^a-zA-Z0-9]'), '')
+        .replaceAll(RegExp(r'[{}]'), '')
+        .replaceAll(RegExp(r'[ \t]+'), ' ')
+        .replaceAll(RegExp(r'\n{3,}'), '\n\n')
+        .trim();
+    return text.length <= 24000 ? text : text.substring(0, 24000);
+  }
+
+  String _cp1251Char(int value) {
+    if (value == 0xa8) return 'Ё';
+    if (value == 0xb8) return 'ё';
+    if (value >= 0xc0) return String.fromCharCode(0x0410 + value - 0xc0);
+    return String.fromCharCode(value);
   }
 
   Future<String> _extractPdfText(ImportedMedia media) async {
@@ -327,7 +683,8 @@ class MediaImportService {
           pages.add('Страница ${page.pageNumber}\n${text.trim()}');
         }
       }
-      return pages.join('\n');
+      final text = pages.join('\n');
+      return text.length <= 48000 ? text : text.substring(0, 48000);
     } catch (_) {
       return _extractPdfWithSystemTool(media.path);
     } finally {

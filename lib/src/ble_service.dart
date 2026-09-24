@@ -4,6 +4,7 @@ import 'dart:typed_data';
 
 import 'package:universal_ble/universal_ble.dart';
 
+import 'error_log_service.dart';
 import 'model.dart';
 
 class HealthBleDevice {
@@ -523,6 +524,13 @@ class HealthBleService {
       errors.add('RSSI: $error');
     }
 
+    if (errors.isNotEmpty) {
+      await ErrorLogService.instance.recordError(
+        StateError(errors.join('\n')),
+        StackTrace.current,
+        source: 'BLE synchronization: ${device.title}',
+      );
+    }
     return HealthBleSyncResult(
       heartRate: heartRate,
       batteryPercent: batteryPercent,

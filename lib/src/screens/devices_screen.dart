@@ -190,7 +190,12 @@ class _DevicesScreenState extends State<DevicesScreen> {
         return;
       }
       setState(() => _status = 'Сканирование активно · $state');
-    } catch (error) {
+    } catch (error, stackTrace) {
+      await ErrorLogService.instance.recordError(
+        error,
+        stackTrace,
+        source: 'Bluetooth scan',
+      );
       if (!mounted) {
         return;
       }
@@ -233,7 +238,12 @@ class _DevicesScreenState extends State<DevicesScreen> {
         _scanning = false;
         _status = 'Подключено: ${connection.title}';
       });
-    } catch (error) {
+    } catch (error, stackTrace) {
+      await ErrorLogService.instance.recordError(
+        error,
+        stackTrace,
+        source: 'Bluetooth connection',
+      );
       if (!mounted) {
         return;
       }
@@ -354,7 +364,12 @@ class _DevicesScreenState extends State<DevicesScreen> {
         _syncingDeviceId = null;
         _status = 'Синхронизация завершена: ${result.summary}';
       });
-    } catch (error) {
+    } catch (error, stackTrace) {
+      await ErrorLogService.instance.recordError(
+        error,
+        stackTrace,
+        source: 'Bluetooth synchronization',
+      );
       if (!mounted) {
         return;
       }
@@ -395,7 +410,12 @@ class _DevicesScreenState extends State<DevicesScreen> {
         _syncingDeviceId = null;
         _status = 'BLE-команда выполнена: ${command.title}';
       });
-    } catch (error) {
+    } catch (error, stackTrace) {
+      await ErrorLogService.instance.recordError(
+        error,
+        stackTrace,
+        source: 'Bluetooth command',
+      );
       final devices = widget.state.devices
           .map(
             (item) => item.id == device.id

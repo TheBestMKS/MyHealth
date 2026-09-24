@@ -1,4 +1,6 @@
 argostranslate==1.11.0
+Babel==2.17.0
+ctranslate2==4.6.0
 duckdb==1.5.4
 huggingface-hub==0.36.2
 requests>=2.32,<3

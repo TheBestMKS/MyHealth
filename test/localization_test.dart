@@ -45,7 +45,11 @@ void main() {
       'Климатический профиль',
       'Напечатать отчёт для врача',
       'Не удалось защитить исходный анализ:',
-      'Версия: 1.7.0+8',
+      'Версия: 1.8.1+10',
+      'Диагностика',
+      'Журнал ошибок',
+      'Копировать журнал',
+      'Очистить журнал ошибок?',
     ];
     for (final language in supportedLanguages.where(
       (item) => item.code != 'ru',
@@ -57,17 +61,22 @@ void main() {
           isNotNull,
           reason: 'missing $phrase in ${language.code}',
         );
-        expect(
-          translations[phrase],
-          isNot(phrase),
-          reason: 'untranslated $phrase in ${language.code}',
-        );
+        final isSharedKazakhTerm =
+            language.code == 'kk' && phrase == 'Диагностика';
+        if (!isSharedKazakhTerm) {
+          expect(
+            translations[phrase],
+            isNot(phrase),
+            reason: 'untranslated $phrase in ${language.code}',
+          );
+        }
       }
     }
     expect(
       generatedUiTranslations['en']!['Факты из приложения:'],
       'Facts from the app:',
     );
+    expect(generatedUiTranslations['en']!['Журнал ошибок'], 'Error log');
   });
 
   testWidgets('shared controls localize text, decorations and tooltips', (

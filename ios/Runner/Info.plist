@@ -38,12 +38,22 @@
 	<string>Приложение читает выбранные вами показатели Apple Health для дневника активности, сна и здоровья.</string>
 	<key>NSHealthUpdateUsageDescription</key>
 	<string>Приложение может сохранять подтверждённые вами показатели в Apple Health.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Геолокация используется только по команде пользователя для маршрута тренировки, погоды и определения дома или работы.</string>
 	<key>NSMotionUsageDescription</key>
 	<string>Приложение использует данные физической активности для подсчёта шагов и тренировок.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Микрофон используется только по команде пользователя для голосового заполнения дневника и вопросов помощнику.</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string>Распознавание речи преобразует русские голосовые команды в текст для локальной обработки.</string>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+	<array>
+		<string>ru.thebestmks.myhealth.backgroundAnalysis.v1</string>
+	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
