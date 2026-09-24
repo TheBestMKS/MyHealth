@@ -4,7 +4,21 @@ Future<void> showAlarmChallenge(
   BuildContext context,
   AlarmGroup alarm, {
   String? dateKey,
+  bool wakefulnessCheck = false,
 }) async {
+  Future<void> dismiss(BuildContext dialogContext) async {
+    await HealthNotificationService.instance.dismissAlarmOccurrence(
+      alarm,
+      dateKey: dateKey,
+    );
+    await WakefulnessMonitorService.instance.start(
+      alarm,
+      dateKey: dateKey,
+      resetWindow: !wakefulnessCheck,
+    );
+    if (dialogContext.mounted) Navigator.pop(dialogContext);
+  }
+
   if (alarm.unlockMode == 'simple') {
     await showDialog<void>(
       context: context,
@@ -17,11 +31,7 @@ Future<void> showAlarmChallenge(
           actions: [
             FilledButton.icon(
               onPressed: () async {
-                await HealthNotificationService.instance.dismissAlarmOccurrence(
-                  alarm,
-                  dateKey: dateKey,
-                );
-                if (context.mounted) Navigator.pop(context);
+                await dismiss(context);
               },
               icon: const Icon(Icons.alarm_off_outlined),
               label: const Text('Отключить'),
@@ -69,13 +79,7 @@ Future<void> showAlarmChallenge(
                 ),
                 onSubmitted: (_) {
                   if (int.tryParse(answer.text.trim()) == expected) {
-                    HealthNotificationService.instance
-                        .dismissAlarmOccurrence(alarm, dateKey: dateKey)
-                        .then((_) {
-                          if (dialogContext.mounted) {
-                            Navigator.pop(dialogContext);
-                          }
-                        });
+                    unawaited(dismiss(dialogContext));
                   } else {
                     setDialogState(() => error = 'Ответ неверный');
                   }
@@ -87,9 +91,7 @@ Future<void> showAlarmChallenge(
             FilledButton.icon(
               onPressed: () async {
                 if (int.tryParse(answer.text.trim()) == expected) {
-                  await HealthNotificationService.instance
-                      .dismissAlarmOccurrence(alarm, dateKey: dateKey);
-                  if (dialogContext.mounted) Navigator.pop(dialogContext);
+                  await dismiss(dialogContext);
                 } else {
                   setDialogState(() => error = 'Ответ неверный');
                 }
@@ -128,6 +130,12 @@ Future<void> _editAlarmGroup(
   final gradualWakeMinutes = TextEditingController(
     text: '${group?.gradualWakeMinutes ?? 3}',
   );
+  final wakefulnessWindowMinutes = TextEditingController(
+    text: '${group?.wakefulnessWindowMinutes ?? 30}',
+  );
+  final wakefulnessInactivityMinutes = TextEditingController(
+    text: '${group?.wakefulnessInactivityMinutes ?? 5}',
+  );
   final pendingCustomOptions = <CustomOption>[];
   var days = group?.days.isNotEmpty == true ? group!.days : 'будни';
   var adaptive = group?.adaptive ?? true;
@@ -139,6 +147,7 @@ Future<void> _editAlarmGroup(
   var useWearableSleepCycle = group?.useWearableSleepCycle ?? false;
   var vibrationEnabled = group?.vibrationEnabled ?? true;
   var gradualWakeEnabled = group?.gradualWakeEnabled ?? true;
+  var wakefulnessCheckEnabled = group?.wakefulnessCheckEnabled ?? false;
 
   await showDialog<void>(
     context: context,
@@ -418,6 +427,26 @@ Future<void> _editAlarmGroup(
                   ),
                   if (gradualWakeEnabled)
                     _numberField(gradualWakeMinutes, 'Время усиления, мин'),
+                  SwitchListTile(
+                    contentPadding: EdgeInsets.zero,
+                    title: const Text('Контроль бодрствования'),
+                    subtitle: const Text(
+                      'Повторять сигнал при отсутствии движения после подъёма.',
+                    ),
+                    value: wakefulnessCheckEnabled,
+                    onChanged: (value) =>
+                        setDialogState(() => wakefulnessCheckEnabled = value),
+                  ),
+                  if (wakefulnessCheckEnabled) ...[
+                    _numberField(
+                      wakefulnessInactivityMinutes,
+                      'Проверять через, мин',
+                    ),
+                    _numberField(
+                      wakefulnessWindowMinutes,
+                      'Период контроля, мин',
+                    ),
+                  ],
                 ],
               ),
             ),
@@ -473,6 +502,15 @@ Future<void> _editAlarmGroup(
                                 gradualWakeMinutes.text,
                                 3,
                               ).clamp(1, 15).toInt(),
+                              wakefulnessCheckEnabled: wakefulnessCheckEnabled,
+                              wakefulnessWindowMinutes: _parseInt(
+                                wakefulnessWindowMinutes.text,
+                                30,
+                              ).clamp(5, 120).toInt(),
+                              wakefulnessInactivityMinutes: _parseInt(
+                                wakefulnessInactivityMinutes.text,
+                                5,
+                              ).clamp(2, 30).toInt(),
                             ))
                         .copyWith(
                           title: titleValue,
@@ -502,6 +540,18 @@ Future<void> _editAlarmGroup(
                             gradualWakeMinutes.text,
                             3,
                           ).clamp(1, 15).toInt(),
+                          wakefulnessCheckEnabled: wakefulnessCheckEnabled,
+                          wakefulnessWindowMinutes: _parseInt(
+                            wakefulnessWindowMinutes.text,
+                            30,
+                          ).clamp(5, 120).toInt(),
+                          wakefulnessInactivityMinutes: _parseInt(
+                            wakefulnessInactivityMinutes.text,
+                            5,
+                          ).clamp(2, 30).toInt(),
+                          lastWakefulnessConfirmedDate: '',
+                          wakefulnessMonitorStartedAt: '',
+                          wakefulnessLastActivityAt: '',
                         );
                 final alarmGroups = group == null
                     ? [updatedGroup, ...state.alarmGroups]
@@ -552,6 +602,7 @@ Future<void> _editReminder(
   var category = reminder?.category.isNotEmpty == true
       ? reminder!.category
       : 'здоровье';
+  var repeat = reminder?.repeat ?? 'none';
 
   await showDialog<void>(
     context: context,
@@ -686,6 +737,29 @@ Future<void> _editReminder(
                       setDialogState(() => category = value);
                     },
                   ),
+                  LocalizedDropdownButtonFormField<String>(
+                    initialValue: repeat,
+                    isExpanded: true,
+                    decoration: const InputDecoration(labelText: 'Повтор'),
+                    items: const [
+                      DropdownMenuItem(value: 'none', child: Text('один раз')),
+                      DropdownMenuItem(
+                        value: 'daily',
+                        child: Text('каждый день'),
+                      ),
+                      DropdownMenuItem(
+                        value: 'weekdays',
+                        child: Text('по будням'),
+                      ),
+                      DropdownMenuItem(
+                        value: 'weekends',
+                        child: Text('по выходным'),
+                      ),
+                    ],
+                    onChanged: (value) {
+                      if (value != null) setDialogState(() => repeat = value);
+                    },
+                  ),
                 ],
               ),
             ),
@@ -720,12 +794,14 @@ Future<void> _editReminder(
                               category: normalizedCategory,
                               done: false,
                               date: targetDate,
+                              repeat: repeat,
                             ))
                         .copyWith(
                           title: titleValue,
                           time: timeValue,
                           category: normalizedCategory,
                           date: targetDate,
+                          repeat: repeat,
                         );
                 final reminders = reminder == null
                     ? [updatedReminder, ...state.reminders]

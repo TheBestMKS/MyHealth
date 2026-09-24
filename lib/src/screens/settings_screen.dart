@@ -597,7 +597,7 @@ class SettingsScreen extends StatelessWidget {
           icon: Icons.info_outline,
           title: 'О программе',
           subtitle:
-              'Версия 1.8.1+10 · создатель: Редин Максим Юрьевич · info@thebestmks.ru',
+              'Версия 1.8.2+11 · создатель: Редин Максим Юрьевич · info@thebestmks.ru',
           onTap: () => _showAboutProgram(context),
         ),
         Card(

@@ -36,6 +36,13 @@ Widget _weatherTodayBlock(HealthAppState state) {
         );
       }
       final weather = snapshot.data!;
+      if (!weather.isAvailable) {
+        return InfoTile(
+          icon: Icons.cloud_off_outlined,
+          title: 'Погода временно недоступна',
+          subtitle: weather.errorMessage,
+        );
+      }
       return InfoTile(
         icon: Icons.cloud_outlined,
         title:
@@ -103,6 +110,13 @@ Widget _switchTile({
     ),
   );
 }
+
+String _reminderRepeatLabel(String value) => switch (value) {
+  'daily' => 'каждый день',
+  'weekdays' => 'по будням',
+  'weekends' => 'по выходным',
+  _ => 'один раз',
+};
 
 Widget _settingsChoice({
   required String label,

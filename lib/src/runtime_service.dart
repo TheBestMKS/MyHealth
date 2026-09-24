@@ -23,7 +23,9 @@ void myHealthBackgroundDispatcher() {
     await ErrorLogService.instance.initialize();
     try {
       final repository = FileHealthRepository();
-      final state = await repository.load();
+      final loaded = await repository.load();
+      final state = loaded.rollForwardDailyTimeline();
+      await repository.save(state);
       if (!state.settings.backgroundAnalysisEnabled) return true;
       await HealthNotificationService.instance.initialize();
       await HealthNotificationService.instance.sync(state);

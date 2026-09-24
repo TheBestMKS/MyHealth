@@ -74,6 +74,29 @@ class TodayScreen extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 10),
+        SectionTitle(
+          'Дневник по датам',
+          action: LocalizedIconButton.filledTonal(
+            tooltip: 'Выбрать дату',
+            onPressed: () => _pickCalendarDate(context, state, onChanged),
+            icon: const Icon(Icons.calendar_month_outlined),
+          ),
+        ),
+        Builder(
+          builder: (context) {
+            final yesterday = DateTime.now().subtract(const Duration(days: 1));
+            final key = todayKey(yesterday);
+            final metrics = state.metricsFor(key);
+            return InfoTile(
+              icon: Icons.history_outlined,
+              title: 'Вчера · ${displayDateKey(key)}',
+              subtitle:
+                  'расход ${metrics.totalCaloriesBurned} ккал · шаги ${metrics.steps} · '
+                  'сон ${metrics.sleepHours.toStringAsFixed(1)} ч · вода ${metrics.waterLiters.toStringAsFixed(1)} л',
+              onTap: () => _showDayDetails(context, state, onChanged, key),
+            );
+          },
+        ),
         ResponsiveGrid(
           minTileWidth: 190,
           children: [
@@ -89,14 +112,14 @@ class TodayScreen extends StatelessWidget {
             if (state.settings.advancedMode) ...[
               MetricCard(
                 title: 'Базовый расход',
-                value: '${state.profile.restingCaloriesBurnedSoFar()} ккал',
+                value: '${state.today.restingCalories} ккал',
                 subtitle:
                     'накоплено за текущие сутки из ${state.profile.basalMetabolicRate.round()} ккал',
                 icon: Icons.local_fire_department_outlined,
                 color: Colors.deepOrange,
                 progress: state.profile.basalMetabolicRate <= 0
                     ? 0
-                    : state.profile.restingCaloriesBurnedSoFar() /
+                    : state.today.restingCalories /
                           state.profile.basalMetabolicRate,
               ),
               MetricCard(
@@ -156,7 +179,8 @@ class TodayScreen extends StatelessWidget {
                     ? Icons.check_circle_outline
                     : Icons.notifications_outlined,
                 title: item.title,
-                subtitle: '${item.category} · ${item.time}',
+                subtitle:
+                    '${item.category} · ${item.time}${item.repeat == 'none' ? '' : ' · ${_reminderRepeatLabel(item.repeat)}'}',
                 onTap: () => _editReminder(context, state, onChanged, item),
                 onLongPress: () => _confirmDelete(
                   context,
@@ -282,8 +306,7 @@ class HealthScreen extends StatelessWidget {
             MetricCard(
               title: 'Базовый обмен',
               value: '${state.profile.basalMetabolicRate.round()} ккал',
-              subtitle:
-                  'сейчас учтено ${state.profile.restingCaloriesBurnedSoFar()} ккал',
+              subtitle: 'сейчас учтено ${state.today.restingCalories} ккал',
               icon: Icons.local_fire_department_outlined,
               color: Colors.deepOrange,
               onTap: () => onSelect(AppSection.profile),

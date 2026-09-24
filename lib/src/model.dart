@@ -48,7 +48,13 @@ String normalizeDateKey(String value, {String fallback = ''}) {
   return todayKey(date);
 }
 
-String newId() => DateTime.now().microsecondsSinceEpoch.toString();
+int _lastGeneratedId = 0;
+
+String newId() {
+  final clock = DateTime.now().microsecondsSinceEpoch;
+  _lastGeneratedId = clock > _lastGeneratedId ? clock : _lastGeneratedId + 1;
+  return _lastGeneratedId.toString();
+}
 
 class HealthAppState {
   const HealthAppState({
@@ -272,7 +278,7 @@ class HealthAppState {
   }
 
   Map<String, dynamic> toJson() => {
-    'schema': 9,
+    'schema': 10,
     'onboardingComplete': onboardingComplete,
     'localeCode': localeCode,
     'profile': profile.toJson(),
@@ -398,6 +404,79 @@ class HealthAppState {
       today: date == today.date ? normalized : today,
       dailyHistory: _upsertDailyMetric(dailyHistory, normalized),
     );
+  }
+
+  HealthAppState rollForwardDailyTimeline([DateTime? value]) {
+    final now = value ?? DateTime.now();
+    final currentDate = DateTime(now.year, now.month, now.day);
+    final currentKey = todayKey(currentDate);
+    final entries = <String, DailyMetrics>{
+      for (final metric in dailyHistory)
+        if (parseDateKey(metric.date) != null) metric.date: metric,
+    };
+    if (parseDateKey(today.date) != null) entries[today.date] = today;
+
+    final parsedDates = entries.keys
+        .map(parseDateKey)
+        .whereType<DateTime>()
+        .where((date) => !date.isAfter(currentDate))
+        .toList();
+    var firstDate = parsedDates.isEmpty
+        ? currentDate
+        : parsedDates.reduce((a, b) => a.isBefore(b) ? a : b);
+    final earliestBackfill = currentDate.subtract(const Duration(days: 3650));
+    if (firstDate.isBefore(earliestBackfill)) firstDate = earliestBackfill;
+
+    for (
+      var date = firstDate;
+      !date.isAfter(currentDate);
+      date = date.add(const Duration(days: 1))
+    ) {
+      final key = todayKey(date);
+      final existing = entries[key] ?? DailyMetrics.empty(key);
+      final resting = key == currentKey
+          ? _restingCaloriesForMoment(now)
+          : existing.restingCalories > 0 && key != today.date
+          ? existing.restingCalories
+          : basalCaloriesForDate(date);
+      entries[key] = existing.copyWith(date: key, restingCalories: resting);
+    }
+
+    final current = entries[currentKey]!.copyWith(
+      restingCalories: _restingCaloriesForMoment(now),
+    );
+    final history = entries.values.toList()
+      ..sort((a, b) => b.date.compareTo(a.date));
+    return copyWith(today: current, dailyHistory: history);
+  }
+
+  int basalCaloriesForDate(DateTime date) {
+    if (profile.heightCm <= 0 || profile.weightKg <= 0) return 0;
+    final birthDate = parseDateKey(profile.birthDate);
+    if (birthDate == null || birthDate.isAfter(date)) return 0;
+    var age = date.year - birthDate.year;
+    if (date.month < birthDate.month ||
+        (date.month == birthDate.month && date.day < birthDate.day)) {
+      age--;
+    }
+    if (age <= 0) return 0;
+    final gender = profile.gender.toLowerCase();
+    final sexOffset =
+        gender.contains('муж') ||
+            gender.contains('male') ||
+            gender.contains('man')
+        ? 5
+        : -161;
+    final bmr =
+        10 * profile.weightKg + 6.25 * profile.heightCm - 5 * age + sexOffset;
+    return bmr <= 0 ? 0 : bmr.round();
+  }
+
+  int _restingCaloriesForMoment(DateTime moment) {
+    final bmr = basalCaloriesForDate(moment);
+    if (bmr <= 0) return 0;
+    final seconds = moment.hour * 3600 + moment.minute * 60 + moment.second;
+    return (bmr * seconds / 86400).round().clamp(0, bmr).toInt();
   }
 
   List<MedicationIntake> medicationIntakesFor(String date) {
@@ -1173,6 +1252,7 @@ class DailyMetrics {
     required this.waterLiters,
     required this.calories,
     this.activeCalories = 0,
+    this.restingCalories = 0,
     required this.workoutMinutes,
     required this.mood,
     required this.stress,
@@ -1187,11 +1267,14 @@ class DailyMetrics {
   final double waterLiters;
   final int calories;
   final int activeCalories;
+  final int restingCalories;
   final int workoutMinutes;
   final int mood;
   final int stress;
   final bool medicationTaken;
   final List<String> symptoms;
+
+  int get totalCaloriesBurned => activeCalories + restingCalories;
 
   factory DailyMetrics.empty(String date) => DailyMetrics(
     date: date,
@@ -1201,6 +1284,7 @@ class DailyMetrics {
     waterLiters: 0,
     calories: 0,
     activeCalories: 0,
+    restingCalories: 0,
     workoutMinutes: 0,
     mood: 0,
     stress: 0,
@@ -1227,6 +1311,7 @@ class DailyMetrics {
       waterLiters: _double(json['waterLiters'], fallback.waterLiters),
       calories: _int(json['calories'], fallback.calories),
       activeCalories: _int(json['activeCalories'], fallback.activeCalories),
+      restingCalories: _int(json['restingCalories'], fallback.restingCalories),
       workoutMinutes: _int(json['workoutMinutes'], fallback.workoutMinutes),
       mood: _int(json['mood'], fallback.mood),
       stress: _int(json['stress'], fallback.stress),
@@ -1243,6 +1328,7 @@ class DailyMetrics {
     'waterLiters': waterLiters,
     'calories': calories,
     'activeCalories': activeCalories,
+    'restingCalories': restingCalories,
     'workoutMinutes': workoutMinutes,
     'mood': mood,
     'stress': stress,
@@ -1258,6 +1344,7 @@ class DailyMetrics {
     double? waterLiters,
     int? calories,
     int? activeCalories,
+    int? restingCalories,
     int? workoutMinutes,
     int? mood,
     int? stress,
@@ -1272,6 +1359,7 @@ class DailyMetrics {
       waterLiters: waterLiters ?? this.waterLiters,
       calories: calories ?? this.calories,
       activeCalories: activeCalories ?? this.activeCalories,
+      restingCalories: restingCalories ?? this.restingCalories,
       workoutMinutes: workoutMinutes ?? this.workoutMinutes,
       mood: mood ?? this.mood,
       stress: stress ?? this.stress,
@@ -2127,6 +2215,12 @@ class AlarmGroup {
     this.vibrationEnabled = true,
     this.gradualWakeEnabled = true,
     this.gradualWakeMinutes = 3,
+    this.wakefulnessCheckEnabled = false,
+    this.wakefulnessWindowMinutes = 30,
+    this.wakefulnessInactivityMinutes = 5,
+    this.lastWakefulnessConfirmedDate = '',
+    this.wakefulnessMonitorStartedAt = '',
+    this.wakefulnessLastActivityAt = '',
   });
 
   final String id;
@@ -2146,6 +2240,12 @@ class AlarmGroup {
   final bool vibrationEnabled;
   final bool gradualWakeEnabled;
   final int gradualWakeMinutes;
+  final bool wakefulnessCheckEnabled;
+  final int wakefulnessWindowMinutes;
+  final int wakefulnessInactivityMinutes;
+  final String lastWakefulnessConfirmedDate;
+  final String wakefulnessMonitorStartedAt;
+  final String wakefulnessLastActivityAt;
 
   factory AlarmGroup.fromJson(Map<String, dynamic> json) => AlarmGroup(
     id: _string(json['id'], newId()),
@@ -2156,7 +2256,9 @@ class AlarmGroup {
     adaptive: _bool(json['adaptive'], false),
     context: _string(json['context'], 'обычный'),
     priority: _int(json['priority'], 2),
-    unlockMode: _string(json['unlockMode'], 'simple'),
+    unlockMode: _normalizeAlarmUnlockMode(
+      _string(json['unlockMode'], 'simple'),
+    ),
     specificDate: _string(json['specificDate'], ''),
     dutyAware: _bool(json['dutyAware'], false),
     vacationAware: _bool(json['vacationAware'], false),
@@ -2165,6 +2267,18 @@ class AlarmGroup {
     vibrationEnabled: _bool(json['vibrationEnabled'], true),
     gradualWakeEnabled: _bool(json['gradualWakeEnabled'], true),
     gradualWakeMinutes: _int(json['gradualWakeMinutes'], 3),
+    wakefulnessCheckEnabled: _bool(json['wakefulnessCheckEnabled'], false),
+    wakefulnessWindowMinutes: _int(json['wakefulnessWindowMinutes'], 30),
+    wakefulnessInactivityMinutes: _int(json['wakefulnessInactivityMinutes'], 5),
+    lastWakefulnessConfirmedDate: _string(
+      json['lastWakefulnessConfirmedDate'],
+      '',
+    ),
+    wakefulnessMonitorStartedAt: _string(
+      json['wakefulnessMonitorStartedAt'],
+      '',
+    ),
+    wakefulnessLastActivityAt: _string(json['wakefulnessLastActivityAt'], ''),
   );
 
   Map<String, dynamic> toJson() => {
@@ -2185,6 +2299,12 @@ class AlarmGroup {
     'vibrationEnabled': vibrationEnabled,
     'gradualWakeEnabled': gradualWakeEnabled,
     'gradualWakeMinutes': gradualWakeMinutes,
+    'wakefulnessCheckEnabled': wakefulnessCheckEnabled,
+    'wakefulnessWindowMinutes': wakefulnessWindowMinutes,
+    'wakefulnessInactivityMinutes': wakefulnessInactivityMinutes,
+    'lastWakefulnessConfirmedDate': lastWakefulnessConfirmedDate,
+    'wakefulnessMonitorStartedAt': wakefulnessMonitorStartedAt,
+    'wakefulnessLastActivityAt': wakefulnessLastActivityAt,
   };
 
   AlarmGroup copyWith({
@@ -2204,6 +2324,12 @@ class AlarmGroup {
     bool? vibrationEnabled,
     bool? gradualWakeEnabled,
     int? gradualWakeMinutes,
+    bool? wakefulnessCheckEnabled,
+    int? wakefulnessWindowMinutes,
+    int? wakefulnessInactivityMinutes,
+    String? lastWakefulnessConfirmedDate,
+    String? wakefulnessMonitorStartedAt,
+    String? wakefulnessLastActivityAt,
   }) => AlarmGroup(
     id: id,
     title: title ?? this.title,
@@ -2223,7 +2349,23 @@ class AlarmGroup {
     vibrationEnabled: vibrationEnabled ?? this.vibrationEnabled,
     gradualWakeEnabled: gradualWakeEnabled ?? this.gradualWakeEnabled,
     gradualWakeMinutes: gradualWakeMinutes ?? this.gradualWakeMinutes,
+    wakefulnessCheckEnabled:
+        wakefulnessCheckEnabled ?? this.wakefulnessCheckEnabled,
+    wakefulnessWindowMinutes:
+        wakefulnessWindowMinutes ?? this.wakefulnessWindowMinutes,
+    wakefulnessInactivityMinutes:
+        wakefulnessInactivityMinutes ?? this.wakefulnessInactivityMinutes,
+    lastWakefulnessConfirmedDate:
+        lastWakefulnessConfirmedDate ?? this.lastWakefulnessConfirmedDate,
+    wakefulnessMonitorStartedAt:
+        wakefulnessMonitorStartedAt ?? this.wakefulnessMonitorStartedAt,
+    wakefulnessLastActivityAt:
+        wakefulnessLastActivityAt ?? this.wakefulnessLastActivityAt,
   );
+}
+
+String _normalizeAlarmUnlockMode(String value) {
+  return value == 'math' ? 'math_easy' : value;
 }
 
 class TripPlan {
@@ -3330,6 +3472,7 @@ class ReminderItem {
     required this.category,
     required this.done,
     this.date = '',
+    this.repeat = 'none',
   });
 
   final String id;
@@ -3338,6 +3481,7 @@ class ReminderItem {
   final String category;
   final bool done;
   final String date;
+  final String repeat;
 
   factory ReminderItem.fromJson(Map<String, dynamic> json) => ReminderItem(
     id: _string(json['id'], newId()),
@@ -3346,6 +3490,7 @@ class ReminderItem {
     category: _string(json['category'], ''),
     done: _bool(json['done'], false),
     date: _string(json['date'], todayKey()),
+    repeat: _string(json['repeat'], 'none'),
   );
 
   Map<String, dynamic> toJson() => {
@@ -3355,6 +3500,7 @@ class ReminderItem {
     'category': category,
     'done': done,
     'date': date,
+    'repeat': repeat,
   };
 
   ReminderItem copyWith({
@@ -3363,6 +3509,7 @@ class ReminderItem {
     String? category,
     bool? done,
     String? date,
+    String? repeat,
   }) => ReminderItem(
     id: id,
     title: title ?? this.title,
@@ -3370,6 +3517,7 @@ class ReminderItem {
     category: category ?? this.category,
     done: done ?? this.done,
     date: date ?? this.date,
+    repeat: repeat ?? this.repeat,
   );
 }
 

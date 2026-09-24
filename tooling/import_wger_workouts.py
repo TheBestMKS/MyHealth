@@ -192,7 +192,7 @@ def main() -> int:
     args = parser.parse_args()
     response = requests.get(
         API_URL,
-        headers={"User-Agent": "MyHealth/1.8.1", "Accept": "application/json"},
+        headers={"User-Agent": "MyHealth/1.8.2", "Accept": "application/json"},
         timeout=120,
     )
     response.raise_for_status()

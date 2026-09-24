@@ -7,6 +7,8 @@ import 'package:speech_to_text/speech_recognition_error.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
+import 'error_log_service.dart';
+
 class SpeechInputService {
   SpeechInputService._();
 
@@ -144,7 +146,12 @@ class SpeechInputService {
         path: _recordingTarget,
       );
       _recording = true;
-    } catch (_) {
+    } catch (error, stackTrace) {
+      await ErrorLogService.instance.recordError(
+        error,
+        stackTrace,
+        source: 'Voice audio recording start',
+      );
       _recording = false;
       _recordingTarget = '';
     }
@@ -162,6 +169,13 @@ class SpeechInputService {
           _recordedAudioPath = candidate;
         }
         return _recordedAudioPath.isEmpty ? null : _recordedAudioPath;
+      } catch (error, stackTrace) {
+        await ErrorLogService.instance.recordError(
+          error,
+          stackTrace,
+          source: 'Voice audio recording stop',
+        );
+        return null;
       } finally {
         _recording = false;
         _recordingTarget = '';

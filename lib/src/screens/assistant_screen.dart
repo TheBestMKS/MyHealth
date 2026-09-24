@@ -26,7 +26,7 @@ class _AssistantScreenState extends State<AssistantScreen> {
   LocalModelStatus? _modelStatus;
   ActivityContextSnapshot? _activityContext;
   double? _downloadProgress;
-  bool _busy = false;
+  bool _modelBusy = false;
   bool _contextBusy = false;
   bool _listening = false;
   String _speechStatus = '';
@@ -91,7 +91,7 @@ class _AssistantScreenState extends State<AssistantScreen> {
           ? null
           : LocalizedIconButton.filledTonal(
               tooltip: 'Очистить выбранный день',
-              onPressed: _busy ? null : _clearSelectedDay,
+              onPressed: _modelBusy ? null : _clearSelectedDay,
               icon: const Icon(Icons.delete_sweep_outlined),
             ),
       children: [
@@ -232,7 +232,7 @@ class _AssistantScreenState extends State<AssistantScreen> {
   }
 
   Future<void> _clearSelectedDay() async {
-    if (_busy) return;
+    if (_modelBusy) return;
     final removed = widget.state.assistantMessages
         .where((message) => message.dateKey == _selectedDate)
         .toList();
@@ -308,14 +308,14 @@ class _AssistantScreenState extends State<AssistantScreen> {
                     label: const LocalizedText('Установить'),
                   ),
                 FilledButton.tonalIcon(
-                  onPressed: downloading || _busy ? null : _importModel,
+                  onPressed: downloading || _modelBusy ? null : _importModel,
                   icon: const Icon(Icons.file_open_outlined),
                   label: const LocalizedText('Импорт GGUF'),
                 ),
                 if (installed && status?.isBundled != true)
                   LocalizedIconButton(
                     tooltip: 'Удалить локальную модель',
-                    onPressed: _busy ? null : _removeModel,
+                    onPressed: _modelBusy ? null : _removeModel,
                     icon: const Icon(Icons.delete_outline),
                   ),
               ],
@@ -428,7 +428,7 @@ class _AssistantScreenState extends State<AssistantScreen> {
                 controller: _controller,
                 minLines: 1,
                 maxLines: 5,
-                enabled: !_busy,
+                enabled: !_modelBusy,
                 decoration: InputDecoration(
                   labelText: 'Вопрос или команда',
                   hintText:
@@ -447,7 +447,7 @@ class _AssistantScreenState extends State<AssistantScreen> {
             const SizedBox(width: 8),
             PopupMenuButton<UniversalCaptureStart>(
               tooltip: 'Камера или файл',
-              enabled: !_busy,
+              enabled: !_modelBusy,
               icon: const Icon(Icons.attach_file),
               onSelected: (start) => showUniversalCaptureSheet(
                 context,
@@ -478,14 +478,14 @@ class _AssistantScreenState extends State<AssistantScreen> {
               tooltip: _listening
                   ? 'Остановить диктовку'
                   : 'Диктовать по-русски офлайн',
-              onPressed: _busy ? null : _toggleSpeech,
+              onPressed: _modelBusy ? null : _toggleSpeech,
               icon: Icon(_listening ? Icons.mic : Icons.mic_none_outlined),
             ),
             const SizedBox(width: 8),
             LocalizedIconButton.filled(
               tooltip: 'Отправить',
-              onPressed: _busy ? null : _send,
-              icon: _busy
+              onPressed: _modelBusy ? null : _send,
+              icon: _modelBusy
                   ? const SizedBox(
                       width: 20,
                       height: 20,
@@ -506,7 +506,7 @@ class _AssistantScreenState extends State<AssistantScreen> {
     return ActionChip(
       avatar: const Icon(Icons.bolt_outlined),
       label: LocalizedText(text),
-      onPressed: _busy
+      onPressed: _modelBusy
           ? null
           : () {
               _voiceInput = false;
@@ -518,20 +518,14 @@ class _AssistantScreenState extends State<AssistantScreen> {
 
   Future<void> _send() async {
     final query = _controller.text.trim();
-    if (query.isEmpty || _busy) return;
+    if (query.isEmpty || _modelBusy) return;
     if (_voiceInput) await _speech.stop();
     final voicePath = _voiceInput ? _speech.takeRecordedAudio() : '';
-    setState(() {
-      _busy = true;
-      _listening = false;
-      _speechStatus = '';
-    });
     try {
       final duration = _voiceStartedAt == null
           ? 0
           : DateTime.now().difference(_voiceStartedAt!).inSeconds;
-      final result = await _conversation.submit(
-        state: widget.state,
+      AssistantBackgroundService.instance.enqueueText(
         query: query,
         kind: _voiceInput ? 'voice' : 'text',
         transcript: _voiceInput ? query : '',
@@ -540,16 +534,16 @@ class _AssistantScreenState extends State<AssistantScreen> {
         attachmentName: voicePath.isEmpty
             ? ''
             : File(voicePath).uri.pathSegments.last,
-        mimeType: voicePath.isEmpty ? '' : 'audio/mp4',
         activityContext: _activityContext?.summary ?? '',
       );
       if (!mounted) return;
       _controller.clear();
-      widget.onChanged(result.state);
       setState(() {
         _selectedDate = todayKey();
         _voiceInput = false;
         _voiceStartedAt = null;
+        _listening = false;
+        _speechStatus = 'Запрос обрабатывается в фоне';
       });
     } catch (error, stackTrace) {
       await ErrorLogService.instance.recordError(
@@ -558,8 +552,6 @@ class _AssistantScreenState extends State<AssistantScreen> {
         source: 'Assistant request',
       );
       _showError('Не удалось обработать запрос: $error');
-    } finally {
-      if (mounted) setState(() => _busy = false);
     }
   }
 
@@ -671,6 +663,7 @@ class _AssistantScreenState extends State<AssistantScreen> {
   }
 
   Future<void> _importModel() async {
+    setState(() => _modelBusy = true);
     try {
       final status = await _llm.importModel();
       if (!mounted || status == null) return;
@@ -682,6 +675,8 @@ class _AssistantScreenState extends State<AssistantScreen> {
         source: 'Local model import',
       );
       _showError('Не удалось импортировать модель: $error');
+    } finally {
+      if (mounted) setState(() => _modelBusy = false);
     }
   }
 
@@ -736,8 +731,13 @@ class _AssistantScreenState extends State<AssistantScreen> {
       ),
     );
     if (accepted != true) return;
-    await _llm.removeInstalledModel();
-    await _refreshModelStatus();
+    setState(() => _modelBusy = true);
+    try {
+      await _llm.removeInstalledModel();
+      await _refreshModelStatus();
+    } finally {
+      if (mounted) setState(() => _modelBusy = false);
+    }
   }
 
   void _showError(String message) {

@@ -97,7 +97,8 @@ class SleepScreen extends StatelessWidget {
                 '${item.vacationAware ? 'отпуск учитывается' : 'без отпуска'} · '
                 'сон-браслет ${item.useWearableSleepCycle ? 'да' : 'нет'} ${item.smartWakeWindowMinutes} мин · '
                 '${item.vibrationEnabled ? 'вибрация' : 'без вибрации'} · '
-                '${item.gradualWakeEnabled ? 'усиление ${item.gradualWakeMinutes} мин' : 'один сигнал'}',
+                '${item.gradualWakeEnabled ? 'усиление ${item.gradualWakeMinutes} мин' : 'один сигнал'} · '
+                '${item.wakefulnessCheckEnabled ? 'контроль бодрствования ${item.wakefulnessWindowMinutes} мин' : 'без контроля бодрствования'}',
             onTap: () => _editAlarmGroup(context, state, onChanged, item),
             trailing: LocalizedIconButton(
               tooltip: 'Проверить отключение',
@@ -148,7 +149,7 @@ class CalendarScreen extends StatelessWidget {
             icon: Icons.event_note_outlined,
             title: item.date,
             subtitle:
-                'Шаги ${item.steps} · сон ${item.sleepHours.toStringAsFixed(1)} ч · вода ${item.waterLiters.toStringAsFixed(1)} л · калории ${item.calories}',
+                'Шаги ${item.steps} · сон ${item.sleepHours.toStringAsFixed(1)} ч · вода ${item.waterLiters.toStringAsFixed(1)} л · питание ${item.calories} ккал · расход ${item.totalCaloriesBurned} ккал',
             onTap: () => _showDayDetails(context, state, onChanged, item.date),
           ),
         ),
@@ -170,7 +171,8 @@ class CalendarScreen extends StatelessWidget {
           (item) => InfoTile(
             icon: item.done ? Icons.done_outline : Icons.event_outlined,
             title: item.title,
-            subtitle: '${item.date} · ${item.category} · ${item.time}',
+            subtitle:
+                '${item.date} · ${item.category} · ${item.time}${item.repeat == 'none' ? '' : ' · ${_reminderRepeatLabel(item.repeat)}'}',
             onTap: () => _editReminder(context, state, onChanged, item),
             onLongPress: () => _confirmDelete(
               context,

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'assistant_engine.dart';
 import 'assistant_tools.dart';
+import 'error_log_service.dart';
 import 'local_llm_service.dart';
 import 'model.dart';
 
@@ -29,6 +30,8 @@ class AssistantConversationService {
 
   Future<ConversationSubmitResult> submit({
     required HealthAppState state,
+    HealthAppState Function()? latestState,
+    AssistantMessage? existingUserMessage,
     required String query,
     String displayText = '',
     String kind = 'text',
@@ -53,8 +56,9 @@ class AssistantConversationService {
         usedTool: false,
       );
     }
+    var currentState = latestState?.call() ?? state;
     var toolResult = allowTools && normalizedQuery.isNotEmpty
-        ? _tools.execute(state, normalizedQuery)
+        ? _tools.execute(currentState, normalizedQuery)
         : null;
     if (toolResult == null &&
         allowTools &&
@@ -64,10 +68,19 @@ class AssistantConversationService {
           query: normalizedQuery,
           localeCode: state.localeCode,
         );
-        if (routed != null) toolResult = _tools.execute(state, routed);
-      } catch (_) {}
+        if (routed != null) {
+          currentState = latestState?.call() ?? currentState;
+          toolResult = _tools.execute(currentState, routed);
+        }
+      } catch (error, stackTrace) {
+        await ErrorLogService.instance.recordError(
+          error,
+          stackTrace,
+          source: 'Assistant tool routing',
+        );
+      }
     }
-    var effectiveState = toolResult?.state ?? state;
+    var effectiveState = toolResult?.state ?? currentState;
     final deterministic = buildAssistantAnswer(
       effectiveState,
       normalizedQuery.isEmpty ? 'Проанализируй вложение' : normalizedQuery,
@@ -103,32 +116,45 @@ class AssistantConversationService {
             localeCode: effectiveState.localeCode,
           );
           answerSource = 'Qwen3.5 0.8B · локально';
-        } catch (error) {
+        } catch (error, stackTrace) {
+          await ErrorLogService.instance.recordError(
+            error,
+            stackTrace,
+            source: 'Local assistant answer',
+          );
           answerText =
               '${deterministic.text}\n\nЛокальная модель не ответила: ${_shortError(error)}';
         }
       }
     }
 
+    if (toolResult == null && latestState != null) {
+      effectiveState = latestState();
+    }
+
     final related = prefilledRelatedSection.isNotEmpty
         ? prefilledRelatedSection
         : toolResult?.relatedSection ?? deterministic.relatedSection;
     final now = DateTime.now();
-    final userMessage = AssistantMessage(
-      id: newId(),
-      createdAt: now.toIso8601String(),
-      role: 'user',
-      text: displayText.trim().isEmpty ? normalizedQuery : displayText.trim(),
-      relatedSection: related,
-      kind: kind,
-      transcript: transcript,
-      attachmentPath: attachmentPath,
-      thumbnailPath: thumbnailPath,
-      attachmentName: attachmentName,
-      mimeType: mimeType,
-      analysis: analysis,
-      durationSeconds: durationSeconds,
-    );
+    final userMessage =
+        existingUserMessage ??
+        AssistantMessage(
+          id: newId(),
+          createdAt: now.toIso8601String(),
+          role: 'user',
+          text: displayText.trim().isEmpty
+              ? normalizedQuery
+              : displayText.trim(),
+          relatedSection: related,
+          kind: kind,
+          transcript: transcript,
+          attachmentPath: attachmentPath,
+          thumbnailPath: thumbnailPath,
+          attachmentName: attachmentName,
+          mimeType: mimeType,
+          analysis: analysis,
+          durationSeconds: durationSeconds,
+        );
     final assistantMessage = AssistantMessage(
       id: '${newId()}-assistant',
       createdAt: DateTime.now().toIso8601String(),
@@ -143,7 +169,9 @@ class AssistantConversationService {
     final combined = [
       assistantMessage,
       userMessage,
-      ...effectiveState.assistantMessages,
+      ...effectiveState.assistantMessages.where(
+        (message) => message.id != userMessage.id,
+      ),
     ];
     if (combined.length > 3000) {
       await deleteMediaForMessages(combined.skip(3000));

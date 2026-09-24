@@ -149,35 +149,48 @@ class MediaImportService {
   }
 
   Future<AttachmentAnalysis> prepareAttachment(ImportedMedia source) async {
-    final originalBytes = await File(source.path).length();
-    final optimized = _isLikelyImage(source.name)
-        ? await _optimizeImage(source)
-        : source;
-    final mimeType =
-        lookupMimeType(
-          optimized.name,
-          headerBytes: await _headerBytes(optimized.path),
-        ) ??
-        'application/octet-stream';
-    final extractedText = await _extractLocalText(optimized);
-    final thumbnailPath = _isLikelyImage(optimized.name)
-        ? await _createThumbnail(optimized)
-        : '';
-    final storedBytes = await File(optimized.path).length();
-    final description = _attachmentDescription(
-      optimized,
-      mimeType,
-      extractedText,
-    );
-    return AttachmentAnalysis(
-      media: optimized,
-      mimeType: mimeType,
-      extractedText: extractedText,
-      description: description,
-      thumbnailPath: thumbnailPath,
-      originalBytes: originalBytes,
-      storedBytes: storedBytes,
-    );
+    try {
+      final sourceFile = File(source.path);
+      if (!await sourceFile.exists()) {
+        throw FileSystemException('Файл вложения не найден', source.path);
+      }
+      final originalBytes = await sourceFile.length();
+      final optimized = _isLikelyImage(source.name)
+          ? await _optimizeImage(source)
+          : source;
+      final mimeType =
+          lookupMimeType(
+            optimized.name,
+            headerBytes: await _headerBytes(optimized.path),
+          ) ??
+          'application/octet-stream';
+      final extractedText = await _extractLocalText(optimized);
+      final thumbnailPath = _isLikelyImage(optimized.name)
+          ? await _createThumbnail(optimized)
+          : '';
+      final storedBytes = await File(optimized.path).length();
+      final description = _attachmentDescription(
+        optimized,
+        mimeType,
+        extractedText,
+      );
+      return AttachmentAnalysis(
+        media: optimized,
+        mimeType: mimeType,
+        extractedText: extractedText,
+        description: description,
+        thumbnailPath: thumbnailPath,
+        originalBytes: originalBytes,
+        storedBytes: storedBytes,
+      );
+    } catch (error, stackTrace) {
+      await ErrorLogService.instance.recordError(
+        error,
+        stackTrace,
+        source: 'Attachment preparation; ${source.name}; ${source.path}',
+      );
+      rethrow;
+    }
   }
 
   Future<String> extractLocalText(ImportedMedia media) =>
@@ -385,30 +398,16 @@ class MediaImportService {
     final source = File(media.path);
     try {
       final original = await source.readAsBytes();
-      var decoded = image_lib.decodeImage(original);
-      if (decoded == null) return media;
-      decoded = image_lib.bakeOrientation(decoded);
-      const maxSide = 2048;
-      if (decoded.width > maxSide || decoded.height > maxSide) {
-        final landscape = decoded.width >= decoded.height;
-        decoded = image_lib.copyResize(
-          decoded,
-          width: landscape ? maxSide : null,
-          height: landscape ? null : maxSide,
-          interpolation: image_lib.Interpolation.average,
-        );
-      }
       final extension = media.name.split('.').last.toLowerCase();
-      final preservePng =
-          extension == 'png' && original.length < 3 * 1024 * 1024;
-      final encoded = preservePng
-          ? image_lib.encodePng(decoded, level: 9)
-          : image_lib.encodeJpg(decoded, quality: 86);
-      if (encoded.length >= original.length &&
-          original.length < 3 * 1024 * 1024) {
+      final transformed = await compute(_optimizeImageBytes, {
+        'bytes': original,
+        'extension': extension,
+      });
+      final encoded = transformed['bytes'] as Uint8List?;
+      if (encoded == null) {
         return media;
       }
-      final outputExtension = preservePng ? 'png' : 'jpg';
+      final outputExtension = transformed['extension']! as String;
       final baseName = media.name.replaceAll(RegExp(r'\.[^.]+$'), '');
       final output = File(
         '${source.parent.path}${Platform.pathSeparator}'
@@ -433,25 +432,16 @@ class MediaImportService {
 
   Future<String> _createThumbnail(ImportedMedia media) async {
     try {
-      var decoded = image_lib.decodeImage(await File(media.path).readAsBytes());
-      if (decoded == null) return '';
-      decoded = image_lib.bakeOrientation(decoded);
-      const maxSide = 560;
-      final landscape = decoded.width >= decoded.height;
-      final thumbnail = image_lib.copyResize(
-        decoded,
-        width: landscape ? maxSide : null,
-        height: landscape ? null : maxSide,
-        interpolation: image_lib.Interpolation.average,
+      final encoded = await compute(
+        _createThumbnailBytes,
+        await File(media.path).readAsBytes(),
       );
+      if (encoded == null) return '';
       final target = File(
         '${File(media.path).parent.path}${Platform.pathSeparator}'
         '${DateTime.now().microsecondsSinceEpoch}_thumbnail.jpg',
       );
-      await target.writeAsBytes(
-        image_lib.encodeJpg(thumbnail, quality: 72),
-        flush: true,
-      );
+      await target.writeAsBytes(encoded, flush: true);
       return target.path;
     } catch (error, stackTrace) {
       await ErrorLogService.instance.recordError(
@@ -685,7 +675,12 @@ class MediaImportService {
       }
       final text = pages.join('\n');
       return text.length <= 48000 ? text : text.substring(0, 48000);
-    } catch (_) {
+    } catch (error, stackTrace) {
+      await ErrorLogService.instance.recordError(
+        error,
+        stackTrace,
+        source: 'PDF text and OCR extraction',
+      );
       return _extractPdfWithSystemTool(media.path);
     } finally {
       await document?.dispose();
@@ -721,7 +716,12 @@ class MediaImportService {
           language: 'rus+eng',
           args: const {'psm': '4', 'preserve_interword_spaces': '1'},
         )).trim();
-      } catch (_) {
+      } catch (error, stackTrace) {
+        await ErrorLogService.instance.recordError(
+          error,
+          stackTrace,
+          source: 'Image OCR on mobile',
+        );
         return '';
       }
     }
@@ -738,7 +738,12 @@ class MediaImportService {
         if (result.exitCode == 0) {
           return '${result.stdout}'.trim();
         }
-      } catch (_) {
+      } catch (error, stackTrace) {
+        await ErrorLogService.instance.recordError(
+          error,
+          stackTrace,
+          source: 'Image OCR with Tesseract process',
+        );
         return '';
       }
     }
@@ -925,4 +930,48 @@ class MediaImportService {
     final text = '$error'.replaceAll(RegExp(r'\s+'), ' ').trim();
     return text.length <= 180 ? text : '${text.substring(0, 180)}...';
   }
+}
+
+Map<String, Object?> _optimizeImageBytes(Map<String, Object> request) {
+  final original = request['bytes']! as Uint8List;
+  var decoded = image_lib.decodeImage(original);
+  if (decoded == null) return const {'bytes': null, 'extension': ''};
+  decoded = image_lib.bakeOrientation(decoded);
+  const maxSide = 2048;
+  if (decoded.width > maxSide || decoded.height > maxSide) {
+    final landscape = decoded.width >= decoded.height;
+    decoded = image_lib.copyResize(
+      decoded,
+      width: landscape ? maxSide : null,
+      height: landscape ? null : maxSide,
+      interpolation: image_lib.Interpolation.average,
+    );
+  }
+  final preservePng =
+      request['extension'] == 'png' && original.length < 3 * 1024 * 1024;
+  final encoded = preservePng
+      ? image_lib.encodePng(decoded, level: 9)
+      : image_lib.encodeJpg(decoded, quality: 86);
+  if (encoded.length >= original.length && original.length < 3 * 1024 * 1024) {
+    return const {'bytes': null, 'extension': ''};
+  }
+  return {
+    'bytes': Uint8List.fromList(encoded),
+    'extension': preservePng ? 'png' : 'jpg',
+  };
+}
+
+Uint8List? _createThumbnailBytes(Uint8List source) {
+  var decoded = image_lib.decodeImage(source);
+  if (decoded == null) return null;
+  decoded = image_lib.bakeOrientation(decoded);
+  const maxSide = 560;
+  final landscape = decoded.width >= decoded.height;
+  final thumbnail = image_lib.copyResize(
+    decoded,
+    width: landscape ? maxSide : null,
+    height: landscape ? null : maxSide,
+    interpolation: image_lib.Interpolation.average,
+  );
+  return Uint8List.fromList(image_lib.encodeJpg(thumbnail, quality: 72));
 }

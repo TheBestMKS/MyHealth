@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:timezone/data/latest.dart' as tz_data;
 import 'package:timezone/timezone.dart' as tz;
@@ -17,17 +18,30 @@ class HealthNotificationService {
   final FlutterLocalNotificationsPlugin _plugin =
       FlutterLocalNotificationsPlugin();
   bool _initialized = false;
+  Future<void>? _initializeFuture;
+  bool _syncing = false;
+  bool _exactAlarmsUnavailable = false;
+  HealthAppState? _pendingSyncState;
+  Completer<void>? _syncCompleter;
   String lastError = '';
   final ValueNotifier<String?> activePayload = ValueNotifier(null);
 
-  Future<void> initialize() async {
-    if (_initialized) return;
+  Future<void> initialize() {
+    if (_initialized) return Future<void>.value();
+    final inFlight = _initializeFuture;
+    if (inFlight != null) return inFlight;
+    final operation = _initialize();
+    _initializeFuture = operation;
+    return operation.whenComplete(() => _initializeFuture = null);
+  }
+
+  Future<void> _initialize() async {
     try {
       tz_data.initializeTimeZones();
       final zone = await FlutterTimezone.getLocalTimezone();
       tz.setLocalLocation(tz.getLocation(zone.identifier));
       const settings = InitializationSettings(
-        android: AndroidInitializationSettings('ic_launcher'),
+        android: AndroidInitializationSettings('ic_notification'),
         iOS: DarwinInitializationSettings(
           requestAlertPermission: false,
           requestBadgePermission: false,
@@ -80,7 +94,9 @@ class HealthNotificationService {
           >();
       final notificationAllowed =
           await android?.requestNotificationsPermission() ?? true;
-      await android?.requestExactAlarmsPermission();
+      final exactAllowed = await android?.requestExactAlarmsPermission();
+      await android?.requestFullScreenIntentPermission();
+      if (exactAllowed == true) _exactAlarmsUnavailable = false;
       final ios = _plugin
           .resolvePlatformSpecificImplementation<
             IOSFlutterLocalNotificationsPlugin
@@ -113,14 +129,52 @@ class HealthNotificationService {
     }
   }
 
-  Future<void> sync(HealthAppState state) async {
-    if (!state.settings.notificationsEnabled) {
-      if (_initialized) await _plugin.cancelAll();
-      return;
-    }
-    await initialize();
-    if (!_initialized) return;
+  Future<void> sync(HealthAppState state) {
+    _pendingSyncState = state;
+    final existing = _syncCompleter;
+    if (existing != null) return existing.future;
+    final completer = Completer<void>();
+    _syncCompleter = completer;
+    scheduleMicrotask(() => unawaited(_drainSync()));
+    return completer.future;
+  }
+
+  Future<void> _drainSync() async {
+    if (_syncing) return;
+    _syncing = true;
     try {
+      while (true) {
+        final state = _pendingSyncState;
+        if (state == null) break;
+        _pendingSyncState = null;
+        await _syncNow(state);
+      }
+    } catch (error, stackTrace) {
+      lastError = '$error';
+      await ErrorLogService.instance.recordError(
+        error,
+        stackTrace,
+        source: 'Notification queue',
+      );
+    } finally {
+      _syncing = false;
+      final completer = _syncCompleter;
+      _syncCompleter = null;
+      if (completer != null && !completer.isCompleted) completer.complete();
+      if (_pendingSyncState != null) {
+        unawaited(sync(_pendingSyncState!));
+      }
+    }
+  }
+
+  Future<void> _syncNow(HealthAppState state) async {
+    try {
+      if (!state.settings.notificationsEnabled) {
+        if (_initialized) await _plugin.cancelAll();
+        return;
+      }
+      await initialize();
+      if (!_initialized) return;
       await _plugin.cancelAll();
       final now = DateTime.now();
       if (state.settings.medicationNotifications) {
@@ -188,6 +242,23 @@ class HealthNotificationService {
     }
   }
 
+  Future<void> cancelWakefulnessChecks(
+    AlarmGroup alarm, {
+    String? dateKey,
+  }) async {
+    await initialize();
+    if (!_initialized) return;
+    final key = dateKey == null || parseDateKey(dateKey) == null
+        ? todayKey()
+        : dateKey;
+    for (var check = 0; check < 60; check++) {
+      await _plugin.cancel(id: _stableId('wakecheck:${alarm.id}:$key:$check'));
+      await _plugin.cancel(
+        id: _stableId('wakecheck:${alarm.id}:$key:monitor:$check'),
+      );
+    }
+  }
+
   Future<void> _scheduleMedicationNotifications(
     HealthAppState state,
     DateTime now,
@@ -243,26 +314,37 @@ class HealthNotificationService {
     DateTime now,
   ) async {
     for (final reminder in state.reminders.where((item) => !item.done)) {
-      final date = parseDateKey(reminder.date);
+      final startDate = parseDateKey(reminder.date);
       final time = _parseTime(reminder.time);
-      if (date == null || time == null) continue;
-      final scheduled = DateTime(
-        date.year,
-        date.month,
-        date.day,
-        time.hour,
-        time.minute,
-      );
-      if (!scheduled.isAfter(now)) continue;
-      await _schedule(
-        id: _stableId('reminder:${reminder.id}'),
-        date: scheduled,
-        title: reminder.title,
-        body: reminder.category,
-        channelId: 'reminders',
-        channelName: 'Напоминания',
-        payload: 'reminder:${reminder.id}',
-      );
+      if (startDate == null || time == null) continue;
+      final repeating = reminder.repeat != 'none';
+      final first = DateTime(now.year, now.month, now.day);
+      for (var offset = 0; offset < (repeating ? 30 : 1); offset++) {
+        final date = repeating ? first.add(Duration(days: offset)) : startDate;
+        if (date.isBefore(
+              DateTime(startDate.year, startDate.month, startDate.day),
+            ) ||
+            !_reminderApplies(reminder, date)) {
+          continue;
+        }
+        final scheduled = DateTime(
+          date.year,
+          date.month,
+          date.day,
+          time.hour,
+          time.minute,
+        );
+        if (!scheduled.isAfter(now)) continue;
+        await _schedule(
+          id: _stableId('reminder:${reminder.id}:${todayKey(date)}'),
+          date: scheduled,
+          title: reminder.title,
+          body: reminder.category,
+          channelId: 'reminders',
+          channelName: 'Напоминания',
+          payload: 'reminder:${reminder.id}',
+        );
+      }
     }
   }
 
@@ -283,53 +365,109 @@ class HealthNotificationService {
         if (alarm.adaptive && alarm.smartWakeWindowMinutes > 0) {
           scheduled = _smartAlarmTime(state, alarm, date, scheduled);
         }
-        if (!scheduled.isAfter(now)) continue;
         final body = alarm.unlockMode == 'simple'
             ? alarm.useWearableSleepCycle
                   ? 'Умное окно подъёма до ${alarm.wakeTime}; выбран ближайший расчётный конец цикла сна.'
                   : 'Время подъёма ${alarm.wakeTime}'
             : 'Для отключения откройте приложение и решите задачу.';
-        if (!alarm.gradualWakeEnabled) {
-          await _schedule(
-            id: _stableId('alarm:${alarm.id}:${todayKey(date)}'),
-            date: scheduled,
-            title: alarm.title,
-            body: body,
-            channelId: 'alarms_full',
-            channelName: 'Будильники',
-            payload: 'alarm:${alarm.id}:${todayKey(date)}',
-            alarm: true,
-            vibrationEnabled: alarm.vibrationEnabled,
-          );
-          continue;
+        if (scheduled.isAfter(now)) {
+          if (!alarm.gradualWakeEnabled) {
+            await _schedule(
+              id: _stableId('alarm:${alarm.id}:${todayKey(date)}'),
+              date: scheduled,
+              title: alarm.title,
+              body: body,
+              channelId: 'alarms_full',
+              channelName: 'Будильники',
+              payload: 'alarm:${alarm.id}:${todayKey(date)}',
+              alarm: true,
+              fullScreen: true,
+              vibrationEnabled: alarm.vibrationEnabled,
+            );
+          } else {
+            final rampMinutes = alarm.gradualWakeMinutes.clamp(1, 15);
+            final stageTimes = gradualAlarmStageTimes(scheduled, rampMinutes);
+            final stages = <({bool sound, String suffix})>[
+              (sound: false, suffix: 'Тихое начало'),
+              (sound: true, suffix: 'Мягкий сигнал'),
+              (sound: true, suffix: 'Полный сигнал'),
+            ];
+            for (var stage = 0; stage < stages.length; stage++) {
+              final item = stages[stage];
+              final stageDate = stageTimes[stage];
+              if (!stageDate.isAfter(now)) continue;
+              await _schedule(
+                id: _stableId(
+                  'alarm:${alarm.id}:${todayKey(date)}:stage:$stage',
+                ),
+                date: stageDate,
+                title: alarm.title,
+                body: '${item.suffix}. $body',
+                channelId: stage == 0
+                    ? 'alarms_quiet'
+                    : stage == 1
+                    ? 'alarms_gentle'
+                    : 'alarms_full',
+                channelName: 'Будильники',
+                payload: 'alarm:${alarm.id}:${todayKey(date)}',
+                alarm: true,
+                fullScreen: stage == stages.length - 1,
+                soundEnabled: item.sound,
+                vibrationEnabled: alarm.vibrationEnabled,
+              );
+            }
+          }
         }
-        final rampMinutes = alarm.gradualWakeMinutes.clamp(1, 15);
-        final stageTimes = gradualAlarmStageTimes(scheduled, rampMinutes);
-        final stages = <({bool sound, String suffix})>[
-          (sound: false, suffix: 'Тихое начало'),
-          (sound: true, suffix: 'Мягкий сигнал'),
-          (sound: true, suffix: 'Полный сигнал'),
-        ];
-        for (var stage = 0; stage < stages.length; stage++) {
-          final item = stages[stage];
-          final stageDate = stageTimes[stage];
-          if (!stageDate.isAfter(now)) continue;
-          await _schedule(
-            id: _stableId('alarm:${alarm.id}:${todayKey(date)}:stage:$stage'),
-            date: stageDate,
-            title: alarm.title,
-            body: '${item.suffix}. $body',
-            channelId: stage == 0
-                ? 'alarms_quiet'
-                : stage == 1
-                ? 'alarms_gentle'
-                : 'alarms_full',
-            channelName: 'Будильники',
-            payload: 'alarm:${alarm.id}:${todayKey(date)}',
-            alarm: true,
-            soundEnabled: item.sound,
-            vibrationEnabled: alarm.vibrationEnabled,
-          );
+        if (alarm.wakefulnessCheckEnabled &&
+            alarm.lastWakefulnessConfirmedDate != todayKey(date)) {
+          final key = todayKey(date);
+          final monitorStarted = DateTime.tryParse(
+            alarm.wakefulnessMonitorStartedAt,
+          )?.toLocal();
+          final lastActivity = DateTime.tryParse(
+            alarm.wakefulnessLastActivityAt,
+          )?.toLocal();
+          final monitoring =
+              monitorStarted != null &&
+              lastActivity != null &&
+              todayKey(monitorStarted) == key &&
+              todayKey(lastActivity) == key;
+          final checks = monitoring
+              ? wakefulnessMonitorCheckTimes(
+                  lastActivity,
+                  monitorStarted.add(
+                    Duration(
+                      minutes: alarm.wakefulnessWindowMinutes.clamp(5, 120),
+                    ),
+                  ),
+                  alarm.wakefulnessInactivityMinutes,
+                )
+              : wakefulnessCheckTimes(
+                  scheduled,
+                  alarm.wakefulnessWindowMinutes,
+                  alarm.wakefulnessInactivityMinutes,
+                );
+          for (var check = 0; check < checks.length; check++) {
+            final checkDate = checks[check];
+            if (!checkDate.isAfter(now)) continue;
+            await _schedule(
+              id: _stableId(
+                monitoring
+                    ? 'wakecheck:${alarm.id}:$key:monitor:$check'
+                    : 'wakecheck:${alarm.id}:$key:$check',
+              ),
+              date: checkDate,
+              title: '${alarm.title}: проверка бодрствования',
+              body:
+                  'Активность после подъёма не подтверждена. Откройте приложение и отключите сигнал.',
+              channelId: 'alarms_full',
+              channelName: 'Будильники',
+              payload: 'wakecheck:${alarm.id}:$key',
+              alarm: true,
+              fullScreen: true,
+              vibrationEnabled: alarm.vibrationEnabled,
+            );
+          }
         }
       }
     }
@@ -416,50 +554,83 @@ class HealthNotificationService {
     required String channelName,
     required String payload,
     bool alarm = false,
+    bool fullScreen = false,
     bool soundEnabled = true,
     bool vibrationEnabled = true,
   }) async {
-    await _plugin.zonedSchedule(
-      id: id,
-      title: title,
-      body: body,
-      scheduledDate: tz.TZDateTime(
-        tz.local,
-        date.year,
-        date.month,
-        date.day,
-        date.hour,
-        date.minute,
-      ),
-      notificationDetails: _details(
-        channelId,
-        channelName,
-        alarm: alarm,
-        soundEnabled: soundEnabled,
-        vibrationEnabled: vibrationEnabled,
-      ),
-      androidScheduleMode: alarm
-          ? AndroidScheduleMode.exactAllowWhileIdle
-          : AndroidScheduleMode.inexactAllowWhileIdle,
-      payload: payload,
+    final scheduledDate = tz.TZDateTime(
+      tz.local,
+      date.year,
+      date.month,
+      date.day,
+      date.hour,
+      date.minute,
     );
+    final details = _details(
+      channelId,
+      channelName,
+      alarm: alarm,
+      fullScreen: fullScreen,
+      soundEnabled: soundEnabled,
+      vibrationEnabled: vibrationEnabled,
+    );
+    try {
+      await _plugin.zonedSchedule(
+        id: id,
+        title: title,
+        body: body,
+        scheduledDate: scheduledDate,
+        notificationDetails: details,
+        androidScheduleMode: alarm && !_exactAlarmsUnavailable
+            ? AndroidScheduleMode.exactAllowWhileIdle
+            : AndroidScheduleMode.inexactAllowWhileIdle,
+        payload: payload,
+      );
+    } on PlatformException catch (error) {
+      if (!alarm ||
+          !('${error.code} ${error.message}'.toLowerCase().contains('exact'))) {
+        rethrow;
+      }
+      _exactAlarmsUnavailable = true;
+      await ErrorLogService.instance.recordInfo(
+        'Точные будильники недоступны (${error.code}); используется приблизительное системное расписание.',
+        source: 'Exact alarm unavailable; using inexact schedule',
+      );
+      await _plugin.zonedSchedule(
+        id: id,
+        title: title,
+        body: body,
+        scheduledDate: scheduledDate,
+        notificationDetails: details,
+        androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+        payload: payload,
+      );
+    }
   }
 
   NotificationDetails _details(
     String channelId,
     String channelName, {
     bool alarm = false,
+    bool fullScreen = false,
     bool soundEnabled = true,
     bool vibrationEnabled = true,
   }) => NotificationDetails(
     android: AndroidNotificationDetails(
       channelId,
       channelName,
+      icon: 'ic_notification',
       channelDescription: 'Уведомления приложения «Моё здоровье»',
       importance: alarm ? Importance.max : Importance.high,
       priority: alarm ? Priority.max : Priority.high,
       category: alarm ? AndroidNotificationCategory.alarm : null,
-      visibility: NotificationVisibility.private,
+      fullScreenIntent: alarm && fullScreen,
+      visibility: alarm
+          ? NotificationVisibility.public
+          : NotificationVisibility.private,
+      audioAttributesUsage: alarm
+          ? AudioAttributesUsage.alarm
+          : AudioAttributesUsage.notification,
       playSound: soundEnabled,
       enableVibration: vibrationEnabled,
     ),
@@ -470,6 +641,15 @@ class HealthNotificationService {
       scenario: alarm ? WindowsNotificationScenario.alarm : null,
     ),
   );
+}
+
+bool _reminderApplies(ReminderItem reminder, DateTime date) {
+  return switch (reminder.repeat) {
+    'daily' => true,
+    'weekdays' => date.weekday <= DateTime.friday,
+    'weekends' => date.weekday >= DateTime.saturday,
+    _ => todayKey(date) == reminder.date,
+  };
 }
 
 DateTime _smartAlarmTime(
@@ -515,6 +695,38 @@ List<DateTime> gradualAlarmStageTimes(DateTime target, int rampMinutes) {
     target.subtract(Duration(minutes: (bounded / 2).floor())),
     target,
   ];
+}
+
+@visibleForTesting
+List<DateTime> wakefulnessCheckTimes(
+  DateTime target,
+  int windowMinutes,
+  int inactivityMinutes,
+) {
+  final window = windowMinutes.clamp(5, 120);
+  final interval = inactivityMinutes.clamp(2, 30);
+  return [
+    for (var minute = interval; minute <= window; minute += interval)
+      target.add(Duration(minutes: minute)),
+  ];
+}
+
+@visibleForTesting
+List<DateTime> wakefulnessMonitorCheckTimes(
+  DateTime lastActivity,
+  DateTime windowEnd,
+  int inactivityMinutes,
+) {
+  final interval = inactivityMinutes.clamp(2, 30);
+  final checks = <DateTime>[];
+  for (
+    var check = lastActivity.add(Duration(minutes: interval));
+    !check.isAfter(windowEnd);
+    check = check.add(Duration(minutes: interval))
+  ) {
+    checks.add(check);
+  }
+  return checks;
 }
 
 class _ClockTime {

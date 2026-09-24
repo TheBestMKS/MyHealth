@@ -136,15 +136,23 @@ def main() -> int:
     offline_maps = (ROOT / "lib/src/offline_map_service.dart").read_text(
         encoding="utf-8"
     )
-    check("version: 1.8.1+10" in pubspec, "pubspec version is not 1.8.1+10", errors)
-    check("1.8.1+10" in readme, "README release version is missing", errors)
-    check("1.8.1+10" in settings, "Settings about version is stale", errors)
-    check("1.8.1+10" in profile, "Profile about version is stale", errors)
+    notification_keep = (
+        ROOT / "android/app/src/main/res/raw/keep.xml"
+    ).read_text(encoding="utf-8")
+    check("version: 1.8.2+11" in pubspec, "pubspec version is not 1.8.2+11", errors)
+    check("1.8.2+11" in readme, "README release version is missing", errors)
+    check("1.8.2+11" in settings, "Settings about version is stale", errors)
+    check("1.8.2+11" in profile, "Profile about version is stale", errors)
     check(
         "FlutterError.onError" in main_entry
         and "PlatformDispatcher.instance.onError" in main_entry
         and "runZonedGuarded" in main_entry,
         "global Flutter/Dart error capture is incomplete",
+        errors,
+    )
+    check(
+        "@drawable/ic_notification" in notification_keep,
+        "Android notification icon is not protected from resource shrinking",
         errors,
     )
     check(

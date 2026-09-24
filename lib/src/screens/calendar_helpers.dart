@@ -105,8 +105,8 @@ Future<void> _showDayDetails(
                         initialDate: date,
                       );
                     },
-                    icon: const Icon(Icons.add),
-                    label: const Text('Добавить'),
+                    icon: const Icon(Icons.edit_outlined),
+                    label: const Text('Изменить'),
                   ),
                 ],
               ),
@@ -130,6 +130,10 @@ Future<void> _showDayDetails(
                   Pill(
                     label: 'калории ${metrics.calories}',
                     icon: Icons.local_fire_department_outlined,
+                  ),
+                  Pill(
+                    label: 'расход ${metrics.totalCaloriesBurned}',
+                    icon: Icons.energy_savings_leaf_outlined,
                   ),
                   Pill(
                     label: 'тренировка ${metrics.workoutMinutes} мин',

@@ -14,6 +14,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:video_player/video_player.dart';
 
 import 'ble_service.dart';
+import 'assistant_background_service.dart';
 import 'assistant_conversation_service.dart';
 import 'activity_context_service.dart';
 import 'catalog.dart';
@@ -40,6 +41,7 @@ import 'speech_input_service.dart';
 import 'unit_format.dart';
 import 'widgets.dart';
 import 'weather_service.dart';
+import 'wakefulness_monitor_service.dart';
 import 'workout_adaptation.dart';
 
 part 'screens/routing.dart';

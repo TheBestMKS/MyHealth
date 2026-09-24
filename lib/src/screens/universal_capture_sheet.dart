@@ -47,7 +47,6 @@ class _UniversalCaptureSheetState extends State<_UniversalCaptureSheet> {
   final _controller = TextEditingController();
   final _speech = SpeechInputService.instance;
   final _media = MediaImportService();
-  final _conversation = AssistantConversationService();
   bool _busy = false;
   bool _listening = false;
   bool _voiceInput = false;
@@ -175,35 +174,19 @@ class _UniversalCaptureSheetState extends State<_UniversalCaptureSheet> {
     final duration = _voiceStartedAt == null
         ? 0
         : DateTime.now().difference(_voiceStartedAt!).inSeconds;
-    setState(() {
-      _busy = true;
-      _listening = false;
-      _status = 'Обрабатываю локально...';
-    });
-    try {
-      final result = await _conversation.submit(
-        state: widget.state,
-        query: query,
-        kind: _voiceInput ? 'voice' : 'text',
-        transcript: _voiceInput ? query : '',
-        durationSeconds: duration,
-        attachmentPath: voicePath,
-        attachmentName: voicePath.isEmpty
-            ? ''
-            : File(voicePath).uri.pathSegments.last,
-        mimeType: voicePath.isEmpty ? '' : 'audio/mp4',
-      );
-      widget.onChanged(result.state);
-      if (!mounted) return;
-      Navigator.pop(context);
-      widget.onSelect(AppSection.assistant);
-    } catch (error) {
-      if (mounted) {
-        setState(() => _status = 'Ошибка: ${_shortAssistantError(error)}');
-      }
-    } finally {
-      if (mounted) setState(() => _busy = false);
-    }
+    AssistantBackgroundService.instance.enqueueText(
+      query: query,
+      kind: _voiceInput ? 'voice' : 'text',
+      transcript: _voiceInput ? query : '',
+      durationSeconds: duration,
+      attachmentPath: voicePath,
+      attachmentName: voicePath.isEmpty
+          ? ''
+          : File(voicePath).uri.pathSegments.last,
+    );
+    if (!mounted) return;
+    Navigator.pop(context);
+    widget.onSelect(AppSection.assistant);
   }
 
   Future<void> _toggleSpeech() async {
@@ -271,98 +254,20 @@ class _UniversalCaptureSheetState extends State<_UniversalCaptureSheet> {
           ? await _media.captureCameraImage()
           : await _media.pickAnyFile();
       if (picked == null || !mounted) return;
-      setState(() => _status = 'Сжимаю и анализирую локально...');
-      final attachment = await _media.prepareAttachment(picked);
-      if (!mounted) return;
-      final intent = await _chooseAttachmentIntent(attachment);
+      final intent = await _chooseAttachmentIntent(picked);
       if (intent == null || !mounted) return;
-      var state = widget.state;
-      var relatedSection = 'documents';
-      var actionSummary = '';
-      final effectiveIntent = intent == _AttachmentIntent.auto
-          ? _detectAttachmentIntent(attachment)
-          : intent;
-      List<RecognitionCandidate> candidates = const [];
-      if (effectiveIntent == _AttachmentIntent.food) {
-        candidates = await _media.recognizeExistingMedia(
-          attachment.media,
-          source: 'фото еды',
-          requiresMedicalReview: false,
-        );
-        relatedSection = 'nutrition';
-      } else if (effectiveIntent == _AttachmentIntent.lab) {
-        candidates = await _media.recognizeExistingMedia(
-          attachment.media,
-          source: 'OCR анализа',
-          requiresMedicalReview: true,
-        );
-        relatedSection = 'labs';
-      } else if (effectiveIntent == _AttachmentIntent.prescription) {
-        candidates = await _media.recognizeExistingPrescription(
-          attachment.media,
-        );
-        relatedSection = 'medicines';
-      }
-      if (candidates.isNotEmpty) {
-        state = state.copyWith(
-          confirmationQueue: [...candidates, ...state.confirmationQueue],
-        );
-        actionSummary =
-            'На проверку добавлено записей: ${candidates.length}. Изменения применятся после подтверждения.';
-      }
-      var analysis = attachment.description;
-      if (attachment.isImage) {
-        try {
-          final modelStatus = await LocalLlmService.instance.status();
-          if (modelStatus.isMultimodal) {
-            analysis = await LocalLlmService.instance.describeImage(
-              imagePath: attachment.media.path,
-              extractedText: attachment.extractedText,
-              localeCode: state.localeCode,
-            );
-          }
-        } catch (error) {
-          analysis =
-              '$analysis\nVision-анализ недоступен: ${_shortAssistantError(error)}';
-        }
-      }
-      final query = attachment.extractedText.trim().isEmpty
-          ? 'Проанализируй вложение ${attachment.media.name}'
-          : 'Проанализируй вложение ${attachment.media.name}. '
-                'Извлечённый текст:\n${attachment.extractedText.trim()}';
-      final analyzeDocumentWithModel =
-          effectiveIntent == _AttachmentIntent.chat &&
-          !attachment.isImage &&
-          attachment.extractedText.trim().isNotEmpty;
-      final result = await _conversation.submit(
-        state: state,
-        query: query,
-        displayText: attachment.isImage
-            ? 'Отправлено изображение: ${attachment.media.name}'
-            : 'Приложен файл: ${attachment.media.name}',
-        kind: attachment.isImage ? 'image' : 'file',
-        attachmentPath: attachment.media.path,
-        thumbnailPath: attachment.thumbnailPath,
-        attachmentName: attachment.media.name,
-        mimeType: attachment.mimeType,
-        analysis: analysis,
-        allowTools:
-            effectiveIntent == _AttachmentIntent.chat &&
-            attachment.extractedText.isNotEmpty,
-        prefilledAnswer: analyzeDocumentWithModel
-            ? ''
-            : [
-                analysis,
-                if (actionSummary.isNotEmpty) actionSummary,
-              ].join('\n\n'),
-        prefilledRelatedSection: analyzeDocumentWithModel ? '' : relatedSection,
-        actionSummary: actionSummary,
+      AssistantBackgroundService.instance.enqueueAttachment(
+        media: picked,
+        intent: intent,
       );
-      widget.onChanged(result.state);
-      if (!mounted) return;
       Navigator.pop(context);
       widget.onSelect(AppSection.assistant);
-    } catch (error) {
+    } catch (error, stackTrace) {
+      await ErrorLogService.instance.recordError(
+        error,
+        stackTrace,
+        source: camera ? 'Universal camera import' : 'Universal file import',
+      );
       if (mounted) {
         setState(() => _status = 'Ошибка: ${_shortAssistantError(error)}');
       }
@@ -371,10 +276,10 @@ class _UniversalCaptureSheetState extends State<_UniversalCaptureSheet> {
     }
   }
 
-  Future<_AttachmentIntent?> _chooseAttachmentIntent(
-    AttachmentAnalysis attachment,
+  Future<AssistantAttachmentIntent?> _chooseAttachmentIntent(
+    ImportedMedia media,
   ) {
-    return showModalBottomSheet<_AttachmentIntent>(
+    return showModalBottomSheet<AssistantAttachmentIntent>(
       context: context,
       showDragHandle: true,
       builder: (sheetContext) => SafeArea(
@@ -384,55 +289,40 @@ class _UniversalCaptureSheetState extends State<_UniversalCaptureSheet> {
             ListTile(
               leading: const Icon(Icons.auto_awesome_outlined),
               title: const LocalizedText('Определить автоматически'),
-              subtitle: Text(attachment.media.name),
-              onTap: () => Navigator.pop(sheetContext, _AttachmentIntent.auto),
+              subtitle: Text(media.name),
+              onTap: () =>
+                  Navigator.pop(sheetContext, AssistantAttachmentIntent.auto),
             ),
             ListTile(
               leading: const Icon(Icons.restaurant_outlined),
               title: const LocalizedText('Еда или напиток'),
-              onTap: () => Navigator.pop(sheetContext, _AttachmentIntent.food),
+              onTap: () =>
+                  Navigator.pop(sheetContext, AssistantAttachmentIntent.food),
             ),
             ListTile(
               leading: const Icon(Icons.biotech_outlined),
               title: const LocalizedText('Результаты анализов'),
-              onTap: () => Navigator.pop(sheetContext, _AttachmentIntent.lab),
+              onTap: () =>
+                  Navigator.pop(sheetContext, AssistantAttachmentIntent.lab),
             ),
             ListTile(
               leading: const Icon(Icons.medication_outlined),
               title: const LocalizedText('Рецепт или назначение'),
-              onTap: () =>
-                  Navigator.pop(sheetContext, _AttachmentIntent.prescription),
+              onTap: () => Navigator.pop(
+                sheetContext,
+                AssistantAttachmentIntent.prescription,
+              ),
             ),
             ListTile(
               leading: const Icon(Icons.chat_bubble_outline),
               title: const LocalizedText('Только вложить в диалог'),
-              onTap: () => Navigator.pop(sheetContext, _AttachmentIntent.chat),
+              onTap: () =>
+                  Navigator.pop(sheetContext, AssistantAttachmentIntent.chat),
             ),
           ],
         ),
       ),
     );
-  }
-
-  _AttachmentIntent _detectAttachmentIntent(AttachmentAnalysis attachment) {
-    final lower = attachment.extractedText.toLowerCase();
-    if (RegExp(
-          r'(?:таблет|капсул|принимать|назначен|рецепт|дозиров)',
-        ).hasMatch(lower) &&
-        RegExp(r'\d+(?:[\.,]\d+)?\s*(?:мг|мкг|мл|ме|ед\.)').hasMatch(lower)) {
-      return _AttachmentIntent.prescription;
-    }
-    if (RegExp(
-      r'(?:гемоглоб|глюкоз|холестерин|ферритин|референс|ммоль/л|мг/дл|анализ крови)',
-    ).hasMatch(lower)) {
-      return _AttachmentIntent.lab;
-    }
-    if (RegExp(
-      r'(?:ккал|калори|белк|жир|углевод|состав|пищевая ценность)',
-    ).hasMatch(lower)) {
-      return _AttachmentIntent.food;
-    }
-    return _AttachmentIntent.chat;
   }
 
   Future<void> _openManualEntry() async {
@@ -441,7 +331,5 @@ class _UniversalCaptureSheetState extends State<_UniversalCaptureSheet> {
     await showQuickAddDialog(rootContext, widget.state, widget.onChanged);
   }
 }
-
-enum _AttachmentIntent { auto, food, lab, prescription, chat }
 
 enum UniversalCaptureStart { composer, camera, file }

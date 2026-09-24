@@ -14,6 +14,21 @@ void main() {
     expect(result.relatedSection, 'nutrition');
   });
 
+  test(
+    'water commands understand milliliters, glasses and status questions',
+    () {
+      var state = HealthAppState.seed();
+      state = engine.execute(state, 'Добавь воды 300 миллилитров')!.state;
+      state = engine.execute(state, 'Я выпил 2 стакана воды')!.state;
+      state = engine.execute(state, '250 мл воды я выпил')!.state;
+
+      expect(state.today.waterLiters, closeTo(1.05, 0.001));
+      final status = engine.execute(state, 'Сколько воды я выпил сегодня?');
+      expect(status, isNotNull);
+      expect(status!.message, contains('1.05'));
+    },
+  );
+
   test('glucose in mg/dL is converted and stored as a lab result', () {
     final result = engine.execute(HealthAppState.seed(), 'Глюкоза 180 мг/дл');
 
@@ -95,7 +110,70 @@ void main() {
     expect(result!.state.alarmGroups.single.wakeTime, '06:45');
     expect(result.state.alarmGroups.single.days, 'пн, вт, ср, чт, пт');
     expect(result.state.alarmGroups.single.priority, 3);
-    expect(result.state.alarmGroups.single.unlockMode, 'math');
+    expect(result.state.alarmGroups.single.unlockMode, 'math_easy');
+  });
+
+  test('alarm command enables the post-wake activity check', () {
+    final result = engine.execute(
+      HealthAppState.seed(),
+      'Поставь будильник в 7 с контролем активности, не дай уснуть',
+    );
+
+    expect(result, isNotNull);
+    final alarm = result!.state.alarmGroups.single;
+    expect(alarm.wakeTime, '07:00');
+    expect(alarm.wakefulnessCheckEnabled, isTrue);
+    expect(alarm.specificDate, isNotEmpty);
+    expect(alarm.title, 'Будильник');
+  });
+
+  test('food without nutrition is saved for later confirmation', () {
+    final result = engine.execute(
+      HealthAppState.seed(),
+      'Я съел яблоко и творог',
+    );
+
+    expect(result, isNotNull);
+    expect(result!.state.meals.single.title, 'Яблоко и творог');
+    expect(result.state.meals.single.confirmed, isFalse);
+    expect(result.state.meals.single.calories, 0);
+  });
+
+  test('generic medicine reminder supports a daily repeat', () {
+    final result = engine.execute(
+      HealthAppState.seed(),
+      'Напомни принять витамин в 8 каждый день',
+    );
+
+    expect(result, isNotNull);
+    final reminder = result!.state.reminders.single;
+    expect(reminder.time, '08:00');
+    expect(reminder.repeat, 'daily');
+    expect(reminder.category, 'лекарства');
+    expect(reminder.title.toLowerCase(), contains('витамин'));
+  });
+
+  test('known medicine reminder extends its medication schedule', () {
+    final seed = HealthAppState.seed();
+    final state = seed.copyWith(
+      medications: const [
+        Medication(
+          id: 'metformin',
+          name: 'Метформин',
+          dose: '500 мг',
+          schedule: '08:00',
+          takenToday: false,
+          notes: '',
+        ),
+      ],
+    );
+
+    final result = engine.execute(state, 'Напомни принять метформин в 20:30');
+
+    expect(result, isNotNull);
+    expect(result!.state.medications.single.schedule, contains('08:00'));
+    expect(result.state.medications.single.schedule, contains('20:30'));
+    expect(result.state.reminders, isEmpty);
   });
 
   test('generic Russian lab command stores value, unit and reference', () {

@@ -23,15 +23,36 @@ class AssistantToolEngine {
     final lower = query.toLowerCase().trim();
     if (lower.isEmpty) return null;
 
-    final water = RegExp(
-      r'(?:выпил[а-яё]*|добав[а-яё]*|запиш[а-яё]*|water).*?(\d+(?:[\.,]\d+)?)\s*(мл|ml|л|l)(?![a-zа-яё])',
-      caseSensitive: false,
-    ).firstMatch(lower);
+    if (lower.contains('вод') &&
+        RegExp(
+          r'(?:сколько|покажи|какой|какое|текущ[а-яё]*|итого)',
+          caseSensitive: false,
+        ).hasMatch(lower) &&
+        !RegExp(r'\d+(?:[\.,]\d+)?\s*(?:мл|л|литр|стакан)').hasMatch(lower)) {
+      return AssistantToolResult(
+        state: state,
+        message:
+            'Сегодня записано ${state.today.waterLiters.toStringAsFixed(2)} л воды.',
+        relatedSection: 'nutrition',
+      );
+    }
+
+    final water =
+        RegExp(
+          r'(?:выпил[а-яё]*|добав[а-яё]*|запиш[а-яё]*|укаж[а-яё]*|вод[а-яё]*|water).*?(\d+(?:[\.,]\d+)?)\s*(мл|ml|миллилитр[а-яё]*|л|l|литр[а-яё]*|стакан[а-яё]*)(?![a-zа-яё])',
+          caseSensitive: false,
+        ).firstMatch(lower) ??
+        RegExp(
+          r'(\d+(?:[\.,]\d+)?)\s*(мл|ml|миллилитр[а-яё]*|л|l|литр[а-яё]*|стакан[а-яё]*)(?![a-zа-яё]).*?(?:вод[а-яё]*|выпил[а-яё]*|добав[а-яё]*|запиш[а-яё]*|water)',
+          caseSensitive: false,
+        ).firstMatch(lower);
     if (water != null && (lower.contains('вод') || lower.contains('water'))) {
       var liters = _number(water.group(1));
-      if (water.group(2)!.toLowerCase().contains('мл') ||
-          water.group(2)!.toLowerCase() == 'ml') {
+      final unit = water.group(2)!.toLowerCase();
+      if (unit.contains('мл') || unit == 'ml' || unit.contains('миллилитр')) {
         liters /= 1000;
+      } else if (unit.contains('стакан')) {
+        liters *= 0.25;
       }
       if (liters > 0 && liters <= 5) {
         final total = (state.today.waterLiters + liters)
@@ -363,22 +384,80 @@ class AssistantToolEngine {
       }
     }
 
-    final alarm = RegExp(
-      r'(?:будильник|разбуди|подъ[её]м).*?(?:в|на)?\s*((?:[01]?\d|2[0-3])[:\.]\d{2})',
+    final mealWithoutNutrition = RegExp(
+      r'(?:съел[а-яё]*|поел[а-яё]*|перекусил[а-яё]*|выпил[а-яё]*|добав[а-яё]*\s+(?:еду|блюдо)|запиш[а-яё]*\s+(?:что\s+)?(?:я\s+)?(?:съел[а-яё]*|поел[а-яё]*))\s+(.+)$',
       caseSensitive: false,
     ).firstMatch(lower);
-    if (alarm != null &&
+    if (mealWithoutNutrition != null &&
+        !lower.contains('вод') &&
+        !RegExp(r'\d{1,4}\s*(?:ккал|kcal)').hasMatch(lower)) {
+      var title = mealWithoutNutrition.group(1)!.trim();
+      title = title
+          .replaceFirst(
+            RegExp(
+              r'^(?:что\s+)?(?:я\s+)?(?:съел[а-яё]*|поел[а-яё]*|перекусил[а-яё]*)\s+',
+              caseSensitive: false,
+            ),
+            '',
+          )
+          .replaceAll(
+            RegExp(
+              r'(?<![a-zа-яё])(?:сегодня|только что)(?![a-zа-яё])',
+              caseSensitive: false,
+            ),
+            '',
+          )
+          .replaceAll(RegExp(r'[.!?,;:]+$'), '')
+          .trim();
+      if (title.length >= 2 && title.length <= 120) {
+        final item = MealEntry(
+          id: newId(),
+          title: _sentenceCase(title),
+          kind: 'Приём пищи',
+          calories: 0,
+          protein: 0,
+          carbs: 0,
+          fat: 0,
+          confirmed: false,
+          notes:
+              'Внесено помощником без количества и нутриентов; значения не выдумывались.',
+          date: state.today.date,
+          source: 'assistant_voice',
+          time: _clockNow(),
+        );
+        return AssistantToolResult(
+          state: state.copyWith(meals: [item, ...state.meals]),
+          message:
+              'Записал «${item.title}». Калории и Б/Ж/У оставлены пустыми; добавьте порцию или уточните данные, когда они известны.',
+          relatedSection: 'nutrition',
+        );
+      }
+    }
+
+    final alarmTime = _commandTime(lower);
+    if (alarmTime != null &&
+        RegExp(r'(?:будильник|разбуди|подъ[её]м)').hasMatch(lower) &&
         (lower.contains('постав') ||
             lower.contains('созда') ||
             lower.contains('завед') ||
             lower.contains('будильник') ||
             lower.contains('разбуди'))) {
-      final wakeTime = alarm.group(1)!.replaceAll('.', ':').padLeft(5, '0');
+      final wakeTime = alarmTime.time;
+      final recurring = _containsAny(lower, const [
+        'кажд',
+        'ежеднев',
+        'будн',
+        'выходн',
+        'дежур',
+        'отпуск',
+      ]);
       final days = lower.contains('будн')
           ? 'пн, вт, ср, чт, пт'
           : lower.contains('выходн')
           ? 'сб, вс'
-          : 'ежедневно';
+          : recurring
+          ? 'ежедневно'
+          : 'по необходимости';
       var title = query
           .replaceAll(
             RegExp(
@@ -387,7 +466,43 @@ class AssistantToolEngine {
             ),
             '',
           )
-          .replaceAll(RegExp(r'\b(?:в|на)\s*\d{1,2}[:\.]\d{2}\b'), '')
+          .replaceAll(
+            RegExp(
+              r'(?<![a-zа-яё])(?:в|на)\s*\d{1,2}(?:[:\.]\d{2})?(?:\s*(?:час[а-яё]*|ч))?(?![a-zа-яё0-9])',
+              caseSensitive: false,
+            ),
+            '',
+          )
+          .replaceAll(
+            RegExp(
+              r'(?<![a-zа-яё])через\s+\d+\s*(?:минут[а-яё]*|мин|час[а-яё]*|ч)(?![a-zа-яё])',
+              caseSensitive: false,
+            ),
+            '',
+          )
+          .replaceAll(
+            RegExp(
+              r'(?<![a-zа-яё])(?:каждый день|ежедневно|по будням|по выходным|сегодня|завтра|послезавтра)(?![a-zа-яё])',
+              caseSensitive: false,
+            ),
+            '',
+          )
+          .replaceAll(
+            RegExp(
+              r'(?<![a-zа-яё])(?:с|и)?\s*(?:проверкой|контролем)\s+(?:активности|бодрствования)(?![a-zа-яё])',
+              caseSensitive: false,
+            ),
+            '',
+          )
+          .replaceAll(
+            RegExp(
+              r'(?<![a-zа-яё])(?:не дай уснуть|не заснуть|не уснул)(?![a-zа-яё])',
+              caseSensitive: false,
+            ),
+            '',
+          )
+          .replaceAll(RegExp(r'\s+'), ' ')
+          .replaceAll(RegExp(r'^[\s,.;:–—-]+|[\s,.;:–—-]+$'), '')
           .trim();
       if (title.isEmpty || title.length > 80) title = 'Будильник';
       final item = AlarmGroup(
@@ -404,19 +519,33 @@ class AssistantToolEngine {
             : 'обычный',
         priority: lower.contains('важн') || lower.contains('высок') ? 3 : 2,
         unlockMode: lower.contains('задач') || lower.contains('математ')
-            ? 'math'
+            ? 'math_easy'
             : 'simple',
+        specificDate: recurring ? '' : todayKey(alarmTime.date),
         dutyAware: lower.contains('дежур'),
         vacationAware: lower.contains('отпуск'),
         smartWakeWindowMinutes: lower.contains('цикл сна') ? 30 : 0,
         useWearableSleepCycle:
             lower.contains('браслет') || lower.contains('цикл сна'),
+        wakefulnessCheckEnabled: _containsAny(lower, const [
+          'проверяй активность',
+          'контроль активности',
+          'проверка активности',
+          'проверкой активности',
+          'контролем активности',
+          'контроль бодрствования',
+          'проверяй бодрствование',
+          'не дай уснуть',
+          'не заснуть',
+          'не уснул',
+        ]),
       );
       return AssistantToolResult(
         state: state.copyWith(alarmGroups: [item, ...state.alarmGroups]),
         message:
-            'Создал будильник «${item.title}» на $wakeTime ($days). '
-            '${item.unlockMode == 'math' ? 'Для отключения потребуется решить задачу.' : 'Обычное отключение.'}',
+            'Создал будильник «${item.title}» на $wakeTime (${recurring ? days : displayDateKey(item.specificDate)}). '
+            '${item.unlockMode != 'simple' ? 'Для отключения потребуется решить задачу. ' : 'Обычное отключение. '}'
+            '${item.wakefulnessCheckEnabled ? 'Контроль бодрствования включён.' : ''}',
         relatedSection: 'calendar',
       );
     }
@@ -525,36 +654,89 @@ class AssistantToolEngine {
       }
     }
 
-    final reminder = RegExp(
-      r'(?:напомни|напоминание|remind).*?(\d{1,2})[:\.](\d{2})',
-      caseSensitive: false,
-    ).firstMatch(lower);
-    if (reminder != null) {
-      final hour = int.parse(reminder.group(1)!);
-      final minute = int.parse(reminder.group(2)!);
-      if (hour < 24 && minute < 60) {
-        final time =
-            '${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
+    final reminderTime = _commandTime(lower);
+    if (reminderTime != null &&
+        RegExp(r'(?:напомни|напоминание|remind)').hasMatch(lower)) {
+      final time = reminderTime.time;
+      if (time.isNotEmpty) {
         var title = query
             .replaceFirst(
               RegExp(r'напомни(?:\s+мне)?', caseSensitive: false),
               '',
             )
             .replaceFirst(RegExp(r'напоминание', caseSensitive: false), '')
-            .replaceFirst(RegExp(r'\b(?:в|на)\s*\d{1,2}[:\.]\d{2}\b'), '')
+            .replaceFirst(
+              RegExp(
+                r'(?<![a-zа-яё])(?:в|на)\s*\d{1,2}(?:[:\.]\d{2})?(?![a-zа-яё0-9])',
+                caseSensitive: false,
+              ),
+              '',
+            )
+            .replaceFirst(
+              RegExp(
+                r'(?<![a-zа-яё])через\s+\d+\s*(?:минут[а-яё]*|мин|час[а-яё]*|ч)(?![a-zа-яё])',
+                caseSensitive: false,
+              ),
+              '',
+            )
+            .replaceAll(
+              RegExp(
+                r'(?<![a-zа-яё])(?:каждый день|ежедневно|по будням|по выходным|сегодня|завтра|послезавтра)(?![a-zа-яё])',
+                caseSensitive: false,
+              ),
+              '',
+            )
+            .replaceAll(RegExp(r'\s+'), ' ')
             .trim();
         if (title.isEmpty) title = 'Напоминание';
+        final medicineMatches = state.medications.where(
+          (item) => lower.contains(item.name.toLowerCase()),
+        );
+        if (medicineMatches.length == 1) {
+          final medicine = medicineMatches.first;
+          final updatedSchedule = _appendScheduleTime(medicine.schedule, time);
+          final medications = state.medications
+              .map(
+                (item) => item.id == medicine.id
+                    ? item.copyWith(schedule: updatedSchedule)
+                    : item,
+              )
+              .toList();
+          return AssistantToolResult(
+            state: state.copyWith(medications: medications),
+            message:
+                'Добавил время $time в расписание «${medicine.name}». Уведомления о приёме будут планироваться по курсу препарата.',
+            relatedSection: 'medicines',
+          );
+        }
+        final repeat = lower.contains('кажд') || lower.contains('ежеднев')
+            ? 'daily'
+            : lower.contains('будн')
+            ? 'weekdays'
+            : lower.contains('выходн')
+            ? 'weekends'
+            : 'none';
         final item = ReminderItem(
           id: newId(),
           title: title,
           time: time,
-          category: 'помощник',
+          category:
+              _containsAny(lower, const [
+                'лекар',
+                'препарат',
+                'таблет',
+                'витамин',
+              ])
+              ? 'лекарства'
+              : 'помощник',
           done: false,
-          date: state.today.date,
+          date: todayKey(reminderTime.date),
+          repeat: repeat,
         );
         return AssistantToolResult(
           state: state.copyWith(reminders: [item, ...state.reminders]),
-          message: 'Создал напоминание «$title» на $time сегодня.',
+          message:
+              'Создал напоминание «$title» на $time, ${displayDateKey(item.date)}${repeat == 'none' ? '' : ' (${_repeatDescription(repeat)})'}.',
           relatedSection: 'calendar',
         );
       }
@@ -798,6 +980,63 @@ String _clockNow() {
   final now = DateTime.now();
   return '${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}';
 }
+
+({String time, DateTime date})? _commandTime(String source, [DateTime? value]) {
+  final now = value ?? DateTime.now();
+  final relative = RegExp(
+    r'(?:^|\s)через\s+(\d{1,3})\s*(минут[а-яё]*|мин|час[а-яё]*|ч)(?=\s|$|[,.!?])',
+    caseSensitive: false,
+  ).firstMatch(source);
+  if (relative != null) {
+    final amount = int.parse(relative.group(1)!);
+    final unit = relative.group(2)!.toLowerCase();
+    final target = now.add(
+      Duration(minutes: unit.startsWith('ч') ? amount * 60 : amount),
+    );
+    return (time: _clock(target), date: target);
+  }
+  final explicit = RegExp(
+    r'(?<!\d)([01]?\d|2[0-3])[:\.]([0-5]\d)(?!\d)',
+  ).firstMatch(source);
+  final hourOnly = explicit == null
+      ? RegExp(
+          r'(?:^|\s)(?:в|на)\s+([01]?\d|2[0-3])(?:\s*(?:час[а-яё]*|ч))?(?=\s|$|[,.!?])',
+          caseSensitive: false,
+        ).firstMatch(source)
+      : null;
+  if (explicit == null && hourOnly == null) return null;
+  final hour = int.parse((explicit ?? hourOnly)!.group(1)!);
+  final minute = int.tryParse(explicit?.group(2) ?? '') ?? 0;
+  var date = DateTime(now.year, now.month, now.day, hour, minute);
+  if (source.contains('послезавтра')) {
+    date = date.add(const Duration(days: 2));
+  } else if (source.contains('завтра')) {
+    date = date.add(const Duration(days: 1));
+  } else if (!date.isAfter(now) &&
+      !source.contains('сегодня') &&
+      !source.contains('на сегодня')) {
+    date = date.add(const Duration(days: 1));
+  }
+  return (time: _clock(date), date: date);
+}
+
+String _clock(DateTime value) =>
+    '${value.hour.toString().padLeft(2, '0')}:${value.minute.toString().padLeft(2, '0')}';
+
+String _appendScheduleTime(String schedule, String time) {
+  final times = RegExp(
+    r'(?<!\d)(?:[01]?\d|2[0-3]):[0-5]\d(?!\d)',
+  ).allMatches(schedule).map((match) => match.group(0)!).toSet();
+  if (times.contains(time)) return schedule;
+  return [schedule.trim(), time].where((item) => item.isNotEmpty).join(', ');
+}
+
+String _repeatDescription(String value) => switch (value) {
+  'daily' => 'каждый день',
+  'weekdays' => 'по будням',
+  'weekends' => 'по выходным',
+  _ => 'один раз',
+};
 
 bool _containsAny(String source, List<String> values) =>
     values.any(source.contains);

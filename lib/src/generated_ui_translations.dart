@@ -9,17 +9,18 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "(*?(?:s:s:s*tnorma) [[:=-]?s*([<>]?s*\\d+(?:[\\.,]\\d+)??",
     "(?:\\s+(?:референс|норма|reference)?\\s*([<>]?\\s*\\d+(?:[,.]\\d+)?(?:\\s*[-–]\\s*\\d+(?:[,.]\\d+)?)?))?":
         "What is the meaning of the word \"reference\"?",
+    "(?:^|\\s)(?:в|на)\\s+([01]?\\d|2[0-3])(?:\\s*(?:час[а-яё]*|ч))?(?=\\s|":
+        "(?: be-t-be-t-be) (: be-t-be-t-be-t-be) (: be-t-be-t-be-t-be-t-be) (: be-t-be-t-be-t-be-t-be-t-be) (: be-t-be-t-be-t-be-t-be) (: be-t-be-t-be-t-be-t-be-t-be) (: be-t-be-t-be-t-be-t-be-t-be-t-be-t-be-t-be-t-be-t-be-t-be-t-be-t-be-t-be-t-be-t-be-t-be-t-be-t-be-t-be-t-be-t) (: be-t-be-t-be-t-be-t-t-be-t-be-t-t-be-t-t-be-t-t-be-t-t-be",
+    "(?:^|\\s)через\\s+(\\d{1,3})\\s*(минут[а-яё]*|мин|час[а-яё]*|ч)(?=\\s|":
+        "(?: ]^^\\s) through\\s+\\d{1,3}) \\s*\\minute[a-yao]* to the time of the day[a-yao]* to the day of the week)",
     "(?:анализ|показатель|результат(?:\\s+анализа)?)\\s+([a-zа-яё][a-zа-яё0-9 ()+._-]{1,60}?)\\s*[:=-]?\\s*([<>]?\\s*\\d+(?:[\\.,]\\d+)?)\\s*":
         "(analysis of the data:?:result?:?:s+analysis)?)\\s+([a-za-ya-yo][a-za-yayo0-9 () ++_-]{1,60}?)\\s*[:=-]?\\s*([<>]?\\s*\\d+(?:[\\.,]\\d+)?)\\s*",
     "(?:белок|protein|протеин|б)\\D{0,10}(\\d{1,3})": "What's the big deal?",
-    "(?:будильник|разбуди|подъ[её]м).*?(?:в|на)?\\s*((?:[01]?\\d|2[0-3])[:\\.]\\d{2})":
-        "What is this? What is this?",
+    "(?:будильник|разбуди|подъ[её]м)": "What's the matter?",
     "(?:вес|масса|weight)\\s*(?:сегодня|now)?\\s*[:=-]?\\s*(\\d{2,3}(?:[\\.,]\\d)?)\\s*(?:кг|kg)?\\b":
         "What's the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of the weight of",
-    "(?:выпил[а-яё]*|добав[а-яё]*|запиш[а-яё]*|water).*?(\\d+(?:[\\.,]\\d+)?)\\s*(мл|ml|л|l)(?![a-zа-яё])":
-        "I'm not sure what to do with it.",
-    "(?:гемоглоб|глюкоз|холестерин|ферритин|референс|ммоль/л|мг/дл|анализ крови)":
-        "(Hemoglobin is not a blood glucose but a blood test)",
+    "(?:выпил[а-яё]*|добав[а-яё]*|запиш[а-яё]*|укаж[а-яё]*|вод[а-яё]*|water).*?(\\d+(?:[\\.,]\\d+)?)\\s*(мл|ml|миллилитр[а-яё]*|л|l|литр[а-яё]*|стакан[а-яё]*)(?![a-zа-яё])":
+        "*: * drank* from the water (a-ya-ya-ya-ya* to the water) * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *",
     "(?:глюкоз[а-яё]*|сахар[а-яё]*\\s+кров[а-яё]*|glucose)\\s*[:=-]?\\s*(\\d{1,3}(?:[\\.,]\\d+)?)":
         "(?:glucose[a-yao]* from the blood[a-yao]*\\s+blood[a-yao]* from the glucose)\\s*[:=-]?\\s*(\\d{1,3}(?:[\\.,]\\d+)?)",
     "(?:давлен[а-яё]*|pressure)\\s*[:=-]?\\s*(\\d{2,3})\\s*[/\\\\]\\s*(\\d{2,3})(?:\\s+(?:пульс|pulse)\\s*(\\d{2,3}))?":
@@ -38,15 +39,13 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "(?:калории|calories)\\D{0,12}(\\d{2,4})": "(?:calories of the calories)",
     "(?:качеств[а-яё]*|оценк[а-яё]*)\\s*(?:сна)?\\s*[:=-]?\\s*([1-5])":
         "(?:quality[a-yao]*theo-value[a-yao]*)\\s*(?:sleep)?\\s*[:=-]?\\s*([1-5])",
-    "(?:ккал|калори|белк|жир|углевод|состав|пищевая ценность)":
-        "• the quality of the food (the quality of the food)",
     "(?:клетчатка|пищевые волокна|fibre|fiber)\\D{0,12}(\\d{1,3}(?:[,.]\\d+)?)":
         "(cells are made of fibrous fibers)",
     "(?:масса|вес|порция|net weight|serving)\\D{0,12}(\\d{1,4})\\s*(?:г|g)":
         "The weight of the machine is not the same as the weight of the machine.",
     "(?:на|per)\\s*100\\s*(?:г|g)": "(on the screen)",
-    "(?:напомни|напоминание|remind).*?(\\d{1,2})[:\\.](\\d{2})":
-        "(?:remember the remembrance of the remembrance of the remembrance of the remembrance of the remembrance of the remembrance of the remembrance of the remembrance of the remembrance of the remembrance of the remembrance of the remembrance of the remembrance of the remembrance of the remembrance of the remembrance of the remembrance of the remembrance of the remembrance of the remembrance of the remembrance of the remembrance of the remembrance of the remembrance of the remembrance of the remembrance of the remembrance of the remembrance of the remembrance of the remembrance of the remembrance of the remembrance of the remembrance of the remembrance of the remembrance of the remembrance of the remembrance of the remembrance of the remembrance of the remembrance of the remembrance of the remembrance of the remembrance of the remembrance of the remembrance of the remembrance of the remembrance of the remembrance of the remembrance of the remembrance of the",
+    "(?:напомни|напоминание|remind)":
+        "(:remembered by remembrance of remembrance)",
     "(?:по\\s+[^.;,]{0,25}\\s+)?\\d+\\s*раз(?:а|у|)\\s+(?:в|за)\\s+(?:день|сутки)":
         "What is it? What is it? What is it?",
     "(?:поставь|создай|заведи|добавь|разбуди(?:\\s+меня)?|будильник|подъ[её]м)":
@@ -55,6 +54,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "What is the meaning of this?",
     "(?:сахара|сахар|sugars?|из них сахара)\\D{0,12}(\\d{1,3}(?:[,.]\\d+)?)":
         "♪ sugar is sugar ♪ ♪ sugar is sugar ♪",
+    "(?:сколько|покажи|какой|какое|текущ[а-яё]*|итого)":
+        "(How much of a time is there to make a difference?",
     "(?:соль|salt)\\D{0,10}(\\d{1,3}(?:[,.]\\d+)?)": "(?:salted with salt)",
     "(?:спал[а-яё]*|сон|sleep).*?(\\d{1,2}(?:[\\.,]\\d+)?)\\s*(?:ч(?:ас(?:а|ов)?)?|hours?|h)(?![a-zа-яё])":
         "(?:sleep[a-yao]*when the time comes to sleep. *?\\d{1,2}??:[\\\\.,]\\d+)?)",
@@ -62,8 +63,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "(?:sleep[a-yayo]*) The time to sleep. *?",
     "(?:съел[а-яё]*|выпил[а-яё]*|запиш[а-яё]*\\s+(?:еду|при[её]м пищи)|добав[а-яё]*\\s+(?:еду|блюдо))\\s+(.+?)\\s+(\\d{1,4})\\s*(?:ккал|kcal)(?![a-zа-яё])":
         "I'm not sure what I'm going to do. I'm not going to say anything.",
-    "(?:таблет|капсул|принимать|назначен|рецепт|дозиров)":
-        "(tablet of the drug: to take the prescribed drug of the drug)",
+    "(?:съел[а-яё]*|поел[а-яё]*|перекусил[а-яё]*|выпил[а-яё]*|добав[а-яё]*\\s+(?:еду|блюдо)|запиш[а-яё]*\\s+(?:что\\s+)?(?:я\\s+)?(?:съел[а-яё]*|поел[а-яё]*))\\s+(.+)":
+        "I'm not sure what I'm going to do with my life. I'm not sure what I'm going to do with my life.",
     "(?:таблетк[а-яё]*|капсул[а-яё]*|раствор[а-яё]*|сироп[а-яё]*|суспензи[а-яё]*|":
         "(:tabletts*a-yao*ka the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the",
     "(?:температур[а-яё]*|temperature)\\s*[:=-]?\\s*(3[4-9]|4[0-2])(?:[\\.,](\\d))?":
@@ -71,8 +72,24 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "(?:тренировк[а-яё]*|пробежал[а-яё]*|бегал[а-яё]*|занимал[а-яё]*).*?(\\d{1,3})\\s*(?:мин|минут)":
         "(?:train[a-yao]* to run[a-yao] to run[a-yao] to run[a-yao] to run[a-yao] to take [a-yao]* to run.",
     "(?:углеводы|carbs|у)\\D{0,10}(\\d{1,3})": "(Carbs?:carbs) D{0,0}",
+    "(?<![a-zа-яё])(?:в|на)\\s*\\d{1,2}(?:[:\\.]\\d{2})?(?![a-zа-яё0-9])":
+        "What is it? What is it?",
+    "(?<![a-zа-яё])(?:в|на)\\s*\\d{1,2}(?:[:\\.]\\d{2})?(?:\\s*(?:час[а-яё]*|ч))?(?![a-zа-яё0-9])":
+        "What is the meaning of the word \"their\" in the following words?",
+    "(?<![a-zа-яё])(?:каждый день|ежедневно|по будням|по выходным|сегодня|завтра|послезавтра)(?![a-zа-яё])":
+        "Every day of the week (Every day of the week)",
+    "(?<![a-zа-яё])(?:не дай уснуть|не заснуть|не уснул)(?![a-zа-яё])":
+        "Don't let me sleep you don't let me sleep you",
+    "(?<![a-zа-яё])(?:с|и)?\\s*(?:проверкой|контролем)\\s+(?:активности|бодрствования)(?![a-zа-яё])":
+        "I'm not sure what I'm doing.",
+    "(?<![a-zа-яё])(?:сегодня|только что)(?![a-zа-яё])":
+        "What's the matter with you?",
+    "(?<![a-zа-яё])через\\s+\\d+\\s*(?:минут[а-яё]*|мин|час[а-яё]*|ч)(?![a-zа-яё])":
+        "What is the meaning of the word \"a-z-a-yao\"?",
     "(\\d+(?:[,.]\\d+)?)\\s*(?:ммоль/л|мг/дл|г/л|нг/мл|мед/л|ме/л|%)":
         "(\\d+(?:[,.]\\d+)?) \\s*(?:mol/l was was was was the",
+    "(\\d+(?:[\\.,]\\d+)?)\\s*(мл|ml|миллилитр[а-яё]*|л|l|литр[а-яё]*|стакан[а-яё]*)(?![a-zа-яё]).*?(?:вод[а-яё]*|выпил[а-яё]*|добав[а-яё]*|запиш[а-яё]*|water)":
+        "([l]l]l]l]l]l]l*l]l*l*l]l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l*l",
     "(\\d{1,3}(?:[\\.,]\\d+)?)\\s*(?:км|km)":
         "(\\d{1,3}(?:[\\.,]\\d+)?)\\s*(km?:",
     "(\\d{1,4})\\s*(?:г|g)\\b": "I'm not going to be able to do this.",
@@ -89,6 +106,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "(ммоль/л|мкмоль/л|мг/дл|мг/л|г/л|г/дл|мкг/л|нг/мл|пг/мл|мед/л|ме/л|ед/л|mmol/l|umol/l|µmol/l|mg/dl|mg/l|g/l|g/dl|µg/l|ug/l|ng/ml|pg/ml|iu/l|u/l|10\\^?[*x×]?\\d+/л|фл|fl|пг|pg|%)":
         "(mold/mold/mold/mold/mold/mold/mold/mold/mold/mold/mold/mold/mold) (mold/mold/mold/mold) (mold/mold/mold) (mold/mold/mold) (mold/mold/mold) (mold/mold/mold) (mold/mold/mold) (mold/mold/mold) (mold/mold/mold) (mold/mold/mold) (mold/mold/mold) (mold/mold/mold) (mold/mold/mold) (mold/mold/mold/mold/mold/mold) (mold/mold/mold/mold/mold/mold/mold/mold/mold/mold/mold/mold/mold/mold/mold/mold/mold/mold/mold/mold/mold/mold/mold/mold/",
     "). Дозировку я не изменяю.": "I'm not changing the dosage.",
+    "); используется приблизительное системное расписание.":
+        "); the approximate system schedule is used.",
     ")} · день": "day",
     ")}. Отложите тренировку; при резком ухудшении или опасных признаках обратитесь за неотложной помощью.":
         "Postpone training; seek emergency medical attention if there is a sudden deterioration or dangerous signs.",
@@ -120,8 +139,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     ", цель": ", purpose",
     ". Добавил их на проверку; после подтверждения приложение создаст расписание и напоминания. Дозировки автоматически не меняются.":
         "Added them to the check; once confirmed, the app will create a schedule and reminders.",
-    ". Изменения применятся после подтверждения.":
-        "The amendments shall be applied after confirmation.",
     ". Не используйте распознанные назначения до сверки с оригиналом.":
         "Don't use the recognized designations until you compare them to the original.",
     ". Невозможные скачки координат отфильтрованы.":
@@ -172,6 +189,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     ": не удалось разобрать": ": failed to crack",
     ": осталось": "It 's still there .",
     ": пакет короче заявленного": ": a package shorter than the declared",
+    ": проверка бодрствования": ": check the alertness",
     ": характеристика не найдена": ": characteristic not found",
     "; выбран ближайший расчётный конец цикла сна.":
         "The nearest end of the sleep cycle is selected.",
@@ -189,22 +207,23 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "[^a-zа-яё0-9]+": "[Laughs]",
     "[a-zа-яё]*\\s*[:=-]?\\s*(\\d{1,3}(?:[\\.,]\\d+)?)\\s*(?:г|g)?":
         "What is this? What is this?",
-    "\\b(?:в|на)\\s*\\d{1,2}[:\\.]\\d{2}\\b":
-        "♪ I'm not going to be able to get you to the hospital ♪",
     "\\b(гемоглобин|ферритин|холестерин|триглицериды|креатинин|мочевина|билирубин|алт|аст|ттг|витамин\\s+[a-zа-яё0-9]+|с-?реактивный\\s+белок)\\s*[:=-]?\\s*([<>]?\\s*\\d+(?:[\\.,]\\d+)?)\\s*":
         "The blood glucose of the blood is a type of vitamin that is a type of vitamin B.",
-    "\\d+(?:[\\.,]\\d+)?\\s*(?:мг|мкг|мл|ме|ед\\.)":
-        "I'm not sure what I'm doing.",
     "\\d+(?:[\\.,]\\d+)?\\s*(?:мкг|мг|г|мл|ед\\.?|ме)":
         "I'm not sure what I'm saying.",
     "\\d+(?:[\\.,]\\d+)?\\s*(?:мкг|мг|г|мл|ед\\.?|ме|iu|mcg|mg|ml)(?![a-zа-яё])":
         "What is the meaning of the word \"their\" in the following words?",
+    "\\d+(?:[\\.,]\\d+)?\\s*(?:мл|л|литр|стакан)":
+        "I'm not sure what I'm saying.",
     "\\d+\\s*(?:дн(?:я|ей|ь)?|сут(?:ок|ки)?|недел[а-яё]*|месяц[а-яё]*)(?![а-яё])":
         "What is the meaning of the word \"they\" in the Bible?",
+    "\\d{1,4}\\s*(?:ккал|kcal)": "♪ I'm not going to be able to do it ♪",
     "^(?:врач\\s+)?(?:мне\\s+)?(?:назначил(?:а|и)?|назначение|рецепт|принимать)\\s*[:\\-]?\\s*":
         "I'm not sure what I'm doing. I'm not sure what I'm doing.",
     "^(?:как|что|почему|зачем|когда|где|можно\\s+ли|расскажи|объясни|проанализируй|how|what|why|when|where|can\\s+i)\\b":
         "How to explain what to do when you can do it, explain how to do it, analyze how to do it when you can do it.",
+    "^(?:что\\s+)?(?:я\\s+)?(?:съел[а-яё]*|поел[а-яё]*|перекусил[а-яё]*)\\s+":
+        "What is it? Did you eat? Did you eat? Did you eat? Did you eat?",
     "^[^a-zа-яё]+": "^[^a-z-a-yao]+",
     "^\\*\\*(?:Answer|Ответ):\\*\\*\\s*":
         "♪ I'm not going to be able to tell you ♪",
@@ -277,7 +296,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "UUID характеристики записи": "UUID characteristics of the record",
     "Vault был восстановлен из безопасного начального состояния.":
         "Vault has been restored from a safe initial state.",
-    "Vision-анализ недоступен:": "Vision analysis is not available:",
     "°C · высота": "°C · height",
     "· вес": "weight",
     "· визуальная оценка": "· visual assessment",
@@ -305,9 +323,13 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "» перед выполнением.": "before the performance.",
     "», интенсивность": ", intensity",
     "». Извлечённый текст:": ". The text is as follows:",
+    "». Калории и Б/Ж/У оставлены пустыми; добавьте порцию или уточните данные, когда они известны.":
+        "Calories and B/J/U are left empty; add a serving or specify the data when they are known.",
     "». Перед продолжением рекомендуется сделать копию текущих данных.":
         "? Before continuing, it is recommended to make a copy of the current data.",
     "». Текст для анализа не найден.": ". No text for analysis found.",
+    "». Уведомления о приёме будут планироваться по курсу препарата.":
+        ". Admission notices will be scheduled according to the course of the drug.",
     "август": "August",
     "Автозапись GPS/GLONASS:": "Autorecording GPS/GLONASS:",
     "Автозапуск": "Auto-starting",
@@ -332,6 +354,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "активное движение": "A very active movement",
     "Активность": "Activity",
     "Активность и вода": "Activity and water",
+    "Активность после подъёма не подтверждена. Откройте приложение и отключите сигнал.":
+        "Activity after lifting is unconfirmed.",
     "Активность хорошая: шаги уже закрывают базовую цель дня.":
         "Activity is good: the steps are already closing the basic goal of the day.",
     "активные калории": "calorie",
@@ -391,6 +415,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "без документа": "paperless",
     "Без жёстких ограничений: можно добавить спокойную прогулку и оценивать недельный баланс.":
         "Without rigid restrictions: you can add a quiet walk and evaluate the weekly balance.",
+    "без контроля бодрствования": "Without a watchful eye",
     "без лекарства": "drugless",
     "Без ограничений": "No restrictions.",
     "без ограничений": "limitlessly",
@@ -469,6 +494,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "в пределах референса": "within the reference",
     "В профиле нет координат города.": "There's no coordinates in the profile.",
     "В пути, мин": "On the way, mine.",
+    "в расписание «": "In the schedule",
     "В списке есть антикоагулянт: взаимодействие нужно проверить у врача или фармацевта.":
         "There's an anticoagulant on the list. You should check with a doctor or pharmacist.",
     "В тренировках отмечалась боль: будущую нагрузку стоит снизить.":
@@ -503,9 +529,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "велотренажёр": "trainer",
     "вероятно в руках": "Probably in his hands.",
     "вероятно используется": "Probably used",
-    "Версия 1.8.1+10 · создатель: Редин Максим Юрьевич · info@thebestmks.ru":
-        "Version 1.8.1+10 · creator: Redin Maxim Yuriyovich · info@thebestmks.ru",
-    "Версия: 1.8.1+10": "Version: 1.8.1+10",
+    "Версия 1.8.2+11 · создатель: Редин Максим Юрьевич · info@thebestmks.ru":
+        "Version 1.8.2+11 · author: Redin Maxim Yuriyovich · info@thebestmks.ru",
+    "Версия: 1.8.2+11": "Version: 1.8.2+11",
     "Вес": "Weight.",
     "вес": "weight",
     "Вес порции и пищевая ценность являются ориентировочной оценкой класса блюда. Проверьте их перед подтверждением.":
@@ -545,6 +571,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Внесено голосом или командой помощника; условия измерения не указаны.":
         "Introduced by voice or command of assistant; measurement conditions not specified.",
     "Внесено командой помощника.": "It was brought in by the assistant team.",
+    "Внесено помощником без количества и нутриентов; значения не выдумывались.":
+        "It was introduced by an assistant without quantity or nutrients; the values were not invented.",
     "внесённая калорийность заметно выше основного обмена, но недельный баланс и активность важнее одного дня.":
         "The calorie intake is significantly higher than the main metabolism, but the weekly balance and activity is more important than one day.",
     "внесённая калорийность низкая относительно основного обмена; возможно, дневник заполнен не полностью.":
@@ -611,6 +639,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "вт": "volt",
     "Вторник": "Tuesday.",
     "вторник": "Tuesday",
+    "Вчера ·": "Yesterday .",
     "вчера уже была тяжёлая тренировка": "It was a tough practice yesterday.",
     "Вы": "You.",
     "Выберите вариант": "Choose an option",
@@ -797,6 +826,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Для чего применяется": "What is it used for ?",
     "Дневник питания, БЖУ, рецепты и ручное подтверждение фото":
         "Nutrition diary, BJU, recipes and manual confirmation photo",
+    "Дневник по датам": "The diary by date",
     "Дневник самочувствия без диагнозов и назначений":
         "Diary of health without diagnoses and appointments",
     "Дневник сна": "Sleep diary",
@@ -814,6 +844,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "До ориентира": "To the landmark",
     "добав": "Added",
     "Добавил": "I added it .",
+    "Добавил время": "I 've added time .",
     "Добавить": "Add",
     "Добавить в дневник": "Add to the diary",
     "Добавить врача или клинику": "Add a doctor or clinic",
@@ -964,6 +995,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Завершить": "Complete.",
     "Завершить и сохранить": "Complete and maintain",
     "зависит от пола и возраста": "depending on gender and age",
+    "завтра": "Tomorrow is the day.",
     "завтрак": "breakfast",
     "Загружаем локальный сейф здоровья": "Download the local health safe",
     "Загруженный GGUF повреждён.": "The loaded GGUF is damaged.",
@@ -1038,6 +1070,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "We ask for permission and look for devices.",
     "Запрещено системой; откройте системные настройки":
         "Prohibited by the system; open the system settings",
+    "Запрос обрабатывается в фоне": "The query is processed in the background",
     "Запрос пользователя:": "The user query:",
     "Запросить разрешение повторно": "Request the permission",
     "Запросить разрешения и синхронизировать":
@@ -1078,9 +1111,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "из-за холода выбран домашний вариант с более длинной разминкой":
         "Because of the cold , I chose a home option with a longer distillation .",
     "избегать задержки дыхания": "hold off",
-    "Извлечённый текст:": "The text is as follows:",
     "Измените запрос или добавьте тег в карточку документа.":
         "Change the request or add a tag to the document card.",
+    "Изменить": "Changing",
     "Изменить симптом": "Change the symptom",
     "Изменить сон": "Change your sleep.",
     "измерения не найдены": "measurements not found",
@@ -1209,6 +1242,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Ккал": "Kal",
     "ккал": "calf",
     "ккал · Б/Ж/У": "kcal · B/J/U",
+    "ккал · расход": "kcal · expense",
+    "ккал · шаги": "The steps",
     "Ккал еды": "Calorie food",
     "ккал за сутки": "calorie",
     "ккал, активность": "Cal, activity",
@@ -1265,6 +1300,10 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Контекст дома и работы": "Home and work context",
     "Контекст телефона": "The context of the phone",
     "Контекст телефона:": "The context of the phone:",
+    "контролем активности": "control of activity",
+    "контроль активности": "control of activity",
+    "Контроль бодрствования": "Watching control",
+    "контроль бодрствования": "control of wakefulness",
     "контроль лекарств": "medication",
     "Координаты": "Coordinators",
     "Координаты используются только на устройстве для определения контекста.":
@@ -1294,7 +1333,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Курс:": "Course:",
     "Күнтізбе": "kuntizbe",
     "л": "l",
-    "л · калории": "k calories",
+    "л · питание": "l · food",
+    "л воды.": "I'm going to the water.",
     "л, шаги": "L, steps",
     "л.": "I'm not going to.",
     "л. Пейте небольшими порциями, если врач не ограничил жидкость.":
@@ -1389,6 +1429,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "мигрень": "migraine",
     "Микрофон и голосовой ввод": "Microphone and voice input",
     "мили": "miles",
+    "миллилитр": "1 ml",
     "мин": "mine",
     "мин ·": "mine",
     "мин · перенос доступен": "Mine transfer available",
@@ -1447,10 +1488,10 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "meat |fish |milk |milk |cheese cheese |chicken |beef |fish |egg |milk |cheese",
     "На весь экран": "On the whole screen .",
     "на ночь": "By the night",
-    "На проверку добавлено записей:": "The check has been added:",
     "на работе": "At work",
     "На ручную проверку добавлено показателей:":
         "The following indicators have been added to the manual check:",
+    "на сегодня": "For today",
     "на сегодня запланировано:": "Today , it 's planned:",
     "набор силы": "force",
     "нагруз": "load",
@@ -1557,8 +1598,10 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "нг/мл": "ng/ml",
     "не выбрано": "not selected",
     "не выбраны": "not selected",
+    "не дай уснуть": "Don 't let me sleep",
     "не задана": "Not specified",
     "не задано": "Not specified",
+    "не заснуть": "Don 't fall asleep",
     "Не извлечено:": "Not recovered:",
     "не компенсируйте еду голоданием; выберите спокойную прогулку и вернитесь к обычному плану.":
         "Do not compensate for your hunger; take a quiet walk and go back to your usual schedule.",
@@ -1612,6 +1655,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "не указано в контексте. В конце укажи уверенность: высокая, средняя или низкая.":
         "At the end, indicate confidence: high, medium, or low.",
     "Не указаны": "Not specified",
+    "не уснул": "I didn 't sleep .",
     "Не установлена; доступен быстрый режим и установка в разделе «Помощник».":
         "Not installed; quick mode and installation available in Help.",
     "Не хватает данных:": "Missing data:",
@@ -1700,7 +1744,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Обновить контекст": "Updating the context",
     "Обновить результаты поиска": "Update search results",
     "Обновлено устройство:": "Updated device:",
-    "Обрабатываю локально...": "I'm working on the local...",
     "обсудите с врачом:": "Talk to your doctor about:",
     "обсудить": "discuss",
     "Обсудить план с помощником": "Discuss the plan with the assistant",
@@ -1724,6 +1767,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "Restrictions, rehabilitation, doctor, documents",
     "Ограничения:": "The restrictions:",
     "ограничить бег": "run down",
+    "один раз": "Once in a while.",
     "один сигнал": "One signal",
     "одыш": "breathlessness",
     "одышка": "breathlessness",
@@ -1811,7 +1855,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Отмечено сегодня": "Celebrated today",
     "отмечено сегодня": "noted",
     "Отправить": "Send.",
-    "Отправлено изображение:": "The image is sent:",
     "Отпуск": "Vacation",
     "отпуск": "leave",
     "Отпуск не запланирован": "Vacation not scheduled",
@@ -1875,6 +1918,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "перенесённая болезнь": "sickness",
     "переохлаждение": "hypothermia",
     "Пересадок": "Transplantation",
+    "Период контроля, мин": "Control period, min",
     "Периодически проверять локальные напоминания и расписание без отправки данных в сеть":
         "Periodically check local reminders and schedules without sending data to the network",
     "Персональная проверка": "Personal check",
@@ -1922,9 +1966,11 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Пн": "pn",
     "пн": "pond",
     "пн, вт, ср, чт, пт": "I'm not sure.",
+    "по будням": "weekly",
     "по внесённым данным допустима обычная плановая нагрузка с контролем самочувствия.":
         "The data entered permits normal scheduled workloads with health control.",
     "По внесённым приёмам пищи:": "The food intake is:",
+    "по выходным": "on weekends",
     "по геолокации": "geolocated",
     "по дням недели": "weekly",
     "По какое число": "What number?",
@@ -1943,12 +1989,18 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Побочные эффекты и реакции": "Side effects and reactions",
     "Побочные эффекты:": "Side effects:",
     "Повседневная активность": "Daily activities",
+    "Повтор": "Repeat this",
     "повторений": "repetition",
     "Повторите PIN": "Repeat the PIN.",
     "Повторно запрашивать PIN или биометрию для чувствительных документов":
         "Re-request PIN or biometrics for sensitive documents",
+    "Повторять сигнал при отсутствии движения после подъёма.":
+        "Repeat the signal when there is no movement after lifting.",
     "Повторяющиеся симптомы:": "Recurrent symptoms:",
     "Повышает масштаб интерфейса": "Increases the scale of the interface",
+    "Погода временно недоступна": "Weather is temporarily unavailable .",
+    "Погода временно недоступна. Климатический профиль продолжает работать локально.":
+        "Weather is temporarily unavailable, and the climate profile continues to operate locally.",
     "Погода и климат": "Weather and climate",
     "Погода недоступна": "Weather inaccessible",
     "Погода подходит для обычной нагрузки с учётом самочувствия.":
@@ -2073,6 +2125,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "последние симптомы:": "The last symptoms:",
     "последняя запись сна:": "Last record of sleep:",
     "Последняя запись:": "Last recording:",
+    "послезавтра": "The day after tomorrow.",
     "постав": "Put it down",
     "Постепенное пробуждение": "Gradual awakening",
     "потер": "sweater",
@@ -2084,6 +2137,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Предупреждение": "Warning",
     "Предупреждения": "Warnings",
     "Препарат": "The drug",
+    "препарат": "the drug",
     "препаратов, принято сегодня": "medicines today.",
     "Препараты": "Drugs",
     "Препараты не распознаны. Проверьте качество снимка или добавьте лекарство вручную.":
@@ -2098,7 +2152,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Приготовление": "Preparation",
     "прием": "The reception",
     "Прикреплённый файл не найден": "The attached file is not found",
-    "Приложен файл:": "The file is attached:",
     "приложение открыто": "The app is open",
     "Приложение работает без браслета: вес, сон, шаги, еда и тренировки можно вводить вручную.":
         "The app works without a bracelet: weight, sleep, steps, food and workouts can be entered manually.",
@@ -2131,10 +2184,12 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Проверить симптомы": "Check the symptoms",
     "Проверить снова": "Check it again .",
     "Проверить уведомление": "Check the notification",
+    "проверка активности": "Activity checking",
     "Проверка назначения": "Checking the assignment",
     "Проверка недоступна:": "Check is not available:",
     "проверка разрешений": "permitting",
     "Проверка распознавания": "Recognition check",
+    "проверкой активности": "by checking the activity",
     "Проверь лекарства и остатки": "Check medicines and residues",
     "Проверьте аллерген в дневнике": "Check the allergen in the log.",
     "Проверьте белок и полноту дневника":
@@ -2159,6 +2214,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "Check your missed meals and don't cut your diet drastically without a specialist.",
     "Проверяем доступность...": "Checking availability...",
     "Проверяем локальную модель...": "We're running the local model...",
+    "проверяй активность": "Check the activity",
+    "проверяй бодрствование": "Check your watchfulness",
+    "Проверять через, мин": "Check through, min",
     "прогулки": "walk",
     "Продолжить": "Continue.",
     "Продолжить тренировку": "Continue training",
@@ -2257,6 +2315,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Расстояние, км": "Distance, km",
     "раствор": "The solution",
     "растяж": "The stretch",
+    "расход": "The cost",
     "Расчёт по данным профиля и сегодняшним отметкам.":
         "Calculation according to profile data and today's marks.",
     "расчётная готовность": "the readiness of calculation",
@@ -2394,9 +2453,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Сегодня важнее восстановление. Не тренируйтесь через боль, температуру или резкое ухудшение самочувствия.":
         "It's more important today to recover. Don't exercise through pain, fever, or a sharp deterioration in your health.",
     "Сегодня дежурство": "Today 's shift .",
+    "Сегодня записано": "It 's recorded today .",
     "сегодня отмечен тревожный симптом или высокая интенсивность жалобы.":
         "Today, there's an alarming symptom or high-intensity complaint.",
-    "сегодня.": "I'm going to be here today.",
     "Сегодня: сон": "Today: sleep",
     "Сейчас активен режим поездки: при ночной дороге, смене часового пояса или недосыпе нагрузка автоматически считается восстановительной.":
         "Now the travel mode is active: with night driving, changing the time zone or lack of sleep, the load is automatically considered restorative.",
@@ -2404,12 +2463,14 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "сентябрь": "September",
     "Сервер модели вернул код": "The model server returned the code",
     "Сервис": "Service",
+    "Сервис погоды временно вернул ошибку. Повторная попытка будет выполнена автоматически.":
+        "Weather service temporarily returned the error, and the next attempt will be automatic.",
+    "Сервис погоды не ответил вовремя. Климатический профиль продолжает работать локально.":
+        "Weather service didn't respond in time, and the climate profile is still working locally.",
     "Сетевое видео отключено офлайн-режимом": "The network video is off-line .",
     "Сетевое изображение скрыто": "The network image is hidden",
     "Сетевые данные отключены режимом «Полностью офлайн». Климатический профиль продолжает работать.":
         "Network data is disabled by “Fullly offline” mode. The climate profile continues to work.",
-    "Сжимаю и анализирую локально...":
-        "I'm compressing and analyzing locally...",
     "сил": "force",
     "силовая": "power",
     "Силовая тренировка по инвентарю": "Strength training on inventory",
@@ -2576,6 +2637,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Срочно:": "I 'm in a hurry .",
     "срочных пунктов; начните с них.": "The urgent points; start with them.",
     "стабильно": "stably",
+    "стакан": "A glass",
     "Стандартные GATT-сервисы читаются автоматически. Для закрытых или редких устройств добавьте UUID вручную.":
         "Standard GATT services are read automatically. For closed or rare devices, add UUID manually.",
     "стандартный": "the standard",
@@ -2673,6 +2735,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Точность": "precision",
     "точность GPS": "GPS accuracy",
     "Точные будильники": "The precise alarm clock",
+    "Точные будильники недоступны (":
+        "The precise alarm clock is not available (",
     "тошнота": "nausea",
     "травма": "trauma",
     "Травмы в течение жизни": "Life-long injuries",
@@ -2807,6 +2871,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Файл в защищённом хранилище:": "The file in the secure storage:",
     "Файл в медицинском сейфе не найден":
         "The file in the medical safe was not found .",
+    "Файл вложения не найден": "The input file is not found",
     "Файл не содержит резервную копию приложения.":
         "The file does not contain a backup copy of the application.",
     "Файл/импорт": "File/import",
@@ -2823,6 +2888,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "фитнес-тренажёр FTMS": "FTMS fitness trainer",
     "Фокус": "Focus",
     "Фокусы тренировок": "Training tricks",
+    "Фоновая обработка": "The background",
     "Фоновая работа": "The background work",
     "Фоновый анализ": "The background analysis",
     "Форма": "Form",
@@ -2960,18 +3026,19 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "现在,我们已经开始了,我们已经开始了.",
     "(?:\\s+(?:референс|норма|reference)?\\s*([<>]?\\s*\\d+(?:[,.]\\d+)?(?:\\s*[-–]\\s*\\d+(?:[,.]\\d+)?)?))?":
         ",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,",
+    "(?:^|\\s)(?:в|на)\\s+([01]?\\d|2[0-3])(?:\\s*(?:час[а-яё]*|ч))?(?=\\s|":
+        "现在,我在的子里着.",
+    "(?:^|\\s)через\\s+(\\d{1,3})\\s*(минут[а-яё]*|мин|час[а-яё]*|ч)(?=\\s|":
+        "通过,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,",
     "(?:анализ|показатель|результат(?:\\s+анализа)?)\\s+([a-zа-яё][a-zа-яё0-9 ()+._-]{1,60}?)\\s*[:=-]?\\s*([<>]?\\s*\\d+(?:[\\.,]\\d+)?)\\s*":
         "(分析的说法:?:结果?:?: 分析)?) +[a-za-ya-yo][a-za-ya-yo0-9 () ++_-]{1,60}?) *[:=-]?\\s*([<>]?\\s*\\d+(?:[\\.,]\\d+)?)",
     "(?:белок|protein|протеин|б)\\D{0,10}(\\d{1,3})":
         "子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子",
-    "(?:будильник|разбуди|подъ[её]м).*?(?:в|на)?\\s*((?:[01]?\\d|2[0-3])[:\\.]\\d{2})":
-        ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::",
+    "(?:будильник|разбуди|подъ[её]м)": "唤醒器:唤醒器",
     "(?:вес|масса|weight)\\s*(?:сегодня|now)?\\s*[:=-]?\\s*(\\d{2,3}(?:[\\.,]\\d)?)\\s*(?:кг|kg)?\\b":
         "现在是什么时候?",
-    "(?:выпил[а-яё]*|добав[а-яё]*|запиш[а-яё]*|water).*?(\\d+(?:[\\.,]\\d+)?)\\s*(мл|ml|л|l)(?![a-zа-яё])":
-        ",我还没有喝过水.",
-    "(?:гемоглоб|глюкоз|холестерин|ферритин|референс|ммоль/л|мг/дл|анализ крови)":
-        "(血球化物化物化物化物化物化物化物化物化物化物化物化物化物化物化物化物化物化物化物化物化物化物化物化物化物化物化物化物化物化物化物化物化物化物化物化物化物化物化物化物化物化物化物化物化物化物化物化物化物化物化物化物化物物化物化物物化物物化物物物物物",
+    "(?:выпил[а-яё]*|добав[а-яё]*|запиш[а-яё]*|укаж[а-яё]*|вод[а-яё]*|water).*?(\\d+(?:[\\.,]\\d+)?)\\s*(мл|ml|миллилитр[а-яё]*|л|l|литр[а-яё]*|стакан[а-яё]*)(?![a-zа-яё])":
+        ":喝了[a-yao]的 (a-yao]的 (a-yao) 的 (a-yao) 的 (a-yao)  (a-yao)  (a-yao)  (a-yao)  (a-yao)  (a-yao)  (a-yao)  (a-yao)  (a-yao)  (a-yao)  (a-yao)  (a-yao)  (a-yao)  (a-yao)  (a-yao)  (a-yao)  (a-yao)  (a-yao)  (a-yao)  (a-yao)  (a-yao)  (a-yao)  (a-yao)  (a-yao)  (a-yao)",
     "(?:глюкоз[а-яё]*|сахар[а-яё]*\\s+кров[а-яё]*|glucose)\\s*[:=-]?\\s*(\\d{1,3}(?:[\\.,]\\d+)?)":
         "(?:glucose[a-yao]*的糖[a-yao]*\\s+血[a-yao]*的糖)\\s*[:=-]?\\s*(\\d{1,3}(?:[\\.,]\\d+)?)",
     "(?:давлен[а-яё]*|pressure)\\s*[:=-]?\\s*(\\d{2,3})\\s*[/\\\\]\\s*(\\d{2,3})(?:\\s+(?:пульс|pulse)\\s*(\\d{2,3}))?":
@@ -2988,15 +3055,12 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "(?:калории|calories)\\D{0,12}(\\d{2,4})": "没有什么可谓的\"\"",
     "(?:качеств[а-яё]*|оценк[а-яё]*)\\s*(?:сна)?\\s*[:=-]?\\s*([1-5])":
         ",我知道你是个,但你知道我是个.",
-    "(?:ккал|калори|белк|жир|углевод|состав|пищевая ценность)":
-        ": ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  () )  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()",
     "(?:клетчатка|пищевые волокна|fibre|fiber)\\D{0,12}(\\d{1,3}(?:[,.]\\d+)?)":
         "子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子",
     "(?:масса|вес|порция|net weight|serving)\\D{0,12}(\\d{1,4})\\s*(?:г|g)":
         ",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,",
     "(?:на|per)\\s*100\\s*(?:г|g)": "现在,我在的子里.",
-    "(?:напомни|напоминание|remind).*?(\\d{1,2})[:\\.](\\d{2})":
-        "记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得我记得",
+    "(?:напомни|напоминание|remind)": "(:记得的记得的记得的记得的记得)",
     "(?:по\\s+[^.;,]{0,25}\\s+)?\\d+\\s*раз(?:а|у|)\\s+(?:в|за)\\s+(?:день|сутки)":
         ",我很高兴能看到你.",
     "(?:поставь|создай|заведи|добавь|разбуди(?:\\s+меня)?|будильник|подъ[её]м)":
@@ -3005,6 +3069,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
         ": 转载: 转载: 转载: 转载:",
     "(?:сахара|сахар|sugars?|из них сахара)\\D{0,12}(\\d{1,3}(?:[,.]\\d+)?)":
         "糖 (糖) 含有糖 (糖)",
+    "(?:сколько|покажи|какой|какое|текущ[а-яё]*|итого)": "(?? 如何才能证明自己是个人?",
     "(?:соль|salt)\\D{0,10}(\\d{1,3}(?:[,.]\\d+)?)":
         ",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,",
     "(?:спал[а-яё]*|сон|sleep).*?(\\d{1,2}(?:[\\.,]\\d+)?)\\s*(?:ч(?:ас(?:а|ов)?)?|hours?|h)(?![a-zа-яё])":
@@ -3013,7 +3078,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "(?:睡着[a-yao]*) 时时sleep).*?(\\d{1,2}[:\\.](\\d{2})\\s*(?:d",
     "(?:съел[а-яё]*|выпил[а-яё]*|запиш[а-яё]*\\s+(?:еду|при[её]м пищи)|добав[а-яё]*\\s+(?:еду|блюдо))\\s+(.+?)\\s+(\\d{1,4})\\s*(?:ккал|kcal)(?![a-zа-яё])":
         ":吃了 () 喝了 () 了 () 了 () 了 () 了 () 了 () 了 () 了 () 了 () 了 () 了 () 了 () 了 () 了 () 了 () 了 () 了 () 了 () 了 () 了 () 了 () 了 () 了 () 了 () 了 () 了 () 了 () 了 () 了 () 了 () 了 () 了 () 了 () 了 () 了 () 了 () 了 () 了 () 了 () 了 () 了 () 了 () 了 () 了 () 了 () 了 () 了 () 了 () 了 ()",
-    "(?:таблет|капсул|принимать|назначен|рецепт|дозиров)": "(药丸: 服用药物处方)",
+    "(?:съел[а-яё]*|поел[а-яё]*|перекусил[а-яё]*|выпил[а-яё]*|добав[а-яё]*\\s+(?:еду|блюдо)|запиш[а-яё]*\\s+(?:что\\s+)?(?:я\\s+)?(?:съел[а-яё]*|поел[а-яё]*))\\s+(.+)":
+        "吃了[a-yao]的子 (a-yao-yao-yao) 的子 (a-yao-yao) 的子 (a-yao-yao) 的子 (a-yao-yao) 的子 (a-yao-yao) 的子 (a-yao-yao) 的子 (a-yao-yao) 的子 (a-yao-yao) 的子 (a-yao-yao) 的子 (a-yao-yao) 的子 (a-yao-yao) 的子 (a-yao-yao) 的子 (a-yao-yao) 的子 (a-yao-yao-yao) 的子 (a-yao-yao-yao) 的子 (a-yao-yao-yao) 的子 (a-yao-yao-yao-yao-yao) 的子 (a-yao-yao-yao-yao-yao)",
     "(?:таблетк[а-яё]*|капсул[а-яё]*|раствор[а-яё]*|сироп[а-яё]*|суспензи[а-яё]*|":
         ",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,",
     "(?:температур[а-яё]*|temperature)\\s*[:=-]?\\s*(3[4-9]|4[0-2])(?:[\\.,](\\d))?":
@@ -3021,7 +3087,22 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "(?:тренировк[а-яё]*|пробежал[а-яё]*|бегал[а-яё]*|занимал[а-яё]*).*?(\\d{1,3})\\s*(?:мин|минут)":
         "(?:训练[a-yao]*过了跑了[a-yao]*过了跑了[a-yao]*过了[a-yao]*过了[a-yao]*).*?",
     "(?:углеводы|carbs|у)\\D{0,10}(\\d{1,3})": ",我很想知道,我能做什么.",
+    "(?<![a-zа-яё])(?:в|на)\\s*\\d{1,2}(?:[:\\.]\\d{2})?(?![a-zа-яё0-9])":
+        ",我很高兴能看到你.",
+    "(?<![a-zа-яё])(?:в|на)\\s*\\d{1,2}(?:[:\\.]\\d{2})?(?:\\s*(?:час[а-яё]*|ч))?(?![a-zа-яё0-9])":
+        ",我很高兴能看到你在这个地方.",
+    "(?<![a-zа-яё])(?:каждый день|ежедневно|по будням|по выходным|сегодня|завтра|послезавтра)(?![a-zа-яё])":
+        "每天都在着,每天都在着,每天都在着,每天都在着,每天都在着,每天都在着,每天都在着,每天都在着,每天都在着,每天都在着,每天都在着,每天都在着,每天都在着,每天都在着,每天都在着,每天都在着,每天都在着,每天都在着,每天都在着,每天都在着,每天都在着,每天都在着,每天都在着,每天都在着,每天都在着,每天都在着,每天都在着,每天都在着,每天都在着,每天都在着,每天都在着,着,着,着,着,着,着,着,着.",
+    "(?<![a-zа-яё])(?:не дай уснуть|не заснуть|не уснул)(?![a-zа-яё])":
+        "让我睡不着吧!",
+    "(?<![a-zа-яё])(?:с|и)?\\s*(?:проверкой|контролем)\\s+(?:активности|бодрствования)(?![a-zа-яё])":
+        ",我知道你是个,我知道你是个.",
+    "(?<![a-zа-яё])(?:сегодня|только что)(?![a-zа-яё])": "现在是什么?",
+    "(?<![a-zа-яё])через\\s+\\d+\\s*(?:минут[а-яё]*|мин|час[а-яё]*|ч)(?![a-zа-яё])":
+        "通过 (?? 个分钟)",
     "(\\d+(?:[,.]\\d+)?)\\s*(?:ммоль/л|мг/дл|г/л|нг/мл|мед/л|ме/л|%)":
+        ",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,",
+    "(\\d+(?:[\\.,]\\d+)?)\\s*(мл|ml|миллилитр[а-яё]*|л|l|литр[а-яё]*|стакан[а-яё]*)(?![a-zа-яё]).*?(?:вод[а-яё]*|выпил[а-яё]*|добав[а-яё]*|запиш[а-яё]*|water)":
         ",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,",
     "(\\d{1,3}(?:[\\.,]\\d+)?)\\s*(?:км|km)": "现在我在着.",
     "(\\d{1,4})\\s*(?:г|g)\\b": "现在,我们要做什么?",
@@ -3037,6 +3118,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "(ммоль/л|мкмоль/л|мг/дл|мг/л|г/л|г/дл|мкг/л|нг/мл|пг/мл|мед/л|ме/л|ед/л|mmol/l|umol/l|µmol/l|mg/dl|mg/l|g/l|g/dl|µg/l|ug/l|ng/ml|pg/ml|iu/l|u/l|10\\^?[*x×]?\\d+/л|фл|fl|пг|pg|%)":
         "///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////",
     "). Дозировку я не изменяю.": "我不会改变剂量.",
+    "); используется приблизительное системное расписание.": ");使用了系统时间表.",
     ")} · день": "日数",
     ")}. Отложите тренировку; при резком ухудшении или опасных признаках обратитесь за неотложной помощью.":
         ") } 延迟训练,如果出现急剧的恶化或危险迹象,请急救.",
@@ -3065,7 +3147,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     ", цель": "目的",
     ". Добавил их на проверку; после подтверждения приложение создаст расписание и напоминания. Дозировки автоматически не меняются.":
         "添加到检查中,确认后,应用程序会创建一个时间表和提醒.",
-    ". Изменения применятся после подтверждения.": "变更应在确认后进行.",
     ". Не используйте распознанные назначения до сверки с оригиналом.":
         "之前不要使用已识别的用途,",
     ". Невозможные скачки координат отфильтрованы.": "。不可能的坐标跳动被过滤出来。",
@@ -3110,6 +3191,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     ": не удалось разобрать": "解答不了",
     ": осталось": "剩下了",
     ": пакет короче заявленного": ": 申请的包短",
+    ": проверка бодрствования": ": 警觉检查",
     ": характеристика не найдена": ": 没有找到的特性",
     "; выбран ближайший расчётный конец цикла сна.": "选择了睡眠周期的最接近的计算终点.",
     "; отложено на проверку:": "; 暂停检查:",
@@ -3123,19 +3205,21 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "[^a-zа-яё0-9]+": "现在,我们要做什么?",
     "[a-zа-яё]*\\s*[:=-]?\\s*(\\d{1,3}(?:[\\.,]\\d+)?)\\s*(?:г|g)?":
         "现在,我们要做什么?",
-    "\\b(?:в|на)\\s*\\d{1,2}[:\\.]\\d{2}\\b": ",我很想知道,我知道.",
     "\\b(гемоглобин|ферритин|холестерин|триглицериды|креатинин|мочевина|билирубин|алт|аст|ттг|витамин\\s+[a-zа-яё0-9]+|с-?реактивный\\s+белок)\\s*[:=-]?\\s*([<>]?\\s*\\d+(?:[\\.,]\\d+)?)\\s*":
         "血蛋白除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除除",
-    "\\d+(?:[\\.,]\\d+)?\\s*(?:мг|мкг|мл|ме|ед\\.)": ",我很想让你知道.",
     "\\d+(?:[\\.,]\\d+)?\\s*(?:мкг|мг|г|мл|ед\\.?|ме)": ",我很高兴能看到你.",
     "\\d+(?:[\\.,]\\d+)?\\s*(?:мкг|мг|г|мл|ед\\.?|ме|iu|mcg|mg|ml)(?![a-zа-яё])":
         ",我很高兴能看到你在这个地方.",
+    "\\d+(?:[\\.,]\\d+)?\\s*(?:мл|л|литр|стакан)": ",我很高兴能看到你.",
     "\\d+\\s*(?:дн(?:я|ей|ь)?|сут(?:ок|ки)?|недел[а-яё]*|месяц[а-яё]*)(?![а-яё])":
         ",我很高兴能看到你,我很高兴能看到你.",
+    "\\d{1,4}\\s*(?:ккал|kcal)": "没有什么可说的.",
     "^(?:врач\\s+)?(?:мне\\s+)?(?:назначил(?:а|и)?|назначение|рецепт|принимать)\\s*[:\\-]?\\s*":
         "医生:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我:我",
     "^(?:как|что|почему|зачем|когда|где|можно\\s+ли|расскажи|объясни|проанализируй|how|what|why|when|where|can\\s+i)\\b":
         "如何知道什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是什么是",
+    "^(?:что\\s+)?(?:я\\s+)?(?:съел[а-яё]*|поел[а-яё]*|перекусил[а-яё]*)\\s+":
+        ",我吃了,我吃了,我吃了.",
     "^[^a-zа-яё]+": ",我很高兴能看到你.",
     "^\\*\\*(?:Answer|Ответ):\\*\\*\\s*": "答案是:",
     "^\\s*(?:КОМАНДА|COMMAND)\\s*:\\s*": "现在我们要做什么?",
@@ -3200,7 +3284,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "UUID характеристики записи": "记录的 UUID 特性",
     "Vault был восстановлен из безопасного начального состояния.":
         "断层已经从安全初始状态恢复。",
-    "Vision-анализ недоступен:": "视觉分析无法访问:",
     "°C · высота": "°C ·高度",
     "· вес": "重量",
     "· визуальная оценка": "·视觉评估",
@@ -3228,9 +3311,13 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "» перед выполнением.": "在执行之前.",
     "», интенсивность": ",强度",
     "». Извлечённый текст:": ". 摘录:",
+    "». Калории и Б/Ж/У оставлены пустыми; добавьте порцию или уточните данные, когда они известны.":
+        ".卡路里和量是空的;添加一个部分或确定数据,当它们已知.",
     "». Перед продолжением рекомендуется сделать копию текущих данных.":
         "在继续进行之前,建议复制当前数据。",
     "». Текст для анализа не найден.": ". 没有找到分析文本.",
+    "». Уведомления о приёме будут планироваться по курсу препарата.":
+        ". 根据药物的过程,将会有收取通知.",
     "август": "8月(半天)",
     "Автозапись GPS/GLONASS:": "自动记录全球定位系统/轨道导航系统:",
     "Автозапуск": "开启自动",
@@ -3253,6 +3340,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "активное движение": "活动",
     "Активность": "活动",
     "Активность и вода": "活动和水",
+    "Активность после подъёма не подтверждена. Откройте приложение и отключите сигнал.":
+        "升降后的活动未得到证实.",
     "Активность хорошая: шаги уже закрывают базовую цель дня.":
         "活动是好的:步骤已经完成了一天的基本目标.",
     "активные калории": "热量",
@@ -3311,6 +3400,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "без документа": "无纸",
     "Без жёстких ограничений: можно добавить спокойную прогулку и оценивать недельный баланс.":
         "没有僵硬的限制:你可以添加一个安静的行走并评价每周的平衡.",
+    "без контроля бодрствования": "没有监控的警觉",
     "без лекарства": "无毒品",
     "Без ограничений": "无限制。",
     "без ограничений": "无限",
@@ -3386,6 +3476,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "в пределах референса": "参考文献",
     "В профиле нет координат города.": "没有城市坐标.",
     "В пути, мин": "来了,我的",
+    "в расписание «": "在时间表中",
     "В списке есть антикоагулянт: взаимодействие нужно проверить у врача или фармацевта.":
         "列表中有抗凝固剂,需要检查到医生或药剂师.",
     "В тренировках отмечалась боль: будущую нагрузку стоит снизить.":
@@ -3418,9 +3509,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "велотренажёр": "教练",
     "вероятно в руках": "可能是手中",
     "вероятно используется": "可能使用",
-    "Версия 1.8.1+10 · создатель: Редин Максим Юрьевич · info@thebestmks.ru":
-        "版本 1.8.1+10 · 创始人:雷丁·马克西姆·尤里维奇 · info@thebestmks.ru",
-    "Версия: 1.8.1+10": "版本: 1.8.1+10",
+    "Версия 1.8.2+11 · создатель: Редин Максим Юрьевич · info@thebestmks.ru":
+        "版本 1.8.2+11 · 创始人:雷丁·马克西姆·尤里维奇 · info@thebestmks.ru",
+    "Версия: 1.8.2+11": "版本: 1.8.2+11",
     "Вес": "重量.",
     "вес": "重量",
     "Вес порции и пищевая ценность являются ориентировочной оценкой класса блюда. Проверьте их перед подтверждением.":
@@ -3458,6 +3549,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Внесено голосом или командой помощника; условия измерения не указаны.":
         "通过助手的声音或命令;测量条件未显示.",
     "Внесено командой помощника.": "据警方说,",
+    "Внесено помощником без количества и нутриентов; значения не выдумывались.":
+        "没有数量和营养的辅助者,没有想出任何值.",
     "внесённая калорийность заметно выше основного обмена, но недельный баланс и активность важнее одного дня.":
         "摄入量比基本的饮食量要高,但每周的平衡和活动比一天更重要.",
     "внесённая калорийность низкая относительно основного обмена; возможно, дневник заполнен не полностью.":
@@ -3521,6 +3614,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "вт": "电压",
     "Вторник": "礼拜二",
     "вторник": "星期二",
+    "Вчера ·": "昨天 ·",
     "вчера уже была тяжёлая тренировка": "昨天的练习很艰难",
     "Вы": "你,你这个",
     "Выберите вариант": "选择一个选项",
@@ -3699,6 +3793,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Для чего применяется": "为什么使用",
     "Дневник питания, БЖУ, рецепты и ручное подтверждение фото":
         "营养日记、BJU、食谱和人工确认照片",
+    "Дневник по датам": "日期日记",
     "Дневник самочувствия без диагнозов и назначений": "健康日记,没有诊断和预约",
     "Дневник сна": "睡眠日记",
     "Дневники и ручной ввод продолжают работать. Включить локальный анализ можно в настройках.":
@@ -3714,6 +3809,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "До ориентира": "到地标",
     "добав": "添加",
     "Добавил": "增加",
+    "Добавил время": "增加时间",
     "Добавить": "添加",
     "Добавить в дневник": "添加到日记",
     "Добавить врача или клинику": "增加医生或诊所",
@@ -3856,6 +3952,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Завершить": "完毕",
     "Завершить и сохранить": "完成和维护",
     "зависит от пола и возраста": "按性别和年龄分列",
+    "завтра": "明天",
     "завтрак": "早饭",
     "Загружаем локальный сейф здоровья": "下载本地健康保险",
     "Загруженный GGUF повреждён.": "载载的GGUF受损.",
@@ -3925,6 +4022,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Запомнить текущую точку как работу": "记住当前点作为工作",
     "Запрашиваем разрешения и ищем устройства...": "我们请求许可 并寻找设备。",
     "Запрещено системой; откройте системные настройки": "系统禁止; 打开系统设置",
+    "Запрос обрабатывается в фоне": "后台处理查询",
     "Запрос пользователя:": "用户的查询:",
     "Запросить разрешение повторно": "再次请求许可",
     "Запросить разрешения и синхронизировать": "请求权限和同步",
@@ -3962,8 +4060,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "из-за холода выбран домашний вариант с более длинной разминкой":
         "由于寒冷,选择了更长时间的家庭式",
     "избегать задержки дыхания": "别动",
-    "Извлечённый текст:": "摘录的文字:",
     "Измените запрос или добавьте тег в карточку документа.": "更改请求或在文档卡中添加标签.",
+    "Изменить": "修改",
     "Изменить симптом": "改变症状",
     "Изменить сон": "改变你的睡眠。",
     "измерения не найдены": "测量未找到",
@@ -4083,6 +4181,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Ккал": "卡尔",
     "ккал": "幼崽",
     "ккал · Б/Ж/У": "克·/",
+    "ккал · расход": "开支",
+    "ккал · шаги": "步",
     "Ккал еды": "卡罗里食品",
     "ккал за сутки": "热量",
     "ккал, активность": ",活动",
@@ -4134,6 +4234,10 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Контекст дома и работы": "家庭和工作的背景",
     "Контекст телефона": "电话的背景",
     "Контекст телефона:": "电话的背景:",
+    "контролем активности": "活动控制",
+    "контроль активности": "活动控制",
+    "Контроль бодрствования": "警觉控制",
+    "контроль бодрствования": "警觉控制",
     "контроль лекарств": "药品",
     "Координаты": "协调员",
     "Координаты используются только на устройстве для определения контекста.":
@@ -4159,7 +4263,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Курс:": "课程:",
     "Күнтізбе": "库蒂兹贝",
     "л": "页:1",
-    "л · калории": "k 热量",
+    "л · питание": "食",
+    "л воды.": "现在,我们要去.",
     "л, шаги": "L,步骤",
     "л.": ",我很高兴.",
     "л. Пейте небольшими порциями, если врач не ограничил жидкость.":
@@ -4246,6 +4351,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "мигрень": "偏头痛",
     "Микрофон и голосовой ввод": "麦克风和语音输入",
     "мили": "英里数",
+    "миллилитр": "一毫升",
     "мин": "属于我的",
     "мин ·": "属于我的",
     "мин · перенос доступен": "现有地雷转让",
@@ -4301,9 +4407,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "肉 鱼 牛奶 奶酪 芝士 牛肉 鱼 鸡蛋 牛奶 芝士",
     "На весь экран": "整个屏幕",
     "на ночь": "在夜间.",
-    "На проверку добавлено записей:": "添加到检查中:",
     "на работе": "在工作中",
     "На ручную проверку добавлено показателей:": "添加了以下指标:",
+    "на сегодня": "今天的时间",
     "на сегодня запланировано:": "今天的计划是:",
     "набор силы": "部队",
     "нагруз": "装入",
@@ -4391,8 +4497,10 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "нг/мл": "纳克/毫升",
     "не выбрано": "未选中",
     "не выбраны": "未选中",
+    "не дай уснуть": "不要让我睡觉.",
     "не задана": "没有指定",
     "не задано": "没有指定",
+    "не заснуть": "没有睡觉",
     "Не извлечено:": "未恢复 :",
     "не компенсируйте еду голоданием; выберите спокойную прогулку и вернитесь к обычному плану.":
         "不要用饥饿来补偿食物,选择一个安静的散步,然后回到平常的计划.",
@@ -4440,6 +4548,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "не указано в контексте. В конце укажи уверенность: высокая, средняя или низкая.":
         "没有文本说明.最后,请指定性:高,中,低.",
     "Не указаны": "没有显示",
+    "не уснул": "我没有睡觉.",
     "Не установлена; доступен быстрый режим и установка в разделе «Помощник».":
         "没有安装; 快速模式和安装在\"辅助\"部分中可用.",
     "Не хватает данных:": "没有数据:",
@@ -4524,7 +4633,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Обновить контекст": "更新文本",
     "Обновить результаты поиска": "更新搜索结果",
     "Обновлено устройство:": "更新设备 :",
-    "Обрабатываю локально...": "我在本地处理...",
     "обсудите с врачом:": "与医生讨论:",
     "обсудить": "讨论",
     "Обсудить план с помощником": "与助理讨论计划",
@@ -4547,6 +4655,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Ограничения, реабилитация, врач, документы": "限制、康复、医生、证件",
     "Ограничения:": "限制:",
     "ограничить бег": "运行下",
+    "один раз": "一次",
     "один сигнал": "一个信号",
     "одыш": "呼吸无常",
     "одышка": "呼吸无常",
@@ -4630,7 +4739,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Отмечено сегодня": "今天庆祝",
     "отмечено сегодня": "说明",
     "Отправить": "发送。",
-    "Отправлено изображение:": "发送的图片:",
     "Отпуск": "休假时间",
     "отпуск": "离开",
     "Отпуск не запланирован": "未安排的休假",
@@ -4691,6 +4799,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "перенесённая болезнь": "疾病",
     "переохлаждение": "低温",
     "Пересадок": "移植",
+    "Период контроля, мин": "监控时间, 矿山",
     "Периодически проверять локальные напоминания и расписание без отправки данных в сеть":
         "定期检查本地提醒和时间表,而不会输送数据到网络",
     "Персональная проверка": "个人检查",
@@ -4736,9 +4845,11 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Пн": "页 次",
     "пн": "池塘区",
     "пн, вт, ср, чт, пт": "现在,我们要做什么?",
+    "по будням": "每周",
     "по внесённым данным допустима обычная плановая нагрузка с контролем самочувствия.":
         "根据输入的数据,可以进行正常计划,并控制健康状况.",
     "По внесённым приёмам пищи:": "根据进口的食物:",
+    "по выходным": "在周末",
     "по геолокации": "地理位置",
     "по дням недели": "每周",
     "По какое число": "什么号码?",
@@ -4757,12 +4868,18 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Побочные эффекты и реакции": "副作用和反应",
     "Побочные эффекты:": "副作用 :",
     "Повседневная активность": "每天活动",
+    "Повтор": "复制",
     "повторений": "重复",
     "Повторите PIN": "复说PIN.",
     "Повторно запрашивать PIN или биометрию для чувствительных документов":
         "对敏感文件重新申请PIN或生物鉴别技术",
+    "Повторять сигнал при отсутствии движения после подъёма.":
+        "升起后,如果没有动作,重复信号.",
     "Повторяющиеся симптомы:": "经常症状:",
     "Повышает масштаб интерфейса": "增加接口的规模",
+    "Погода временно недоступна": "暂时无法获得天气",
+    "Погода временно недоступна. Климатический профиль продолжает работать локально.":
+        "气候状况暂时不适宜,气候状况仍在本地工作.",
     "Погода и климат": "天气和气候",
     "Погода недоступна": "无法进入天气",
     "Погода подходит для обычной нагрузки с учётом самочувствия.": "气候适合正常工作,",
@@ -4877,6 +4994,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "последние симптомы:": "最后的症状:",
     "последняя запись сна:": "最后的睡眠记录:",
     "Последняя запись:": "最后的录音:",
+    "послезавтра": "在第二天之后",
     "постав": "设置",
     "Постепенное пробуждение": "渐渐的觉醒",
     "потер": "毛衣",
@@ -4888,6 +5006,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Предупреждение": "3⁄4 ̧漯B",
     "Предупреждения": "警告",
     "Препарат": "药",
+    "препарат": "药物",
     "препаратов, принято сегодня": "现在的药物",
     "Препараты": "毒品",
     "Препараты не распознаны. Проверьте качество снимка или добавьте лекарство вручную.":
@@ -4902,7 +5021,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Приготовление": "筹备",
     "прием": "接待",
     "Прикреплённый файл не найден": "连载文件未找到",
-    "Приложен файл:": "附加文件:",
     "приложение открыто": "应用程序已开放",
     "Приложение работает без браслета: вес, сон, шаги, еда и тренировки можно вводить вручную.":
         "该应用程序在工作时没有手镯:体重,睡眠,步数,食物和锻炼可以手动输入.",
@@ -4932,10 +5050,12 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Проверить симптомы": "检查一下症状",
     "Проверить снова": "检查一次",
     "Проверить уведомление": "检查通知",
+    "проверка активности": "活动检查",
     "Проверка назначения": "目的检查",
     "Проверка недоступна:": "无法查看:",
     "проверка разрешений": "允许",
     "Проверка распознавания": "识别检查",
+    "проверкой активности": "检查活动",
     "Проверь лекарства и остатки": "检查药品和残留物",
     "Проверьте аллерген в дневнике": "检查过敏症的日记",
     "Проверьте белок и полноту дневника": "检查蛋白质和日记的完整性",
@@ -4956,6 +5076,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "检查错过的食物,不要在没有专家的情况下大幅减少饮食.",
     "Проверяем доступность...": "正在检查可用性...",
     "Проверяем локальную модель...": "我们正在检查本地模型.",
+    "проверяй активность": "检查活动",
+    "проверяй бодрствование": "检查你的警觉状态",
+    "Проверять через, мин": "通过,我查看",
     "прогулки": "走开",
     "Продолжить": "继续",
     "Продолжить тренировку": "继续培训",
@@ -5047,6 +5170,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Расстояние, км": "距离,公里",
     "раствор": "溶液",
     "растяж": "拉伸",
+    "расход": "费用",
     "Расчёт по данным профиля и сегодняшним отметкам.": "根据剖面数据和今天的标记计算.",
     "расчётная готовность": "计算准备",
     "расчётный основной обмен:": "基本的计算交易:",
@@ -5178,9 +5302,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Сегодня важнее восстановление. Не тренируйтесь через боль, температуру или резкое ухудшение самочувствия.":
         "今天,恢复是最重要的. 不要因为疼痛,热,或急剧恶化而炼.",
     "Сегодня дежурство": "今天是个工作位",
+    "Сегодня записано": "今天的录音",
     "сегодня отмечен тревожный симптом или высокая интенсивность жалобы.":
         "今天,有警觉症状或高强度的抱怨.",
-    "сегодня.": "今天.",
     "Сегодня: сон": "今天:梦",
     "Сейчас активен режим поездки: при ночной дороге, смене часового пояса или недосыпе нагрузка автоматически считается восстановительной.":
         "现在的旅行模式是活跃的:随着夜间驾驶,改变时区或睡眠不足,负载自动被认为是恢复性.",
@@ -5188,11 +5312,14 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "сентябрь": "9月 (中文(简体) ).",
     "Сервер модели вернул код": "模型服务器返回了代码",
     "Сервис": "服务",
+    "Сервис погоды временно вернул ошибку. Повторная попытка будет выполнена автоматически.":
+        "气象局暂时回复了错误,",
+    "Сервис погоды не ответил вовремя. Климатический профиль продолжает работать локально.":
+        "气候服务未及时回复,气候配置仍在本地工作.",
     "Сетевое видео отключено офлайн-режимом": "网络视频在线模式下被关闭",
     "Сетевое изображение скрыто": "网络图像隐藏",
     "Сетевые данные отключены режимом «Полностью офлайн». Климатический профиль продолжает работать.":
         "网络数据通过“离线”模式禁用。 气候概况继续发挥作用。",
-    "Сжимаю и анализирую локально...": "我在局部进行压缩和分析.",
     "сил": "部队",
     "силовая": "动力",
     "Силовая тренировка по инвентарю": "关于库存的优势培训",
@@ -5348,6 +5475,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Срочно:": "紧急:",
     "срочных пунктов; начните с них.": "首先要从他们那里开始.",
     "стабильно": "刺伤",
+    "стакан": "一杯",
     "Стандартные GATT-сервисы читаются автоматически. Для закрытых или редких устройств добавьте UUID вручную.":
         "关贸总协定的标准服务是自动读取的。 对于封闭或稀有设备,手动添加UUID.",
     "стандартный": "标准的",
@@ -5441,6 +5569,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Точность": "精确度",
     "точность GPS": "GPS 的精度",
     "Точные будильники": "精确的醒器",
+    "Точные будильники недоступны (": "精确的警报器无法使用 (",
     "тошнота": "恶心",
     "травма": "创伤",
     "Травмы в течение жизни": "生命中受伤",
@@ -5561,6 +5690,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Файл анализа:": "分析文件:",
     "Файл в защищённом хранилище:": "保护存储中的文件:",
     "Файл в медицинском сейфе не найден": "医疗安全中的文件未找到",
+    "Файл вложения не найден": "输入文件未找到",
     "Файл не содержит резервную копию приложения.": "文件不包含应用程序的备份副本.",
     "Файл/импорт": "文件/进口",
     "Файл:": "文件 :",
@@ -5576,6 +5706,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "фитнес-тренажёр FTMS": "健身训练师 FTMS",
     "Фокус": "焦点",
     "Фокусы тренировок": "训练技巧",
+    "Фоновая обработка": "背景处理",
     "Фоновая работа": "背景工作",
     "Фоновый анализ": "背景分析",
     "Форма": "表单",
@@ -5706,17 +5837,18 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "(*?(?:\\s?:referes*のノーマ) [:=-]?\\s*([<>]?\\s*\\d+(?:[\\.,]\\d+)?(?:\\s*[-]\\s*\\d+(?:[\\.,]\\d+)?)?",
     "(?:\\s+(?:референс|норма|reference)?\\s*([<>]?\\s*\\d+(?:[,.]\\d+)?(?:\\s*[-–]\\s*\\d+(?:[,.]\\d+)?)?))?":
         "(?:\\s+(?:referenceの異議を語ること?\\s([<>]?s*\\d+(?:[,.]\\d+)?(?:\\s*[-]\\s*\\d+(?:[,.]\\d+)?)??",
+    "(?:^|\\s)(?:в|на)\\s+([01]?\\d|2[0-3])(?:\\s*(?:час[а-яё]*|ч))?(?=\\s|":
+        "(?: 出発: 川口) 川口 (?? 川口) 川口 (?? 川口) 川口 (?? 川口) 川口 (?? 川口) 川口 (?? 川口) 川口 (?? 川口) 川口 (?? 川口) 川口 (?? 川口) 川口 (?? 川口) 川口 (?? 川口) 川口 (?? 川口) 川口 (?? 川口) 川口 (?? 川口) 川口 (?? 川口) 川口 (?? 川口) 川口 (?? 川口) 川口 (?? 川口) 川口 (?? 川口) 川口 (?? 川口) 川口 (?? 川口) 川口 (?? 川口) 川口 (?? 川口) 川口 (?? 川口)",
+    "(?:^|\\s)через\\s+(\\d{1,3})\\s*(минут[а-яё]*|мин|час[а-яё]*|ч)(?=\\s|":
+        "(?: 出発: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経由: 経",
     "(?:анализ|показатель|результат(?:\\s+анализа)?)\\s+([a-zа-яё][a-zа-яё0-9 ()+._-]{1,60}?)\\s*[:=-]?\\s*([<>]?\\s*\\d+(?:[\\.,]\\d+)?)\\s*":
         "(分析のときの指標?:結果?: ヽ \\ s+解析)?) \\ s+ ヽ [a-z-a-yao][a-z-yao0-9 () ++_-]{1,60}?) \\ s*[:=-]?\\s*([<>]\\s*\\d+(?:[\\.,]\\d+)?) \\s*",
     "(?:белок|protein|протеин|б)\\D{0,10}(\\d{1,3})": "タンパク質は,タンパク質である.",
-    "(?:будильник|разбуди|подъ[её]м).*?(?:в|на)?\\s*((?:[01]?\\d|2[0-3])[:\\.]\\d{2})":
-        "覚醒機は, 覚醒機は, 覚醒機は, 覚醒機は, 覚醒機は, 覚醒機は, 覚醒機は, 覚醒機は, 覚醒機は, 覚醒機は, 覚醒機は, 覚醒機は, 覚醒機は, 覚醒機は, 覚醒機は, 覚醒機は, 覚醒機は, 覚醒機は, 覚醒機は, 覚醒機は, 覚醒機は, 覚醒機は, 覚醒機は, 覚醒機は, 覚醒機は, 覚醒機は, 覚醒機は, 覚醒機は, 覚醒機は, 覚醒機は, 覚醒機は, 覚醒機は, 覚醒機は, 覚醒機は, 覚醒機は, 覚醒機は, 覚醒機は, 覚醒機は, 覚醒機は, 覚醒機は, 覚醒機は, 覚醒機は, 覚醒",
+    "(?:будильник|разбуди|подъ[её]м)": "覚醒器 覚醒器 (発覚器)",
     "(?:вес|масса|weight)\\s*(?:сегодня|now)?\\s*[:=-]?\\s*(\\d{2,3}(?:[\\.,]\\d)?)\\s*(?:кг|kg)?\\b":
         "(?:体重の減量量) \\s*(?:今日も減量? \\s*[:=-]? \\s*(\\d{2,3}(?:[\\.,]\\d)?) \\s*(?:kgaの減量kg)?\\b",
-    "(?:выпил[а-яё]*|добав[а-яё]*|запиш[а-яё]*|water).*?(\\d+(?:[\\.,]\\d+)?)\\s*(мл|ml|л|l)(?![a-zа-яё])":
-        "飲んだ (お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お-お",
-    "(?:гемоглоб|глюкоз|холестерин|ферритин|референс|ммоль/л|мг/дл|анализ крови)":
-        "(血の血液検査/血液検査)",
+    "(?:выпил[а-яё]*|добав[а-яё]*|запиш[а-яё]*|укаж[а-яё]*|вод[а-яё]*|water).*?(\\d+(?:[\\.,]\\d+)?)\\s*(мл|ml|миллилитр[а-яё]*|л|l|литр[а-яё]*|стакан[а-яё]*)(?![a-zа-яё])":
+        "飲んだ ([a-yao]]はたたたたたた ([a-yao]はたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたたた",
     "(?:глюкоз[а-яё]*|сахар[а-яё]*\\s+кров[а-яё]*|glucose)\\s*[:=-]?\\s*(\\d{1,3}(?:[\\.,]\\d+)?)":
         "(?:glucose[a-yao]*のうたサハル[a-yao]*\\s+血[a-yao]*のうたglucose)\\s*[:=-]?\\s*(\\d{1,3}(?:[\\.,]\\d+)?)",
     "(?:давлен[а-яё]*|pressure)\\s*[:=-]?\\s*(\\d{2,3})\\s*[/\\\\]\\s*(\\d{2,3})(?:\\s+(?:пульс|pulse)\\s*(\\d{2,3}))?":
@@ -5735,14 +5867,12 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "(?:калории|calories)\\D{0,12}(\\d{2,4})": "(?:カロリー・カロリー・カロリー)",
     "(?:качеств[а-яё]*|оценк[а-яё]*)\\s*(?:сна)?\\s*[:=-]?\\s*([1-5])":
         "(?:素質[a-yao]* 定価[a-yao]*) \\s*(?:睡眠)?\\s*[:=-]?\\s*([1-5])",
-    "(?:ккал|калори|белк|жир|углевод|состав|пищевая ценность)": ":",
     "(?:клетчатка|пищевые волокна|fibre|fiber)\\D{0,12}(\\d{1,3}(?:[,.]\\d+)?)":
         "(?? 細胞は, 糸糸) 糸糸の糸の糸の糸の糸の糸",
     "(?:масса|вес|порция|net weight|serving)\\D{0,12}(\\d{1,4})\\s*(?:г|g)":
         "体重は, 体重は, 体重は, 体重は, 体重は, 体重は, 体重は, 体重は, 体重は, 体重は, 体重は, 体重は, 体重は, 体重は, 体重は, 体重は, 体重は, 体重は, 体重は, 体重は, 体重は, 体重は, 体重は, 体重は, 体重は, 体重は, 体重は, 体重は, 体重は, 体重は, 体重は, 体重は, 体重は, 体重は, 体重は, 体重は, 体重は, 体重は, 体重は, 体重は, 体重は, 体重は, 体重は, 体重は, 体重は, 体重は, 体重は, 体重は, 体重は, 体重は, 体重は, 体重は, 体重は, 体重は, 体重は,",
     "(?:на|per)\\s*100\\s*(?:г|g)": "(?? に はてなキーワード) \\*100\\s*s?",
-    "(?:напомни|напоминание|remind).*?(\\d{1,2})[:\\.](\\d{2})":
-        "(:?:記憶の記憶の記憶を) *?",
+    "(?:напомни|напоминание|remind)": "(:記憶の記憶の記憶の記憶)",
     "(?:по\\s+[^.;,]{0,25}\\s+)?\\d+\\s*раз(?:а|у|)\\s+(?:в|за)\\s+(?:день|сутки)":
         ": : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : :",
     "(?:поставь|создай|заведи|добавь|разбуди(?:\\s+меня)?|будильник|подъ[её]м)":
@@ -5751,6 +5881,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "参照: (ノーマの参照) \\D{0,12}([\\d,.]+?[-] ?[\\d,.]+)",
     "(?:сахара|сахар|sugars?|из них сахара)\\D{0,12}(\\d{1,3}(?:[,.]\\d+)?)":
         "砂糖は,砂糖の種類から",
+    "(?:сколько|покажи|какой|какое|текущ[а-яё]*|итого)":
+        "(?? どれだけの時間,どれだけの時間,どれだけの時間,どれだけの時間,どれだけの時間,どれだけの時間,どれだけの時間,どれだけの時間,どれだけの時間,どれだけの時間,どれだけの時間,どれだけの時間,どれだけの時間,どれだけの時間,どれだけの時間,どれだけの時間,どれだけの時間,どれだけの時間,どれだけの時間,どれだけの時間,どれだけの時間,どれだけの時間,どれだけの時間,どれだけの時間,どれだけの時間,どれだけの時間,どれだけの時間,どれだけの時間,どれだけの時間,どれだけの時間,どれだけの時間,どれだけの時間,どれだけの時間,どれだけの時間,どれだけの時間,どれだけの時間,どれだけの時間,どれだけの時間,どれだけの時間,どれだけの時間,どれだけの時間,どれだけの時間,どれだけの時間,どれだけの時間,どれだけの時間,どれだけの時間,どれだけの時間,どれだけの時間,どれだけの時間,どれだけの時間,どれだけの時間,どれだけの時間,どれだけの時間,どれだけの時間,どれだけの時間,どれだけの時間,どれだけの時間,どれ,どれ,どれ,どれ,どれ,どれ,どれ,どれ,どれ,どれ,どれ,どれ,",
     "(?:соль|salt)\\D{0,10}(\\d{1,3}(?:[,.]\\d+)?)":
         "(?:塩はしゃべり) \\D{0,10}(\\d{1,3}(?:[,.]\\d+)?)",
     "(?:спал[а-яё]*|сон|sleep).*?(\\d{1,2}(?:[\\.,]\\d+)?)\\s*(?:ч(?:ас(?:а|ов)?)?|hours?|h)(?![a-zа-яё])":
@@ -5759,8 +5891,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "(?:寝[ア-ヤヤオ]*) ぼうぼうぼう) *?",
     "(?:съел[а-яё]*|выпил[а-яё]*|запиш[а-яё]*\\s+(?:еду|при[её]м пищи)|добав[а-яё]*\\s+(?:еду|блюдо))\\s+(.+?)\\s+(\\d{1,4})\\s*(?:ккал|kcal)(?![a-zа-яё])":
         "飲んだ ([a-yao]] 飲んだ ([a-yao] 飲んだ ([a-yao] 飲んだ) ([a-yao] 飲んだ ([a-yao] 飲んだ) ([a-yao] 飲んだ ([a-yao] 飲んだ) ([a-yao] 飲んだ ([a-yao] 飲んだ) ([a-yao] 飲んだ ([a-yao] 飲んだ) ([a-yao] 飲んだ ([a-yao] 飲んだ) ([a-yao] 飲んだ ([a-yao] 飲んだ) ([a-yao] 飲んだ ([a-yao] 飲んだ) ([a-yao] 飲んだ) ([a-yao] (a-yao-yao) (a-yao) (a-yao) (a-yao) (a-yao) (a-yao) (a-yao) (a-yao) (a-ya",
-    "(?:таблет|капсул|принимать|назначен|рецепт|дозиров)":
-        "(タブレット・ブランコプス?: 服用する 薬剤の処方箋)",
+    "(?:съел[а-яё]*|поел[а-яё]*|перекусил[а-яё]*|выпил[а-яё]*|добав[а-яё]*\\s+(?:еду|блюдо)|запиш[а-яё]*\\s+(?:что\\s+)?(?:я\\s+)?(?:съел[а-яё]*|поел[а-яё]*))\\s+(.+)":
+        "飲食[a-yao]は[a-yao]は[a-yao]は[a-yao]は[a-yao]は[a-yao]:[a-yao]は[a-yao]は[a-yao]は[a-yao]は[a-yao]は[a-yao]は[a-yao]は[a-yao]は[a-yao]は[a-yao]は[a-yao]は[a-yao]は[a-yao]は[a-yao]は[a-yao]は[a-yao]は[a-yao]は[a-yao]は[a-yao]は[a-yao]は[a-yao]は[a-yao]は[a-yao]は[a-yao]は[a-yao]は[a-yao]は[a-yao]は[a-yao]は[a-yao]は[a-yao]は[",
     "(?:таблетк[а-яё]*|капсул[а-яё]*|раствор[а-яё]*|сироп[а-яё]*|суспензи[а-яё]*|":
         "(??:タブレット[a-yao]*カ・ダイジングス[a-yao]*ダイジングス[a-yao]*ダイジングス[a-yao]*ダイジングス[a-yao]*ダイジングス[a-yao]*",
     "(?:температур[а-яё]*|temperature)\\s*[:=-]?\\s*(3[4-9]|4[0-2])(?:[\\.,](\\d))?":
@@ -5768,8 +5900,23 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "(?:тренировк[а-яё]*|пробежал[а-яё]*|бегал[а-яё]*|занимал[а-яё]*).*?(\\d{1,3})\\s*(?:мин|минут)":
         "(?:トレーニングク[ア-ヤ]* ちがう]* ちがう]* ちがう]*",
     "(?:углеводы|carbs|у)\\D{0,10}(\\d{1,3})": "(炭水化水素?:carbs?:carbs:u)",
+    "(?<![a-zа-яё])(?:в|на)\\s*\\d{1,2}(?:[:\\.]\\d{2})?(?![a-zа-яё0-9])":
+        "<![a-za-yao]) ? ? ? (a) (?a) ヽ \\ \\ \\ d{1,2} ? ? ?",
+    "(?<![a-zа-яё])(?:в|на)\\s*\\d{1,2}(?:[:\\.]\\d{2})?(?:\\s*(?:час[а-яё]*|ч))?(?![a-zа-яё0-9])":
+        "<![a-yao-yo]) ? ?a (?a*の) \\s\\d{1,2} ??:[:\\.]\\d{2} ? ?",
+    "(?<![a-zа-яё])(?:каждый день|ежедневно|по будням|по выходным|сегодня|завтра|послезавтра)(?![a-zа-яё])":
+        "<![a-zа-yao]) ((?:毎日のこと (?毎日のこと)",
+    "(?<![a-zа-яё])(?:не дай уснуть|не заснуть|не уснул)(?![a-zа-яё])":
+        "眠らせないで 眠らせないで",
+    "(?<![a-zа-яё])(?:с|и)?\\s*(?:проверкой|контролем)\\s+(?:активности|бодрствования)(?![a-zа-яё])":
+        "()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ( ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  (",
+    "(?<![a-zа-яё])(?:сегодня|только что)(?![a-zа-яё])": "<![a-z-yayo])",
+    "(?<![a-zа-яё])через\\s+\\d+\\s*(?:минут[а-яё]*|мин|час[а-яё]*|ч)(?![a-zа-яё])":
+        "<![a-z-a-yao]) を経由して (?[a-yao]*は,",
     "(\\d+(?:[,.]\\d+)?)\\s*(?:ммоль/л|мг/дл|г/л|нг/мл|мед/л|ме/л|%)":
         "(\\d+(?:[,.]\\d+)?) \\s*(?:mol/l ゙i m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m",
+    "(\\d+(?:[\\.,]\\d+)?)\\s*(мл|ml|миллилитр[а-яё]*|л|l|литр[а-яё]*|стакан[а-яё]*)(?![a-zа-яё]).*?(?:вод[а-яё]*|выпил[а-яё]*|добав[а-яё]*|запиш[а-яё]*|water)":
+        "()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ( ()  ()  (",
     "(\\d{1,3}(?:[\\.,]\\d+)?)\\s*(?:км|km)":
         "(\\d{1,3}(?:[\\.,]\\d+)?)\\s*(km?:",
     "(\\d{1,4})\\s*(?:г|g)\\b": "()  ()  ()  ()  ()  ()  ()  ()  ()  ()",
@@ -5786,6 +5933,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "(ммоль/л|мкмоль/л|мг/дл|мг/л|г/л|г/дл|мкг/л|нг/мл|пг/мл|мед/л|ме/л|ед/л|mmol/l|umol/l|µmol/l|mg/dl|mg/l|g/l|g/dl|µg/l|ug/l|ng/ml|pg/ml|iu/l|u/l|10\\^?[*x×]?\\d+/л|фл|fl|пг|pg|%)":
         "(moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll/moll",
     "). Дозировку я не изменяю.": "薬の量を変えることはできません",
+    "); используется приблизительное системное расписание.":
+        "), 系統的なスケジュールを使用する.",
     ")} · день": "日 時",
     ")}. Отложите тренировку; при резком ухудшении или опасных признаках обратитесь за неотложной помощью.":
         "訓練を延期し,急症や危険症状を起こす場合は,緊急の支援を要請してください.",
@@ -5813,7 +5962,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     ", цель": "目的",
     ". Добавил их на проверку; после подтверждения приложение создаст расписание и напоминания. Дозировки автоматически не меняются.":
         "確認後,アプリはスケジュールと思い出を書き込みます. 投与量は自動的に変更されません.",
-    ". Изменения применятся после подтверждения.": "変更は確認後適用されます.",
     ". Не используйте распознанные назначения до сверки с оригиналом.":
         "元のものと比較するまで 識別された用途を使用しないでください",
     ". Невозможные скачки координат отфильтрованы.": ". 不可能な座標はろ過されます。",
@@ -5859,6 +6007,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     ": не удалось разобрать": ": 解読できなかった",
     ": осталось": "余った",
     ": пакет короче заявленного": ": 申し出より短いパケット",
+    ": проверка бодрствования": ": 警戒をチェック",
     ": характеристика не найдена": ": 特徴が見つかりませんでした",
     "; выбран ближайший расчётный конец цикла сна.": "睡眠周期の最寄りの計算終了が選択されます.",
     "; отложено на проверку:": "; 検査に延期された:",
@@ -5872,22 +6021,23 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "[^a-zа-яё0-9]+": "[^a-z-a-yao0-9]+",
     "[a-zа-яё]*\\s*[:=-]?\\s*(\\d{1,3}(?:[\\.,]\\d+)?)\\s*(?:г|g)?":
         "[a-z-a-yao]*\\s*[:=-]?\\s*(\\d{1,3}(?:[\\.,]\\d+)?)\\s*(?:g ぐ?",
-    "\\b(?:в|на)\\s*\\d{1,2}[:\\.]\\d{2}\\b":
-        "()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()",
     "\\b(гемоглобин|ферритин|холестерин|триглицериды|креатинин|мочевина|билирубин|алт|аст|ттг|витамин\\s+[a-zа-яё0-9]+|с-?реактивный\\s+белок)\\s*[:=-]?\\s*([<>]?\\s*\\d+(?:[\\.,]\\d+)?)\\s*":
         "血球ホイホイビン・デイン・フェリチン・デイン・レステリン・デイン・トリグリグリセルイド・デイン・クレアティニン・デイン・デイン・デイン・デイン・デイン・デイン・デイン・デイン・デイン・デイン・デイン・ビタミンの+[a-z-a-yao0-9]+デイン・デイン・レアクティブ・ド・ベーлок)",
-    "\\d+(?:[\\.,]\\d+)?\\s*(?:мг|мкг|мл|ме|ед\\.)":
-        "()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()",
     "\\d+(?:[\\.,]\\d+)?\\s*(?:мкг|мг|г|мл|ед\\.?|ме)":
         "()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()",
     "\\d+(?:[\\.,]\\d+)?\\s*(?:мкг|мг|г|мл|ед\\.?|ме|iu|mcg|mg|ml)(?![a-zа-яё])":
         "()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ( ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  (",
+    "\\d+(?:[\\.,]\\d+)?\\s*(?:мл|л|литр|стакан)":
+        "()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  () )  ()  ()  ()  () )  (",
     "\\d+\\s*(?:дн(?:я|ей|ь)?|сут(?:ок|ки)?|недел[а-яё]*|месяц[а-яё]*)(?![а-яё])":
         "()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()",
+    "\\d{1,4}\\s*(?:ккал|kcal)": "()  ()  ()  ()  ()",
     "^(?:врач\\s+)?(?:мне\\s+)?(?:назначил(?:а|и)?|назначение|рецепт|принимать)\\s*[:\\-]?\\s*":
         "処方箋の指定は,処方箋の指定は,",
     "^(?:как|что|почему|зачем|когда|где|можно\\s+ли|расскажи|объясни|проанализируй|how|what|why|when|where|can\\s+i)\\b":
         "解明する方法について解明する方法について解明する方法について解明する方法について解明する方法について解明する方法について解明する方法について解明する方法について解明する方法について解明する方法について解明する方法について解明する方法について解明する方法について解明する方法について解明する方法について解明する方法について解明する方法について解明する方法について解明する方法について解明する方法について解明する方法について解明する方法について解明する方法について解明する方法について解明する方法について解明する方法について解明する方法について解明する方法について解明する方法について解明する方法について解明する方法について解明する方法について解明する方法について解明する方法について解明する方法について解明する方法について解明する方法について解明する方法について解明する方法について解明する方法について解明する方法について解明する方法について解明する方法について解明する方法について解明する方法について解明する方法",
+    "^(?:что\\s+)?(?:я\\s+)?(?:съел[а-яё]*|поел[а-яё]*|перекусил[а-яё]*)\\s+":
+        "()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  ()  () )  ()  () )  ()  ()  (",
     "^[^a-zа-яё]+": "^[^a-z-a-yao]+",
     "^\\*\\*(?:Answer|Ответ):\\*\\*\\s*": "答えが:",
     "^\\s*(?:КОМАНДА|COMMAND)\\s*:\\s*": "()  ()  ()  ()  ()  ()  ()  ()  ()",
@@ -5955,7 +6105,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "UUID характеристики записи": "レコードのUUID特性",
     "Vault был восстановлен из безопасного начального состояния.":
         "Vault は安全な初期状態から復元されています。",
-    "Vision-анализ недоступен:": "ビジョン解析は利用できません:",
     "°C · высота": "°C · 高さ",
     "· вес": "体重",
     "· визуальная оценка": "·視覚評価",
@@ -5983,9 +6132,13 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "» перед выполнением.": "実行前に",
     "», интенсивность": ",強度",
     "». Извлечённый текст:": ". 抜粋のテキスト:",
+    "». Калории и Б/Ж/У оставлены пустыми; добавьте порцию или уточните данные, когда они известны.":
+        ".カロリーとB/J/Uは空いており,分数を追加するか,分数が既知のときに詳細を表示する.",
     "». Перед продолжением рекомендуется сделать копию текущих данных.":
         "? 続行する前に、現在のデータのコピーを作成することをお勧めします。",
     "». Текст для анализа не найден.": ".解析のテキストが見つかりませんでした.",
+    "». Уведомления о приёме будут планироваться по курсу препарата.":
+        ". 薬のコースで通知が予定されます.",
     "август": "8月8日",
     "Автозапись GPS/GLONASS:": "GPS / GLONASSの自動記録:",
     "Автозапуск": "自動起動",
@@ -6009,6 +6162,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "активное движение": "活発な動き",
     "Активность": "活動内容",
     "Активность и вода": "活動と水",
+    "Активность после подъёма не подтверждена. Откройте приложение и отключите сигнал.":
+        "信号が確認されていないので 信号を消して",
     "Активность хорошая: шаги уже закрывают базовую цель дня.":
         "活動が良いのです ステップは既に日の基本目標を 締めくくくっています",
     "активные калории": "カロリー",
@@ -6067,6 +6222,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "без документа": "ペーパーレス",
     "Без жёстких ограничений: можно добавить спокойную прогулку и оценивать недельный баланс.":
         "剛性制限なし:静かな散歩を追加し、週単位の残高を評価することができます。",
+    "без контроля бодрствования": "目を覚ます状態のコントロールがない",
     "без лекарства": "ドラッグレス",
     "Без ограничений": "制限なし",
     "без ограничений": "無限に",
@@ -6142,6 +6298,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "в пределах референса": "参照内の",
     "В профиле нет координат города.": "都市座標はプロフィールに載っていない",
     "В пути, мин": "ところで、鉱山。",
+    "в расписание «": "予定書に",
     "В списке есть антикоагулянт: взаимодействие нужно проверить у врача или фармацевта.":
         "抗凝固剤は 薬剤の相互作用を 医者や薬剤師から確認する必要があります",
     "В тренировках отмечалась боль: будущую нагрузку стоит снизить.":
@@ -6174,9 +6331,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "велотренажёр": "トレーナー",
     "вероятно в руках": "恐らく手の中に",
     "вероятно используется": "恐らく使用されている",
-    "Версия 1.8.1+10 · создатель: Редин Максим Юрьевич · info@thebestmks.ru":
-        "バージョン 1.8.1+10 · 作者: レディン・マキシム・ユリエвич · info@thebestmks.ru",
-    "Версия: 1.8.1+10": "バージョン: 1.8.1+10",
+    "Версия 1.8.2+11 · создатель: Редин Максим Юрьевич · info@thebestmks.ru":
+        "バージョン 1.8.2+11 · 作者: レディン・マキシム・ユリーエвич · info@thebestmks.ru",
+    "Версия: 1.8.2+11": "バージョン: 1.8.2+11",
     "Вес": "重量。",
     "вес": "体重",
     "Вес порции и пищевая ценность являются ориентировочной оценкой класса блюда. Проверьте их перед подтверждением.":
@@ -6215,6 +6372,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Внесено голосом или командой помощника; условия измерения не указаны.":
         "音声や助手命令によって入力された;測定条件は示されていない.",
     "Внесено командой помощника.": "副部署が提起した",
+    "Внесено помощником без количества и нутриентов; значения не выдумывались.":
+        "補佐者が数値や栄養素をなくして 導入した. 値が発明されなかった.",
     "внесённая калорийность заметно выше основного обмена, но недельный баланс и активность важнее одного дня.":
         "摂取カロリー量は 食事の量よりも大きく 週間のバランスと活動が 1日より重要です",
     "внесённая калорийность низкая относительно основного обмена; возможно, дневник заполнен не полностью.":
@@ -6279,6 +6438,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "вт": "ボルト",
     "Вторник": "毎週火曜日",
     "вторник": "星期二",
+    "Вчера ·": "昨日は",
     "вчера уже была тяжёлая тренировка": "昨日は厳しい練習でした。",
     "Вы": "お問い合わせ",
     "Выберите вариант": "オプションを選択します",
@@ -6461,6 +6621,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Для чего применяется": "適用される目的",
     "Дневник питания, БЖУ, рецепты и ручное подтверждение фото":
         "栄養日記、BJU、レシピおよび手動確認の写真",
+    "Дневник по датам": "日記",
     "Дневник самочувствия без диагнозов и назначений": "診断や任命なしで健康の日記",
     "Дневник сна": "睡眠日記",
     "Дневники и ручной ввод продолжают работать. Включить локальный анализ можно в настройках.":
@@ -6476,6 +6637,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "До ориентира": "ランドマークへ",
     "добав": "追加",
     "Добавил": "追加",
+    "Добавил время": "時間を増やした",
     "Добавить": "追加する",
     "Добавить в дневник": "日記に追加",
     "Добавить врача или клинику": "医者か医院を加えて下さい",
@@ -6619,6 +6781,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Завершить": "完了。",
     "Завершить и сохранить": "完全で維持",
     "зависит от пола и возраста": "性別・年齢に応じて",
+    "завтра": "明日",
     "завтрак": "朝食",
     "Загружаем локальный сейф здоровья": "地域の健康を安全にダウンロード",
     "Загруженный GGUF повреждён.": "負荷されたGGUFは損傷した",
@@ -6689,6 +6852,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Запрашиваем разрешения и ищем устройства...": "弊社では、お客様のご了解をお願いしております。",
     "Запрещено системой; откройте системные настройки":
         "システムで禁止されています.システム設定を開きます.",
+    "Запрос обрабатывается в фоне": "フォントで処理される",
     "Запрос пользователя:": "ユーザーからの質問",
     "Запросить разрешение повторно": "許可を再申請する",
     "Запросить разрешения и синхронизировать": "リクエスト権限と同期",
@@ -6726,9 +6890,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "из-за холода выбран домашний вариант с более длинной разминкой":
         "寒いので,より長い消し式を用意した家庭用作を選択しました",
     "избегать задержки дыхания": "キャンセル",
-    "Извлечённый текст:": "取られたテキスト:",
     "Измените запрос или добавьте тег в карточку документа.":
         "ドキュメントカードにタグを追加またはリクエストする。",
+    "Изменить": "変更する",
     "Изменить симптом": "症状を変更する",
     "Изменить сон": "眠りを変える",
     "измерения не найдены": "測定値が見つかりませんでした",
@@ -6851,6 +7015,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Ккал": "ログイン",
     "ккал": "ログイン",
     "ккал · Б/Ж/У": "kcal · B/J/U",
+    "ккал · расход": "経費",
+    "ккал · шаги": "歩行",
     "Ккал еды": "カロリー食品",
     "ккал за сутки": "カロリー",
     "ккал, активность": "運動",
@@ -6903,6 +7069,10 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Контекст дома и работы": "家と仕事の文脈",
     "Контекст телефона": "電話の文脈",
     "Контекст телефона:": "電話の文脈:",
+    "контролем активности": "活動制御",
+    "контроль активности": "活動制御",
+    "Контроль бодрствования": "警戒制御",
+    "контроль бодрствования": "警戒制御",
     "контроль лекарств": "薬用薬",
     "Координаты": "コーディネーター",
     "Координаты используются только на устройстве для определения контекста.":
@@ -6929,7 +7099,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Курс:": "コース:",
     "Күнтізбе": "ログイン",
     "л": "ログイン",
-    "л · калории": "kカロリー",
+    "л · питание": "飲食",
+    "л воды.": "水に",
     "л, шаги": "L、ステップ",
     "л.": "л.",
     "л. Пейте небольшими порциями, если врач не ограничил жидкость.":
@@ -7018,6 +7189,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "мигрень": "ログイン",
     "Микрофон и голосовой ввод": "マイクロフォンと音声入力",
     "мили": "マイル",
+    "миллилитр": "1ミリリットル",
     "мин": "ログイン",
     "мин ·": "ログイン",
     "мин · перенос доступен": "利用できる鉱山の転送",
@@ -7074,9 +7246,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "肉 |魚 |ミルク |ミルク |チーズ |チーズ |チキン |牛肉 |魚 |エッグ |ミルク |チーズ",
     "На весь экран": "画面全体に",
     "на ночь": "夜に",
-    "На проверку добавлено записей:": "チェックに記事が追加されました",
     "на работе": "職場での",
     "На ручную проверку добавлено показателей:": "手動チェックに以下の指標が追加されました",
+    "на сегодня": "今日まで",
     "на сегодня запланировано:": "本日,次の予定があります.",
     "набор силы": "パワー",
     "нагруз": "ログイン",
@@ -7168,8 +7340,10 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "нг/мл": "ng/mlの",
     "не выбрано": "選択しない",
     "не выбраны": "選択しない",
+    "не дай уснуть": "眠れないように",
     "не задана": "指定されていない",
     "не задано": "指定されていない",
+    "не заснуть": "眠れない",
     "Не извлечено:": "回復しない:",
     "не компенсируйте еду голоданием; выберите спокойную прогулку и вернитесь к обычному плану.":
         "食事の代償として 飢えを補うのではなく ゆっくりとした散歩を選び 普通の生活に戻ってください",
@@ -7219,6 +7393,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "не указано в контексте. В конце укажи уверенность: высокая, средняя или низкая.":
         "背景に示されていないので 結論に自信を表示してください 高度か中度か低度か",
     "Не указаны": "指定されていない",
+    "не уснул": "眠れない",
     "Не установлена; доступен быстрый режим и установка в разделе «Помощник».":
         "インストールされていません. 速度のモードとインストールは 助手で利用できます.",
     "Не хватает данных:": "データは不足しています",
@@ -7304,7 +7479,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Обновить контекст": "文脈を更新する",
     "Обновить результаты поиска": "検索結果の更新",
     "Обновлено устройство:": "更新された装置:",
-    "Обрабатываю локально...": "地元で処理する",
     "обсудите с врачом:": "医者に相談してください",
     "обсудить": "ディスカッション",
     "Обсудить план с помощником": "計画について相談",
@@ -7327,6 +7501,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Ограничения, реабилитация, врач, документы": "制限、リハビリテーション、医師、書類",
     "Ограничения:": "制限:",
     "ограничить бег": "ダウン",
+    "один раз": "ひとつだけ",
     "один сигнал": "信号が1つ",
     "одыш": "通気性",
     "одышка": "通気性",
@@ -7411,7 +7586,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Отмечено сегодня": "本日のお祝い",
     "отмечено сегодня": "お知らせ",
     "Отправить": "お問い合わせ",
-    "Отправлено изображение:": "画像が送信されました",
     "Отпуск": "アクセス",
     "отпуск": "ふりがな",
     "Отпуск не запланирован": "定休日なし",
@@ -7472,6 +7646,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "перенесённая болезнь": "病気",
     "переохлаждение": "低体温",
     "Пересадок": "トランスプラント",
+    "Период контроля, мин": "監視期間,ミンス",
     "Периодически проверять локальные напоминания и расписание без отправки данных в сеть":
         "ネットワークにデータを送らないうちに,ローカル・リモートやスケジュールを定期的にチェックする",
     "Персональная проверка": "個人検定",
@@ -7517,9 +7692,11 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Пн": "ログイン",
     "пн": "ログイン",
     "пн, вт, ср, чт, пт": ",,,,,,,,,,,,,,,,,,,,,,,,,,,,",
+    "по будням": "週ごとに",
     "по внесённым данным допустима обычная плановая нагрузка с контролем самочувствия.":
         "入力されたデータによると,健康管理の通常の計画的な負担が許容されます.",
     "По внесённым приёмам пищи:": "食品の入口は:",
+    "по выходным": "週末",
     "по геолокации": "ジオロケーション",
     "по дням недели": "ウィークリー",
     "По какое число": "数字とは?",
@@ -7538,12 +7715,18 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Побочные эффекты и реакции": "副作用と反応",
     "Побочные эффекты:": "副作用:",
     "Повседневная активность": "日常活動",
+    "Повтор": "繰り返す",
     "повторений": "反復",
     "Повторите PIN": "PINを繰り返します。",
     "Повторно запрашивать PIN или биометрию для чувствительных документов":
         "機密文書のための再要求PINか生物測定",
+    "Повторять сигнал при отсутствии движения после подъёма.":
+        "信号を繰り返す 昇降後,動きがない場合.",
     "Повторяющиеся симптомы:": "再発症状:",
     "Повышает масштаб интерфейса": "インターフェイスのスケールを増加させます",
+    "Погода временно недоступна": "天気は一時的に利用できません",
+    "Погода временно недоступна. Климатический профиль продолжает работать локально.":
+        "気候は局所的に動いています",
     "Погода и климат": "天候と気候",
     "Погода недоступна": "天気が悪くない",
     "Погода подходит для обычной нагрузки с учётом самочувствия.":
@@ -7660,6 +7843,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "последние симптомы:": "症状は:",
     "последняя запись сна:": "最後の睡眠記録:",
     "Последняя запись:": "最後の記録:",
+    "послезавтра": "明日後",
     "постав": "設定",
     "Постепенное пробуждение": "卒業式目覚め",
     "потер": "スウェット",
@@ -7671,6 +7855,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Предупреждение": "インフォメーション",
     "Предупреждения": "警告",
     "Препарат": "薬について",
+    "препарат": "薬",
     "препаратов, принято сегодня": "薬剤は今日",
     "Препараты": "医薬品",
     "Препараты не распознаны. Проверьте качество снимка или добавьте лекарство вручную.":
@@ -7685,7 +7870,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Приготовление": "導入事例",
     "прием": "接待",
     "Прикреплённый файл не найден": "添付ファイルが見つかりませんでした",
-    "Приложен файл:": "ファイルが付加された",
     "приложение открыто": "アプリケーションが開いている",
     "Приложение работает без браслета: вес, сон, шаги, еда и тренировки можно вводить вручную.":
         "アプリはブレスレットなしで動作します。重量、睡眠、ステップ、食品、ワークアウトは手動で入力できます。",
@@ -7715,10 +7899,12 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Проверить симптомы": "症状をチェックする",
     "Проверить снова": "確認する",
     "Проверить уведомление": "通知を確認する",
+    "проверка активности": "活動確認",
     "Проверка назначения": "目的の確認",
     "Проверка недоступна:": "確認は行えない:",
     "проверка разрешений": "許可する",
     "Проверка распознавания": "認証チェック",
+    "проверкой активности": "活動確認",
     "Проверь лекарства и остатки": "薬と残留物をチェック",
     "Проверьте аллерген в дневнике": "チェックする日記",
     "Проверьте белок и полноту дневника": "タンパク質と日記をチェック",
@@ -7740,6 +7926,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "食事の節食をチェックし 専門家の助けなしに 食事の節食を急に減らさないでください",
     "Проверяем доступность...": "空室状況を確認する",
     "Проверяем локальную модель...": "ローカルモデルをチェックする",
+    "проверяй активность": "活動を確認",
+    "проверяй бодрствование": "目を覚ます状態をチェック",
+    "Проверять через, мин": "通過して確認する",
     "прогулки": "アクセス",
     "Продолжить": "お問い合わせ",
     "Продолжить тренировку": "継続訓練",
@@ -7832,6 +8021,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Расстояние, км": "距離、km",
     "раствор": "溶液",
     "растяж": "伸び",
+    "расход": "費用",
     "Расчёт по данным профиля и сегодняшним отметкам.":
         "プロファイルデータと今日のマークによると計算。",
     "расчётная готовность": "計算準備",
@@ -7967,9 +8157,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Сегодня важнее восстановление. Не тренируйтесь через боль, температуру или резкое ухудшение самочувствия.":
         "痛みや熱気や 気分が悪化する事で 運動をしないようにしましょう",
     "Сегодня дежурство": "今日は,番番",
+    "Сегодня записано": "今日も記録",
     "сегодня отмечен тревожный симптом или высокая интенсивность жалобы.":
         "今日 懸念症状や 高い 濃度の苦情が 発覚しました",
-    "сегодня.": "今夜",
     "Сегодня: сон": "今日:夢",
     "Сейчас активен режим поездки: при ночной дороге, смене часового пояса или недосыпе нагрузка автоматически считается восстановительной.":
         "今、旅行モードはアクティブです:夜間運転、タイムゾーンの変更、睡眠不足、負荷は自動的に回復と考えられます。",
@@ -7977,11 +8167,14 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "сентябрь": "9月9日",
     "Сервер модели вернул код": "モデルサーバーがコードを返しました",
     "Сервис": "サービス",
+    "Сервис погоды временно вернул ошибку. Повторная попытка будет выполнена автоматически.":
+        "異常気象局は一時的にエラーを返しました 再び実行します",
+    "Сервис погоды не ответил вовремя. Климатический профиль продолжает работать локально.":
+        "天気局は対応していない 気候プロフィールが 現地で動いています",
     "Сетевое видео отключено офлайн-режимом": "オンライン動画がオフラインでオフライン",
     "Сетевое изображение скрыто": "ネットワーク画像は隠されています",
     "Сетевые данные отключены режимом «Полностью офлайн». Климатический профиль продолжает работать.":
         "ネットワークデータは「完全にオフライン」モードで無効化されます。 気候変動プロファイルは引き続き機能します。",
-    "Сжимаю и анализирую локально...": "検定を局所的に 処理する",
     "сил": "パワー",
     "силовая": "パワー",
     "Силовая тренировка по инвентарю": "在庫の強さの訓練",
@@ -8139,6 +8332,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Срочно:": "緊急:",
     "срочных пунктов; начните с них.": "緊急事態を起こす 緊急事態を起こす",
     "стабильно": "安定して",
+    "стакан": "グラス",
     "Стандартные GATT-сервисы читаются автоматически. Для закрытых или редких устройств добавьте UUID вручную.":
         "標準的なGATTサービスは自動的に読みます。 クローズまたはレアなデバイスの場合、UUIDを手動で追加します。",
     "стандартный": "標準的な",
@@ -8233,6 +8427,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Точность": "精密加工",
     "точность GPS": "GPSの精度",
     "Точные будильники": "精密な目覚まし器",
+    "Точные будильники недоступны (": "精密な目覚まし装置は利用できない (",
     "тошнота": "ナセア",
     "травма": "トラウマ",
     "Травмы в течение жизни": "生命中傷",
@@ -8356,6 +8551,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Файл анализа:": "分析ファイル:",
     "Файл в защищённом хранилище:": "保護されたファイル:",
     "Файл в медицинском сейфе не найден": "医療セーフのファイルが見つかりませんでした",
+    "Файл вложения не найден": "挿入ファイルが見つかりませんでした",
     "Файл не содержит резервную копию приложения.":
         "ファイルがアプリケーションのバックアップコピーを含んでいません。",
     "Файл/импорт": "ファイル/インポート",
@@ -8372,6 +8568,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "фитнес-тренажёр FTMS": "FTMSのフィットネス・トレーナー",
     "Фокус": "フォーカス",
     "Фокусы тренировок": "トレーニングトリック",
+    "Фоновая обработка": "背景処理",
     "Фоновая работа": "背景の作品",
     "Фоновый анализ": "背景分析",
     "Форма": "フォーム",
@@ -8504,17 +8701,18 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "(*?(?:\\s?:рэференс*таннорма) [[:=-]?\\s*([<>]?\\s*\\d+(?:[\\.,]\\d+)?(?:\\s*[-]\\s*\\d+(?:[\\.,]\\d+)?)?",
     "(?:\\s+(?:референс|норма|reference)?\\s*([<>]?\\s*\\d+(?:[,.]\\d+)?(?:\\s*[-–]\\s*\\d+(?:[,.]\\d+)?)?))?":
         "(?:\\s+(?:рэферэнс джыннорма дажыні?\\s([<>?s*\\d+(?:[,.]\\d+)?(?:\\s*[-]\\s*\\d+(?:[,.]\\d+)?)?",
+    "(?:^|\\s)(?:в|на)\\s+([01]?\\d|2[0-3])(?:\\s*(?:час[а-яё]*|ч))?(?=\\s|":
+        "(?: вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы - вы",
+    "(?:^|\\s)через\\s+(\\d{1,3})\\s*(минут[а-яё]*|мин|час[а-яё]*|ч)(?=\\s|":
+        "(?: неўзабаве) (забаве) (забаве) (забаве) (забаве) (забаве) (забаве) (забаве) (забаве) (забаве) (забаве) (забаве) (забаве) (забаве) (забаве) (забаве) (забаве) (забаве) (забаве) (забаве) (забаве) (забаве) (забаве) (забаве) (забаве) (забаве) (забаве) (забаве) (забаве) (забаве) (забаве) (забаве) (забаве) (забаве) (забаве) (забаве) (забаве) (забаве) (забаве) (забаве) (забаве) (забаве) (забаве) (забаве) (з) (забаве) (з) (забаве) (з) (з) (забаве) (з) (з",
     "(?:анализ|показатель|результат(?:\\s+анализа)?)\\s+([a-zа-яё][a-zа-яё0-9 ()+._-]{1,60}?)\\s*[:=-]?\\s*([<>]?\\s*\\d+(?:[\\.,]\\d+)?)\\s*":
         "(аналіз маляўнічапаказчык?:рэзультат?:?:час \\\\s+аналіз)?)\\s+([a-zа-яё][a-zа-яё0-9 () ++._-]{1,60}?)\\s*[:=-]?\\s*([<>]\\s*\\d+(?:[\\.,]\\d+)?)\\s*",
     "(?:белок|protein|протеин|б)\\D{0,10}(\\d{1,3})": "?:белок небяспекі (б)",
-    "(?:будильник|разбуди|подъ[её]м).*?(?:в|на)?\\s*((?:[01]?\\d|2[0-3])[:\\.]\\d{2})":
-        "?:бутарнік не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбудзіць не разбу",
+    "(?:будильник|разбуди|подъ[её]м)": "?:буткульнік сказатьразбуди (падъем)",
     "(?:вес|масса|weight)\\s*(?:сегодня|now)?\\s*[:=-]?\\s*(\\d{2,3}(?:[\\.,]\\d)?)\\s*(?:кг|kg)?\\b":
         "(?:вес роўнага вагі) \\s*(?:сегодня новые)?\\s*[:=-]?\\s*(\\d{2,3}(?:[\\.,]\\d)?) \\s*(?:кг роўных кг)?\\b",
-    "(?:выпил[а-яё]*|добав[а-яё]*|запиш[а-яё]*|water).*?(\\d+(?:[\\.,]\\d+)?)\\s*(мл|ml|л|l)(?![a-zа-яё])":
-        "?:піў[а-яя]*дыдыбаў[а-яя] (*ьізапіш[а-яя]*дыбаўтар).*?(\\d+(?:[\\.,]\\d+)?)\\s*(млml з'яўляецца маляўнічымі самымі самымі самымі самымі самымі самымі самымі самымі самымі самымі самымі самымі самымі самымі самымі самымі самымі самымі самымі самымі самымі самымі самымі самымі самымі самымі самымі самымі самымі самымі самымі самымі самымі самымі самымі самымі самымі самымі самымі самымі самымі самымі самымі самымі самымі самымі самымі самымі самымі самымі самымі самымі самымі самымі самымі самымі самымі самымі самымі самымі самымі са",
-    "(?:гемоглоб|глюкоз|холестерин|ферритин|референс|ммоль/л|мг/дл|анализ крови)":
-        "?: (гемоглоб дуглюкоз дугхолестерин дугфермритин дугреференс дуг дуг/л дугмг/дл дугэаналіз)",
+    "(?:выпил[а-яё]*|добав[а-яё]*|запиш[а-яё]*|укаж[а-яё]*|вод[а-яё]*|water).*?(\\d+(?:[\\.,]\\d+)?)\\s*(мл|ml|миллилитр[а-яё]*|л|l|литр[а-яё]*|стакан[а-яё]*)(?![a-zа-яё])":
+        "?::піў[а-яя] у*добав[а-яя] (а-яяя* у*уууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууу",
     "(?:глюкоз[а-яё]*|сахар[а-яё]*\\s+кров[а-яё]*|glucose)\\s*[:=-]?\\s*(\\d{1,3}(?:[\\.,]\\d+)?)":
         "(?:глюкоз[а-яя]* ужыўсахар[а-я]*\\s+крова[а-яя]* ужыўglucose)\\s*[:=-]?\\s*(\\d{1,3}(?:[\\.,]\\d+)?)",
     "(?:давлен[а-яё]*|pressure)\\s*[:=-]?\\s*(\\d{2,3})\\s*[/\\\\]\\s*(\\d{2,3})(?:\\s+(?:пульс|pulse)\\s*(\\d{2,3}))?":
@@ -8534,16 +8732,13 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "(?:калорыі недахопаў)\\D{0,12}(\\d{2,4})",
     "(?:качеств[а-яё]*|оценк[а-яё]*)\\s*(?:сна)?\\s*[:=-]?\\s*([1-5])":
         "(?:каштоўнасцяў[а-яя]* датыоценк[а-яя]*)\\s*(?:сна)?\\s*[:=-]?\\s*([1-5])",
-    "(?:ккал|калори|белк|жир|углевод|состав|пищевая ценность)":
-        "?:ккал з'явы (каляры з'явы з'явы з'явы з'явы з'явы з'явы з'явы)",
     "(?:клетчатка|пищевые волокна|fibre|fiber)\\D{0,12}(\\d{1,3}(?:[,.]\\d+)?)":
         "(?:клеткачка з лічыстых валокнаў) дыяфрагмы з лічыстых валакнаў?",
     "(?:масса|вес|порция|net weight|serving)\\D{0,12}(\\d{1,4})\\s*(?:г|g)":
         "?:масса і вес (порцыя і весу і весу)",
     "(?:на|per)\\s*100\\s*(?:г|g)":
         "(на?: на сцяжынку)\\*100\\s*s?:г сцяжынку)",
-    "(?:напомни|напоминание|remind).*?(\\d{1,2})[:\\.](\\d{2})":
-        "(?:памінае тыяяпамінае тыяпаміна).*?",
+    "(?:напомни|напоминание|remind)": "(?:памінаў з душыпамінаў з душы)",
     "(?:по\\s+[^.;,]{0,25}\\s+)?\\d+\\s*раз(?:а|у|)\\s+(?:в|за)\\s+(?:день|сутки)":
         "?:па\\s+[^.;,]{0,25}\\s+)?\\d+\\s*раз(?:ааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааа",
     "(?:поставь|создай|заведи|добавь|разбуди(?:\\s+меня)?|будильник|подъ[её]м)":
@@ -8552,6 +8747,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "?:рэферэнс (рэферэнс)\\D{0,12}([\\d,.]+ ?[-] ?[\\d,.]+)",
     "(?:сахара|сахар|sugars?|из них сахара)\\D{0,12}(\\d{1,3}(?:[,.]\\d+)?)":
         "?:сахар баян (сахар баянсugars) з іх з'яўляецца цукар D{0,12}(\\d{1,3}?:[,.]\\d+)?)",
+    "(?:сколько|покажи|какой|какое|текущ[а-яё]*|итого)":
+        "(?: як шмат значыць паказаць, што ў вас ёсць, што ў вас ёсць, што ў вас ёсць, што ў вас ёсць, што ў вас ёсць, што ў вас ёсць, што ў вас ёсць, што ў вас ёсць, што ў вас ёсць, што ў вас ёсць, што ў вас ёсць, што ў вас ёсць, што ў вас ёсць, што ў вас ёсць, што ў вас ёсць, што ў вас ёсць, што ў вас ёсць, што ў вас ёсць, што ў вас ёсць, што ў вас ёсць, што ў вас ёсць, што ў вас ёсць, што ў вас ёсць, што ў вас ёсць, што ў вас ёсць, што ў вас ёсць, што ў вас ёсць, што ў вас ёсць, што ў вас ёсць, што ў вас ёсць, што ў вас ёсць, што ў вас ёсць, і вы ёсць, што ў вас ёсць, і вы ёсць, што ў вас ёсць, што ёсць, і вы ёсць, і вы ёсць, што ў вас ёсць, і вы ёсць, і вы ёсць, што ў вас ёсць, і вы ёсць, і вы ёсць, і вы можаце ў вас ёсць, і вы можаце зрабіць, і вы можаце гэта.",
     "(?:соль|salt)\\D{0,10}(\\d{1,3}(?:[,.]\\d+)?)":
         "(?:соль сказать)\\D{0,10}(\\d{1,3}(?:[,.]\\d+)?)",
     "(?:спал[а-яё]*|сон|sleep).*?(\\d{1,2}(?:[\\.,]\\d+)?)\\s*(?:ч(?:ас(?:а|ов)?)?|hours?|h)(?![a-zа-яё])":
@@ -8560,8 +8757,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "(?:спал[а-яё]*) дзьвеснуць слёп).*?(\\d{1,2}[:\\.](\\d{2})\\s*(?:до слёз[-])\\s*(\\d{1,2})[:\\.]\\d{2})",
     "(?:съел[а-яё]*|выпил[а-яё]*|запиш[а-яё]*\\s+(?:еду|при[её]м пищи)|добав[а-яё]*\\s+(?:еду|блюдо))\\s+(.+?)\\s+(\\d{1,4})\\s*(?:ккал|kcal)(?![a-zа-яё])":
         "?:еў[а-яяе]*ы выпіў[а-яе] (*ызапіш[ааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааа",
-    "(?:таблет|капсул|принимать|назначен|рецепт|дозиров)":
-        "(таблетка для прыёму: прымаць прызначаны рэцэпт для прыёму дазораў)",
+    "(?:съел[а-яё]*|поел[а-яё]*|перекусил[а-яё]*|выпил[а-яё]*|добав[а-яё]*\\s+(?:еду|блюдо)|запиш[а-яё]*\\s+(?:что\\s+)?(?:я\\s+)?(?:съел[а-яё]*|поел[а-яё]*))\\s+(.+)":
+        "Еў[а-яё]* Дыяпаэль[а-яё] Дыяпаэль[а-яё] Дыяпаэль[а-яё]:Dіяпаэль[а-яё] Дадатак[а-яё]*Дыяпаэль[а-яё]Дыяпаэль[а-яё]Дыяпаэль[а-яё]Дыяпаэль[а-яё]Дыяпаэль[а-яё]Дыяпаэль[а-яё]Дыяпаэль[а-яё]Дыяпаэль[а-яё]Дыяпаэль[а-яё]Дыяпаэль[а-яё]Дыяпаэль[а-яё]Дыяпаэль[а-яё]Дыяпаэль[а-яё]Дыяпаэль[а-я-я-я-я]Дыяпаэль[а-я-я-я-я-я-",
     "(?:таблетк[а-яё]*|капсул[а-яё]*|раствор[а-яё]*|сироп[а-яё]*|суспензи[а-яё]*|":
         "(?:таблетк[а-яя]*ка запіс[а-яя]*запіс[а-яя]*запіс[а-я]*запіс[а-я]*запіс[а-я]*запіс[а-я]запіс*запіс*запіс*запіс*запіс*запіс*запіс*запіс*запіс*запіс*запіс*запіс*запіс*запіс*запіс*запіс*запіс*запіс*запіс*запіс*запіс*запіс*запіс*запіс*запіс*запіс*запіс*запіс*запіс*запіс*запіс*запіс*запіс*запіс*запіс*запіс*запіс*запіс*запіс*запіс*запіс*запіс*запіс*запіс*запіс*запіс*запі",
     "(?:температур[а-яё]*|temperature)\\s*[:=-]?\\s*(3[4-9]|4[0-2])(?:[\\.,](\\d))?":
@@ -8570,8 +8767,23 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "(?:трэнёрк[а-яя]*бачаўся[а-я]*бег[а-я]*бачаўся[а-я]*заняў[а-я]*).*?\\d{1,3})\\s*(?:мін да да дакумента)",
     "(?:углеводы|carbs|у)\\D{0,10}(\\d{1,3})":
         "(углеводы?:carbs?:у) \\D{0, бляск}\\d{1,3})",
+    "(?<![a-zа-яё])(?:в|на)\\s*\\d{1,2}(?:[:\\.]\\d{2})?(?![a-zа-яё0-9])":
+        "<![a-z-яё]) ??: у (?а*аяна) \\s\\d{1,2}(?:[:\\.]\\d{2})?(?![a-zа-яё0-9])",
+    "(?<![a-zа-яё])(?:в|на)\\s*\\d{1,2}(?:[:\\.]\\d{2})?(?:\\s*(?:час[а-яё]*|ч))?(?![a-zа-яё0-9])":
+        "<![a-яё]) ? у?:а (?а) \\с\\d{1,2} ??:[:\\.]\\d{2} ? ? ??:\\s*(?:часы[а-яё] *цацач)) ?????[a-а-яё0-9])",
+    "(?<![a-zа-яё])(?:каждый день|ежедневно|по будням|по выходным|сегодня|завтра|послезавтра)(?![a-zа-яё])":
+        "<![a-zа-яё])(?:кадзённы дзень даняэ (?дзённы даняэны даняэны даняэны даняэны даняэны даняэны даняэны даняэны даняэны даняэны даняэны даняэны даняэны даняэны даняэны даняэнаўтра даняэнапослезазаўтра) ((?![a-zа-яё])",
+    "(?<![a-zа-яё])(?:не дай уснуть|не заснуть|не уснул)(?![a-zа-яё])":
+        "<![a-zа-яё]) ??:не дай спаць у тыдзень не спаць (?",
+    "(?<![a-zа-яё])(?:с|и)?\\s*(?:проверкой|контролем)\\s+(?:активности|бодрствования)(?![a-zа-яё])":
+        "<![a-z-яё]) ??:а (?а з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з з",
+    "(?<![a-zа-яё])(?:сегодня|только что)(?![a-zа-яё])": "<![a-z-яё])",
+    "(?<![a-zа-яё])через\\s+\\d+\\s*(?:минут[а-яё]*|мин|час[а-яё]*|ч)(?![a-zа-яё])":
+        "<![a-zа-яё]) праз\\s+\\d+\\s*(?:мінуты[а-яё] (?*узялі ў сябе ўдзел[а-яё]*узялі ўдзел) ????[a-zа-яё])",
     "(\\d+(?:[,.]\\d+)?)\\s*(?:ммоль/л|мг/дл|г/л|нг/мл|мед/л|ме/л|%)":
         "(\\d+(?:[,.]\\d+)?)\\s*(?:мол/л з'яўмг/дл з'яўг/л з'яўг/мл з'яўг/л з'яўме/л з'яўг/л з'яўг%)",
+    "(\\d+(?:[\\.,]\\d+)?)\\s*(мл|ml|миллилитр[а-яё]*|л|l|литр[а-яё]*|стакан[а-яё]*)(?![a-zа-яё]).*?(?:вод[а-яё]*|выпил[а-яё]*|добав[а-яё]*|запиш[а-яё]*|water)":
+        "(\\d+(?:\\.,]\\d+)?)\\s*(мл ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў ужыў у",
     "(\\d{1,3}(?:[\\.,]\\d+)?)\\s*(?:км|km)":
         "(\\d{1,3}(?:[\\.,]\\d+)?)\\s*(км?:",
     "(\\d{1,4})\\s*(?:г|g)\\b": "(\\d{1,4}\\s*(?:г) з'яўляецца",
@@ -8588,6 +8800,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "(ммоль/л|мкмоль/л|мг/дл|мг/л|г/л|г/дл|мкг/л|нг/мл|пг/мл|мед/л|ме/л|ед/л|mmol/l|umol/l|µmol/l|mg/dl|mg/l|g/l|g/dl|µg/l|ug/l|ng/ml|pg/ml|iu/l|u/l|10\\^?[*x×]?\\d+/л|фл|fl|пг|pg|%)":
         "(ммл/лммммммл/лмммммл/лмммл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/л/лмл/лмл/лмл/л",
     "). Дозировку я не изменяю.": "Я не змяняю дозу.",
+    "); используется приблизительное системное расписание.":
+        "); выкарыстоўваецца прыблізная сістэмная расписание.",
     ")} · день": ")} · дзень",
     ")}. Отложите тренировку; при резком ухудшении или опасных признаках обратитесь за неотложной помощью.":
         ")}. Адкладзіце трэніроўку; пры рэзкім пагаршэнні або небяспечных прыкметах звярніцеся да неадкладнага дапамогі.",
@@ -8616,8 +8830,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     ", цель": ", мэта",
     ". Добавил их на проверку; после подтверждения приложение создаст расписание и напоминания. Дозировки автоматически не меняются.":
         "Дадаў іх на праверку; пасля пацверджання прыкладанне стварае расклад і напамін. Дазаванні аўтаматычна не мяняюцца.",
-    ". Изменения применятся после подтверждения.":
-        "Змены будуць прымяняцца пасля пацверджання.",
     ". Не используйте распознанные назначения до сверки с оригиналом.":
         "Не выкарыстоўвайце прызнаныя прызначэння да параўнання з арыгіналам.",
     ". Невозможные скачки координат отфильтрованы.":
@@ -8667,6 +8879,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     ": не удалось разобрать": ": не атрымалася разабрацца",
     ": осталось": ": засталося",
     ": пакет короче заявленного": ": пакет кароткі заяўленага",
+    ": проверка бодрствования": ": праверка практычнасці",
     ": характеристика не найдена": ": характарыстыка не знайшлі",
     "; выбран ближайший расчётный конец цикла сна.":
         "; выбраны бліжэйшы разліковы канец цыкла сну.",
@@ -8684,22 +8897,23 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "[^a-zа-яё0-9]+": "[^a-z-a-яё0-9]+",
     "[a-zа-яё]*\\s*[:=-]?\\s*(\\d{1,3}(?:[\\.,]\\d+)?)\\s*(?:г|g)?":
         "[a-zа-яё]*\\s*[:=-]?\\s*(\\d{1,3}(?:[\\.,]\\d+)?)\\s*(?:г дасягнуць?",
-    "\\b(?:в|на)\\s*\\d{1,2}[:\\.]\\d{2}\\b":
-        "\\b(?:у сцяне)\\s*\\d{1,2}[:\\.]\\d{2}\\b",
     "\\b(гемоглобин|ферритин|холестерин|триглицериды|креатинин|мочевина|билирубин|алт|аст|ттг|витамин\\s+[a-zа-яё0-9]+|с-?реактивный\\s+белок)\\s*[:=-]?\\s*([<>]?\\s*\\d+(?:[\\.,]\\d+)?)\\s*":
         "б(гемоглобин зачапіць ад феррыцінаў зачапіць ад трыгліцерыдаў зачапіць ад зачапіць ад зачапіць ад зачапіць ад зачапіць ад зачапіць ад зачапіць ад зачапіць ад зачапіць ад зачапіць ад зачапіць ад зачапіць ад зачапіць ад зачапіць ад зачапіць ад зачапіць ад зачапіць ад зачапіць ад зачапіць ад зачапіць ад зачапіць ад зачапіць ад зачапіць ад зачапіць ад зачапіць ад зачапіць ад зачапіць ад зачапіць ад зачапіць ад зачапіць ад зачапіць ад зачапіць ад зачапіць ад зачапіць ад зачапіць ад зачапіць ад зачапіць ад зачапіць ад зачапіць ад зачапіць ад зачапіць ад зачапіць ад зачапіць ад зачапіць ад зачапіць ад зачапіць",
-    "\\d+(?:[\\.,]\\d+)?\\s*(?:мг|мкг|мл|ме|ед\\.)":
-        "\\d+(?:[\\.,]\\d+?\\s*(?:мг з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з",
     "\\d+(?:[\\.,]\\d+)?\\s*(?:мкг|мг|г|мл|ед\\.?|ме)":
         "\\d+(?:[\\]\\d+)? ? ?\\s\\s?:мг., з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'яўляецца з'",
     "\\d+(?:[\\.,]\\d+)?\\s*(?:мкг|мг|г|мл|ед\\.?|ме|iu|mcg|mg|ml)(?![a-zа-яё])":
         "? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ?",
+    "\\d+(?:[\\.,]\\d+)?\\s*(?:мл|л|литр|стакан)":
+        "\\d+(?:[\\]\\d+)? с*(?:мстал\\кан) з'яўляецца літр з'яўляецца",
     "\\d+\\s*(?:дн(?:я|ей|ь)?|сут(?:ок|ки)?|недел[а-яё]*|месяц[а-яё]*)(?![а-яё])":
         "\\d+\\s\\dn?:яюць з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца з'яўляюцца",
+    "\\d{1,4}\\s*(?:ккал|kcal)": "\\d{1,4}\\s*(?:ккалк",
     "^(?:врач\\s+)?(?:мне\\s+)?(?:назначил(?:а|и)?|назначение|рецепт|принимать)\\s*[:\\-]?\\s*":
         "↑ \"рач\"? ? ? ?мне? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ?",
     "^(?:как|что|почему|зачем|когда|где|можно\\s+ли|расскажи|объясни|проанализируй|how|what|why|when|where|can\\s+i)\\b":
         "↑(?:як даведацца, што даведаўся, чаму даведаўся, калі даведаўся, дзе даведаўся, калі даведаўся, што даведаўся, калі даведаўся, як даведаўся, што даведаўся, калі даведаўся, дзе даведаўся, калі даведаўся, дзе даведаўся, дзе даведаўся, што даведаўся, калі даведаўся, дзе даведаўся, дзе даведаўся, дзе даведаўся, дзе даведаўся, што даведаўся, калі даведаўся, дзе даведаўся, дзе даведаўся, дзе даведаўся, дзе даведаўся, дзе даведаўся, дзе даведаўся, дзе даведаўся, дзе даведаўся, дзе даведаўся, дзе даведаўся, дзе даведаўся, дзе даведаўся, дзе даведаўся, дзе даведаўся, дзе даведаўся, дзе даведаўся, дзе даведаўся, дзе даведаўся, дзе даведаўся, дзе даведаўся, дзе даведаўся, дзе даведаўся, дзе даведаўся.",
+    "^(?:что\\s+)?(?:я\\s+)?(?:съел[а-яё]*|поел[а-яё]*|перекусил[а-яё]*)\\s+":
+        "↑:?:што\\s+)?(?:я\\s+)?(?:яў[а-яя]*узяў[а-яя] п'е[а-яя]*узяў[а-яя]*узяў[а-яя]*узяў[а-яя]**узяў**узяў**узяў*узяў*узяў*узяў*узяў*уз*узяў*уз*узяў*узяў*уз*узяў*уз*узяў*у*узяў*у*узяў*у*уз*узяў*у*узяў*у*у*у*у*у*у*у*у*у*у*у*у*у*у*у*у*у*у*у*у*у*у*у*у*у*у*у*у*у*у*у*у*у*у*у*у*у*у*у*у*у*у*у*у*у*",
     "^[^a-zа-яё]+": "^[^a-zа-яё]+",
     "^\\*\\*(?:Answer|Ответ):\\*\\*\\s*":
         "Аднак я не магу сказаць, што я не магу.",
@@ -8772,7 +8986,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "UUID характеристики записи": "UUID характарыстыкі запісу",
     "Vault был восстановлен из безопасного начального состояния.":
         "Вальт быў аднаўлены з бяспечнага пачатковага стану.",
-    "Vision-анализ недоступен:": "Vision-аналіз не даступны:",
     "°C · высота": "°C · вышыня",
     "· вес": "· вага",
     "· визуальная оценка": "· візуальная ацэнка",
@@ -8800,9 +9013,13 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "» перед выполнением.": "перад выкананнем.",
     "», интенсивность": ", інтэнсіўнасць",
     "». Извлечённый текст:": ". Вывадзены тэкст:",
+    "». Калории и Б/Ж/У оставлены пустыми; добавьте порцию или уточните данные, когда они известны.":
+        ". Калорыі і Б/Ж/У пакінутыя пустымі; дадайце порцыю або ўдакладніце дадзеныя, калі яны вядомыя.",
     "». Перед продолжением рекомендуется сделать копию текущих данных.":
         ". Перад працягам рэкамендуецца зрабіць копію бягучых дадзеных.",
     "». Текст для анализа не найден.": ". Тэкст для аналізу не знайшоў.",
+    "». Уведомления о приёме будут планироваться по курсу препарата.":
+        ". Паведамленні аб прыёме будуць планавацца па курсе прэпарата.",
     "август": "жнівень",
     "Автозапись GPS/GLONASS:": "Аўтаматычная запіс GPS/GLONASS:",
     "Автозапуск": "Аўтаматычнае загрузка",
@@ -8827,6 +9044,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "активное движение": "актыўнае руху",
     "Активность": "Актыўнасць",
     "Активность и вода": "Актыўнасць і вада",
+    "Активность после подъёма не подтверждена. Откройте приложение и отключите сигнал.":
+        "Пасля ўзлёту актыўнасць не пацверджана. Адкрыйце прыкладанне і адключыце сігнал.",
     "Активность хорошая: шаги уже закрывают базовую цель дня.":
         "Актыўнасць добрая: крокі ўжо закрываюць асноўную мэту дня.",
     "активные калории": "актыўныя калорыі",
@@ -8886,6 +9105,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "без документа": "без дакумента",
     "Без жёстких ограничений: можно добавить спокойную прогулку и оценивать недельный баланс.":
         "Без жорсткіх абмежаванняў: можна дадаць спакойны прагул і ацаніць тыдзеньны баланс.",
+    "без контроля бодрствования": "без кантролю ў будзільніцтве",
     "без лекарства": "без лекі",
     "Без ограничений": "Без абмежаванняў",
     "без ограничений": "без абмежаванняў",
@@ -8966,6 +9186,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "в пределах референса": "у межах рэферэнсу",
     "В профиле нет координат города.": "У профілі няма каардынатаў горада.",
     "В пути, мин": "Я ў шляху, мін",
+    "в расписание «": "у расписание",
     "В списке есть антикоагулянт: взаимодействие нужно проверить у врача или фармацевта.":
         "У спісе ёсць антыкаагулянты: ўзаемадзеянне трэба праверыць у лекара або фармацэўта.",
     "В тренировках отмечалась боль: будущую нагрузку стоит снизить.":
@@ -9000,9 +9221,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "велотренажёр": "велатрэньжэр",
     "вероятно в руках": "верагодна ў руках",
     "вероятно используется": "верагодна выкарыстоўваецца",
-    "Версия 1.8.1+10 · создатель: Редин Максим Юрьевич · info@thebestmks.ru":
-        "Версія 1.8.1+10 · стваральнік: Рэдзін Максім Юр'евіч · info@thebestmks.ru",
-    "Версия: 1.8.1+10": "Версія: 1.8.1+10",
+    "Версия 1.8.2+11 · создатель: Редин Максим Юрьевич · info@thebestmks.ru":
+        "Версія 1.8.2+11 · стваральнік: Рэдзін Максім Юр'евіч · info@thebestmks.ru",
+    "Версия: 1.8.2+11": "Версія: 1.8.2+11",
     "Вес": "Вага",
     "вес": "вага",
     "Вес порции и пищевая ценность являются ориентировочной оценкой класса блюда. Проверьте их перед подтверждением.":
@@ -9043,6 +9264,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Внесено голосом или командой помощника; условия измерения не указаны.":
         "Уведзена голасам або камандаваннем памочніка; умовы вымярэння не паказаны.",
     "Внесено командой помощника.": "Уведзена камандай памочніка.",
+    "Внесено помощником без количества и нутриентов; значения не выдумывались.":
+        "Уведзена памочнікам без колькасці і нажыўных рэчываў; значэння не выдумваліся.",
     "внесённая калорийность заметно выше основного обмена, но недельный баланс и активность важнее одного дня.":
         "Калорычная колькасць, якую яны прыносяць, значна вышэй за асноўны абмен, але тыдзень, калі яны працуюць, важней за дзень.",
     "внесённая калорийность низкая относительно основного обмена; возможно, дневник заполнен не полностью.":
@@ -9110,6 +9333,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "вт": "Ут",
     "Вторник": "У аўторак",
     "вторник": "аўторак",
+    "Вчера ·": "Учора ·",
     "вчера уже была тяжёлая тренировка": "Учора ўжо была цяжкая трэніроўка.",
     "Вы": "Вы",
     "Выберите вариант": "Выберыце варыянт",
@@ -9296,6 +9520,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Для чего применяется": "Для чаго выкарыстоўваецца",
     "Дневник питания, БЖУ, рецепты и ручное подтверждение фото":
         "Дзённік харчавання, БЖУ, рэцэпты і ручная пацверджанне фота",
+    "Дневник по датам": "Дзень па датах",
     "Дневник самочувствия без диагнозов и назначений":
         "Дзень самаадчування без дыягнозаў і прызначэнняў",
     "Дневник сна": "Дзень сну",
@@ -9313,6 +9538,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "До ориентира": "Да арыенціры",
     "добав": "дадаваць",
     "Добавил": "Дадаў",
+    "Добавил время": "Дадаў час",
     "Добавить": "Дадаць",
     "Добавить в дневник": "Дадаць у дзённік",
     "Добавить врача или клинику": "Дадаць лекара або клініку",
@@ -9461,6 +9687,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Завершить": "Завяршыць",
     "Завершить и сохранить": "Завяршыць і захаваць",
     "зависит от пола и возраста": "залежыць ад полу і ўзросту",
+    "завтра": "заўтра",
     "завтрак": "сняданак",
     "Загружаем локальный сейф здоровья": "Загружаем лакальны сейф здароўя",
     "Загруженный GGUF повреждён.": "Загружаны GGUF пашкоджаны.",
@@ -9533,6 +9760,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "Мы шукаем дазвол і шукаем прылады...",
     "Запрещено системой; откройте системные настройки":
         "Сістэма забараніла; адкрыйце сістэмныя налады",
+    "Запрос обрабатывается в фоне": "Запыт апрацоўваецца ў фоне",
     "Запрос пользователя:": "Запыт карыстальніка:",
     "Запросить разрешение повторно": "Звярнуцца ў дазвол зноў",
     "Запросить разрешения и синхронизировать":
@@ -9573,9 +9801,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "из-за холода выбран домашний вариант с более длинной разминкой":
         "з-за халаду выбраны хатні варыянт з больш працяглай разминкай",
     "избегать задержки дыхания": "пазбегнуць затрымкі дыхання",
-    "Извлечённый текст:": "Вывадзены тэкст:",
     "Измените запрос или добавьте тег в карточку документа.":
         "Змяніце запыт або дадайце тэг у карту дакумента.",
+    "Изменить": "Змяніць",
     "Изменить симптом": "Змяніць сімптом",
     "Изменить сон": "Змяніць сон",
     "измерения не найдены": "вымярэнні не знайшлі",
@@ -9703,6 +9931,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Ккал": "Ккал",
     "ккал": "ккал",
     "ккал · Б/Ж/У": "ккал · Б/Ж/У",
+    "ккал · расход": "ккал · расход",
+    "ккал · шаги": "ккал · крокі",
     "Ккал еды": "Ккал ежы",
     "ккал за сутки": "ккал за суткі",
     "ккал, активность": "ккал, актыўнасць",
@@ -9759,6 +9989,10 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Контекст дома и работы": "Кантэкст дома і працы",
     "Контекст телефона": "Кантэкст тэлефона",
     "Контекст телефона:": "Кантэкст тэлефона:",
+    "контролем активности": "кантроль актыўнасці",
+    "контроль активности": "кантроль актыўнасці",
+    "Контроль бодрствования": "Кантроль прачнуцца",
+    "контроль бодрствования": "кантроль прачнуцца",
     "контроль лекарств": "кантроль над лекамі",
     "Координаты": "Каардынаты",
     "Координаты используются только на устройстве для определения контекста.":
@@ -9788,7 +10022,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Курс:": "Курс:",
     "Күнтізбе": "Кунтызбе",
     "л": "л",
-    "л · калории": "л · калорыі",
+    "л · питание": "л · харчаванне",
+    "л воды.": "Я не магу.",
     "л, шаги": "Л, крокі",
     "л.": "Л.",
     "л. Пейте небольшими порциями, если врач не ограничил жидкость.":
@@ -9883,6 +10118,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "мигрень": "мігрэна",
     "Микрофон и голосовой ввод": "Мікрафон і голасны ўвод",
     "мили": "міль",
+    "миллилитр": "мілілітр",
     "мин": "мін",
     "мин ·": "мн ·",
     "мин · перенос доступен": "м · перанос даступны",
@@ -9942,10 +10178,10 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "мяса небыўных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных рыбных",
     "На весь экран": "На ўвесь экран",
     "на ночь": "на ноч",
-    "На проверку добавлено записей:": "Дададзеныя запісы:",
     "на работе": "на працы",
     "На ручную проверку добавлено показателей:":
         "На ручную праверку дададзеныя паказчыкі:",
+    "на сегодня": "на сёння",
     "на сегодня запланировано:": "на сёння запланавана:",
     "набор силы": "набор сілы",
     "нагруз": "нагрузка",
@@ -10053,8 +10289,10 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "нг/мл": "нг/мл",
     "не выбрано": "не выбрана",
     "не выбраны": "не выбраны",
+    "не дай уснуть": "Не дай мне спаць",
     "не задана": "не ўстаноўлена",
     "не задано": "не ўстаноўлена",
+    "не заснуть": "не заснуць",
     "Не извлечено:": "Не выведзена:",
     "не компенсируйте еду голоданием; выберите спокойную прогулку и вернитесь к обычному плану.":
         "не кампенсуйце ежу галаданнем; абярыце спакойны прагул і вярніцеся да звычайнага плана.",
@@ -10111,6 +10349,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "не указано в контексте. В конце укажи уверенность: высокая, средняя или низкая.":
         "У канчатковым выніку паказаць упэўненасць: высокая, сярэдняя ці нізкая.",
     "Не указаны": "Не паказаны",
+    "не уснул": "не заснуў",
     "Не установлена; доступен быстрый режим и установка в разделе «Помощник».":
         "Не ўстаноўлена; хуткае рэжым і ўстаноўка даступныя ў раздзеле Прыможнік.",
     "Не хватает данных:": "Недастаткова дадзеных:",
@@ -10200,7 +10439,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Обновить контекст": "Абнавіць кантэкст",
     "Обновить результаты поиска": "Абноўленне вынікаў пошуку",
     "Обновлено устройство:": "Абноўленае прылада:",
-    "Обрабатываю локально...": "Я апрацоўваю мясцова...",
     "обсудите с врачом:": "пагаворыце з лекарам:",
     "обсудить": "абмяркоўваць",
     "Обсудить план с помощником": "Абмяркоўваць план з памочнікам",
@@ -10224,6 +10462,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "Абмежаванні, рэабілітацыя, лекар, дакументы",
     "Ограничения:": "Абмежаванні:",
     "ограничить бег": "абмежаваць бег",
+    "один раз": "адзін раз",
     "один сигнал": "адзін сігнал",
     "одыш": "Аддых",
     "одышка": "дыханне",
@@ -10311,7 +10550,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Отмечено сегодня": "Адзначана сёння",
     "отмечено сегодня": "адзначана сёння",
     "Отправить": "Адпраўляць",
-    "Отправлено изображение:": "Вырашана здымка:",
     "Отпуск": "Адпуск",
     "отпуск": "адпачынак",
     "Отпуск не запланирован": "Адпуск не запланаваны",
@@ -10374,6 +10612,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "перенесённая болезнь": "перададзеная хвароба",
     "переохлаждение": "перазахаладжванне",
     "Пересадок": "Перасадка",
+    "Период контроля, мин": "Перыяд кантролю, мін",
     "Периодически проверять локальные напоминания и расписание без отправки данных в сеть":
         "Часта правяраць лакальныя напаміны і расписание без адпраўкі дадзеных у сетку",
     "Персональная проверка": "Персанальная праверка",
@@ -10421,9 +10660,11 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Пн": "Пн",
     "пн": "Пн",
     "пн, вт, ср, чт, пт": "Пн, Вт, ср, чт, пт",
+    "по будням": "па тыдзень",
     "по внесённым данным допустима обычная плановая нагрузка с контролем самочувствия.":
         "па ўнесеным дадзеных дапушчальная звычайная планавая нагрузка з кантролем самаадчування.",
     "По внесённым приёмам пищи:": "Па ўнесеных прыёмах ежы:",
+    "по выходным": "па выходных",
     "по геолокации": "па геалакацыі",
     "по дням недели": "па днях тыдня",
     "По какое число": "Па якім ліку",
@@ -10442,12 +10683,18 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Побочные эффекты и реакции": "Пабочныя эфекты і рэакцыі",
     "Побочные эффекты:": "Пабочныя эфекты:",
     "Повседневная активность": "Штодзённая актыўнасць",
+    "Повтор": "Паўтарыце",
     "повторений": "паўторных",
     "Повторите PIN": "Паўтарыце PIN",
     "Повторно запрашивать PIN или биометрию для чувствительных документов":
         "Перапрасіць Пін або біяметрыю для адчувальных дакументаў",
+    "Повторять сигнал при отсутствии движения после подъёма.":
+        "Паўтарыць сігнал пры адсутнасці руху пасля пад'ёму.",
     "Повторяющиеся симптомы:": "Паўторныя сімптомы:",
     "Повышает масштаб интерфейса": "Павышае маштаб інтэрфейсу",
+    "Погода временно недоступна": "Надвор 'е часова не даступна",
+    "Погода временно недоступна. Климатический профиль продолжает работать локально.":
+        "Надвор'е часова не даступна. Кліматычны профіль працягвае працаваць мясцова.",
     "Погода и климат": "Надвор'е і клімат",
     "Погода недоступна": "Надвор'е не даступнае",
     "Погода подходит для обычной нагрузки с учётом самочувствия.":
@@ -10574,6 +10821,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "последние симптомы:": "апошнія сімптомы:",
     "последняя запись сна:": "Апошні запіс сна:",
     "Последняя запись:": "Апошні запіс:",
+    "послезавтра": "паслязаўтра",
     "постав": "пастаўкі",
     "Постепенное пробуждение": "Паступова прачынаючыся",
     "потер": "страціць",
@@ -10585,6 +10833,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Предупреждение": "Папярэджанне",
     "Предупреждения": "Папярэджанні",
     "Препарат": "Прэпарат",
+    "препарат": "прэпарат",
     "препаратов, принято сегодня": "лекі, прынятыя сёння",
     "Препараты": "Прэпараты",
     "Препараты не распознаны. Проверьте качество снимка или добавьте лекарство вручную.":
@@ -10599,7 +10848,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Приготовление": "Падрыхтоўка",
     "прием": "прыём",
     "Прикреплённый файл не найден": "Файл не знайшоў",
-    "Приложен файл:": "Дададзены файл:",
     "приложение открыто": "Прыкладанне адкрыта",
     "Приложение работает без браслета: вес, сон, шаги, еда и тренировки можно вводить вручную.":
         "Прыкладанне працуе без браслету: вага, сон, крокі, ежа і трэніроўка можна ўводзіць ручна.",
@@ -10633,10 +10881,12 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Проверить симптомы": "Праверка сімптомаў",
     "Проверить снова": "Праверце зноў",
     "Проверить уведомление": "Праверка паведамлення",
+    "проверка активности": "праверка актыўнасці",
     "Проверка назначения": "Праверка прызначэння",
     "Проверка недоступна:": "Праверка не даступная:",
     "проверка разрешений": "праверка дазволаў",
     "Проверка распознавания": "Праверка пазнання",
+    "проверкой активности": "праверкай актыўнасці",
     "Проверь лекарства и остатки": "Праверце лекі і рэшткі",
     "Проверьте аллерген в дневнике": "Праверце алерген у дзённіку",
     "Проверьте белок и полноту дневника": "Праверце бялок і поўнае запісванне",
@@ -10659,6 +10909,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "Праверце прапушчаныя ежы і не скарачце рацыёны без спецыяліста.",
     "Проверяем доступность...": "Праверяем даступнасць...",
     "Проверяем локальную модель...": "Праверяем мясцовую мадэль...",
+    "проверяй активность": "праверце актыўнасць",
+    "проверяй бодрствование": "праверце ўважлівасць",
+    "Проверять через, мин": "Праверце праз, мін",
     "прогулки": "прагулкі",
     "Продолжить": "Працягваць",
     "Продолжить тренировку": "Працягваць трэніроўку",
@@ -10757,6 +11010,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Расстояние, км": "Адлегласць, км",
     "раствор": "раствор",
     "растяж": "расцяжэнне",
+    "расход": "расход",
     "Расчёт по данным профиля и сегодняшним отметкам.":
         "Ралік на дадзеных профілю і сённяшніх адзнаках.",
     "расчётная готовность": "разліковая гатоўнасць",
@@ -10895,9 +11149,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Сегодня важнее восстановление. Не тренируйтесь через боль, температуру или резкое ухудшение самочувствия.":
         "Сёння важна аднаўленне. Не практыкуйцеся праз боль, тэмпературу або рэзкае пагаршэнне здароўя.",
     "Сегодня дежурство": "Сёння чарговая",
+    "Сегодня записано": "Сёння запісана",
     "сегодня отмечен тревожный симптом или высокая интенсивность жалобы.":
         "сёння адзначаецца трывожным сімптомам або высокай інтэнсіўнасцю скаргі.",
-    "сегодня.": "Сёння.",
     "Сегодня: сон": "Сёння: сон",
     "Сейчас активен режим поездки: при ночной дороге, смене часового пояса или недосыпе нагрузка автоматически считается восстановительной.":
         "Зараз актыўна рэжым падарожжа: пры начным шляху, змене гадзіннага пояса або недасыпанні нагрузка аўтаматычна лічыцца аднаўляльнай.",
@@ -10905,12 +11159,15 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "сентябрь": "верасня",
     "Сервер модели вернул код": "Сервер мадэлі вярнуў код",
     "Сервис": "Сервіс",
+    "Сервис погоды временно вернул ошибку. Повторная попытка будет выполнена автоматически.":
+        "Паслуга надвор'я аднавіла памылку.",
+    "Сервис погоды не ответил вовремя. Климатический профиль продолжает работать локально.":
+        "Служба надвор'я не адказала своечасова. Кліматычны профіль працягвае працаваць мясцова.",
     "Сетевое видео отключено офлайн-режимом":
         "Сецівовае відэа адключана ў афлайн-рэжыме",
     "Сетевое изображение скрыто": "Сецівое малюнка схавана",
     "Сетевые данные отключены режимом «Полностью офлайн». Климатический профиль продолжает работать.":
         "Сеткавыя дадзеныя адключаны рэжымам Поўная афлайн. Кліматычны профіль працягвае працаваць.",
-    "Сжимаю и анализирую локально...": "Сціскаю і аналізую мясцова...",
     "сил": "сілы",
     "силовая": "сілавая",
     "Силовая тренировка по инвентарю": "Сілавая трэніроўка па інвентары",
@@ -11076,6 +11333,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Срочно:": "Сардэчна:",
     "срочных пунктов; начните с них.": "неадкладныя пункты; пачніце з іх.",
     "стабильно": "стабільна",
+    "стакан": "шклянка",
     "Стандартные GATT-сервисы читаются автоматически. Для закрытых или редких устройств добавьте UUID вручную.":
         "Стандартныя паслугі GATT чытаюцца аўтаматычна. Для закрытых або рэдкіх прылад дадайце UUID уручную.",
     "стандартный": "стандартны",
@@ -11172,6 +11430,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Точность": "Дакладнасць",
     "точность GPS": "дакладнасць GPS",
     "Точные будильники": "Дакладная прабудзільнік",
+    "Точные будильники недоступны (": "Дакладная прабудзільнік не даступны (",
     "тошнота": "нахабства",
     "травма": "траўма",
     "Травмы в течение жизни": "Трэба адзначыць, што ў жыцці",
@@ -11303,6 +11562,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Файл анализа:": "Файл аналізу:",
     "Файл в защищённом хранилище:": "Файл у абароненага сховішча:",
     "Файл в медицинском сейфе не найден": "Файл у медыцынскім сейфе не знайшлі",
+    "Файл вложения не найден": "Файл ўкладання не знайшоў",
     "Файл не содержит резервную копию приложения.":
         "Файл не змяшчае рэзервовай копіі прыкладання.",
     "Файл/импорт": "Файл / імпарт",
@@ -11319,6 +11579,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "фитнес-тренажёр FTMS": "фітнес-трэнжэр FTMS",
     "Фокус": "Фокус",
     "Фокусы тренировок": "Фокусы трэніровак",
+    "Фоновая обработка": "Падлеткавая апрацоўка",
     "Фоновая работа": "Фонавая праца",
     "Фоновый анализ": "Фонны аналіз",
     "Форма": "Форма",
@@ -11456,17 +11717,19 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "(*?(?:\\s?:референс*таннорма) [[:=-]?\\s*([<>]?\\s*\\d+(?:[\\.,]\\d+)?(?:\\s*[-]\\s*\\d+(?:[\\.,]\\d+)?)?",
     "(?:\\s+(?:референс|норма|reference)?\\s*([<>]?\\s*\\d+(?:[,.]\\d+)?(?:\\s*[-–]\\s*\\d+(?:[,.]\\d+)?)?))?":
         "(?:\\s+(?:референс дэннорманы дайындайды)?\\s([<>?s*\\d+(?:[,.]\\d+)?(?:\\s*[-]\\s*\\d+(?:[,.]\\d+)?)??",
+    "(?:^|\\s)(?:в|на)\\s+([01]?\\d|2[0-3])(?:\\s*(?:час[а-яё]*|ч))?(?=\\s|":
+        "(?: си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си си",
+    "(?:^|\\s)через\\s+(\\d{1,3})\\s*(минут[а-яё]*|мин|час[а-яё]*|ч)(?=\\s|":
+        "(?: сиыршы) (с+(с\\д{1,3}) (с**) минуты[а-яяя]* кезінде (а-яяя]* кезінде) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (с) (",
     "(?:анализ|показатель|результат(?:\\s+анализа)?)\\s+([a-zа-яё][a-zа-яё0-9 ()+._-]{1,60}?)\\s*[:=-]?\\s*([<>]?\\s*\\d+(?:[\\.,]\\d+)?)\\s*":
         "(анализ қиямет көрсеткіші?:результат?:?:с\\с+анализ)?)\\s+([a-zа-яё][a-zа-яё0-9 ()+._-]{1,60}?)\\s*[:=-]?\\s*([<>]\\s*\\d+(?:[\\.,]\\d+)?)\\s*",
     "(?:белок|protein|протеин|б)\\D{0,10}(\\d{1,3})": "Бетінді белдеуі:",
-    "(?:будильник|разбуди|подъ[её]м).*?(?:в|на)?\\s*((?:[01]?\\d|2[0-3])[:\\.]\\d{2})":
-        "* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *",
+    "(?:будильник|разбуди|подъ[её]м)":
+        "?:аятушы /аятушы /аятушы /аятушы /аятушы /аятушы /аятушы /аятушы /аятушы /аятушы /аятушы /аятушы /аятушы /аятушы /аятушы /аятушы /аятушы /аятушы /аятушы /аятушы /аятушы /аятушы /аятушы /аятушы /аятушы /аятушы /аятушы /аятушы /аятушы /аятушы /аятушы /аятушы /аятушы /аятушы /аятушы /аятушы /аятушы /аятушы /аятушы /аю",
     "(?:вес|масса|weight)\\s*(?:сегодня|now)?\\s*[:=-]?\\s*(\\d{2,3}(?:[\\.,]\\d)?)\\s*(?:кг|kg)?\\b":
         "(?:вес российского масса российского масса российского масса российского масса российского масса российского масса российского масса российского масса российского масса российского масса российского масса российского масса российского масса российского масса российского масса российского масса российского масса российского масса российского масса российского масса российского масса российского масса российского масса российского масса российского масса российского масса российского масса российского масса российского масса российского масса российского масса российского масса российского масса российского масса российского масса российского масса российского масса российского масса российского масса российского масса российского масса российского масса российского масса российского масса российского масса российского масса российского масса российского масса российского масса российского масса ро",
-    "(?:выпил[а-яё]*|добав[а-яё]*|запиш[а-яё]*|water).*?(\\d+(?:[\\.,]\\d+)?)\\s*(мл|ml|л|l)(?![a-zа-яё])":
-        "?:ішіп, (а-яяааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааа",
-    "(?:гемоглоб|глюкоз|холестерин|ферритин|референс|ммоль/л|мг/дл|анализ крови)":
-        "(гемоглобдың қиылысуы, қанды талдау)",
+    "(?:выпил[а-яё]*|добав[а-яё]*|запиш[а-яё]*|укаж[а-яё]*|вод[а-яё]*|water).*?(\\d+(?:[\\.,]\\d+)?)\\s*(мл|ml|миллилитр[а-яё]*|л|l|литр[а-яё]*|стакан[а-яё]*)(?![a-zа-яё])":
+        "?:ішіп алды[а-яё]*а-яёо (а-яё*иііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііііі",
     "(?:глюкоз[а-яё]*|сахар[а-яё]*\\s+кров[а-яё]*|glucose)\\s*[:=-]?\\s*(\\d{1,3}(?:[\\.,]\\d+)?)":
         "(?: глюкоз[а-яё]* отсахар[а-яё]*\\s+кров[а-яё]* отсуглокоз)\\s*[:=-]?\\s*(\\d{1,3}(?:[\\.,]\\d+)?)",
     "(?:давлен[а-яё]*|pressure)\\s*[:=-]?\\s*(\\d{2,3})\\s*[/\\\\]\\s*(\\d{2,3})(?:\\s+(?:пульс|pulse)\\s*(\\d{2,3}))?":
@@ -11487,16 +11750,14 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "(?:kalories of the calories) \\D{0,12}\\d{2,4})",
     "(?:качеств[а-яё]*|оценк[а-яё]*)\\s*(?:сна)?\\s*[:=-]?\\s*([1-5])":
         "(?:сапаттары[а-яя]* қасиеті[а-яя]*)\\s*(?:спа)?\\s*[:=-]?\\s*([1-5])",
-    "(?:ккал|калори|белк|жир|углевод|состав|пищевая ценность)":
-        "Құрамында: (азық-түлік қасиеті)",
     "(?:клетчатка|пищевые волокна|fibre|fiber)\\D{0,12}(\\d{1,3}(?:[,.]\\d+)?)":
         "(?:күлті жапырағы тігіс талшықтары) д д д д т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т т",
     "(?:масса|вес|порция|net weight|serving)\\D{0,12}(\\d{1,4})\\s*(?:г|g)":
         "Массасын (бұл салмақ)",
     "(?:на|per)\\s*100\\s*(?:г|g)":
         "(?: үшін) \\*100\\s*s?: с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с с",
-    "(?:напомни|напоминание|remind).*?(\\d{1,2})[:\\.](\\d{2})":
-        "(?:іштегені есте сақтаңыз). *?",
+    "(?:напомни|напоминание|remind)":
+        "(?:жаттықтаған жадыныжаттықтаған жадыныжаттықтаған жадыныжаттықтаған жадыныжаттықтаған жадыныжаттықтаған жадыныжаттықтаған жадыныжаттықтаған жадыныжаттықтаған жадыныжаттықтаған жадыныжаттықтаған жадыныжаттықтаған жадыныжаттықтаған жадыныжаттықтаған жады)",
     "(?:по\\s+[^.;,]{0,25}\\s+)?\\d+\\s*раз(?:а|у|)\\s+(?:в|за)\\s+(?:день|сутки)":
         "?:по\\s+[^.;,]{0,25}\\s+)?\\d+\\s*раз(?:ааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааа",
     "(?:поставь|создай|заведи|добавь|разбуди(?:\\s+меня)?|будильник|подъ[её]м)":
@@ -11505,6 +11766,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
         ":референс (норманы қиылысreference) \\D{0,12}([\\d,.]+ ?[-] ?[\\d,.]+)",
     "(?:сахара|сахар|sugars?|из них сахара)\\D{0,12}(\\d{1,3}(?:[,.]\\d+)?)":
         "Шәкәрден қант өсіріледі?",
+    "(?:сколько|покажи|какой|какое|текущ[а-яё]*|итого)":
+        "(?: қаншалықты көптіктікпен көрсетіңіз)",
     "(?:соль|salt)\\D{0,10}(\\d{1,3}(?:[,.]\\d+)?)":
         "(?: тұздың тұздауы) \\D{0,10}(\\d{1,3}(?:[,.]\\d+)?)",
     "(?:спал[а-яё]*|сон|sleep).*?(\\d{1,2}(?:[\\.,]\\d+)?)\\s*(?:ч(?:ас(?:а|ов)?)?|hours?|h)(?![a-zа-яё])":
@@ -11513,8 +11776,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "(?:спал[а-яё]*) қиялдан қиялдан).*?(\\d{1,2}[:\\.](\\d{2})\\s*(?:до сий[-])\\s*(\\d{1,2})[:\\.]\\d{2})",
     "(?:съел[а-яё]*|выпил[а-яё]*|запиш[а-яё]*\\s+(?:еду|при[её]м пищи)|добав[а-яё]*\\s+(?:еду|блюдо))\\s+(.+?)\\s+(\\d{1,4})\\s*(?:ккал|kcal)(?![a-zа-яё])":
         "А-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а",
-    "(?:таблет|капсул|принимать|назначен|рецепт|дозиров)":
-        "(табл. зайыбы?: зайыбының рецепті",
+    "(?:съел[а-яё]*|поел[а-яё]*|перекусил[а-яё]*|выпил[а-яё]*|добав[а-яё]*\\s+(?:еду|блюдо)|запиш[а-яё]*\\s+(?:что\\s+)?(?:я\\s+)?(?:съел[а-яё]*|поел[а-яё]*))\\s+(.+)":
+        "А-а-яо-яо-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а",
     "(?:таблетк[а-яё]*|капсул[а-яё]*|раствор[а-яё]*|сироп[а-яё]*|суспензи[а-яё]*|":
         "(?:таблетк[а-яё]*ка за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за за",
     "(?:температур[а-яё]*|temperature)\\s*[:=-]?\\s*(3[4-9]|4[0-2])(?:[\\.,](\\d))?":
@@ -11523,8 +11786,23 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "(?: жаттығушы[а-яё]*шығып кетті[а-яё]*шығып кетті[а-яё]*шығып кетті[а-яё]*шығып кетті[а-яё]*шығып кетті[а-яё]*).*?\\d{1,3})\\s*(?:минуттан кейін)",
     "(?:углеводы|carbs|у)\\D{0,10}(\\d{1,3})":
         "(углеводтар?:carbs?:у) \\D{0, бiрiк}\\d{1,3})",
+    "(?<![a-zа-яё])(?:в|на)\\s*\\d{1,2}(?:[:\\.]\\d{2})?(?![a-zа-яё0-9])":
+        "<![a-a-yayo]) ?: в (?а*аа) \\s\\d{1,2}(?:[:\\.]\\d{2})?(?![a-a-a-yayo0-9])",
+    "(?<![a-zа-яё])(?:в|на)\\s*\\d{1,2}(?:[:\\.]\\d{2})?(?:\\s*(?:час[а-яё]*|ч))?(?![a-zа-яё0-9])":
+        "<![a-a-yao]) ?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?",
+    "(?<![a-zа-яё])(?:каждый день|ежедневно|по будням|по выходным|сегодня|завтра|послезавтра)(?![a-zа-яё])":
+        "<![a-zа-яё]) ((?:күн сайынғы қайтыс (?күн сайынғы қайтыс күндері)",
+    "(?<![a-zа-яё])(?:не дай уснуть|не заснуть|не уснул)(?![a-zа-яё])":
+        "<![a-zа-яё]): ұйықтатпа, ұйықтама!",
+    "(?<![a-zа-яё])(?:с|и)?\\s*(?:проверкой|контролем)\\s+(?:активности|бодрствования)(?![a-zа-яё])":
+        "(А-а-а-яё) (а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а) (а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а-а)",
+    "(?<![a-zа-яё])(?:сегодня|только что)(?![a-zа-яё])": "<![a-z-яё])",
+    "(?<![a-zа-яё])через\\s+\\d+\\s*(?:минут[а-яё]*|мин|час[а-яё]*|ч)(?![a-zа-яё])":
+        "<![a-zа-яё]) арқылы \\s+\\d+\\s*(?:минут[a-яё] (?*үзілгішін қимылданбау[a-яё]* қимылданбау) ????[a-zа-яё])",
     "(\\d+(?:[,.]\\d+)?)\\s*(?:ммоль/л|мг/дл|г/л|нг/мл|мед/л|ме/л|%)":
         "(\\d+(?:[,.]\\d+)?) \\s*(?:мол/л қиымммг/дл қиыммг/л қиымг/л қиымммд/л қиыммме/л қиыммг/л қиымг%)",
+    "(\\d+(?:[\\.,]\\d+)?)\\s*(мл|ml|миллилитр[а-яё]*|л|l|литр[а-яё]*|стакан[а-яё]*)(?![a-zа-яё]).*?(?:вод[а-яё]*|выпил[а-яё]*|добав[а-яё]*|запиш[а-яё]*|water)":
+        "(\\d+(?:\\,]\\d+)?) \\s*(мл елеулі миллилитр[а-яяё] қайдан шыққан?",
     "(\\d{1,3}(?:[\\.,]\\d+)?)\\s*(?:км|km)":
         "(\\d{1,3}(?:[\\.,]\\d+)?)\\s*(км?:",
     "(\\d{1,4})\\s*(?:г|g)\\b": "(\\d{1,4}\\s*(?:г) мұнда",
@@ -11541,6 +11819,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "(ммоль/л|мкмоль/л|мг/дл|мг/л|г/л|г/дл|мкг/л|нг/мл|пг/мл|мед/л|ме/л|ед/л|mmol/l|umol/l|µmol/l|mg/dl|mg/l|g/l|g/dl|µg/l|ug/l|ng/ml|pg/ml|iu/l|u/l|10\\^?[*x×]?\\d+/л|фл|fl|пг|pg|%)":
         "(ммлл/лмммммлл/лмммлл/лмллл/лмллл/лмллл/лмллл/лмллл/лмлллл/лмлллл/лмлллл/лмлллл/лмллл/лмллл/лмллл/лмлл/лмлл/лмлл/лмлл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/лмл/л",
     "). Дозировку я не изменяю.": "Мен дозаны өзгертпеймін.",
+    "); используется приблизительное системное расписание.":
+        "); шамамен жүйелі кесте пайдаланылады.",
     ")} · день": ")} · күн",
     ")}. Отложите тренировку; при резком ухудшении или опасных признаках обратитесь за неотложной помощью.":
         "Оқуды кейінге қалдырыңыз; күрт нашарлау немесе қауіпті белгілер кезінде шұғыл көмек сұраңыз.",
@@ -11572,8 +11852,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     ", цель": "мақсат",
     ". Добавил их на проверку; после подтверждения приложение создаст расписание и напоминания. Дозировки автоматически не меняются.":
         "- Тексеруге қосылды. Анықталғаннан кейін қосымша кесте мен ескертулер жасайды. Дозировкалар автоматты түрде өзгермейді.",
-    ". Изменения применятся после подтверждения.":
-        "Өзгерістер расталғаннан кейін қолданылады.",
     ". Не используйте распознанные назначения до сверки с оригиналом.":
         "- Оригиналмен салыстыруға дейін белгілі мақсаттарды қолданбаңыз.",
     ". Невозможные скачки координат отфильтрованы.":
@@ -11622,6 +11900,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     ": не удалось разобрать": ": түсіну мүмкін емес",
     ": осталось": "қалды",
     ": пакет короче заявленного": ": мәлімделгеннен қысқа пакет",
+    ": проверка бодрствования": ": сергек болуын тексеру",
     ": характеристика не найдена": ": сипаттама табылмады",
     "; выбран ближайший расчётный конец цикла сна.":
         "Ұйқы циклының ең жақын есептік аяғы таңдалды.",
@@ -11639,22 +11918,23 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "[^a-zа-яё0-9]+": "[^a-z-a-ya0-9]+",
     "[a-zа-яё]*\\s*[:=-]?\\s*(\\d{1,3}(?:[\\.,]\\d+)?)\\s*(?:г|g)?":
         "[a-zа-яё]*\\s*[:=-]?\\s*(\\d{1,3}(?:[\\.,]\\d+)?)\\s*(?:гүгеді?",
-    "\\b(?:в|на)\\s*\\d{1,2}[:\\.]\\d{2}\\b":
-        "\\b(?:аяқта) \\s*\\d{1,2}[:\\.]\\d{2}\\b",
     "\\b(гемоглобин|ферритин|холестерин|триглицериды|креатинин|мочевина|билирубин|алт|аст|ттг|витамин\\s+[a-zа-яё0-9]+|с-?реактивный\\s+белок)\\s*[:=-]?\\s*([<>]?\\s*\\d+(?:[\\.,]\\d+)?)\\s*":
         "Б-(гемоглобин бұғауфертин бұғаулестерин бұғаутриглицерид бұғаукреатинин бұғаушы бұғауқұлақ бұғауқұлақ бұғаушы бұғауқұлақ бұғаушы бұғауқұлақ бұғаушы бұғауқұлақ бұғауқұлақ бұғауқұлақ бұғауқұлақ бұғауқұлақ бұғауқұлақ бұғауқұлақ бұғауқұлақ бұғауқұлақ бұғауқұлақ бұғауқұлақ бұғауқұлақ бұғауқұлақ бұғауқұлақ бұғауқұлақ бұғауқұлақ бұғауқұлақ бұғауқұлақ бұғауқұлақ бұғауқұлақ бұғауқұлақ бұғауқұлақ бұғауқұлақ бұғауқұлақ бұғауқұлақ бұғауқұлақ бұғауқұлақ бұғауқұлақ бұғауқұлақ бұғауқұлақ бұғауқұлақ бұғауқұлақ бұғауқұлақ бұғауқұлақ бұғауқұлақ бұғауқұлақ бұғауқұлақ бұға",
-    "\\d+(?:[\\.,]\\d+)?\\s*(?:мг|мкг|мл|ме|ед\\.)":
-        "\\d+(?:[\\.,]\\d+)?\\s*(?:мг қимылсыздықты болдырмау үшін",
     "\\d+(?:[\\.,]\\d+)?\\s*(?:мкг|мг|г|мл|ед\\.?|ме)":
         "\\d+(?:[\\]\\d+)? \\s\\s?",
     "\\d+(?:[\\.,]\\d+)?\\s*(?:мкг|мг|г|мл|ед\\.?|ме|iu|mcg|mg|ml)(?![a-zа-яё])":
         "С+Д? ?[\\]\\Д+)?\\с*??:мг?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н?н",
+    "\\d+(?:[\\.,]\\d+)?\\s*(?:мл|л|литр|стакан)":
+        "\\d+(?:[\\\\]\\d+)?s*(?:мл.,\\млкан)",
     "\\d+\\s*(?:дн(?:я|ей|ь)?|сут(?:ок|ки)?|недел[а-яё]*|месяц[а-яё]*)(?![а-яё])":
         "\\d+\\s\\s*дн \\дн?:яуыздың айлары? ?ыы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?ы?",
+    "\\d{1,4}\\s*(?:ккал|kcal)": "\\d{1,4}\\s*(?:ккалкұрсын)",
     "^(?:врач\\s+)?(?:мне\\s+)?(?:назначил(?:а|и)?|назначение|рецепт|принимать)\\s*[:\\-]?\\s*":
         "Дарыгердің тағайындауы мен рецепті",
     "^(?:как|что|почему|зачем|когда|где|можно\\s+ли|расскажи|объясни|проанализируй|how|what|why|when|where|can\\s+i)\\b":
         "\"Кімнің не екенін біліп, не үшін біліп, не үшін біліп, не үшін біліп, не үшін біліп, не үшін біліп, не үшін біліп, не үшін біліп, не үшін біліп, не үшін біліп, не үшін біліп, не үшін біліп, не үшін біліп, не үшін біліп, не үшін біліп, не үшін біліп, не үшін біліп, не үшін біліп, не үшін біліп, не үшін біліп, не үшін біліп, не үшін біліп, не үшін біліп, не үшін біліп, не үшін біліп, не үшін біліп, не үшін біліп, не үшін біліп, не үшін біліп, не үшін біліп, не үшін біліп, не үшін біліп, не үшін біліп, не үшін біліп, не үшін біліп, не үшін біліп, не үшін біліп, не үшін біліп, не үшін біліп, не үшін біліп, не үшін біліп, не үшін біліп, не үшін біліп, не үшін біліп, не үшін біліп, не үшін біліп, не үшін\"",
+    "^(?:что\\s+)?(?:я\\s+)?(?:съел[а-яё]*|поел[а-яё]*|перекусил[а-яё]*)\\s+":
+        "[а-яя] *иісе бастады] *иісе бастады*",
     "^[^a-zа-яё]+": "^[^a-zа-яё]+",
     "^\\*\\*(?:Answer|Ответ):\\*\\*\\s*": "Жауап:",
     "^\\s*(?:КОМАНДА|COMMAND)\\s*:\\s*": "КОМАНДА ДЕКІМЕЗ)",
@@ -11725,7 +12005,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "UUID характеристики записи": "Жазудың UUID сипаттамасы",
     "Vault был восстановлен из безопасного начального состояния.":
         "Vault қауіпсіз бастапқы күйінен қалпына келтірілді.",
-    "Vision-анализ недоступен:": "Vision- талдауы жоқ:",
     "°C · высота": "°C · биіктігі",
     "· вес": "· салмағы",
     "· визуальная оценка": "· бейнелік бағалау",
@@ -11753,9 +12032,13 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "» перед выполнением.": "орындау алдында.",
     "», интенсивность": ", қарқындылығы",
     "». Извлечённый текст:": ". Мынадан алынған мәтін:",
+    "». Калории и Б/Ж/У оставлены пустыми; добавьте порцию или уточните данные, когда они известны.":
+        "Калориялар мен Б/Ж/У бос қалдырылған; олар белгілі болған кезде порцияны қосыңыз немесе деректерді нақтылаңыз.",
     "». Перед продолжением рекомендуется сделать копию текущих данных.":
         ". Қосымшаны жалғастырудан бұрын ағымдағы деректердің көшірмесін жасау ұсынылады.",
     "». Текст для анализа не найден.": ". Талдау үшін мәтін табылмады.",
+    "». Уведомления о приёме будут планироваться по курсу препарата.":
+        ". Қабылдау туралы хабарламалар препараттың курсы бойынша жоспарланады.",
     "август": "тамыз",
     "Автозапись GPS/GLONASS:": "GPS/GLONASS автожабдықтары:",
     "Автозапуск": "Автошығыс",
@@ -11780,6 +12063,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "активное движение": "белсенді қозғалыс",
     "Активность": "Актілік",
     "Активность и вода": "Актерлік және су",
+    "Активность после подъёма не подтверждена. Откройте приложение и отключите сигнал.":
+        "Қозғалыстан кейінгі белсенділік расталмаған. Қолданбаны ашу және сигналды өшіру.",
     "Активность хорошая: шаги уже закрывают базовую цель дня.":
         "Белсенділік жақсы: қадамдар күннің негізгі мақсатын бекітеді.",
     "активные калории": "белсенді калориялар",
@@ -11839,6 +12124,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "без документа": "құжаты жоқ",
     "Без жёстких ограничений: можно добавить спокойную прогулку и оценивать недельный баланс.":
         "Қатты шектеулер жоқ: тыныш шеткі сапарды қосу және апталық балансты бағалау.",
+    "без контроля бодрствования": "сергек болудың бақылаусыз",
     "без лекарства": "дәрісіз",
     "Без ограничений": "Шексіз",
     "без ограничений": "шектеусіз",
@@ -11918,6 +12204,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "в пределах референса": "референс шегінде",
     "В профиле нет координат города.": "Профильде қала координаттары жоқ.",
     "В пути, мин": "Жолда, мин",
+    "в расписание «": "кестеге",
     "В списке есть антикоагулянт: взаимодействие нужно проверить у врача или фармацевта.":
         "Тізімде антикоагулянт бар: өзара әрекеттестігін дәрігерден немесе фармацевттен тексеру керек.",
     "В тренировках отмечалась боль: будущую нагрузку стоит снизить.":
@@ -11952,9 +12239,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "велотренажёр": "велотренажер",
     "вероятно в руках": "қолдарыңда болуы мүмкін",
     "вероятно используется": "пайдалануы мүмкін",
-    "Версия 1.8.1+10 · создатель: Редин Максим Юрьевич · info@thebestmks.ru":
-        "1.8.1+10 нұсқасы · жасаушы: Редин Максим Юрьевич · info@thebestmks.ru",
-    "Версия: 1.8.1+10": "Нұсқа: 1.8.1+10",
+    "Версия 1.8.2+11 · создатель: Редин Максим Юрьевич · info@thebestmks.ru":
+        "1.8.2+11 нұсқасы · жасаушы: Редин Максим Юрьевич · info@thebestmks.ru",
+    "Версия: 1.8.2+11": "Нұсқа: 1.8.2+11",
     "Вес": "Салмағы",
     "вес": "салмағы",
     "Вес порции и пищевая ценность являются ориентировочной оценкой класса блюда. Проверьте их перед подтверждением.":
@@ -11995,6 +12282,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Внесено голосом или командой помощника; условия измерения не указаны.":
         "Дауыс немесе көмекші командасы енгізген; өлшеу шарттары көрсетілмеген.",
     "Внесено командой помощника.": "Қасымшы командасымен.",
+    "Внесено помощником без количества и нутриентов; значения не выдумывались.":
+        "Көмекші сансыз және қоректік заттарсыз енгізді; мәндер ойлап шығарылмаған.",
     "внесённая калорийность заметно выше основного обмена, но недельный баланс и активность важнее одного дня.":
         "Ал апталық баланс және белсенділік бір күннен әлдеқайда маңызды.",
     "внесённая калорийность низкая относительно основного обмена; возможно, дневник заполнен не полностью.":
@@ -12064,6 +12353,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "вт": "жт",
     "Вторник": "Шішке",
     "вторник": "сейсенбі",
+    "Вчера ·": "Келесі күні ·",
     "вчера уже была тяжёлая тренировка": "Келесі күні қатты жаттығу болды.",
     "Вы": "Сіздер",
     "Выберите вариант": "Таңдаңыз",
@@ -12251,6 +12541,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Для чего применяется": "Неге қолданылады",
     "Дневник питания, БЖУ, рецепты и ручное подтверждение фото":
         "Тамақ күнделігі, ЖЖУ, рецепттер және қолмен растау фотосуреті",
+    "Дневник по датам": "Күндіздік",
     "Дневник самочувствия без диагнозов и назначений":
         "Диагноздар мен тағайындауларсыз денсаулығы күнделігі",
     "Дневник сна": "Ұйқы күндізі",
@@ -12268,6 +12559,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "До ориентира": "Бағдарға дейін",
     "добав": "қосылған",
     "Добавил": "Қосылды",
+    "Добавил время": "Уақыт қосылды",
     "Добавить": "Қосу",
     "Добавить в дневник": "Күндізге қосу",
     "Добавить врача или клинику": "Дәрігер немесе клиниканы қосу",
@@ -12416,6 +12708,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Завершить": "Аяқтау",
     "Завершить и сохранить": "Аяқтау және сақтау",
     "зависит от пола и возраста": "жынысына және жасына байланысты",
+    "завтра": "ертең",
     "завтрак": "таңғы ас",
     "Загружаем локальный сейф здоровья":
         "Жергілікті денсаулық сақтау сейфі жүктеледі",
@@ -12493,6 +12786,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "Біз рұқсат сұрап, құрылғыны іздеп жатырмыз...",
     "Запрещено системой; откройте системные настройки":
         "Жүйе тыйым салды; Жүйелік баптауларды ашу",
+    "Запрос обрабатывается в фоне": "Сұранысты аясында өңдеу",
     "Запрос пользователя:": "Пайдаланушы сұранысы:",
     "Запросить разрешение повторно": "Рұқсатты қайта сұра",
     "Запросить разрешения и синхронизировать":
@@ -12533,9 +12827,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "из-за холода выбран домашний вариант с более длинной разминкой":
         "суық болғандықтан , үй нұсқасы ұзағырақ ыдыспен таңдалды",
     "избегать задержки дыхания": "тыныс алудың кешіктірілуінен аулақ болу",
-    "Извлечённый текст:": "Көшірілген мәтін:",
     "Измените запрос или добавьте тег в карточку документа.":
         "Сұранысты өзгерту немесе құжаттың карточкасына тег қосу.",
+    "Изменить": "Өзгерту",
     "Изменить симптом": "Симптомды өзгерту",
     "Изменить сон": "Төс өзгертілсін",
     "измерения не найдены": "өлшемі табылмады",
@@ -12664,6 +12958,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Ккал": "Қал",
     "ккал": "ккал",
     "ккал · Б/Ж/У": "ккал · Б/Ж/У",
+    "ккал · расход": "ккал · шығыс",
+    "ккал · шаги": "қадамдар",
     "Ккал еды": "Тамақ қақпағы",
     "ккал за сутки": "тәулігіне ккал",
     "ккал, активность": "ккал, белсенділік",
@@ -12720,6 +13016,10 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Контекст дома и работы": "Үй мен жұмыс контексті",
     "Контекст телефона": "Телефонның мағынасы",
     "Контекст телефона:": "Телефонның мән-жайы:",
+    "контролем активности": "белсенділікті бақылау",
+    "контроль активности": "белсенділікті бақылау",
+    "Контроль бодрствования": "Ояу болуды бақылау",
+    "контроль бодрствования": "сергек болуды бақылау",
     "контроль лекарств": "дәрілік заттардың бақылауы",
     "Координаты": "Үйлестіруші",
     "Координаты используются только на устройстве для определения контекста.":
@@ -12749,7 +13049,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Курс:": "Курс:",
     "Күнтізбе": "Күнтізбе",
     "л": "l",
-    "л · калории": "l · калориялар",
+    "л · питание": "l · қоректендіру",
+    "л воды.": "Судан.",
     "л, шаги": "Л, қадамдар",
     "л.": "Л.",
     "л. Пейте небольшими порциями, если врач не ограничил жидкость.":
@@ -12844,6 +13145,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "мигрень": "мигрень",
     "Микрофон и голосовой ввод": "Микрофон және дауыс қосу",
     "мили": "миль",
+    "миллилитр": "миллилитр",
     "мин": "минус",
     "мин ·": "м-н",
     "мин · перенос доступен": "м · көшіру қол жетімді",
@@ -12903,10 +13205,10 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "етін қайтарған балықтарды қайтарған балықтарды қайтарған балықтарды қайтарған балықтарды қайтарған балықтарды қайтарған балықтарды қайтарған балықтарды қайтарған балықтарды қайтарған балықтарды қайтарған балықтарды қайтарған балықтарды қайтарған балықтарды қайтарған балықтарды қайтарған балықтарды қайтарған балықтарды қайтарған балықтарды қайтарған балықтарды қайтарған балықтарды қайтарған балықтарды қайтарған балықтарды қайтарған балықтар балықтарды қайтарған балықтарды қайтарған балықтар балықтарлар",
     "На весь экран": "Бүкіл экранға",
     "на ночь": "түнде",
-    "На проверку добавлено записей:": "Тексеруге мына жазулар қосылды:",
     "на работе": "жұмыс орнында",
     "На ручную проверку добавлено показателей:":
         "Қолмен тексеруге көрсеткіштер қосылды:",
+    "на сегодня": "бүгінге дейін",
     "на сегодня запланировано:": "Бүгінге жоспарланған:",
     "набор силы": "күш жинағы",
     "нагруз": "жүктемесі",
@@ -13010,8 +13312,10 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "нг/мл": "нг/мл",
     "не выбрано": "таңдалмаған",
     "не выбраны": "таңдалмаған",
+    "не дай уснуть": "ұйықтатпа",
     "не задана": "келтірілмеген",
     "не задано": "келтірілмеген",
+    "не заснуть": "ұйықтама",
     "Не извлечено:": "Алып алынбады:",
     "не компенсируйте еду голоданием; выберите спокойную прогулку и вернитесь к обычному плану.":
         "тамақпен ауытқытпаңыз, тыныш жүріп, әдеттегі жоспарға оралыңыз.",
@@ -13064,6 +13368,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "не указано в контексте. В конце укажи уверенность: высокая, средняя или низкая.":
         "Бұл контекстте көрсетілмеген. Соңында сенімділік туралы айтыңыз: жоғары, орта немесе төмен.",
     "Не указаны": "Көрсетілген жоқ",
+    "не уснул": "ұйықтамаған",
     "Не установлена; доступен быстрый режим и установка в разделе «Помощник».":
         "Тіркелмеген; жылдам режим және Қосымша бөлімінде орнату қол жетімді.",
     "Не хватает данных:": "Деректер жоқ:",
@@ -13152,7 +13457,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Обновить контекст": "Контексті жаңарту",
     "Обновить результаты поиска": "Іздеу нәтижелерін жаңарту",
     "Обновлено устройство:": "Құрылғы жаңартылды:",
-    "Обрабатываю локально...": "Жергілікті түрде өңдеу...",
     "обсудите с врачом:": "дәрігермен талқылаңыз:",
     "обсудить": "талқылау",
     "Обсудить план с помощником": "Қадаманы көмекшімен талқылау",
@@ -13176,6 +13480,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "Шектеулер, оңалту, дәрігер, құжаттар",
     "Ограничения:": "Шектеулер:",
     "ограничить бег": "жүгіруді шектеуге",
+    "один раз": "бір рет",
     "один сигнал": "бір сигнал",
     "одыш": "тынысы",
     "одышка": "тынысу",
@@ -13262,7 +13567,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Отмечено сегодня": "Бүгін белгіленді",
     "отмечено сегодня": "атап өтті бүгін",
     "Отправить": "Жіберу",
-    "Отправлено изображение:": "Суретті жіберді:",
     "Отпуск": "Демалыс",
     "отпуск": "демалыс",
     "Отпуск не запланирован": "Демалысы жоспарланбаған",
@@ -13325,6 +13629,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "перенесённая болезнь": "жұқпалы ауру",
     "переохлаждение": "қайта суыту",
     "Пересадок": "Қайта ауысу",
+    "Период контроля, мин": "Бақылау кезеңі, мин",
     "Периодически проверять локальные напоминания и расписание без отправки данных в сеть":
         "Желіде мәлімет жіберместен жергілікті ескертулерді және кестелерді тексеру",
     "Персональная проверка": "Жеке тексеру",
@@ -13372,9 +13677,11 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Пн": "Пн",
     "пн": "ж .",
     "пн, вт, ср, чт, пт": "пн, вт, ср, чт, пт",
+    "по будням": "апта сайын",
     "по внесённым данным допустима обычная плановая нагрузка с контролем самочувствия.":
         "енгізілген деректер бойынша денсаулығын бақылаумен әдеттегі жоспарлы жүктеме рұқсат етіледі.",
     "По внесённым приёмам пищи:": "Тамақтардың енгізілген түрлері бойынша:",
+    "по выходным": "демалыс күндері",
     "по геолокации": "геолокация бойынша",
     "по дням недели": "аптаның күндері бойынша",
     "По какое число": "Қанша сан бойынша",
@@ -13394,12 +13701,18 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Побочные эффекты и реакции": "Қосалқы әсерлер және реакциялар",
     "Побочные эффекты:": "Қосалқы әсері:",
     "Повседневная активность": "Күнделікті белсенділік",
+    "Повтор": "Қайталау",
     "повторений": "қайталау",
     "Повторите PIN": "PIN- ні қайталау",
     "Повторно запрашивать PIN или биометрию для чувствительных документов":
         "Сезімтал құжаттар үшін PIN немесе биометрияны қайта сұрау",
+    "Повторять сигнал при отсутствии движения после подъёма.":
+        "Көтерілгеннен кейін қозғалыс болмаған жағдайда сигналды қайталау.",
     "Повторяющиеся симптомы:": "Қайталайтын белгілер:",
     "Повышает масштаб интерфейса": "Интерфейстің масштабын ұлғайту",
+    "Погода временно недоступна": "Ауа райы уақытша қолжетімді емес",
+    "Погода временно недоступна. Климатический профиль продолжает работать локально.":
+        "Ауа райы уақытша қолжетімді емес. Климаттық профиль жергілікті деңгейде жұмыс істеуін жалғастырады.",
     "Погода и климат": "Ауа-райы мен климат",
     "Погода недоступна": "Ауа райы қолжетімді емес",
     "Погода подходит для обычной нагрузки с учётом самочувствия.":
@@ -13526,6 +13839,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "последние симптомы:": "соңғы белгілері:",
     "последняя запись сна:": "соңғы ұйқы жазбасы:",
     "Последняя запись:": "Соңғы жазба:",
+    "послезавтра": "ертеңгі күні",
     "постав": "орнату",
     "Постепенное пробуждение": "Артқалай ойғану",
     "потер": "жоғалту",
@@ -13537,6 +13851,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Предупреждение": "Ескерту",
     "Предупреждения": "Ескертулер",
     "Препарат": "Препарат",
+    "препарат": "препарат",
     "препаратов, принято сегодня": "бүгін қабылданған дәрілер",
     "Препараты": "Дары-дәрмектер",
     "Препараты не распознаны. Проверьте качество снимка или добавьте лекарство вручную.":
@@ -13551,7 +13866,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Приготовление": "Дайындау",
     "прием": "қабылдау",
     "Прикреплённый файл не найден": "Қосылған файл табылмады",
-    "Приложен файл:": "Қосылған файл:",
     "приложение открыто": "қосымша ашылған",
     "Приложение работает без браслета: вес, сон, шаги, еда и тренировки можно вводить вручную.":
         "Қолданба қолғапсыз жұмыс істейді: салмақ, ұйқы, қадамдар, тамақ және жаттығуларды қолмен енгізуге болады.",
@@ -13584,10 +13898,12 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Проверить симптомы": "Симптомдарын тексеру",
     "Проверить снова": "Қайта тексеру",
     "Проверить уведомление": "Хабарламаны тексеру",
+    "проверка активности": "белсенділікті тексеру",
     "Проверка назначения": "Жөндеуді тексеру",
     "Проверка недоступна:": "Тексеруге қол жетімді емес:",
     "проверка разрешений": "рұқсаттарды тексеру",
     "Проверка распознавания": "Таңдауды тексеру",
+    "проверкой активности": "белсенділікті тексеру",
     "Проверь лекарства и остатки": "Дәрілік заттар мен қалдықтарды тексеріңіз",
     "Проверьте аллерген в дневнике": "Аллергенді күндiзбенiң iшiнде тексеріңіз",
     "Проверьте белок и полноту дневника":
@@ -13612,6 +13928,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "Етпеген тамақтарды тексеріңіз және арнайы маманданбастан тамақты қатты азайтпаңыз.",
     "Проверяем доступность...": "Қолжетімділікті тексеріп жатырмыз...",
     "Проверяем локальную модель...": "Жергілікті модельді тексеріп жатырмыз...",
+    "проверяй активность": "белсенділігін тексеріңіз",
+    "проверяй бодрствование": "сергек тұрғанын тексеріңіз",
+    "Проверять через, мин": "Мен арқылы тексеріңіз",
     "прогулки": "жүруге",
     "Продолжить": "Жалғастыру",
     "Продолжить тренировку": "Оқуды жалғастыру",
@@ -13710,6 +14029,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Расстояние, км": "Қашықтығы, км",
     "раствор": "ерітіндісі",
     "растяж": "ұзарту",
+    "расход": "шығыс",
     "Расчёт по данным профиля и сегодняшним отметкам.":
         "Профильге және бүгінгі таңдағы белгілерге қарай есеп.",
     "расчётная готовность": "есептік дайындық",
@@ -13849,9 +14169,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Сегодня важнее восстановление. Не тренируйтесь через боль, температуру или резкое ухудшение самочувствия.":
         "Бүгін қалпына келтіру маңызды. Ауырлық, температура немесе қатты нашарлау арқылы жаттығудан бас тартыңыз.",
     "Сегодня дежурство": "Бүгін кезекшілік",
+    "Сегодня записано": "Бүгін жазылған",
     "сегодня отмечен тревожный симптом или высокая интенсивность жалобы.":
         "Бүгін қатаң белгі немесе шағымның қарқындылығы байқалады.",
-    "сегодня.": "Бүгін.",
     "Сегодня: сон": "Бүгін: ұйқы",
     "Сейчас активен режим поездки: при ночной дороге, смене часового пояса или недосыпе нагрузка автоматически считается восстановительной.":
         "Қазір жол жүріс режимі белсенді: түнде жол жүргенде, сағат белдеуін ауыстырғанда немесе ұйықтамағанда жүктеме автоматты түрде қалпына келтіріледі.",
@@ -13859,12 +14179,15 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "сентябрь": "қыркүйек айы",
     "Сервер модели вернул код": "Үлгі сервері кодты қайтарады",
     "Сервис": "Қызмет",
+    "Сервис погоды временно вернул ошибку. Повторная попытка будет выполнена автоматически.":
+        "Ауа райы қызметі уақытша қате жіберді. Қайталап көріңіз.",
+    "Сервис погоды не ответил вовремя. Климатический профиль продолжает работать локально.":
+        "Ауа райы қызметі уақытылы жауап бермеді. Климат профилі жергілікті түрде жұмыс істеуде.",
     "Сетевое видео отключено офлайн-режимом":
         "Желілік бейне офлайн режимде өшірілді",
     "Сетевое изображение скрыто": "Желідегі суретті жасыру",
     "Сетевые данные отключены режимом «Полностью офлайн». Климатический профиль продолжает работать.":
         "Желі деректері Түлек офлайн режимінде ажыратылды. Климаттық профиль жұмыс істеуін жалғастырады.",
-    "Сжимаю и анализирую локально...": "Жергiлiктi түрде сынама және талдау...",
     "сил": "күштері",
     "силовая": "күшті",
     "Силовая тренировка по инвентарю": "Жабдықтар бойынша күш жаттығулары",
@@ -14030,6 +14353,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Срочно:": "Тез арада:",
     "срочных пунктов; начните с них.": "Тездік пункттер; солардан бастаңыз.",
     "стабильно": "тұрақты",
+    "стакан": "стакан",
     "Стандартные GATT-сервисы читаются автоматически. Для закрытых или редких устройств добавьте UUID вручную.":
         "GATT стандартты қызметтерін автоматты түрде оқиды. Жабық немесе сирек құрылғылар үшін UUID-ді қолмен қосыңыз.",
     "стандартный": "стандартты",
@@ -14127,6 +14451,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Точность": "Дұрыслығы",
     "точность GPS": "GPS дәлдігі",
     "Точные будильники": "Дұрыс сергітушілер",
+    "Точные будильники недоступны (": "Толық ескертулер қолжетімді емес (",
     "тошнота": "асқазан",
     "травма": "жарақаттану",
     "Травмы в течение жизни": "Өмір бойығы жарақаттар",
@@ -14258,6 +14583,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Файл анализа:": "Таңдау файлы:",
     "Файл в защищённом хранилище:": "Қорғалған сақтау орнында файл:",
     "Файл в медицинском сейфе не найден": "Медициналық сейфтегі файл табылмады",
+    "Файл вложения не найден": "Қосылым файлы табылмады",
     "Файл не содержит резервную копию приложения.":
         "Файлда қосымшаның резервтік көшірмесі жоқ.",
     "Файл/импорт": "Файл / импорт",
@@ -14274,6 +14600,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "фитнес-тренажёр FTMS": "FTMS фитнес-тренижерлері",
     "Фокус": "Фокус",
     "Фокусы тренировок": "Машығуға арналған фокустар",
+    "Фоновая обработка": "Ая өңдеу",
     "Фоновая работа": "Тақырыбындағы жұмыс",
     "Фоновый анализ": "Тақырыбының талдау",
     "Форма": "Нысан",
@@ -14412,18 +14739,20 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "(*?(?:\\s?:referen*ststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststststst",
     "(?:\\s+(?:референс|норма|reference)?\\s*([<>]?\\s*\\d+(?:[,.]\\d+)?(?:\\s*[-–]\\s*\\d+(?:[,.]\\d+)?)?))?":
         "(?:\\s+(?:referens der Norm der Vergangenheit)?\\s([<>]?\\s*\\d+(?:[,.]\\d+)?(?:\\s*[-]\\s*\\d+(?:[,.]\\d+)?)?",
+    "(?:^|\\s)(?:в|на)\\s+([01]?\\d|2[0-3])(?:\\s*(?:час[а-яё]*|ч))?(?=\\s|":
+        "(?: ich bin hier?) (in der Schrift) (in der Schrift) (in der Schrift) (in der Schrift) (in der Schrift) (in der Schrift) (in der Schrift) (in der Schrift) (in der Schrift) (in der Schrift) (in der Schrift) (in der Schrift) (in der Schrift) (in der Schrift) (in der Schrift) (in der Schrift) (in der Schrift) (in der Schrift) (in der Schrift) (in der Schrift) (in der Schrift) (in der Schrift) (in der Schrift) (in der Schrift) (in der Schrift) (in der Schrift) (in der Schrift) (in der Schrift) (in der Schrift) (in der Schrift) (in der Schrift) (in der Schrift) (in der Schrift) (in der Schrift) (in der Schrift) (in der Schrift) (in der Schrift) (in der Schrift) (in der Schrift) (in der Schrift) (in der Schrift) (in der",
+    "(?:^|\\s)через\\s+(\\d{1,3})\\s*(минут[а-яё]*|мин|час[а-яё]*|ч)(?=\\s|":
+        "(?: Ich bin nicht mehr da, ich bin nicht da, ich bin nicht da, ich bin nicht da, ich bin nicht da, ich bin nicht da, ich bin da, ich bin hier, ich bin hier, ich bin hier, ich bin hier, ich bin hier, ich bin hier, ich bin hier, ich bin hier, ich bin hier, ich bin hier, ich bin hier, ich bin hier, ich bin hier, ich bin hier, ich bin hier, ich bin hier, ich bin hier, ich bin hier, ich bin hier, ich bin hier, ich bin hier, ich bin hier, ich bin hier, ich bin hier, ich bin hier, ich bin hier, ich bin hier, ich bin hier, ich bin hier, ich bin hier, ich bin hier, ich bin hier, ich bin hier, ich bin hier, ich bin hier, ich bin hier, ich bin hier, ich bin hier, ich bin hier, ich bin hier, ich bin hier, ich bin hier, ich bin hier, ich bin hier, ich bin hier, ich bin hier, ich bin hier, ich bin hier, ich bin hier, ich bin hier, ich bin hier, ich bin hier, ich bin hier, ich bin hier, ich bin",
     "(?:анализ|показатель|результат(?:\\s+анализа)?)\\s+([a-zа-яё][a-zа-яё0-9 ()+._-]{1,60}?)\\s*[:=-]?\\s*([<>]?\\s*\\d+(?:[\\.,]\\d+)?)\\s*":
         "(Analyse des Doppelpunkts?:Resultat?:Behandlung)?)\\s+([a-za-ya-yo][a-za-yayo0-9 () ++._-]{1,60}?)\\s*[:=-]?\\s*([<>]?\\s*\\d+(?:[\\.,]\\d+)?)\\s*",
     "(?:белок|protein|протеин|б)\\D{0,10}(\\d{1,3})":
         "Das ist ein Protein, das sich aus dem Körper erzeugt.",
-    "(?:будильник|разбуди|подъ[её]м).*?(?:в|на)?\\s*((?:[01]?\\d|2[0-3])[:\\.]\\d{2})":
-        "Der Aufschwemmungsgerät ist ein \"Bauer\" (Bauer)",
+    "(?:будильник|разбуди|подъ[её]м)":
+        "•:Ausrufer des Schmerzschmerzes (under'em)",
     "(?:вес|масса|weight)\\s*(?:сегодня|now)?\\s*[:=-]?\\s*(\\d{2,3}(?:[\\.,]\\d)?)\\s*(?:кг|kg)?\\b":
         "(?:Weg des Schwergewichts des Schwergewichts)",
-    "(?:выпил[а-яё]*|добав[а-яё]*|запиш[а-яё]*|water).*?(\\d+(?:[\\.,]\\d+)?)\\s*(мл|ml|л|l)(?![a-zа-яё])":
-        "?::trunken[a-yao]*dieren[a-yao] (dierenbespitzt[a-yao]*dierenwater).*?(\\d+(?:[\\.,]\\d+)?)\\s*(mlml",
-    "(?:гемоглоб|глюкоз|холестерин|ферритин|референс|ммоль/л|мг/дл|анализ крови)":
-        "(Hemoglobin-Durchschnitts-Durchschnitts-Durchschnitts-Durchschnitts-Durchschnitts-Durchschnitts-Durchschnitts-Durchschnitts-Durchschnitts-Durchschnitts-Durchschnitts-Durchschnitts-Durchschnitts-Durchschnitts-Durchschnitts-Durchschnitts-Durchschnitts-Durchschnitts-Durchschnitts-Durchschnitts-Durchschnitts-Durchschnitts-Durchschnitts-Durchschnitts-Durchschnitts-Durchschnitts-Durchschnitts-Durchschnitts-Durchschnitts-Durchschnitts-Durchschnitts-Durchschnitts-Durchschnitts-Durchschnitts-Durchschnitts-Durchschnitts-Durchschnitts-Durchschnitts-Durchschnitts-Durchschnitts-Durchschnitts-Durchsch",
+    "(?:выпил[а-яё]*|добав[а-яё]*|запиш[а-яё]*|укаж[а-яё]*|вод[а-яё]*|water).*?(\\d+(?:[\\.,]\\d+)?)\\s*(мл|ml|миллилитр[а-яё]*|л|l|литр[а-яё]*|стакан[а-яё]*)(?![a-zа-яё])":
+        ":::trinkte[a-yao] zu* zu* (a-yao* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu* zu",
     "(?:глюкоз[а-яё]*|сахар[а-яё]*\\s+кров[а-яё]*|glucose)\\s*[:=-]?\\s*(\\d{1,3}(?:[\\.,]\\d+)?)":
         "(?:Glucose[a-yao]* zu bekommen?",
     "(?:давлен[а-яё]*|pressure)\\s*[:=-]?\\s*(\\d{2,3})\\s*[/\\\\]\\s*(\\d{2,3})(?:\\s+(?:пульс|pulse)\\s*(\\d{2,3}))?":
@@ -14442,16 +14771,14 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "(?:калории|calories)\\D{0,12}(\\d{2,4})": "(?:Kalorien von Kalorien)",
     "(?:качеств[а-яё]*|оценк[а-яё]*)\\s*(?:сна)?\\s*[:=-]?\\s*([1-5])":
         "(?:Qualitäten[a-yao]* die Bewertung[a-yao]*)\\s*(?:Schlaf)?\\s*[:=-]?\\s*([1-5])",
-    "(?:ккал|калори|белк|жир|углевод|состав|пищевая ценность)":
-        "•Kkal der Ernährung (Kkal der Ernährung)",
     "(?:клетчатка|пищевые волокна|fibre|fiber)\\D{0,12}(\\d{1,3}(?:[,.]\\d+)?)":
         "(Zellzelle von Schleiffasern) Die Fiber-Fibre ist nicht mehr ausgerichtet.",
     "(?:масса|вес|порция|net weight|serving)\\D{0,12}(\\d{1,4})\\s*(?:г|g)":
         "Die Masse ist nicht mehr so hoch wie die Masse des Gewichts.",
     "(?:на|per)\\s*100\\s*(?:г|g)":
         "(auf: auf: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu: zu",
-    "(?:напомни|напоминание|remind).*?(\\d{1,2})[:\\.](\\d{2})":
-        "(?:Erinnern Sie sich an die Erinnerung an die Erinnerung an die Erinnerung an die Erinnerung an die Erinnerung an die Erinnerung an die Erinnerung an die Erinnerung an die Erinnerung an die Erinnerung an die Erinnerung an die Erinnerung an die Erinnerung an die Erinnerung an die Erinnerung an die Erinnerung an die Erinnerung an die Erinnerung an die Erinnerung an die Erinnerung an die Erinnerung an die Erinnerung an die Erinnerung an die Erinnerung an die Erinnerung an die Erinnerung an die Erinnerung an die Erinnerung an die Erinnerung an die Erinnerung an die Erinnerung an die Erinnerung an die Erinnerung an die Erinnerung an die Erinnerung an die Erinnerung an die Erinnerung an die Erinnerung",
+    "(?:напомни|напоминание|remind)":
+        "(?:erinnern Sie sich zu einer Erinnerung zu einer Erinnerung zu einer Erinnerung zu einer Erinnerung zu einer Erinnerung zu einer Erinnerung zu einer Erinnerung zu einer Erinnerung zu einer Erinnerung zu einer Erinnerung zu einer Erinnerung zu einer Erinnerung zu einer Erinnerung zu einer Erinnerung zu einer Erinnerung zu einer Erinnerung zu einer Erinnerung zu einer Erinnerung zu einer Erinnerung zu einer Erinnerung zu einer Erinnerung zu einer Erinnerung zu einer Erinnerung zu einer Erinnerung zu einer Erinnerung zu einer Erinnerung zu einer Erinnerung zu einer Erinnerung)",
     "(?:по\\s+[^.;,]{0,25}\\s+)?\\d+\\s*раз(?:а|у|)\\s+(?:в|за)\\s+(?:день|сутки)":
         "Es ist ein sehr schönes Beispiel für die Art und Weise, wie man das hier sieht.",
     "(?:поставь|создай|заведи|добавь|разбуди(?:\\s+меня)?|будильник|подъ[её]м)":
@@ -14460,6 +14787,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
         ":reference (Norma des Bleibe Referenz) \\D{0,12}([\\d,.]+ ?[-] ?[\\d,.]+)",
     "(?:сахара|сахар|sugars?|из них сахара)\\D{0,12}(\\d{1,3}(?:[,.]\\d+)?)":
         "Und die anderen, die sich mit dem Zucker beschäftigen, sind die anderen.",
+    "(?:сколько|покажи|какой|какое|текущ[а-яё]*|итого)":
+        "(?: wie viel ich zu dir bringe, wenn du dich nicht aufhören willst)",
     "(?:соль|salt)\\D{0,10}(\\d{1,3}(?:[,.]\\d+)?)":
         "(?:salz nicht) \\D{0,10}(\\d{1,3}(?:[,.]\\d+)?)",
     "(?:спал[а-яё]*|сон|sleep).*?(\\d{1,2}(?:[\\.,]\\d+)?)\\s*(?:ч(?:ас(?:а|ов)?)?|hours?|h)(?![a-zа-яё])":
@@ -14468,8 +14797,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "(?:schlafen[a-yayo]*) haben sie geschlafen.*?(\\d{1,2}[:\\.](\\d{2})\\s*(?:d",
     "(?:съел[а-яё]*|выпил[а-яё]*|запиш[а-яё]*\\s+(?:еду|при[её]м пищи)|добав[а-яё]*\\s+(?:еду|блюдо))\\s+(.+?)\\s+(\\d{1,4})\\s*(?:ккал|kcal)(?![a-zа-яё])":
         "::[a-yao] zu essen* zu trinken ([a-yao] zu trinken* zu schreiben**\\s+(?:zu essen zu schlafen* zu schlafen) zu schlafen zu haben ([a-yao] zu schlafen zu schlafen)",
-    "(?:таблет|капсул|принимать|назначен|рецепт|дозиров)":
-        "(Tablette des Schadstoffs?: nehmen Sie das für Sie bestimmte Schadstoffrezept)",
+    "(?:съел[а-яё]*|поел[а-яё]*|перекусил[а-яё]*|выпил[а-яё]*|добав[а-яё]*\\s+(?:еду|блюдо)|запиш[а-яё]*\\s+(?:что\\s+)?(?:я\\s+)?(?:съел[а-яё]*|поел[а-яё]*))\\s+(.+)":
+        "Er hat [a-yao] auch zu Hause geessen, aber es gibt auch noch einige andere Dinge, die man nicht kann.",
     "(?:таблетк[а-яё]*|капсул[а-яё]*|раствор[а-яё]*|сироп[а-яё]*|суспензи[а-яё]*|":
         "(?:tablettik*a-yao*ka zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu",
     "(?:температур[а-яё]*|temperature)\\s*[:=-]?\\s*(3[4-9]|4[0-2])(?:[\\.,](\\d))?":
@@ -14477,8 +14806,24 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "(?:тренировк[а-яё]*|пробежал[а-яё]*|бегал[а-яё]*|занимал[а-яё]*).*?(\\d{1,3})\\s*(?:мин|минут)":
         "(?:Trainer*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*r*",
     "(?:углеводы|carbs|у)\\D{0,10}(\\d{1,3})": "(Kohlenwasserstoffe?:carbs?:b)",
+    "(?<![a-zа-яё])(?:в|на)\\s*\\d{1,2}(?:[:\\.]\\d{2})?(?![a-zа-яё0-9])":
+        "Sie ist ein sehr guter Anbieter.",
+    "(?<![a-zа-яё])(?:в|на)\\s*\\d{1,2}(?:[:\\.]\\d{2})?(?:\\s*(?:час[а-яё]*|ч))?(?![a-zа-яё0-9])":
+        "Sie ist ein sehr guter Anbieter von \"Frauen\" und \"Frauen\" und \"Frauen\" und \"Frauen\" und \"Frauen\" und \"Frauen\" und \"Frauen\" und \"Frauen\" und \"Frauen\" und \"Frauen\" und \"Frauen\" und \"Frauen\" und \"Frauen\" und \"Frauen\" und \"Frauen\" und \"Frauen\" und \"Frauen\" und \"Frauen\" und \"Frauen\" und \"Frauen\" und \"Frauen\" und \"Frauen\" und \"Frauen\" und \"Frauen\" und \"Frauen\" und \"Frauen\" und \"Frauen\" und \"Frauen\" und \"Frauen\" und \"Frauen\" und \"Frauen\" und \"Frauen\" und \"Frauen\" und \"Frauen\" und \"Frauen\" und \"Frauen\" (Frauen).",
+    "(?<![a-zа-яё])(?:каждый день|ежедневно|по будням|по выходным|сегодня|завтра|послезавтра)(?![a-zа-яё])":
+        "<![a-za-yayo]) ?????:jeder Tag zuerst (täglich zuerst)",
+    "(?<![a-zа-яё])(?:не дай уснуть|не заснуть|не уснул)(?![a-zа-яё])":
+        "Ich habe mich nicht geschlafen lassen.",
+    "(?<![a-zа-яё])(?:с|и)?\\s*(?:проверкой|контролем)\\s+(?:активности|бодрствования)(?![a-zа-яё])":
+        "Die Aktivität der Aufmerksamkeit wird durch die Überprüfung durch die Kontrolle überprüft.",
+    "(?<![a-zа-яё])(?:сегодня|только что)(?![a-zа-яё])":
+        "Ich bin nicht sicher, ob ich das hier tun kann.",
+    "(?<![a-zа-яё])через\\s+\\d+\\s*(?:минут[а-яё]*|мин|час[а-яё]*|ч)(?![a-zа-яё])":
+        "Sie ist ein sehr guter Anbieter.",
     "(\\d+(?:[,.]\\d+)?)\\s*(?:ммоль/л|мг/дл|г/л|нг/мл|мед/л|ме/л|%)":
         "(\\d+(?:[,.]\\d+)?) \\s*(?:mol/l zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu zu",
+    "(\\d+(?:[\\.,]\\d+)?)\\s*(мл|ml|миллилитр[а-яё]*|л|l|литр[а-яё]*|стакан[а-яё]*)(?![a-zа-яё]).*?(?:вод[а-яё]*|выпил[а-яё]*|добав[а-яё]*|запиш[а-яё]*|water)":
+        "(\\d+(?:\\.,]\\d+)?) \\s*(ml erhielt Millililiter[a-yao] von der Art und Weise, wie er erhielt, dass er er sich in die Wüste der Stadt befand.",
     "(\\d{1,3}(?:[\\.,]\\d+)?)\\s*(?:км|km)":
         "(\\d{1,3}(?:[\\.,]\\d+)?)\\s*(km?:",
     "(\\d{1,4})\\s*(?:г|g)\\b":
@@ -14496,6 +14841,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "(ммоль/л|мкмоль/л|мг/дл|мг/л|г/л|г/дл|мкг/л|нг/мл|пг/мл|мед/л|ме/л|ед/л|mmol/l|umol/l|µmol/l|mg/dl|mg/l|g/l|g/dl|µg/l|ug/l|ng/ml|pg/ml|iu/l|u/l|10\\^?[*x×]?\\d+/л|фл|fl|пг|pg|%)":
         "(immersion/lmmmmmmll/lmmml) (immersion/lmml) (immersion/lmml) (immersion/lml) (immersion/lml) (immersion/lml) (immersion/lml) (immersion/lml) (immersion/lml) (immersion/l) (immersion/l) (immersion/l) (immersion/l) (immersion/l) (immersion/l) (immersion/l) (immersion/l) (immersion/l) (immersion/l) (immersion/l) (immersion/l) (immersion/l) (immersion/l) (immersion/l) (immersion/l) (immersion/l) (immersion/l) (immersion/l) (immersion/l) (immersion/l) (immersion/l) (immersion/l",
     "). Дозировку я не изменяю.": "Ich ändere nicht die Dosis.",
+    "); используется приблизительное системное расписание.":
+        "); ein systematisches Schema verwendet wird.",
     ")} · день": "Tag",
     ")}. Отложите тренировку; при резком ухудшении или опасных признаках обратитесь за неотложной помощью.":
         ") }) Verzögern Sie das Training; wenn Sie sich stark verschlechtern oder gefährliche Anzeichen haben, suchen Sie sofortige Hilfe.",
@@ -14527,8 +14874,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     ", цель": ", Ziel",
     ". Добавил их на проверку; после подтверждения приложение создаст расписание и напоминания. Дозировки автоматически не меняются.":
         "- Sie wurden zur Überprüfung hinzugefügt. Nach der Bestätigung wird die App einen Zeitplan und eine Erinnerung erstellen.",
-    ". Изменения применятся после подтверждения.":
-        "- Die Änderungen werden nach der Bestätigung angewendet.",
     ". Не используйте распознанные назначения до сверки с оригиналом.":
         "- Verwenden Sie nicht die identifizierten Kennzeichen, bevor Sie das Original nicht vergleichen.",
     ". Невозможные скачки координат отфильтрованы.":
@@ -14578,6 +14923,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     ": не удалось разобрать": ": nicht gelungen zu lösen",
     ": осталось": ": bleibt",
     ": пакет короче заявленного": ": ein Kürzerpaket als das angegebene",
+    ": проверка бодрствования": ": Wachschutzprüfung",
     ": характеристика не найдена": ": Kennzeichnung nicht gefunden",
     "; выбран ближайший расчётный конец цикла сна.":
         "Sie wählen das nächste Berechnungsende des Schlafzyklus.",
@@ -14595,22 +14941,24 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "[^a-zа-яё0-9]+": "Ich bin nicht der einzige, der das kann.",
     "[a-zа-яё]*\\s*[:=-]?\\s*(\\d{1,3}(?:[\\.,]\\d+)?)\\s*(?:г|g)?":
         "Ich habe die Möglichkeit, das zu tun.",
-    "\\b(?:в|на)\\s*\\d{1,2}[:\\.]\\d{2}\\b":
-        "Ich bin nicht der einzige, der das kann.",
     "\\b(гемоглобин|ферритин|холестерин|триглицериды|креатинин|мочевина|билирубин|алт|аст|ттг|витамин\\s+[a-zа-яё0-9]+|с-?реактивный\\s+белок)\\s*[:=-]?\\s*([<>]?\\s*\\d+(?:[\\.,]\\d+)?)\\s*":
         "Hämoglobin beim Bleiferten beim Bleiferten beim Bleifertigelsterin beim Bleifertigelterin beim Bleifertigelterin beim Bleiferten beim Bleiferten beim Bleiferten beim Bleiferten beim Bleiferten beim Bleiferten beim Bleifertigelter Vitamin (s+[a-z-a-yayo0-9]+ beim Bleiferten (s+s+b)?",
-    "\\d+(?:[\\.,]\\d+)?\\s*(?:мг|мкг|мл|ме|ед\\.)":
-        "Ich habe mich nicht gefreut, dass ich mich nicht mehr fühle.",
     "\\d+(?:[\\.,]\\d+)?\\s*(?:мкг|мг|г|мл|ед\\.?|ме)":
         "Ich habe die Möglichkeit, mich zu verhalten.",
     "\\d+(?:[\\.,]\\d+)?\\s*(?:мкг|мг|г|мл|ед\\.?|ме|iu|mcg|mg|ml)(?![a-zа-яё])":
         "Ich habe mich in die Schatten des Schreibens befestigt.",
+    "\\d+(?:[\\.,]\\d+)?\\s*(?:мл|л|литр|стакан)":
+        "Ich habe das Gefühl, dass ich mich nicht mehr fühlen kann.",
     "\\d+\\s*(?:дн(?:я|ей|ь)?|сут(?:ок|ки)?|недел[а-яё]*|месяц[а-яё]*)(?![а-яё])":
         "Sie sind ein paar Monate lang im Leben.",
+    "\\d{1,4}\\s*(?:ккал|kcal)":
+        "Ich habe das Gefühl, dass ich es nicht mehr habe.",
     "^(?:врач\\s+)?(?:мне\\s+)?(?:назначил(?:а|и)?|назначение|рецепт|принимать)\\s*[:\\-]?\\s*":
         "Er hat mir ein Rezept gegeben.",
     "^(?:как|что|почему|зачем|когда|где|можно\\s+ли|расскажи|объясни|проанализируй|how|what|why|when|where|can\\s+i)\\b":
         "Wie kann ich das, was ich habe, verstehen, was ich habe, wenn ich es kann, oder fragen, was ich habe, erklären, was ich habe, analysieren, wie ich es kann, wenn ich es kann?",
+    "^(?:что\\s+)?(?:я\\s+)?(?:съел[а-яё]*|поел[а-яё]*|перекусил[а-яё]*)\\s+":
+        "Was ist das? Ich habe es gegessen.",
     "^[^a-zа-яё]+": "^[^a-z-a-yayo]+",
     "^\\*\\*(?:Answer|Ответ):\\*\\*\\s*":
         "Ich bin nicht der einzige, der das kann.",
@@ -14684,7 +15032,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "UUID характеристики записи": "UUID-Eigenschaften des Datensatzes",
     "Vault был восстановлен из безопасного начального состояния.":
         "Vault wurde aus einem sicheren Ausgangszustand wiederhergestellt.",
-    "Vision-анализ недоступен:": "Vision-Analyse nicht verfügbar:",
     "°C · высота": "°C · Höhe",
     "· вес": "Gewicht",
     "· визуальная оценка": "· visuelle Bewertung",
@@ -14712,9 +15059,13 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "» перед выполнением.": "Vor der Ausführung.",
     "», интенсивность": ", die Intensität",
     "». Извлечённый текст:": ". Ausgelegte Wortlaut:",
+    "». Калории и Б/Ж/У оставлены пустыми; добавьте порцию или уточните данные, когда они известны.":
+        "Kalorien und B/G/U sind leer; fügen Sie eine Portion hinzu oder klären Sie die Daten, wenn sie bekannt sind.",
     "». Перед продолжением рекомендуется сделать копию текущих данных.":
         "Bevor wir fortfahren, wird empfohlen, eine Kopie der aktuellen Daten anzufertigen.",
     "». Текст для анализа не найден.": ". Der Analysetext ist nicht gefunden.",
+    "». Уведомления о приёме будут планироваться по курсу препарата.":
+        ". Die Einnahmebestätigungen werden nach dem Kurs des Medikaments geplant.",
     "август": "August",
     "Автозапись GPS/GLONASS:": "Autorecording GPS/GLONASS:",
     "Автозапуск": "Autostart",
@@ -14739,6 +15090,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "активное движение": "Aktives Bewegung",
     "Активность": "Tätigkeit",
     "Активность и вода": "Aktivität und Wasser",
+    "Активность после подъёма не подтверждена. Откройте приложение и отключите сигнал.":
+        "Wird die Aktivität nach dem Aufstieg nicht bestätigt?",
     "Активность хорошая: шаги уже закрывают базовую цель дня.":
         "Aktivität ist gut: Die Schritte schließen bereits das Grundziel des Tages ab.",
     "активные калории": "Kalorien",
@@ -14797,6 +15150,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "без документа": "papierlos",
     "Без жёстких ограничений: можно добавить спокойную прогулку и оценивать недельный баланс.":
         "Ohne starre Einschränkungen: Sie können einen ruhigen Spaziergang hinzufügen und die wöchentliche Bilanz bewerten.",
+    "без контроля бодрствования": "Ohne Wachkontrolle",
     "без лекарства": "drogenlos",
     "Без ограничений": "Keine Einschränkungen.",
     "без ограничений": "grenzenlos",
@@ -14878,6 +15232,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "В профиле нет координат города.":
         "Es gibt keine Stadtkoordinaten im Profil.",
     "В пути, мин": "Unterwegs, meine.",
+    "в расписание «": "in den Zeitplan",
     "В списке есть антикоагулянт: взаимодействие нужно проверить у врача или фармацевта.":
         "Es gibt eine Antikoagulante auf der Liste: Sie müssen bei einem Arzt oder einem Apotheker überprüft werden.",
     "В тренировках отмечалась боль: будущую нагрузку стоит снизить.":
@@ -14913,9 +15268,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "велотренажёр": "Ausbilder",
     "вероятно в руках": "Wahrscheinlich in den Händen.",
     "вероятно используется": "wahrscheinlich verwendet",
-    "Версия 1.8.1+10 · создатель: Редин Максим Юрьевич · info@thebestmks.ru":
-        "Version 1.8.1+10 · Schöpfer: Radin Maxim Jüriewitsch · info@thebestmks.ru",
-    "Версия: 1.8.1+10": "Version: 1.8.1+10",
+    "Версия 1.8.2+11 · создатель: Редин Максим Юрьевич · info@thebestmks.ru":
+        "Version 1.8.2+11 · Schöpfer: Radin Maxim Jüriewitsch · info@thebestmks.ru",
+    "Версия: 1.8.2+11": "Version: 1.8.2+11",
     "Вес": "Gewicht.",
     "вес": "Gewicht",
     "Вес порции и пищевая ценность являются ориентировочной оценкой класса блюда. Проверьте их перед подтверждением.":
@@ -14957,6 +15312,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Внесено голосом или командой помощника; условия измерения не указаны.":
         "Eintritt durch Stimme oder Kommando des Helfer; die Messbedingungen sind nicht angegeben.",
     "Внесено командой помощника.": "Das ist ein Team des Assistenten.",
+    "Внесено помощником без количества и нутриентов; значения не выдумывались.":
+        "Einigerseits wurde es von einem Helfer ohne Anzahl und Nährstoffe eingeführt; die Werte wurden nicht erfunden.",
     "внесённая калорийность заметно выше основного обмена, но недельный баланс и активность важнее одного дня.":
         "Die Kalorien, die sie einbringen, sind deutlich höher als die Hauptveränderung, aber die Woche ist wichtiger als ein Tag.",
     "внесённая калорийность низкая относительно основного обмена; возможно, дневник заполнен не полностью.":
@@ -15025,6 +15382,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "вт": "Volt",
     "Вторник": "Dienstag.",
     "вторник": "Dienstag",
+    "Вчера ·": "Gestern ·",
     "вчера уже была тяжёлая тренировка": "Es war gestern eine harte Übung.",
     "Вы": "Sie.",
     "Выберите вариант": "Wählen Sie eine Option",
@@ -15212,6 +15570,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Для чего применяется": "Für was wird verwendet",
     "Дневник питания, БЖУ, рецепты и ручное подтверждение фото":
         "Ernährungstagebuch, BJU, Rezepte und manuelles Bestätigungsfoto",
+    "Дневник по датам": "Tagebuch nach den Datumszeiten",
     "Дневник самочувствия без диагнозов и назначений":
         "Tagebuch der Gesundheit ohne Diagnosen und Termine",
     "Дневник сна": "Schlaftagebuch",
@@ -15229,6 +15588,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "До ориентира": "Zur Landmarke",
     "добав": "Zusatz",
     "Добавил": "Ich habe hinzugefügt",
+    "Добавил время": "Ich habe Zeit.",
     "Добавить": "Addition",
     "Добавить в дневник": "Zum Tagebuch hinzufügen",
     "Добавить врача или клинику": "Hinzufügen eines Arztes oder einer Klinik",
@@ -15379,6 +15739,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Завершить": "Vollständig.",
     "Завершить и сохранить": "Vollständig und wartend",
     "зависит от пола и возраста": "Je nach Geschlecht und Alter",
+    "завтра": "Morgen ist es so.",
     "завтрак": "Frühstück",
     "Загружаем локальный сейф здоровья":
         "Laden Sie den lokalen Gesundheitssafe herunter",
@@ -15455,6 +15816,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "Wir bitten um Erlaubnis und suchen nach Geräten.",
     "Запрещено системой; откройте системные настройки":
         "Das System verboten; Öffnen Sie die Systemanpassungen",
+    "Запрос обрабатывается в фоне":
+        "Die Anfrage wird im Hintergrund bearbeitet",
     "Запрос пользователя:": "Benutzerfrage:",
     "Запросить разрешение повторно": "Wiederholte Erlaubnis beantragen",
     "Запросить разрешения и синхронизировать":
@@ -15495,9 +15858,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "из-за холода выбран домашний вариант с более длинной разминкой":
         "Aufgrund der Kälte wählte man eine länger gestaltete Hausversion",
     "избегать задержки дыхания": "Halten Sie",
-    "Извлечённый текст:": "Aus dem Text:",
     "Измените запрос или добавьте тег в карточку документа.":
         "Ändern Sie die Anforderung oder fügen Sie ein Tag zur Dokumentkarte hinzu.",
+    "Изменить": "Ändern",
     "Изменить симптом": "Ändern Sie das Symptom",
     "Изменить сон": "Ändern Sie Ihren Schlaf.",
     "измерения не найдены": "Messungen nicht gefunden",
@@ -15626,6 +15989,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Ккал": "Kalmar",
     "ккал": "Kalb",
     "ккал · Б/Ж/У": "kkal · B/J/U",
+    "ккал · расход": "kcal · Ausgaben",
+    "ккал · шаги": "Schritte",
     "Ккал еды": "Kalorienfutter",
     "ккал за сутки": "Kalorien",
     "ккал, активность": "Kkal, Aktivität",
@@ -15682,6 +16047,10 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Контекст дома и работы": "Kontext von Haus und Arbeit",
     "Контекст телефона": "Kontext des Telefons",
     "Контекст телефона:": "Kontext des Telefons:",
+    "контролем активности": "Aktivitätskontrolle",
+    "контроль активности": "Aktivitätskontrolle",
+    "Контроль бодрствования": "Wachhaltskontrolle",
+    "контроль бодрствования": "Wachzeitkontrolle",
     "контроль лекарств": "Medikamente",
     "Координаты": "Koordinatoren",
     "Координаты используются только на устройстве для определения контекста.":
@@ -15710,7 +16079,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Курс:": "Kurs:",
     "Күнтізбе": "Kuntizbe",
     "л": "l",
-    "л · калории": "k Kalorien",
+    "л · питание": "l · Nahrung",
+    "л воды.": "Das ist Wasser.",
     "л, шаги": "L, Stufen",
     "л.": "Ich bin nicht ein Schwein.",
     "л. Пейте небольшими порциями, если врач не ограничил жидкость.":
@@ -15806,6 +16176,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "мигрень": "Migräne",
     "Микрофон и голосовой ввод": "Mikrofon und Stimme-Eingabe",
     "мили": "Meilen",
+    "миллилитр": "Milliter",
     "мин": "Mine",
     "мин ·": "Mine",
     "мин · перенос доступен": "Minentransfer verfügbar",
@@ -15865,11 +16236,10 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "Fleisch | Fisch | Milch | Milch | Käse | Hühnchen | Rindfleisch | Fisch | Ei | Milch | Käse",
     "На весь экран": "Auf den ganzen Bildschirm",
     "на ночь": "und die Nacht",
-    "На проверку добавлено записей:":
-        "Es wurden folgende Aufzeichnungen hinzugefügt:",
     "на работе": "bei der Arbeit",
     "На ручную проверку добавлено показателей:":
         "Zu der manuellen Prüfung wurden folgende Indikatoren hinzugefügt:",
+    "на сегодня": "bis heute.",
     "на сегодня запланировано:": "Heute ist geplant:",
     "набор силы": "Kraft",
     "нагруз": "Last",
@@ -15982,8 +16352,10 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "нг/мл": "ng/ml",
     "не выбрано": "nicht ausgewählt",
     "не выбраны": "nicht ausgewählt",
+    "не дай уснуть": "Lass mich nicht schlafen.",
     "не задана": "nicht eingestellt",
     "не задано": "nicht eingestellt",
+    "не заснуть": "Ich schlafe nicht.",
     "Не извлечено:": "Nicht wiedereingezogen:",
     "не компенсируйте еду голоданием; выберите спокойную прогулку и вернитесь к обычному плану.":
         "Vergessen Sie nicht, dass Sie sich hungern, gehen Sie ruhig spazieren und machen Sie Ihren normalen Plan.",
@@ -16046,6 +16418,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "не указано в контексте. В конце укажи уверенность: высокая, средняя или низкая.":
         "Siehe am Ende, ob Sie sich sicher sind: hoch, mittelschief oder niedrig.",
     "Не указаны": "Nicht angegeben",
+    "не уснул": "Ich bin nicht eingeschlafen.",
     "Не установлена; доступен быстрый режим и установка в разделе «Помощник».":
         "Nicht installiert; schneller Modus und Installation im Abschnitt \"Hilfer\" verfügbar.",
     "Не хватает данных:": "Daten fehlen:",
@@ -16134,7 +16507,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Обновить контекст": "Um den Kontext zu aktualisieren",
     "Обновить результаты поиска": "Aktualisierung der Suchergebnisse",
     "Обновлено устройство:": "Aktualisierte Vorrichtung:",
-    "Обрабатываю локально...": "Ich verarbeite lokal...",
     "обсудите с врачом:": "Besprechen Sie mit Ihrem Arzt:",
     "обсудить": "Diskussion",
     "Обсудить план с помощником": "Besprechen Sie den Plan mit dem Helfer",
@@ -16158,6 +16530,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "Einschränkungen, Rehabilitation, Arzt, Dokumente",
     "Ограничения:": "Einschränkungen:",
     "ограничить бег": "gelaufen",
+    "один раз": "Einmal .",
     "один сигнал": "Ein Signal",
     "одыш": "Atemnot",
     "одышка": "Atemnot",
@@ -16247,7 +16620,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Отмечено сегодня": "Heute gefeiert",
     "отмечено сегодня": "vermerkt",
     "Отправить": "Senden.",
-    "Отправлено изображение:": "Das Bild ist gesendet:",
     "Отпуск": "Urlaub",
     "отпуск": "Urlaub",
     "Отпуск не запланирован": "Urlaub nicht geplant",
@@ -16310,6 +16682,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "перенесённая болезнь": "Krankheit",
     "переохлаждение": "Hypothermie",
     "Пересадок": "Transplantation",
+    "Период контроля, мин": "Kontrollzeit, Min",
     "Периодически проверять локальные напоминания и расписание без отправки данных в сеть":
         "Lokaler Erinnerungen und Zeitpläne überprüfen Sie regelmäßig ohne Daten im Netz zu senden",
     "Персональная проверка": "Persönliche Überprüfung",
@@ -16357,9 +16730,11 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Пн": "pn",
     "пн": "Teich",
     "пн, вт, ср, чт, пт": "Ich habe die Möglichkeit, mich zu verhalten.",
+    "по будням": "in der Woche",
     "по внесённым данным допустима обычная плановая нагрузка с контролем самочувствия.":
         "Einige der Daten sind für die normalen Planbelastungen mit Gesundheitskontrolle zulässig.",
     "По внесённым приёмам пищи:": "Nach den eingebrachten Speisen:",
+    "по выходным": "am Wochenende",
     "по геолокации": "geolokalisiert",
     "по дням недели": "wöchentlich",
     "По какое число": "Welche Nummer?",
@@ -16379,12 +16754,19 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Побочные эффекты и реакции": "Nebenwirkungen und Reaktionen",
     "Побочные эффекты:": "Nebenwirkungen:",
     "Повседневная активность": "Tägliche Aktivitäten",
+    "Повтор": "Wiederholung",
     "повторений": "Wiederholung",
     "Повторите PIN": "Wiederholen Sie die PIN.",
     "Повторно запрашивать PIN или биометрию для чувствительных документов":
         "PIN oder Biometrie für sensible Dokumente erneut anfordern",
+    "Повторять сигнал при отсутствии движения после подъёма.":
+        "Wiederholen Sie das Signal, wenn Sie nicht bewegen, wenn Sie nach dem Aufstehen sind.",
     "Повторяющиеся симптомы:": "Wiederholte Symptome:",
     "Повышает масштаб интерфейса": "Erhöht den Umfang der Schnittstelle",
+    "Погода временно недоступна":
+        "Das Wetter ist vorübergehend nicht verfügbar .",
+    "Погода временно недоступна. Климатический профиль продолжает работать локально.":
+        "Das Wetter ist vorübergehend nicht verfügbar.",
     "Погода и климат": "Wetter und Klima",
     "Погода недоступна": "Wetter unzugänglich",
     "Погода подходит для обычной нагрузки с учётом самочувствия.":
@@ -16512,6 +16894,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "последние симптомы:": "die letzten Symptome:",
     "последняя запись сна:": "Letzte Schlaf-Aufnahme:",
     "Последняя запись:": "Letzte Aufnahme:",
+    "послезавтра": "Nachmittag",
     "постав": "Setzen Sie",
     "Постепенное пробуждение": "Allmähliches Erwachen",
     "потер": "Pullover",
@@ -16523,6 +16906,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Предупреждение": "Warnung",
     "Предупреждения": "Warnungen",
     "Препарат": "Die Droge",
+    "препарат": "das Medikament",
     "препаратов, принято сегодня": "Drogen, die heute verabreicht wurden",
     "Препараты": "Drogen",
     "Препараты не распознаны. Проверьте качество снимка или добавьте лекарство вручную.":
@@ -16538,7 +16922,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "прием": "Aufnahme",
     "Прикреплённый файл не найден":
         "Die festgelegte Datei wurde nicht gefunden",
-    "Приложен файл:": "Beigefügt:",
     "приложение открыто": "Die App ist geöffnet",
     "Приложение работает без браслета: вес, сон, шаги, еда и тренировки можно вводить вручную.":
         "Die App funktioniert ohne Armband: Gewicht, Schlaf, Schritte, Essen und Workouts können manuell eingegeben werden.",
@@ -16571,10 +16954,12 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Проверить симптомы": "Überprüfen Sie die Symptome",
     "Проверить снова": "- Ich überprüfe es nochmal.",
     "Проверить уведомление": "Überprüfen Sie die Benachrichtigung",
+    "проверка активности": "Aktivitätsprüfung",
     "Проверка назначения": "Bestimmungsprüfung",
     "Проверка недоступна:": "Überprüfung nicht verfügbar:",
     "проверка разрешений": "Genehmigung",
     "Проверка распознавания": "Anerkennungsprüfung",
+    "проверкой активности": "Überprüfung der Aktivität",
     "Проверь лекарства и остатки": "Arzneimittel und Rückstände prüfen",
     "Проверьте аллерген в дневнике":
         "Überprüfen Sie den Allergen in Ihrem Tagebuch",
@@ -16602,6 +16987,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "Überprüfen Sie die verpassten Speisen und reduzieren Sie Ihre Ernährung nicht ohne einen Fachmann.",
     "Проверяем доступность...": "Verfügbarkeit prüfen...",
     "Проверяем локальную модель...": "Wir überprüfen das lokale Modell...",
+    "проверяй активность": "Überprüfen Sie die Aktivität",
+    "проверяй бодрствование": "Überprüfen Sie Ihre Wachsamkeit",
+    "Проверять через, мин": "Überprüfen, Min",
     "прогулки": "Wanderweg",
     "Продолжить": "Weiterfahren.",
     "Продолжить тренировку": "Weiterbildung",
@@ -16700,6 +17088,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Расстояние, км": "Entfernung, km",
     "раствор": "Schmelzmittel",
     "растяж": "Ausdehnung",
+    "расход": "der Aufwand",
     "Расчёт по данным профиля и сегодняшним отметкам.":
         "Berechnung nach Profildaten und heutigen Markierungen.",
     "расчётная готовность": "Berechnungsbereitschaft",
@@ -16838,9 +17227,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Сегодня важнее восстановление. Не тренируйтесь через боль, температуру или резкое ухудшение самочувствия.":
         "Es ist wichtig, dass man sich heute wieder erholt. Nicht wegen Schmerzen, Temperaturen oder starkem Verfall trainiert.",
     "Сегодня дежурство": "Heute ist die Warteschlange.",
+    "Сегодня записано": "Heute ist es aufgenommen.",
     "сегодня отмечен тревожный симптом или высокая интенсивность жалобы.":
         "Heute ist ein Alarm-Symptom oder eine hohe Beschwerdeintensität.",
-    "сегодня.": "Heute.",
     "Сегодня: сон": "Heute: Schlaf",
     "Сейчас активен режим поездки: при ночной дороге, смене часового пояса или недосыпе нагрузка автоматически считается восстановительной.":
         "Jetzt ist der Fahrmodus aktiv: Bei Nachtfahrt, Zeitzonenwechsel oder Schlafmangel wird die Ladung automatisch als restaurativ betrachtet.",
@@ -16848,12 +17237,15 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "сентябрь": "September",
     "Сервер модели вернул код": "Der Modellserver hat den Code zurückgegeben",
     "Сервис": "Dienst",
+    "Сервис погоды временно вернул ошибку. Повторная попытка будет выполнена автоматически.":
+        "Der Wetterdienst hat den Fehler vorübergehend zurückgegeben.",
+    "Сервис погоды не ответил вовремя. Климатический профиль продолжает работать локально.":
+        "Der Wetterdienst hat nicht rechtzeitig geantwortet, der Klimaprofil ist weiterhin lokal.",
     "Сетевое видео отключено офлайн-режимом":
         "Das Netzwerkvideo ist offline ausgeschaltet",
     "Сетевое изображение скрыто": "Das Netzbild ist verborgen",
     "Сетевые данные отключены режимом «Полностью офлайн». Климатический профиль продолжает работать.":
         "Netzwerkdaten werden im Modus „Voll offline deaktiviert. Das Klimaprofil funktioniert weiter.",
-    "Сжимаю и анализирую локально...": "Ich streiche und analysiere lokal...",
     "сил": "Kraft",
     "силовая": "Strom",
     "Силовая тренировка по инвентарю": "Krafttraining im Inventar",
@@ -17024,6 +17416,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "срочных пунктов; начните с них.":
         "Sie müssen mit den dringenden Punkten beginnen.",
     "стабильно": "stabil",
+    "стакан": "Glas",
     "Стандартные GATT-сервисы читаются автоматически. Для закрытых или редких устройств добавьте UUID вручную.":
         "Standard-GATT-Dienste werden automatisch gelesen. Für geschlossene oder seltene Geräte, fügen Sie UUID manuell hinzu.",
     "стандартный": "Standard- und",
@@ -17123,6 +17516,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Точность": "Präzision",
     "точность GPS": "GPS-Genauigkeit",
     "Точные будильники": "Genaue Wecker",
+    "Точные будильники недоступны (":
+        "Die genauen Wecker sind nicht verfügbar (",
     "тошнота": "Übelkeit",
     "травма": "Traumata",
     "Травмы в течение жизни": "Verletzungen im Laufe des Lebens",
@@ -17258,6 +17653,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Файл в защищённом хранилище:": "Die Datei ist im geschützten Speicher:",
     "Файл в медицинском сейфе не найден":
         "Die Datei im medizinischen Safe wurde nicht gefunden",
+    "Файл вложения не найден": "Einfügung nicht gefunden",
     "Файл не содержит резервную копию приложения.":
         "Die Datei enthält keine Sicherungskopie der Anwendung.",
     "Файл/импорт": "Datei/Einfuhr",
@@ -17274,6 +17670,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "фитнес-тренажёр FTMS": "Fitness-Treneger von FTMS",
     "Фокус": "Schwerpunkt",
     "Фокусы тренировок": "Trainingstricks",
+    "Фоновая обработка": "Hintergrundbearbeitung",
     "Фоновая работа": "Hintergrundarbeit",
     "Фоновый анализ": "Hintergrundanalyse",
     "Форма": "Formblatt",
@@ -17411,18 +17808,19 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "(*?(?:s:s:s*dnorme) ?[[=-]?s*([<>]?s*d+??:[\\.,]\\d+)??",
     "(?:\\s+(?:референс|норма|reference)?\\s*([<>]?\\s*\\d+(?:[,.]\\d+)?(?:\\s*[-–]\\s*\\d+(?:[,.]\\d+)?)?))?":
         "(?:\\s+(?:références de la référence de la référence)?\\s([<>?s*\\d+(?:[,.]\\d+)?(?:\\s*[-]\\s*\\d+(?:[,.]\\d+)?)?",
+    "(?:^|\\s)(?:в|на)\\s+([01]?\\d|2[0-3])(?:\\s*(?:час[а-яё]*|ч))?(?=\\s|":
+        "(?: ça va être une bonne journée)",
+    "(?:^|\\s)через\\s+(\\d{1,3})\\s*(минут[а-яё]*|мин|час[а-яё]*|ч)(?=\\s|":
+        "Je suis en train de faire une petite partie de la série.",
     "(?:анализ|показатель|результат(?:\\s+анализа)?)\\s+([a-zа-яё][a-zа-яё0-9 ()+._-]{1,60}?)\\s*[:=-]?\\s*([<>]?\\s*\\d+(?:[\\.,]\\d+)?)\\s*":
         "(analyse du détail ?:résultat ?:?:?:s+analyse)?)\\s+([a-zâ-ya-yo][a-zâ-yayo0-9 () ++._-]{1,60}?)\\s*[:=-]?\\s*([<>]?\\s*\\d+(?:[\\.,]\\d+)?)\\s*",
     "(?:белок|protein|протеин|б)\\D{0,10}(\\d{1,3})":
         "La protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine de la protéine",
-    "(?:будильник|разбуди|подъ[её]м).*?(?:в|на)?\\s*((?:[01]?\\d|2[0-3])[:\\.]\\d{2})":
-        "Je suis en train de faire une petite surprise.",
+    "(?:будильник|разбуди|подъ[её]м)": "Le réveil est un réveil.",
     "(?:вес|масса|weight)\\s*(?:сегодня|now)?\\s*[:=-]?\\s*(\\d{2,3}(?:[\\.,]\\d)?)\\s*(?:кг|kg)?\\b":
         "Je suis un homme de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la famille de la",
-    "(?:выпил[а-яё]*|добав[а-яё]*|запиш[а-яё]*|water).*?(\\d+(?:[\\.,]\\d+)?)\\s*(мл|ml|л|l)(?![a-zа-яё])":
-        "Vous avez bu de l'eau (à-ya-ya-ya-ya-ya-ya-ya-ya) ?",
-    "(?:гемоглоб|глюкоз|холестерин|ферритин|референс|ммоль/л|мг/дл|анализ крови)":
-        "(Hémoglobine de l'écoulement de la glycémie de la hémoglobine de l'écoulement de la hémoglobine de l'écoulement de la hémoglobine de l'écoulement de la hémoglobine de l'écoulement de la hémoglobine de l'écoulement de la hémoglobine de l'écoulement de l'écoulement de la hémoglobine de l'écoulement de l'écoulement de la hémoglobine de l'écoulement de l'écoulement de l'écoulement de la hémoglobine de l'écoulement de l'écoulement de la hémoglobine de l'écoulement de l'écoulement de l'écoulement de l'écoulement de l'écoulement de l'écoulement de l'écoulement de l'écoulement de l'écoulement de l'écoulement de l'écoulement de l'écoulement de l'écoulement)",
+    "(?:выпил[а-яё]*|добав[а-яё]*|запиш[а-яё]*|укаж[а-яё]*|вод[а-яё]*|water).*?(\\d+(?:[\\.,]\\d+)?)\\s*(мл|ml|миллилитр[а-яё]*|л|l|литр[а-яё]*|стакан[а-яё]*)(?![a-zа-яё])":
+        "*: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *",
     "(?:глюкоз[а-яё]*|сахар[а-яё]*\\s+кров[а-яё]*|glucose)\\s*[:=-]?\\s*(\\d{1,3}(?:[\\.,]\\d+)?)":
         "(?:glucose[a-yao]* de l'écorce[a-yao]*\\s+du sang[a-yao]* de l'écorce de glucose)\\s*[:=-]?\\s*(\\d{1,3}(?:[\\.,]\\d+)?)",
     "(?:давлен[а-яё]*|pressure)\\s*[:=-]?\\s*(\\d{2,3})\\s*[/\\\\]\\s*(\\d{2,3})(?:\\s+(?:пульс|pulse)\\s*(\\d{2,3}))?":
@@ -17443,16 +17841,13 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "Je suis en train de faire une petite partie de la série.",
     "(?:качеств[а-яё]*|оценк[а-яё]*)\\s*(?:сна)?\\s*[:=-]?\\s*([1-5])":
         "(?:quotices[a-yao]* pour le prix[a-yao]*)\\s*(?:sne)?\\s*[:=-]?\\s*([1-5])",
-    "(?:ккал|калори|белк|жир|углевод|состав|пищевая ценность)":
-        "•l'équipement de la valeur alimentaire",
     "(?:клетчатка|пищевые волокна|fibre|fiber)\\D{0,12}(\\d{1,3}(?:[,.]\\d+)?)":
         "(cellule de fibres de la bouche) D'où vient le fibre de la bouche ?",
     "(?:масса|вес|порция|net weight|serving)\\D{0,12}(\\d{1,4})\\s*(?:г|g)":
         "Le poids de l'eau est de 0,12 °C.",
     "(?:на|per)\\s*100\\s*(?:г|g)":
         "Je suis en train de faire une petite histoire.",
-    "(?:напомни|напоминание|remind).*?(\\d{1,2})[:\\.](\\d{2})":
-        "Je me souviens de toi.",
+    "(?:напомни|напоминание|remind)": "Je suis en train de me rappeler.",
     "(?:по\\s+[^.;,]{0,25}\\s+)?\\d+\\s*раз(?:а|у|)\\s+(?:в|за)\\s+(?:день|сутки)":
         "Je suis en train de vous dire que vous êtes un homme.",
     "(?:поставь|создай|заведи|добавь|разбуди(?:\\s+меня)?|будильник|подъ[её]м)":
@@ -17461,6 +17856,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "Vous avez besoin de plus de temps pour faire le tour de la page.",
     "(?:сахара|сахар|sugars?|из них сахара)\\D{0,12}(\\d{1,3}(?:[,.]\\d+)?)":
         "Le sucre est le sucre de la viande.",
+    "(?:сколько|покажи|какой|какое|текущ[а-яё]*|итого)":
+        "(?: combien de temps il faut pour montrer sa valeur à la fois)",
     "(?:соль|salt)\\D{0,10}(\\d{1,3}(?:[,.]\\d+)?)":
         "Je suis en train de faire une petite partie de la série.",
     "(?:спал[а-яё]*|сон|sleep).*?(\\d{1,2}(?:[\\.,]\\d+)?)\\s*(?:ч(?:ас(?:а|ов)?)?|hours?|h)(?![a-zа-яё])":
@@ -17469,8 +17866,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "Je suis en train de dormir. Je suis en train de dormir.",
     "(?:съел[а-яё]*|выпил[а-яё]*|запиш[а-яё]*\\s+(?:еду|при[её]м пищи)|добав[а-яё]*\\s+(?:еду|блюдо))\\s+(.+?)\\s+(\\d{1,4})\\s*(?:ккал|kcal)(?![a-zа-яё])":
         ":: mangé[a-yao] à boire ([a-yao] à boire (*a-yao) à boire (*a-yao) à boire (*a-yao) à boire (*a-yao) à boire (*a-yao) à boire (*a-yao) à boire (*a-yao) à boire (*a-yao) à boire (*a-yao) à boire (*a-yao) à boire (*a-yao) à boire (*a-yao) à boire (*a-yao) à boire (*a-yao) à boire (*a-yao) à boire (*a-yao) à boire (*a-yao) à boire (*a-yao) à boire (*a-yao)",
-    "(?:таблет|капсул|принимать|назначен|рецепт|дозиров)":
-        "(tablettes de vaccination ?: prendre une prescription de vaccination)",
+    "(?:съел[а-яё]*|поел[а-яё]*|перекусил[а-яё]*|выпил[а-яё]*|добав[а-яё]*\\s+(?:еду|блюдо)|запиш[а-яё]*\\s+(?:что\\s+)?(?:я\\s+)?(?:съел[а-яё]*|поел[а-яё]*))\\s+(.+)":
+        "Il a mangé le pain de la viande de coco et il a bu le vin de la viande de coco.",
     "(?:таблетк[а-яё]*|капсул[а-яё]*|раствор[а-яё]*|сироп[а-яё]*|суспензи[а-яё]*|":
         "(: tablettes[a-yao] de la douceur de la douceur de la douceur de la douceur de la douceur de la douceur de la douceur de la douceur de la douceur de la douceur de la douceur de la douceur de la douceur de la douceur de la douceur de la douceur de la douceur de la douceur de la douceur de la douceur de la douceur de la douceur de la douceur de la douceur de la douceur de la douceur de la douceur de la douceur de la douceur de la douceur de la douceur de la douceur de la douceur de la douceur de la douceur de la douceur de la douceur de la douceur de la douceur de la douceur de la douceur de la douceur de la douceur de la douceur de la douceur de la douceur de la douceur de la douceur de douceur de",
     "(?:температур[а-яё]*|temperature)\\s*[:=-]?\\s*(3[4-9]|4[0-2])(?:[\\.,](\\d))?":
@@ -17479,8 +17876,24 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "(?:entraîneur[a-yao]*a-d'a-d'a-d'a-d'a-d'a-d'a-d'a-d'a-d'a-d'a-d'a-d'a-d'a-d'a-d'a-d'a-d'a-d'a-d'a-d'a-d'a-d'a-d'a-d'a-d'a-d'a-d'a-d'a-d'a-d'a-d'a-d'a-d'a-d'a-d'a-d'a-d'a-d'a-d'a-d'a-d'a-d'a-d'a-d'a-d'a-d'a-d'a-d'a-d'a-d'a-d'a-d'a-d'a-d'a-d'a-d'a-d'a-d'a-d'a-d'a-d",
     "(?:углеводы|carbs|у)\\D{0,10}(\\d{1,3})":
         "Je suis en train de faire une petite partie de la série.",
+    "(?<![a-zа-яё])(?:в|на)\\s*\\d{1,2}(?:[:\\.]\\d{2})?(?![a-zа-яё0-9])":
+        "Je suis en train de vous dire que vous êtes un peu plus proche de moi.",
+    "(?<![a-zа-яё])(?:в|на)\\s*\\d{1,2}(?:[:\\.]\\d{2})?(?:\\s*(?:час[а-яё]*|ч))?(?![a-zа-яё0-9])":
+        "Je suis en train de vous dire que vous êtes un peu plus proche de moi.",
+    "(?<![a-zа-яё])(?:каждый день|ежедневно|по будням|по выходным|сегодня|завтра|послезавтра)(?![a-zа-яё])":
+        "<![a-z-a-yao]) ? ?:chaque jour de la journée (?chaque jour de la journée de la journée de la journée de la journée de la journée de la journée de la journée de la journée de la journée de la journée de la journée de la journée de la journée de la journée de la journée de la journée de la journée de la journée de la journée de la journée de la journée de la journée de la journée de la journée de la journée de la journée de la journée de la journée de la journée de la semaine de la semaine de la semaine de la semaine de la semaine de la semaine de la semaine de la semaine de la semaine de la semaine de la semaine de la semaine de la semaine de la semaine de la semaine de la semaine de la semaine de la semaine de la semaine de la semaine de la semaine de la semaine de la semaine de la semaine de la semaine de la semaine de la semaine de la semaine de la semaine de la semaine de la semaine de la semaine de la semaine de la semaine de la semaine de la semaine de la semaine de la semaine de la semaine de la semaine de la semaine de la semaine de la semaine de la semaine de la semaine de la semaine de la semaine de la semaine",
+    "(?<![a-zа-яё])(?:не дай уснуть|не заснуть|не уснул)(?![a-zа-яё])":
+        "Je ne veux pas que tu dormes",
+    "(?<![a-zа-яё])(?:с|и)?\\s*(?:проверкой|контролем)\\s+(?:активности|бодрствования)(?![a-zа-яё])":
+        "Il est également possible de vérifier l'activité de l'appel d'offres.",
+    "(?<![a-zа-яё])(?:сегодня|только что)(?![a-zа-яё])":
+        "Je suis en train de vous dire que vous êtes en train de vous faire une idée.",
+    "(?<![a-zа-яё])через\\s+\\d+\\s*(?:минут[а-яё]*|мин|час[а-яё]*|ч)(?![a-zа-яё])":
+        "Il est possible de trouver un moyen de se débrouiller avec le temps.",
     "(\\d+(?:[,.]\\d+)?)\\s*(?:ммоль/л|мг/дл|г/л|нг/мл|мед/л|ме/л|%)":
         "(\\d+(?:[,.]\\d+)?) \\s*(?:mol/l'écriture/dl'écriture/l'écriture/l'écriture/l'écriture/l'écriture/l'écriture/l'écriture/l'écriture/l'écriture/l'écriture/l'écriture/l'écriture/l'écriture/l'écriture/l'écriture/l'écriture/l'écriture/l'écriture/l'écriture/l'écriture/l'écriture/l'écriture/l'écriture/l'écriture/l'écriture/l'écriture/l'écriture/l'écriture/l'écriture/l'écriture/l'écriture/l'écriture/l'écriture/l'écriture/l'écriture/l'écriture/l'écriture/l'écrit",
+    "(\\d+(?:[\\.,]\\d+)?)\\s*(мл|ml|миллилитр[а-яё]*|л|l|литр[а-яё]*|стакан[а-яё]*)(?![a-zа-яё]).*?(?:вод[а-яё]*|выпил[а-яё]*|добав[а-яё]*|запиш[а-яё]*|water)":
+        "(l'a-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-",
     "(\\d{1,3}(?:[\\.,]\\d+)?)\\s*(?:км|km)":
         "Je suis en train de faire une petite histoire.",
     "(\\d{1,4})\\s*(?:г|g)\\b":
@@ -17499,6 +17912,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "(ммоль/л|мкмоль/л|мг/дл|мг/л|г/л|г/дл|мкг/л|нг/мл|пг/мл|мед/л|ме/л|ед/л|mmol/l|umol/l|µmol/l|mg/dl|mg/l|g/l|g/dl|µg/l|ug/l|ng/ml|pg/ml|iu/l|u/l|10\\^?[*x×]?\\d+/л|фл|fl|пг|pg|%)":
         "(l'équipe de l'équipe de l'équipe de l'équipe de l'équipe de l'équipe de l'équipe de l'équipe de l'équipe de l'équipe de l'équipe de l'équipe de l'équipe de l'équipe de l'équipe de l'équipe de l'équipe de l'équipe de l'équipe de l'équipe de l'équipe de l'équipe de l'équipe de l'équipe de l'équipe de l'équipe de l'équipe de l'équipe de l'équipe de l'équipe de l'équipe de l'équipe de l'équipe de l'équipe de l'équipe de l'équipe de l'équipe de l'équipe de l'équipe de l'équipe de l'équipe de l'équipe de l'équipe de l'équipe de l'équipe de l'équipe de l'équipe de l'équipe de l'équipe de l'équipe de l'équipe",
     "). Дозировку я не изменяю.": "Je ne change pas de dosage.",
+    "); используется приблизительное системное расписание.":
+        "); utilisez un calendrier approximatif.",
     ")} · день": "jour",
     ")}. Отложите тренировку; при резком ухудшении или опасных признаках обратитесь за неотложной помощью.":
         "Retardez votre séance d'entraînement; si vous avez des symptômes graves ou des symptômes dangereux, demandez de l'aide immédiate.",
@@ -17529,8 +17944,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     ", цель": ", but",
     ". Добавил их на проверку; после подтверждения приложение создаст расписание и напоминания. Дозировки автоматически не меняются.":
         "- J'ai ajouté les doses pour vérifier, et après avoir confirmé, l'application créera un calendrier et des rappels.",
-    ". Изменения применятся после подтверждения.":
-        "Les modifications seront appliquées après confirmation.",
     ". Не используйте распознанные назначения до сверки с оригиналом.":
         "Ne pas utiliser les destinations reconnues avant de les comparer à l'original.",
     ". Невозможные скачки координат отфильтрованы.":
@@ -17580,6 +17993,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     ": не удалось разобрать": ": pas réussi à déchiffrer",
     ": осталось": "Il reste:",
     ": пакет короче заявленного": ": un paquet plus court que celui déclaré",
+    ": проверка бодрствования": ": vérification de la veille",
     ": характеристика не найдена": ": la caractéristique n' a pas été trouvée",
     "; выбран ближайший расчётный конец цикла сна.":
         "; le dernier calcul du cycle de sommeil est choisi.",
@@ -17599,22 +18013,23 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "[^a-zа-яё0-9]+": "Je suis en train de vous dire que vous êtes un homme.",
     "[a-zа-яё]*\\s*[:=-]?\\s*(\\d{1,3}(?:[\\.,]\\d+)?)\\s*(?:г|g)?":
         "Je suis en train de vous dire que vous êtes un homme.",
-    "\\b(?:в|на)\\s*\\d{1,2}[:\\.]\\d{2}\\b":
-        "Je suis en train de vous dire que vous êtes un homme.",
     "\\b(гемоглобин|ферритин|холестерин|триглицериды|креатинин|мочевина|билирубин|алт|аст|ттг|витамин\\s+[a-zа-яё0-9]+|с-?реактивный\\s+белок)\\s*[:=-]?\\s*([<>]?\\s*\\d+(?:[\\.,]\\d+)?)\\s*":
         "L'hémoglobine de l'étoffe de la protéine de l'étoffe de l'étoffe de l'étoffe de l'étoffe de l'étoffe de l'étoffe de l'étoffe de l'étoffe de l'étoffe de l'étoffe de l'étoffe de l'étoffe de l'étoffe de l'étoffe de l'étoffe de l'étoffe de l'étoffe de l'étoffe de l'étoffe de l'étoffe de l'étoffe de l'étoffe de l'étoffe de l'étoffe de l'étoffe de l'étoffe de l'étoffe de l'étoffe de l'étoffe de l'étoffe de l'étoffe de l'étoffe de l'étoffe de l'étoffe de l'étoffe de l'étoffe de l'étoffe de l'étoffe de l'étoffe de l'éto",
-    "\\d+(?:[\\.,]\\d+)?\\s*(?:мг|мкг|мл|ме|ед\\.)":
-        "Je suis en train de vous dire que vous êtes un homme.",
     "\\d+(?:[\\.,]\\d+)?\\s*(?:мкг|мг|г|мл|ед\\.?|ме)":
         "Je suis en train de vous dire que vous êtes un homme.",
     "\\d+(?:[\\.,]\\d+)?\\s*(?:мкг|мг|г|мл|ед\\.?|ме|iu|mcg|mg|ml)(?![a-zа-яё])":
         "Je suis en train de vous dire que vous êtes un peu plus âgé que moi.",
+    "\\d+(?:[\\.,]\\d+)?\\s*(?:мл|л|литр|стакан)":
+        "Je suis en train de faire une petite histoire.",
     "\\d+\\s*(?:дн(?:я|ей|ь)?|сут(?:ок|ки)?|недел[а-яё]*|месяц[а-яё]*)(?![а-яё])":
         "Je suis en train de vous dire que vous êtes en train de faire une fête de Noël.",
+    "\\d{1,4}\\s*(?:ккал|kcal)": "Je suis un peu déprimé.",
     "^(?:врач\\s+)?(?:мне\\s+)?(?:назначил(?:а|и)?|назначение|рецепт|принимать)\\s*[:\\-]?\\s*":
         "Vous avez déjà reçu une prescription pour prendre une autre.",
     "^(?:как|что|почему|зачем|когда|где|можно\\s+ли|расскажи|объясни|проанализируй|how|what|why|when|where|can\\s+i)\\b":
         "Comment sais-tu ce que tu sais pourquoi tu sais-tu sais-tu quand tu sais où tu peux/ou tu sais-tu comment tu peux/ tu peux/ tu peux/ tu peux/ tu peux/ tu peux/ tu peux/ tu peux/ tu peux/ tu peux/ tu peux/ tu peux/ tu peux/ tu peux/ tu peux/ tu peux/ tu peux/ tu peux/ tu peux/ tu peux/ tu peux/ tu peux/ tu peux/ tu peux/ tu peux/ tu peux/ tu peux/ tu peux/ tu peux/ tu peux/ tu peux/ tu peux/ tu peux/ tu peux/ tu peux/ tu peux/ tu peux/tu peux/tu peux/tu peux/tu peux/tu/tu peux/tu/tu peux/tu/tu peux/tu/tu peux/tu/tu peux/tu/tu peux/tu/tu/tu/tu/tu/tu/tu/tu/tu/tu/tu/tu/tu/es/tu/tu/es/tu/tu/tu/es/tu/tu/es/tu/tu/es/es/es/es/es/es/es/es/es/es/es",
+    "^(?:что\\s+)?(?:я\\s+)?(?:съел[а-яё]*|поел[а-яё]*|перекусил[а-яё]*)\\s+":
+        "Il a mangé et bu, il a mangé et a mangé.",
     "^[^a-zа-яё]+": "^[^a-z-a-yao]+",
     "^\\*\\*(?:Answer|Ответ):\\*\\*\\s*": "Je suis désolé.",
     "^\\s*(?:КОМАНДА|COMMAND)\\s*:\\s*":
@@ -17688,7 +18103,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "UUID характеристики записи": "Caractéristiques UUID de l'enregistrement",
     "Vault был восстановлен из безопасного начального состояния.":
         "Vault a été restauré à partir d'un état initial sûr.",
-    "Vision-анализ недоступен:": "L' analyse Vision n' est pas disponible:",
     "°C · высота": "°C · hauteur",
     "· вес": "Poids",
     "· визуальная оценка": "• évaluation visuelle",
@@ -17716,10 +18130,14 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "» перед выполнением.": "avant l'exécution.",
     "», интенсивность": ", intensité",
     "». Извлечённый текст:": ". Le texte extrait:",
+    "». Калории и Б/Ж/У оставлены пустыми; добавьте порцию или уточните данные, когда они известны.":
+        ". Calories et B/J/U sont laissés vides; ajoutez une portion ou éclaircir les données quand elles sont connues.",
     "». Перед продолжением рекомендуется сделать копию текущих данных.":
         "? Avant de poursuivre, il est recommandé de faire une copie des données actuelles.",
     "». Текст для анализа не найден.":
         ". Le texte de l'analyse n'a pas été trouvé.",
+    "». Уведомления о приёме будут планироваться по курсу препарата.":
+        ". Les notifications d'admission seront planifiées sur le cours du médicament.",
     "август": "Août",
     "Автозапись GPS/GLONASS:": "Enregistrement automatique GPS/GLONASS:",
     "Автозапуск": "Le démarrage automatique",
@@ -17744,6 +18162,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "активное движение": "mouvement actif",
     "Активность": "Activité",
     "Активность и вода": "Activité et eau",
+    "Активность после подъёма не подтверждена. Откройте приложение и отключите сигнал.":
+        "L'activité après le lever n'est pas confirmée.",
     "Активность хорошая: шаги уже закрывают базовую цель дня.":
         "L'activité est bonne: les étapes ferment déjà l'objectif de base de la journée.",
     "активные калории": "calories",
@@ -17803,6 +18223,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "без документа": "sans papier",
     "Без жёстких ограничений: можно добавить спокойную прогулку и оценивать недельный баланс.":
         "Sans restrictions rigides: vous pouvez ajouter une promenade tranquille et évaluer l'équilibre hebdomadaire.",
+    "без контроля бодрствования": "sans contrôle de la veille",
     "без лекарства": "sans drogue",
     "Без ограничений": "Pas de restrictions.",
     "без ограничений": "sans limite",
@@ -17884,6 +18305,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "В профиле нет координат города.":
         "Il n'y a pas de coordonnées de la ville dans le profil.",
     "В пути, мин": "En route, la mienne.",
+    "в расписание «": "dans le calendrier",
     "В списке есть антикоагулянт: взаимодействие нужно проверить у врача или фармацевта.":
         "Il y a un anticoagulant sur la liste: l'interaction doit être vérifiée chez un médecin ou un pharmacien.",
     "В тренировках отмечалась боль: будущую нагрузку стоит снизить.":
@@ -17919,9 +18341,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "велотренажёр": "formateur",
     "вероятно в руках": "Il est probablement entre les mains.",
     "вероятно используется": "est probablement utilisé",
-    "Версия 1.8.1+10 · создатель: Редин Максим Юрьевич · info@thebestmks.ru":
-        "La version 1.8.1+10 · créateur: Rédine Maxime Yurievich · info@thebestmks.ru",
-    "Версия: 1.8.1+10": "La version 1.8.1+10",
+    "Версия 1.8.2+11 · создатель: Редин Максим Юрьевич · info@thebestmks.ru":
+        "La version 1.8.2+11 · créateur: Rédine Maxime Yurievich · info@thebestmks.ru",
+    "Версия: 1.8.2+11": "La version 1.8.2+11",
     "Вес": "Poids.",
     "вес": "Poids",
     "Вес порции и пищевая ценность являются ориентировочной оценкой класса блюда. Проверьте их перед подтверждением.":
@@ -17964,6 +18386,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "Introduit par la voix ou par la commande d'un assistant; les conditions de mesure ne sont pas indiquées.",
     "Внесено командой помощника.":
         "Il a été introduit par une équipe d'assistants.",
+    "Внесено помощником без количества и нутриентов; значения не выдумывались.":
+        "Il est introduit par un assistant sans quantité ni nutriments; les valeurs ne sont pas inventées.",
     "внесённая калорийность заметно выше основного обмена, но недельный баланс и активность важнее одного дня.":
         "La quantité de calories apportée est nettement supérieure à la quantité de métabolisme, mais le rapport hebdomadaire et l'activité sont plus importants qu'une journée.",
     "внесённая калорийность низкая относительно основного обмена; возможно, дневник заполнен не полностью.":
@@ -18034,6 +18458,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "вт": "volt",
     "Вторник": "Mardi.",
     "вторник": "mardi",
+    "Вчера ·": "Hier ...",
     "вчера уже была тяжёлая тренировка": "C'était une pratique difficile hier.",
     "Вы": "Toi.",
     "Выберите вариант": "Choisissez une option",
@@ -18221,6 +18646,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Для чего применяется": "Pour quoi il est utilisé",
     "Дневник питания, БЖУ, рецепты и ручное подтверждение фото":
         "Journal de nutrition, BJU, recettes et photo de confirmation manuelle",
+    "Дневник по датам": "Le journal des dates",
     "Дневник самочувствия без диагнозов и назначений":
         "Journal de santé sans diagnostics et rendez-vous",
     "Дневник сна": "Journal du sommeil",
@@ -18238,6 +18664,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "До ориентира": "Au point de repère",
     "добав": "ajout",
     "Добавил": "Il a ajouté",
+    "Добавил время": "J'ai ajouté du temps",
     "Добавить": "Ajouter",
     "Добавить в дневник": "Ajouter au journal",
     "Добавить врача или клинику": "Ajouter un médecin ou une clinique",
@@ -18388,6 +18815,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Завершить": "Complète.",
     "Завершить и сохранить": "Compléter et entretenir",
     "зависит от пола и возраста": "selon le sexe et l'âge",
+    "завтра": "Demain",
     "завтрак": "Petit déjeuner",
     "Загружаем локальный сейф здоровья":
         "Télécharger la sécurité sanitaire locale",
@@ -18466,6 +18894,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "Nous demandons la permission et cherchons des appareils.",
     "Запрещено системой; откройте системные настройки":
         "Le système l' a interdit; ouvrez les paramètres du système",
+    "Запрос обрабатывается в фоне": "La requête est traitée en arrière-plan",
     "Запрос пользователя:": "Une requête utilisateur:",
     "Запросить разрешение повторно": "Revenir à la demande",
     "Запросить разрешения и синхронизировать":
@@ -18506,9 +18935,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "из-за холода выбран домашний вариант с более длинной разминкой":
         "à cause du froid , une option maison plus longue",
     "избегать задержки дыхания": "Attendez.",
-    "Извлечённый текст:": "Le texte est extrait:",
     "Измените запрос или добавьте тег в карточку документа.":
         "Modifier la demande ou ajouter une étiquette à la carte de document.",
+    "Изменить": "Modifier",
     "Изменить симптом": "Changer le symptôme",
     "Изменить сон": "Change de sommeil.",
     "измерения не найдены": "Les mesures ne sont pas trouvées",
@@ -18638,6 +19067,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Ккал": "Kal",
     "ккал": "veau",
     "ккал · Б/Ж/У": "à l'heure de la réception",
+    "ккал · расход": "l' économie de marché",
+    "ккал · шаги": "les étapes",
     "Ккал еды": "Produits alimentaires",
     "ккал за сутки": "calories",
     "ккал, активность": "la calorie, l'activité",
@@ -18694,6 +19125,10 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Контекст дома и работы": "Le contexte de la maison et du travail",
     "Контекст телефона": "Le contexte du téléphone",
     "Контекст телефона:": "Le contexte du téléphone:",
+    "контролем активности": "le contrôle de l'activité",
+    "контроль активности": "contrôler l'activité",
+    "Контроль бодрствования": "Le contrôle de la veille",
+    "контроль бодрствования": "le contrôle de la veille",
     "контроль лекарств": "médicament",
     "Координаты": "Coordonnateurs",
     "Координаты используются только на устройстве для определения контекста.":
@@ -18723,7 +19158,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Курс:": "Cours :",
     "Күнтізбе": "kuntizbe",
     "л": "L",
-    "л · калории": "k calories",
+    "л · питание": "l · alimentation",
+    "л воды.": "Il y a de l'eau.",
     "л, шаги": "L, marches",
     "л.": "Je suis là.",
     "л. Пейте небольшими порциями, если врач не ограничил жидкость.":
@@ -18819,6 +19255,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "мигрень": "migraine",
     "Микрофон и голосовой ввод": "Microphone et entrée vocale",
     "мили": "miles",
+    "миллилитр": "millilitres",
     "мин": "la mienne",
     "мин ·": "la mienne",
     "мин · перенос доступен": "Transfert de mines disponibles",
@@ -18879,11 +19316,10 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "viande poisson lait lait lait fromage fromage fromage",
     "На весь экран": "Pour tout l'écran",
     "на ночь": "pour la nuit",
-    "На проверку добавлено записей:":
-        "Les enregistrements ont été ajoutés à la vérification:",
     "на работе": "au travail",
     "На ручную проверку добавлено показателей:":
         "Les indicateurs suivants ont été ajoutés à la vérification manuelle:",
+    "на сегодня": "pour aujourd'hui",
     "на сегодня запланировано:": "Il est prévu pour aujourd 'hui:",
     "набор силы": "force",
     "нагруз": "charge",
@@ -18993,8 +19429,10 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "нг/мл": "ng/ml",
     "не выбрано": "non sélectionné",
     "не выбраны": "non sélectionné",
+    "не дай уснуть": "Ne me laisse pas dormir.",
     "не задана": "pas indiqué",
     "не задано": "pas encore mis",
+    "не заснуть": "Je ne veux pas dormir.",
     "Не извлечено:": "Non récupéré:",
     "не компенсируйте еду голоданием; выберите спокойную прогулку и вернитесь к обычному плану.":
         "Ne compensez pas votre repas par la faim; choisissez une promenade calme et retournez à votre plan habituel.",
@@ -19048,6 +19486,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "не указано в контексте. В конце укажи уверенность: высокая, средняя или низкая.":
         "ne figure pas dans le contexte. En fin de compte, indiquez la confiance: élevée, moyenne ou faible.",
     "Не указаны": "Pas indiqué",
+    "не уснул": "Je n'ai pas dormi.",
     "Не установлена; доступен быстрый режим и установка в разделе «Помощник».":
         "Pas installé; le mode rapide et l'installation sont disponibles dans la section Assistant.",
     "Не хватает данных:": "Les données manquent:",
@@ -19138,7 +19577,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Обновить контекст": "Ressouvenir le contexte",
     "Обновить результаты поиска": "Mettre à jour les résultats de recherche",
     "Обновлено устройство:": "Appareil mis à jour & #160;:",
-    "Обрабатываю локально...": "Je suis en train de traiter localement...",
     "обсудите с врачом:": "consultez votre médecin:",
     "обсудить": "discuter",
     "Обсудить план с помощником": "Discutez du plan avec votre assistant",
@@ -19162,6 +19600,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "Restrictions, réadaptation, médecin, documents",
     "Ограничения:": "Les restrictions:",
     "ограничить бег": "descente",
+    "один раз": "Une fois",
     "один сигнал": "Un seul signal",
     "одыш": "essoufflement",
     "одышка": "essoufflement",
@@ -19250,7 +19689,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Отмечено сегодня": "Célébré aujourd'hui",
     "отмечено сегодня": "noté",
     "Отправить": "Envoyez.",
-    "Отправлено изображение:": "Une image a été envoyée:",
     "Отпуск": "Vacances",
     "отпуск": "congé",
     "Отпуск не запланирован": "Vacances non prévues",
@@ -19314,6 +19752,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "перенесённая болезнь": "maladie",
     "переохлаждение": "hypothermie",
     "Пересадок": "Transplantation",
+    "Период контроля, мин": "La période de contrôle, min",
     "Периодически проверять локальные напоминания и расписание без отправки данных в сеть":
         "Vérifiez régulièrement les rappels locaux et les horaires sans envoyer de données au réseau",
     "Персональная проверка": "Vérifie personnelle",
@@ -19362,9 +19801,11 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Пн": "pn",
     "пн": "étang",
     "пн, вт, ср, чт, пт": "Je suis un homme de la famille de l'homme.",
+    "по будням": "par semaine",
     "по внесённым данным допустима обычная плановая нагрузка с контролем самочувствия.":
         "Selon les données fournies, il est permis de faire une charge de travail ordinaire avec contrôle de santé.",
     "По внесённым приёмам пищи:": "Pour les repas introduits:",
+    "по выходным": "le week-end",
     "по геолокации": "géolocalisée",
     "по дням недели": "hebdomadaire",
     "По какое число": "Quel numéro ?",
@@ -19383,12 +19824,18 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Побочные эффекты и реакции": "Effets indésirables et réactions",
     "Побочные эффекты:": "Effets secondaires:",
     "Повседневная активность": "Activité quotidienne",
+    "Повтор": "Répétez",
     "повторений": "répétition",
     "Повторите PIN": "Répétez le NIP.",
     "Повторно запрашивать PIN или биометрию для чувствительных документов":
         "Redemander le NIP ou la biométrie pour les documents sensibles",
+    "Повторять сигнал при отсутствии движения после подъёма.":
+        "Répétez le signal en cas d'absence de mouvement après le lever.",
     "Повторяющиеся симптомы:": "Symptômes récurrents:",
     "Повышает масштаб интерфейса": "Augmente l'échelle de l'interface",
+    "Погода временно недоступна": "La météo est temporairement inaccessible .",
+    "Погода временно недоступна. Климатический профиль продолжает работать локально.":
+        "Le climat est en panne, le profil climatique continue de fonctionner localement.",
     "Погода и климат": "Météo et climat",
     "Погода недоступна": "Météo inaccessible",
     "Погода подходит для обычной нагрузки с учётом самочувствия.":
@@ -19518,6 +19965,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "последние симптомы:": "les derniers symptômes:",
     "последняя запись сна:": "La dernière enregistrement de sommeil:",
     "Последняя запись:": "La dernière vidéo:",
+    "послезавтра": "le lendemain",
     "постав": "- Je suis en train de mettre",
     "Постепенное пробуждение": "L'éveil progressif",
     "потер": "pull",
@@ -19529,6 +19977,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Предупреждение": "Avertissement",
     "Предупреждения": "Les précautions",
     "Препарат": "Le médicament",
+    "препарат": "le médicament",
     "препаратов, принято сегодня": "les médicaments pris aujourd'hui",
     "Препараты": "Médicaments",
     "Препараты не распознаны. Проверьте качество снимка или добавьте лекарство вручную.":
@@ -19543,7 +19992,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Приготовление": "Préparation",
     "прием": "accueil",
     "Прикреплённый файл не найден": "Le fichier n' a pas été trouvé",
-    "Приложен файл:": "Fichier ajouté:",
     "приложение открыто": "l'application est ouverte",
     "Приложение работает без браслета: вес, сон, шаги, еда и тренировки можно вводить вручную.":
         "L'application fonctionne sans bracelet : poids, sommeil, marches, nourriture et séances d'entraînement peuvent être entrées manuellement.",
@@ -19577,10 +20025,12 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Проверить симптомы": "Vérifiez les symptômes",
     "Проверить снова": "Je vais vérifier à nouveau.",
     "Проверить уведомление": "Vérifiez l' avis",
+    "проверка активности": "vérification de l'activité",
     "Проверка назначения": "Vérifiez l'emploi",
     "Проверка недоступна:": "Pas de vérification:",
     "проверка разрешений": "permettre",
     "Проверка распознавания": "Vérification de la reconnaissance",
+    "проверкой активности": "vérifier l'activité",
     "Проверь лекарства и остатки": "Vérifier les médicaments et les résidus",
     "Проверьте аллерген в дневнике":
         "Vérifiez les allergies dans votre journal.",
@@ -19608,6 +20058,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "Vérifiez les repas manqués et ne réduisez pas votre alimentation sans un spécialiste.",
     "Проверяем доступность...": "Vérification de la disponibilité...",
     "Проверяем локальную модель...": "On vérifie le modèle local...",
+    "проверяй активность": "Vérifiez l'activité",
+    "проверяй бодрствование": "Vérifiez votre vigilance",
+    "Проверять через, мин": "Vérifiez à travers, min",
     "прогулки": "Marcher",
     "Продолжить": "Continuez.",
     "Продолжить тренировку": "Poursuivre la formation",
@@ -19706,6 +20159,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Расстояние, км": "Distance, km",
     "раствор": "une solution",
     "растяж": "détente",
+    "расход": "le dépense",
     "Расчёт по данным профиля и сегодняшним отметкам.":
         "Calcul selon les données de profil et les marques d'aujourd'hui.",
     "расчётная готовность": "préparation du calcul",
@@ -19845,9 +20299,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Сегодня важнее восстановление. Не тренируйтесь через боль, температуру или резкое ухудшение самочувствия.":
         "Il est plus important aujourd'hui de se rétablir. Ne faites pas de sport à cause de la douleur, de la température ou d'un état de santé grave.",
     "Сегодня дежурство": "Aujourd'hui, il est en poste.",
+    "Сегодня записано": "Aujourd'hui, il est enregistré",
     "сегодня отмечен тревожный симптом или высокая интенсивность жалобы.":
         "Aujourd'hui, il y a un symptôme d'anxiété ou une plainte très intense.",
-    "сегодня.": "Je suis là aujourd'hui.",
     "Сегодня: сон": "Aujourd'hui, c'est un rêve",
     "Сейчас активен режим поездки: при ночной дороге, смене часового пояса или недосыпе нагрузка автоматически считается восстановительной.":
         "Maintenant le mode de voyage est actif : avec la conduite nocturne, le changement du fuseau horaire ou le manque de sommeil, la charge est automatiquement considérée comme réparatrice.",
@@ -19855,12 +20309,15 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "сентябрь": "Septembre",
     "Сервер модели вернул код": "Le serveur du modèle a renvoyé le code",
     "Сервис": "Services",
+    "Сервис погоды временно вернул ошибку. Повторная попытка будет выполнена автоматически.":
+        "Le service météo a temporairement récupéré l'erreur.",
+    "Сервис погоды не ответил вовремя. Климатический профиль продолжает работать локально.":
+        "Le service météo n'a pas répondu à temps, le profil climatique continue de fonctionner localement.",
     "Сетевое видео отключено офлайн-режимом":
         "La vidéo est désactivée en mode hors ligne",
     "Сетевое изображение скрыто": "L' image réseau est cachée",
     "Сетевые данные отключены режимом «Полностью офлайн». Климатический профиль продолжает работать.":
         "Les données réseau sont désactivées par le mode complètement hors ligne. Le profil climatique continue de fonctionner.",
-    "Сжимаю и анализирую локально...": "Je comprime et analyse localement...",
     "сил": "force",
     "силовая": "Puissance",
     "Силовая тренировка по инвентарю": "Formation à l'inventaire des effectifs",
@@ -20028,6 +20485,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "срочных пунктов; начните с них.":
         "Les points d'urgence, commencez par ceux-là.",
     "стабильно": "poignardé",
+    "стакан": "Un verre",
     "Стандартные GATT-сервисы читаются автоматически. Для закрытых или редких устройств добавьте UUID вручную.":
         "Les services standard du GATT sont lus automatiquement. Pour les dispositifs fermés ou rares, ajoutez UUID manuellement.",
     "стандартный": "standard",
@@ -20127,6 +20585,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Точность": "précision",
     "точность GPS": "précision du GPS",
     "Точные будильники": "Des réveillants précis",
+    "Точные будильники недоступны (":
+        "Les alarmes précises ne sont pas disponibles (",
     "тошнота": "nausées",
     "травма": "traumatisme",
     "Травмы в течение жизни": "Traumatisme au cours de la vie",
@@ -20262,6 +20722,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Файл в защищённом хранилище:": "Fichier dans le référentiel protégé:",
     "Файл в медицинском сейфе не найден":
         "Le fichier dans la caisse médicale n' a pas été trouvé",
+    "Файл вложения не найден": "Le fichier de mise ne peut pas être trouvé",
     "Файл не содержит резервную копию приложения.":
         "Le fichier ne contient pas de copie de sauvegarde de l'application.",
     "Файл/импорт": "Fichier/importation",
@@ -20278,6 +20739,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "фитнес-тренажёр FTMS": "entraîneur de fitness FTMS",
     "Фокус": "Objectif",
     "Фокусы тренировок": "Astuces d'entraînement",
+    "Фоновая обработка": "Traitement de fond",
     "Фоновая работа": "Le travail de fond",
     "Фоновый анализ": "Analyse de fond",
     "Форма": "Formulaire",
@@ -20418,18 +20880,19 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "¿Qué es esto? ¿Qué es esto? ¿Qué es esto? ¿Qué es esto?",
     "(?:\\s+(?:референс|норма|reference)?\\s*([<>]?\\s*\\d+(?:[,.]\\d+)?(?:\\s*[-–]\\s*\\d+(?:[,.]\\d+)?)?))?":
         "¿Qué es lo que se dice en el libro de la Biblia?",
+    "(?:^|\\s)(?:в|на)\\s+([01]?\\d|2[0-3])(?:\\s*(?:час[а-яё]*|ч))?(?=\\s|":
+        "¿Qué es esto? ¿Qué es esto? ¿Qué es esto?",
+    "(?:^|\\s)через\\s+(\\d{1,3})\\s*(минут[а-яё]*|мин|час[а-яё]*|ч)(?=\\s|":
+        "¿Por qué no me gusta el juego?",
     "(?:анализ|показатель|результат(?:\\s+анализа)?)\\s+([a-zа-яё][a-zа-яё0-9 ()+._-]{1,60}?)\\s*[:=-]?\\s*([<>]?\\s*\\d+(?:[\\.,]\\d+)?)\\s*":
         "(análisis del indicador de la información?:resultado?:?:?:?:s\\s+análisis)?)\\s+([a-zá-yayo][a-zá-yayo0-9 () ++._-]{1,60}?)\\s*[:=-]?\\s*([<>]?\\s*\\d+(?:[\\.,]\\d+)?)\\s*",
     "(?:белок|protein|протеин|б)\\D{0,10}(\\d{1,3})":
         "¿Qué es esto? ¿Qué es esto?",
-    "(?:будильник|разбуди|подъ[её]м).*?(?:в|на)?\\s*((?:[01]?\\d|2[0-3])[:\\.]\\d{2})":
-        "¿Qué es esto? ¿Estimador de despertador de despertador de despertador de despertador?",
+    "(?:будильник|разбуди|подъ[её]м)": "¿Qué es esto?",
     "(?:вес|масса|weight)\\s*(?:сегодня|now)?\\s*[:=-]?\\s*(\\d{2,3}(?:[\\.,]\\d)?)\\s*(?:кг|kg)?\\b":
         "¿Qué peso tiene ahora? ¿Qué peso tiene ahora?",
-    "(?:выпил[а-яё]*|добав[а-яё]*|запиш[а-яё]*|water).*?(\\d+(?:[\\.,]\\d+)?)\\s*(мл|ml|л|l)(?![a-zа-яё])":
-        "¿Qué es esto? ¿bebió[a-yayo] de agua? ¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿",
-    "(?:гемоглоб|глюкоз|холестерин|ферритин|референс|ммоль/л|мг/дл|анализ крови)":
-        "¿Qué es la sangre? (hemoglobina de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de glucosa de",
+    "(?:выпил[а-яё]*|добав[а-яё]*|запиш[а-яё]*|укаж[а-яё]*|вод[а-яё]*|water).*?(\\d+(?:[\\.,]\\d+)?)\\s*(мл|ml|миллилитр[а-яё]*|л|l|литр[а-яё]*|стакан[а-яё]*)(?![a-zа-яё])":
+        "¿Qué es esto? ¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿",
     "(?:глюкоз[а-яё]*|сахар[а-яё]*\\s+кров[а-яё]*|glucose)\\s*[:=-]?\\s*(\\d{1,3}(?:[\\.,]\\d+)?)":
         "¿Qué es esto? ¿Qué es esto? ¿Qué es esto?",
     "(?:давлен[а-яё]*|pressure)\\s*[:=-]?\\s*(\\d{2,3})\\s*[/\\\\]\\s*(\\d{2,3})(?:\\s+(?:пульс|pulse)\\s*(\\d{2,3}))?":
@@ -20448,15 +20911,13 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "(?:калории|calories)\\D{0,12}(\\d{2,4})": "(?:calorias de las calorías)",
     "(?:качеств[а-яё]*|оценк[а-яё]*)\\s*(?:сна)?\\s*[:=-]?\\s*([1-5])":
         "¿Qué es lo que se hace en el mundo?",
-    "(?:ккал|калори|белк|жир|углевод|состав|пищевая ценность)":
-        "¿Cuál es el valor de la comida?",
     "(?:клетчатка|пищевые волокна|fibre|fiber)\\D{0,12}(\\d{1,3}(?:[,.]\\d+)?)":
         "¿Qué es esto? ¿Qué es esto?",
     "(?:масса|вес|порция|net weight|serving)\\D{0,12}(\\d{1,4})\\s*(?:г|g)":
         "¿Qué es lo que se hace en el mundo?",
     "(?:на|per)\\s*100\\s*(?:г|g)": "¿Qué es esto?",
-    "(?:напомни|напоминание|remind).*?(\\d{1,2})[:\\.](\\d{2})":
-        "¿Recuerdas lo que te dijo?",
+    "(?:напомни|напоминание|remind)":
+        "(: recuerdo de la muerte recuerdo de la muerte)",
     "(?:по\\s+[^.;,]{0,25}\\s+)?\\d+\\s*раз(?:а|у|)\\s+(?:в|за)\\s+(?:день|сутки)":
         "¿Por qué no? ¿Por qué no? ¿Por qué no? ¿Por qué no?",
     "(?:поставь|создай|заведи|добавь|разбуди(?:\\s+меня)?|будильник|подъ[её]м)":
@@ -20465,6 +20926,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "¿Qué es esto? ¿Qué es esto? ¿Qué es esto?",
     "(?:сахара|сахар|sugars?|из них сахара)\\D{0,12}(\\d{1,3}(?:[,.]\\d+)?)":
         "¿Es que el azúcar en el agua es un poco más que el agua?",
+    "(?:сколько|покажи|какой|какое|текущ[а-яё]*|итого)":
+        "(¿cuánto tiempo le falta para que lo haga?",
     "(?:соль|salt)\\D{0,10}(\\d{1,3}(?:[,.]\\d+)?)":
         "¿Qué es esto? ¿Qué es esto?",
     "(?:спал[а-яё]*|сон|sleep).*?(\\d{1,2}(?:[\\.,]\\d+)?)\\s*(?:ч(?:ас(?:а|ов)?)?|hours?|h)(?![a-zа-яё])":
@@ -20473,8 +20936,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "(?:dorm[a-yayo]*) el tiempo de dormir.*?",
     "(?:съел[а-яё]*|выпил[а-яё]*|запиш[а-яё]*\\s+(?:еду|при[её]м пищи)|добав[а-яё]*\\s+(?:еду|блюдо))\\s+(.+?)\\s+(\\d{1,4})\\s*(?:ккал|kcal)(?![a-zа-яё])":
         "¿Cómo se puede comer? ¿Cómo se puede comer? ¿Cómo se puede comer? ¿Cómo se puede comer? ¿Cómo se puede comer? ¿Cómo se puede comer? ¿Cómo se puede comer?",
-    "(?:таблет|капсул|принимать|назначен|рецепт|дозиров)":
-        "(tablilla para tomar: tomar para tomar para tomar para tomar para tomar para tomar para tomar para tomar para tomar para tomar para tomar)",
+    "(?:съел[а-яё]*|поел[а-яё]*|перекусил[а-яё]*|выпил[а-яё]*|добав[а-яё]*\\s+(?:еду|блюдо)|запиш[а-яё]*\\s+(?:что\\s+)?(?:я\\s+)?(?:съел[а-яё]*|поел[а-яё]*))\\s+(.+)":
+        "Se comió[a-yao] de la mano de un hombre que se había acostado a comer.",
     "(?:таблетк[а-яё]*|капсул[а-яё]*|раствор[а-яё]*|сироп[а-яё]*|суспензи[а-яё]*|":
         "(?:tabletc[a-yao]*ca de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la mano de la",
     "(?:температур[а-яё]*|temperature)\\s*[:=-]?\\s*(3[4-9]|4[0-2])(?:[\\.,](\\d))?":
@@ -20482,8 +20945,24 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "(?:тренировк[а-яё]*|пробежал[а-яё]*|бегал[а-яё]*|занимал[а-яё]*).*?(\\d{1,3})\\s*(?:мин|минут)":
         "(?:entrenador[a-yao]*dijo que corrió[a-yao]*dijo que corrió[a-yao]*dijo que se ocupó[a-yao]*).*?\\d{1,3})\\s*(?:minuto",
     "(?:углеводы|carbs|у)\\D{0,10}(\\d{1,3})": "(Carbohidratos?:carbs?:carbs)",
+    "(?<![a-zа-яё])(?:в|на)\\s*\\d{1,2}(?:[:\\.]\\d{2})?(?![a-zа-яё0-9])":
+        "¿Qué es esto? ¿Qué es esto? ¿Qué es esto?",
+    "(?<![a-zа-яё])(?:в|на)\\s*\\d{1,2}(?:[:\\.]\\d{2})?(?:\\s*(?:час[а-яё]*|ч))?(?![a-zа-яё0-9])":
+        "¿Qué es esto? ¿Qué es esto? ¿Qué es esto? ¿Qué es esto?",
+    "(?<![a-zа-яё])(?:каждый день|ежедневно|по будням|по выходным|сегодня|завтра|послезавтра)(?![a-zа-яё])":
+        "¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡",
+    "(?<![a-zа-яё])(?:не дай уснуть|не заснуть|не уснул)(?![a-zа-яё])":
+        "¿No te dejes dormir? ¿No te dejes dormir?",
+    "(?<![a-zа-яё])(?:с|и)?\\s*(?:проверкой|контролем)\\s+(?:активности|бодрствования)(?![a-zа-яё])":
+        "¿Qué es esto? ¿Qué es esto? ¿Qué es esto? ¿Qué es esto?",
+    "(?<![a-zа-яё])(?:сегодня|только что)(?![a-zа-яё])":
+        "¿Qué pasa hoy? ¿Qué pasa hoy?",
+    "(?<![a-zа-яё])через\\s+\\d+\\s*(?:минут[а-яё]*|мин|час[а-яё]*|ч)(?![a-zа-яё])":
+        "¿Por qué no se ha hecho esto? ¿Por qué no se ha hecho esto?",
     "(\\d+(?:[,.]\\d+)?)\\s*(?:ммоль/л|мг/дл|г/л|нг/мл|мед/л|ме/л|%)":
         "¿Qué es esto? ¿Qué es esto?",
+    "(\\d+(?:[\\.,]\\d+)?)\\s*(мл|ml|миллилитр[а-яё]*|л|l|литр[а-яё]*|стакан[а-яё]*)(?![a-zа-яё]).*?(?:вод[а-яё]*|выпил[а-яё]*|добав[а-яё]*|запиш[а-яё]*|water)":
+        "¿Qué es esto? ¿Qué es esto? ¿Qué es esto? ¿Qué es esto? ¿Qué es esto? ¿Qué es esto? ¿Qué es esto? ¿Qué es esto?",
     "(\\d{1,3}(?:[\\.,]\\d+)?)\\s*(?:км|km)": "¿Qué es esto? ¿Qué es esto?",
     "(\\d{1,4})\\s*(?:г|g)\\b": "¿Qué es esto?",
     "(\\d{2,4})\\s*(?:ккал|kcal)": "¿Qué es esto?",
@@ -20498,6 +20977,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "(ммоль/л|мкмоль/л|мг/дл|мг/л|г/л|г/дл|мкг/л|нг/мл|пг/мл|мед/л|ме/л|ед/л|mmol/l|umol/l|µmol/l|mg/dl|mg/l|g/l|g/dl|µg/l|ug/l|ng/ml|pg/ml|iu/l|u/l|10\\^?[*x×]?\\d+/л|фл|fl|пг|pg|%)":
         "(por ejemplo, el uso de la palabra \"moll\" en el sentido de \"moll\" en el sentido de \"moll\" en el sentido de \"moll\" en el sentido de \"moll\" en el sentido de \"moll\" en el sentido de \"moll\" en el sentido de \"moll\" en el sentido de \"moll\" en el sentido de \"moll\" en el sentido de \"moll\" en el sentido de \"moll\" en el sentido de \"moll\" en el sentido de \"moll\" en el sentido de \"moll\" en el sentido de \"moll\" en el sentido de \"moll\" en el sentido de \"moll\" en el sentido de \"moll\" en el sentido de \"moll\" en el sentido de \"moll\" en el sentido de \"moll\" en el sentido de \"moll\" en el sentido de \"moll\" en el sentido de \"moll\" en el sentido de \"moll\" en el sentido de \"moll\" en el sentido de \"moll\" en el sentido de \"moll\" en el sentido de \"moll\" en el sentido de \"moll\" en el",
     "). Дозировку я не изменяю.": "No cambiaré la dosis.",
+    "); используется приблизительное системное расписание.":
+        "); se utiliza el calendario aproximado del sistema.",
     ")} · день": "día",
     ")}. Отложите тренировку; при резком ухудшении или опасных признаках обратитесь за неотложной помощью.":
         "Retrasar el entrenamiento; en caso de deterioro brusco o de signos peligrosos, pedir ayuda urgente.",
@@ -20529,8 +21010,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     ", цель": ", objetivo",
     ". Добавил их на проверку; после подтверждения приложение создаст расписание и напоминания. Дозировки автоматически не меняются.":
         "Los añadimos para comprobarlos, y después de confirmarlo, la aplicación creará un horario y un recordatorio.",
-    ". Изменения применятся после подтверждения.":
-        ". Las modificaciones se aplicarán después de la confirmación.",
     ". Не используйте распознанные назначения до сверки с оригиналом.":
         "No utilices las instrucciones identificadas hasta que comparas con el original.",
     ". Невозможные скачки координат отфильтрованы.":
@@ -20580,6 +21059,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     ": не удалось разобрать": ": no se pudo resolver",
     ": осталось": "Lo que queda es:",
     ": пакет короче заявленного": ": paquete más corto de lo declarado",
+    ": проверка бодрствования": ": comprobar el estado de vigilia",
     ": характеристика не найдена": ": no se encuentra la característica",
     "; выбран ближайший расчётный конец цикла сна.":
         "Se ha elegido el final más cercano del ciclo de sueño.",
@@ -20597,21 +21077,23 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "[^a-zа-яё0-9]+": "¿Qué es esto?",
     "[a-zа-яё]*\\s*[:=-]?\\s*(\\d{1,3}(?:[\\.,]\\d+)?)\\s*(?:г|g)?":
         "¿Qué es esto? ¿Qué es esto?",
-    "\\b(?:в|на)\\s*\\d{1,2}[:\\.]\\d{2}\\b": "¿Qué es esto?",
     "\\b(гемоглобин|ферритин|холестерин|триглицериды|креатинин|мочевина|билирубин|алт|аст|ттг|витамин\\s+[a-zа-яё0-9]+|с-?реактивный\\s+белок)\\s*[:=-]?\\s*([<>]?\\s*\\d+(?:[\\.,]\\d+)?)\\s*":
         "La hemoglobina de la hemoglobina de la hemoglobina de la hemoglobina de la hemoglobina de la hemoglobina de la hemoglobina de la hemoglobina de la hemoglobina de la hemoglobina de la hemoglobina de la hemoglobina de la hemoglobina de la hemoglobina de la hemoglobina de la hemoglobina de la hemoglobina de la hemoglobina de la hemoglobina de la hemoglobina de la hemoglobina de la hemoglobina de la hemoglobina de la hemoglobina de la hemoglobina de la hemoglobina de la hemoglobina de la hemoglobina de la hemoglobina de la hemoglobina de la hemoglobina de la hemoglobina de la hemoglobina de la hemoglobina de la hemoglobina de la hemoglobina de la hemoglobina de la hemoglobina de la hemoglobina de la hemoglobina de la hemoglobina de la hemoglobina de la hemoglobina de la hemoglobina de la hemoglobina de la hemoglobina de la hemoglobina de la hemoglobina de la hemoglobina de la hemoglobina de la hemoglobina de la",
-    "\\d+(?:[\\.,]\\d+)?\\s*(?:мг|мкг|мл|ме|ед\\.)":
-        "¿Qué es esto? ¿Qué es esto?",
     "\\d+(?:[\\.,]\\d+)?\\s*(?:мкг|мг|г|мл|ед\\.?|ме)":
         "¿Qué es esto? ¿Qué es esto?",
     "\\d+(?:[\\.,]\\d+)?\\s*(?:мкг|мг|г|мл|ед\\.?|ме|iu|mcg|mg|ml)(?![a-zа-яё])":
         "¿Qué es esto? ¿Qué es esto? ¿Qué es esto? ¿Qué es esto?",
+    "\\d+(?:[\\.,]\\d+)?\\s*(?:мл|л|литр|стакан)":
+        "¿Qué es esto? ¿Qué es esto?",
     "\\d+\\s*(?:дн(?:я|ей|ь)?|сут(?:ок|ки)?|недел[а-яё]*|месяц[а-яё]*)(?![а-яё])":
         "¿Qué es esto? ¿Qué es esto? ¿Qué es esto? ¿Qué es esto?",
+    "\\d{1,4}\\s*(?:ккал|kcal)": "¿Qué es esto?",
     "^(?:врач\\s+)?(?:мне\\s+)?(?:назначил(?:а|и)?|назначение|рецепт|принимать)\\s*[:\\-]?\\s*":
         "¿Qué es esto? ¿Qué es esto? ¿Qué es esto? ¿Qué es esto?",
     "^(?:как|что|почему|зачем|когда|где|можно\\s+ли|расскажи|объясни|проанализируй|how|what|why|when|where|can\\s+i)\\b":
         "¿Cómo puedo hacer esto cuando puedo hacer esto? ¿Cómo puedo hacer esto cuando puedo hacer esto? ¿Cómo puedo hacer esto? ¿Cómo puedo hacer esto? ¿Cómo puedo hacer esto? ¿Cómo puedo hacer esto?",
+    "^(?:что\\s+)?(?:я\\s+)?(?:съел[а-яё]*|поел[а-яё]*|перекусил[а-яё]*)\\s+":
+        "¿Qué es esto? ¿Qué es esto? ¿Qué es esto? ¿Qué es esto?",
     "^[^a-zа-яё]+": "↑[^a-z-a-yayo]+",
     "^\\*\\*(?:Answer|Ответ):\\*\\*\\s*": "¿Answer de la respuesta?",
     "^\\s*(?:КОМАНДА|COMMAND)\\s*:\\s*": "¿Cómo es que no lo haces?",
@@ -20683,7 +21165,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "UUID характеристики записи": "Características UUID del registro",
     "Vault был восстановлен из безопасного начального состояния.":
         "Vault ha sido restaurado desde un estado inicial seguro.",
-    "Vision-анализ недоступен:": "No está disponible el análisis de visión:",
     "°C · высота": "°C · altura",
     "· вес": "peso",
     "· визуальная оценка": "· evaluación visual",
@@ -20711,10 +21192,14 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "» перед выполнением.": "Antes de la ejecución.",
     "», интенсивность": ", intensidad",
     "». Извлечённый текст:": ". El texto extraído:",
+    "». Калории и Б/Ж/У оставлены пустыми; добавьте порцию или уточните данные, когда они известны.":
+        "Calorias y B/G/U están vacíos; añada una porción o especifica los datos cuando sean conocidos.",
     "». Перед продолжением рекомендуется сделать копию текущих данных.":
         "Antes de continuar, se recomienda hacer una copia de los datos actuales.",
     "». Текст для анализа не найден.":
         ". No se ha encontrado el texto para su análisis.",
+    "». Уведомления о приёме будут планироваться по курсу препарата.":
+        ". Los avisos de recepción se planificarán por el curso del medicamento.",
     "август": "Agosto",
     "Автозапись GPS/GLONASS:": "Autorregulación GPS/GLONASS:",
     "Автозапуск": "El arranque automático",
@@ -20739,6 +21224,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "активное движение": "movimiento activo",
     "Активность": "Actividad",
     "Активность и вода": "Actividad y agua",
+    "Активность после подъёма не подтверждена. Откройте приложение и отключите сигнал.":
+        "No se ha confirmado la actividad después de la subida.",
     "Активность хорошая: шаги уже закрывают базовую цель дня.":
         "La actividad es buena: los pasos ya cerran el objetivo básico del día.",
     "активные калории": "calorías",
@@ -20798,6 +21285,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "без документа": "sin papeles",
     "Без жёстких ограничений: можно добавить спокойную прогулку и оценивать недельный баланс.":
         "Sin restricciones rígidas: puede agregar un paseo tranquilo y evaluar el equilibrio semanal.",
+    "без контроля бодрствования": "sin control de vigilia",
     "без лекарства": "sin drogas",
     "Без ограничений": "Sin restricciones.",
     "без ограничений": "ilimitadamente",
@@ -20879,6 +21367,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "В профиле нет координат города.":
         "No hay coordenadas de la ciudad en el perfil.",
     "В пути, мин": "En camino, el mío.",
+    "в расписание «": "en el horario",
     "В списке есть антикоагулянт: взаимодействие нужно проверить у врача или фармацевта.":
         "Hay un anticoagulante en la lista: la interacción debe comprobarse con un médico o farmacéutico.",
     "В тренировках отмечалась боль: будущую нагрузку стоит снизить.":
@@ -20914,9 +21403,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "велотренажёр": "entrenador",
     "вероятно в руках": "Probablemente en las manos.",
     "вероятно используется": "probablemente se utiliza",
-    "Версия 1.8.1+10 · создатель: Редин Максим Юрьевич · info@thebestmks.ru":
-        "Versión 1.8.1+10 · creador: Reden Maxim Yuriyovich · info@thebestmks.ru",
-    "Версия: 1.8.1+10": "Versión: 1.8.1+10",
+    "Версия 1.8.2+11 · создатель: Редин Максим Юрьевич · info@thebestmks.ru":
+        "Versión 1.8.2+11 · creador: Reden Maxim Yuriyovich · info@thebestmks.ru",
+    "Версия: 1.8.2+11": "Versión: 1.8.2+11",
     "Вес": "Peso.",
     "вес": "peso",
     "Вес порции и пищевая ценность являются ориентировочной оценкой класса блюда. Проверьте их перед подтверждением.":
@@ -20957,6 +21446,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Внесено голосом или командой помощника; условия измерения не указаны.":
         "Introducido por voz o por el comando de un asistente; no se indican las condiciones de medición.",
     "Внесено командой помощника.": "Fue llevado por el equipo de ayudantes.",
+    "Внесено помощником без количества и нутриентов; значения не выдумывались.":
+        "Introducido por el asistente sin cantidad ni nutrientes; los valores no se inventaron.",
     "внесённая калорийность заметно выше основного обмена, но недельный баланс и активность важнее одного дня.":
         "la cantidad de calorías aportada es mucho mayor que la cantidad de metabolismo principal, pero el equilibrio y la actividad semanales son más importantes que un día.",
     "внесённая калорийность низкая относительно основного обмена; возможно, дневник заполнен не полностью.":
@@ -21025,6 +21516,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "вт": "volt",
     "Вторник": "Martes.",
     "вторник": "el martes",
+    "Вчера ·": "Ayer fue",
     "вчера уже была тяжёлая тренировка": "Fue una práctica difícil ayer.",
     "Вы": "Tú.",
     "Выберите вариант": "Elija una opción",
@@ -21214,6 +21706,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Для чего применяется": "Para qué se utiliza",
     "Дневник питания, БЖУ, рецепты и ручное подтверждение фото":
         "Diario de nutrición, BJU, recetas y foto de confirmación manual",
+    "Дневник по датам": "Diario de fechas",
     "Дневник самочувствия без диагнозов и назначений":
         "Diario de salud sin diagnósticos y nombramientos",
     "Дневник сна": "Diario del sueño",
@@ -21231,6 +21724,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "До ориентира": "Al hito",
     "добав": "añadido",
     "Добавил": "Se añadió",
+    "Добавил время": "Me ha dado más tiempo.",
     "Добавить": "Añadir",
     "Добавить в дневник": "Añadir al diario",
     "Добавить врача или клинику": "Añadir un médico o una clínica",
@@ -21381,6 +21875,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Завершить": "Completa.",
     "Завершить и сохранить": "Complete y mantenga",
     "зависит от пола и возраста": "según sexo y edad",
+    "завтра": "mañana",
     "завтрак": "desayuno",
     "Загружаем локальный сейф здоровья":
         "Descarga la seguridad sanitaria local",
@@ -21457,6 +21952,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "Pedimos permiso y buscamos dispositivos.",
     "Запрещено системой; откройте системные настройки":
         "Prohibido por el sistema; abre las configuraciones del sistema",
+    "Запрос обрабатывается в фоне": "La consulta se trata en el fondo",
     "Запрос пользователя:": "La pregunta del usuario:",
     "Запросить разрешение повторно": "Repear el permiso",
     "Запросить разрешения и синхронизировать":
@@ -21497,9 +21993,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "из-за холода выбран домашний вариант с более длинной разминкой":
         "por el frío se eligió una opción de casa con una desmincha más larga",
     "избегать задержки дыхания": "Espera.",
-    "Извлечённый текст:": "El texto extraído:",
     "Измените запрос или добавьте тег в карточку документа.":
         "Cambia la solicitud o agrega una etiqueta a la tarjeta de documento.",
+    "Изменить": "Cambiar",
     "Изменить симптом": "Cambiar el síntoma",
     "Изменить сон": "Cambia tu sueño.",
     "измерения не найдены": "No se encuentran las medidas",
@@ -21629,6 +22125,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Ккал": "Kal",
     "ккал": "becerro",
     "ккал · Б/Ж/У": "ccal · B/J/U",
+    "ккал · расход": "ccal · gasto",
+    "ккал · шаги": "ccal · pasos",
     "Ккал еды": "Calorie food",
     "ккал за сутки": "calorías",
     "ккал, активность": "Cal, actividad",
@@ -21685,6 +22183,10 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Контекст дома и работы": "Contexto de la casa y el trabajo",
     "Контекст телефона": "Contexto del teléfono",
     "Контекст телефона:": "Contexto del teléfono:",
+    "контролем активности": "control de la actividad",
+    "контроль активности": "control de la actividad",
+    "Контроль бодрствования": "Control de vigilia",
+    "контроль бодрствования": "control de la vigilancia",
     "контроль лекарств": "medicamento",
     "Координаты": "Coordinators",
     "Координаты используются только на устройстве для определения контекста.":
@@ -21715,7 +22217,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Курс:": "Por supuesto:",
     "Күнтізбе": "kuntizbe",
     "л": "l",
-    "л · калории": "k calorías",
+    "л · питание": "l · alimentación",
+    "л воды.": "¿Qué es eso?",
     "л, шаги": "L, pasos",
     "л.": "¿Qué es esto?",
     "л. Пейте небольшими порциями, если врач не ограничил жидкость.":
@@ -21811,6 +22314,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "мигрень": "migraña",
     "Микрофон и голосовой ввод": "Microfón y entrada de voz",
     "мили": "millas",
+    "миллилитр": "un litros",
     "мин": "mía",
     "мин ·": "mía",
     "мин · перенос доступен": "Transferencia de minas disponibles",
@@ -21870,10 +22374,10 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "carne ¦fish Silenciomilk Silenciomilk Silenciocheese queso Silenciochicken Silenciobeef Silenciofish egg ¦",
     "На весь экран": "En todo el monitor",
     "на ночь": "por la noche.",
-    "На проверку добавлено записей:": "Se han añadido las siguientes notas:",
     "на работе": "en el trabajo",
     "На ручную проверку добавлено показателей:":
         "A la verificación manual se han añadido los siguientes indicadores:",
+    "на сегодня": "para hoy",
     "на сегодня запланировано:": "para hoy se planea:",
     "набор силы": "fuerza",
     "нагруз": "carga",
@@ -21983,8 +22487,10 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "нг/мл": "ng/ml",
     "не выбрано": "no seleccionado",
     "не выбраны": "no seleccionado",
+    "не дай уснуть": "No te dejes dormir.",
     "не задана": "no se ha dado",
     "не задано": "No se ha dado",
+    "не заснуть": "No dormir.",
     "Не извлечено:": "No se recupera:",
     "не компенсируйте еду голоданием; выберите спокойную прогулку и вернитесь к обычному плану.":
         "No compense la comida con el hambre; elige un paseo tranquilo y vuelva a su plan normal.",
@@ -22042,6 +22548,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "не указано в контексте. В конце укажи уверенность: высокая, средняя или низкая.":
         "No se indica en el contexto. En el final, indique la confianza: alta, media o baja.",
     "Не указаны": "No se indica",
+    "не уснул": "No se ha dormido.",
     "Не установлена; доступен быстрый режим и установка в разделе «Помощник».":
         "No está instalado; está disponible el modo rápido y la instalación en la sección Asistente.",
     "Не хватает данных:": "No hay datos:",
@@ -22132,7 +22639,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Обновить контекст": "Actualizar el contexto",
     "Обновить результаты поиска": "Actualizar los resultados de búsqueda",
     "Обновлено устройство:": "Dispositivo actualizado:",
-    "Обрабатываю локально...": "Estoy trabajando en el local...",
     "обсудите с врачом:": "Hable con su médico:",
     "обсудить": "Debate",
     "Обсудить план с помощником": "Discutir el plan con el asistente",
@@ -22156,6 +22662,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "Restrictions, rehabilitation, doctor, documents",
     "Ограничения:": "Las limitaciones:",
     "ограничить бег": "Abajo.",
+    "один раз": "Una vez.",
     "один сигнал": "un solo mensaje",
     "одыш": "sin aliento",
     "одышка": "sin aliento",
@@ -22245,7 +22752,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Отмечено сегодня": "Celebrada hoy",
     "отмечено сегодня": "Notas",
     "Отправить": "Enviar.",
-    "Отправлено изображение:": "Se envió la imagen:",
     "Отпуск": "Vacaciones",
     "отпуск": "licencia",
     "Отпуск не запланирован": "Vacaciones no programadas",
@@ -22309,6 +22815,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "перенесённая болезнь": "enfermedad",
     "переохлаждение": "hipotermia",
     "Пересадок": "Trasplante",
+    "Период контроля, мин": "Periodo de control, min",
     "Периодически проверять локальные напоминания и расписание без отправки данных в сеть":
         "Revisar periódicamente los recordatorios locales y el calendario sin enviar datos a la red",
     "Персональная проверка": "Verificación personal",
@@ -22357,9 +22864,11 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "пн": "estanque",
     "пн, вт, ср, чт, пт":
         "Señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor y señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor y señor, señor, señor, señor, señor, señor, señor, señor, señor, señor, señor y señor, señor, señor, señor, señor, señor, señor, señor, señor, señor y señor",
+    "по будням": "por semana",
     "по внесённым данным допустима обычная плановая нагрузка с контролем самочувствия.":
         "Se permite una carga ordinaria de plan con control de salud.",
     "По внесённым приёмам пищи:": "Por las comidas introducidas:",
+    "по выходным": "los fines de semana",
     "по геолокации": "geolocado",
     "по дням недели": "semanales",
     "По какое число": "¿Qué número?",
@@ -22378,12 +22887,18 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Побочные эффекты и реакции": "Efectos secundarios y reacciones",
     "Побочные эффекты:": "Efectos secundarios:",
     "Повседневная активность": "Actividad diaria",
+    "Повтор": "Repite",
     "повторений": "repetición",
     "Повторите PIN": "Repita el PIN.",
     "Повторно запрашивать PIN или биометрию для чувствительных документов":
         "Repetición de PIN o biometría para documentos sensibles",
+    "Повторять сигнал при отсутствии движения после подъёма.":
+        "Repite la señal cuando no haya movimiento después de la elevación.",
     "Повторяющиеся симптомы:": "Síntomas recurrentes:",
     "Повышает масштаб интерфейса": "Aumenta la escala de la interfaz",
+    "Погода временно недоступна": "El tiempo está temporal .",
+    "Погода временно недоступна. Климатический профиль продолжает работать локально.":
+        "El clima está fuera de control, y el perfil climático continúa trabajando localmente.",
     "Погода и климат": "Clima y clima",
     "Погода недоступна": "El tiempo inaccesible",
     "Погода подходит для обычной нагрузки с учётом самочувствия.":
@@ -22510,6 +23025,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "последние симптомы:": "los últimos síntomas:",
     "последняя запись сна:": "La última grabación del sueño:",
     "Последняя запись:": "La última grabación:",
+    "послезавтра": "después del día siguiente",
     "постав": "- ¿Qué quieres decir ?",
     "Постепенное пробуждение": "Despertamiento gradual",
     "потер": "jersey",
@@ -22521,6 +23037,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Предупреждение": "Advertencia",
     "Предупреждения": "Las advertencias",
     "Препарат": "La droga",
+    "препарат": "el medicamento",
     "препаратов, принято сегодня": "de los medicamentos que se tomaron hoy",
     "Препараты": "Drogas",
     "Препараты не распознаны. Проверьте качество снимка или добавьте лекарство вручную.":
@@ -22535,7 +23052,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Приготовление": "Preparación",
     "прием": "Acogida",
     "Прикреплённый файл не найден": "No se ha encontrado el archivo",
-    "Приложен файл:": "Se ha añadido el archivo:",
     "приложение открыто": "el archivo está abierto",
     "Приложение работает без браслета: вес, сон, шаги, еда и тренировки можно вводить вручную.":
         "La aplicación funciona sin un brazalete: peso, sueño, pasos, comida y ejercicios se pueden introducir manualmente.",
@@ -22568,10 +23084,12 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Проверить симптомы": "Comprueba los síntomas",
     "Проверить снова": "Revisar el mismo.",
     "Проверить уведомление": "Verificar el aviso",
+    "проверка активности": "verificación de la actividad",
     "Проверка назначения": "Verificación de la asignación",
     "Проверка недоступна:": "No está disponible:",
     "проверка разрешений": "permisos",
     "Проверка распознавания": "Verificación de reconocimiento",
+    "проверкой активности": "por la verificación de la actividad",
     "Проверь лекарства и остатки": "Comprobar medicamentos y residuos",
     "Проверьте аллерген в дневнике": "Compruebe el alérgeno en el diario.",
     "Проверьте белок и полноту дневника":
@@ -22598,6 +23116,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "compruebe las comidas que no se tomen y no reduzca su dieta de forma drástica sin un especialista.",
     "Проверяем доступность...": "Comprobando disponibilidad...",
     "Проверяем локальную модель...": "Estamos probando el modelo local...",
+    "проверяй активность": "comprobar la actividad",
+    "проверяй бодрствование": "comprobar su estado de vigilia",
+    "Проверять через, мин": "Verificar a través de, min",
     "прогулки": "caminar",
     "Продолжить": "Continúa.",
     "Продолжить тренировку": "Continuar la formación",
@@ -22697,6 +23218,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Расстояние, км": "Distancia, km",
     "раствор": "la solución",
     "растяж": "el estiramiento",
+    "расход": "el gasto",
     "Расчёт по данным профиля и сегодняшним отметкам.":
         "Cálculo según los datos del perfil y las marcas de hoy.",
     "расчётная готовность": "la preparación de los cálculos",
@@ -22835,9 +23357,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Сегодня важнее восстановление. Не тренируйтесь через боль, температуру или резкое ухудшение самочувствия.":
         "Hoy es más importante que la recuperación. No entrenes por dolor, temperatura o deterioro brusco.",
     "Сегодня дежурство": "Hoy es el turno.",
+    "Сегодня записано": "Hoy fue registrado.",
     "сегодня отмечен тревожный симптом или высокая интенсивность жалобы.":
         "Hoy se nota un síntoma de alarma o una alta intensidad de la queja.",
-    "сегодня.": "¿Qué es esto?",
     "Сегодня: сон": "Hoy: sueño",
     "Сейчас активен режим поездки: при ночной дороге, смене часового пояса или недосыпе нагрузка автоматически считается восстановительной.":
         "Ahora el modo de viaje es activo: con la conducción nocturna, cambiando la zona horaria o la falta de sueño, la carga se considera automáticamente restaurativa.",
@@ -22845,13 +23367,15 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "сентябрь": "Septiembre",
     "Сервер модели вернул код": "El servidor del modelo devolvió el código",
     "Сервис": "Servicio",
+    "Сервис погоды временно вернул ошибку. Повторная попытка будет выполнена автоматически.":
+        "El servicio meteorológico ha devuelto el error temporalmente.",
+    "Сервис погоды не ответил вовремя. Климатический профиль продолжает работать локально.":
+        "El servicio meteorológico no ha respondido a tiempo, y el perfil climático continúa funcionando localmente.",
     "Сетевое видео отключено офлайн-режимом":
         "El vídeo de red está apagado en modo offline",
     "Сетевое изображение скрыто": "Imagen de red oculta",
     "Сетевые данные отключены режимом «Полностью офлайн». Климатический профиль продолжает работать.":
         "Los datos de la red están deshabilitados por modo “sin conexión completa”. El perfil climático sigue funcionando.",
-    "Сжимаю и анализирую локально...":
-        "Estoy comprimiendo y analizando localmente...",
     "сил": "fuerza",
     "силовая": "poder",
     "Силовая тренировка по инвентарю": "Capacitación en materia de inventario",
@@ -23019,6 +23543,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "срочных пунктов; начните с них.":
         "Los puntos de emergencia, empieza con ellos.",
     "стабильно": "stably",
+    "стакан": "un vaso",
     "Стандартные GATT-сервисы читаются автоматически. Для закрытых или редких устройств добавьте UUID вручную.":
         "Los servicios estándar del GATT se leen automáticamente. Para dispositivos cerrados o raros, agregue UUID manualmente.",
     "стандартный": "de la norma",
@@ -23117,6 +23642,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Точность": "precisión",
     "точность GPS": "precisión del GPS",
     "Точные будильники": "Despertadores precisos",
+    "Точные будильники недоступны (": "No hay despertadores precisos (",
     "тошнота": "n",
     "травма": "traumatismo",
     "Травмы в течение жизни": "Traumas en la vida",
@@ -23252,6 +23778,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Файл в защищённом хранилище:": "Ficha en el almacén protegido:",
     "Файл в медицинском сейфе не найден":
         "No se encuentra el archivo en el seguro médico",
+    "Файл вложения не найден": "No se encuentra el archivo de la entrada",
     "Файл не содержит резервную копию приложения.":
         "El archivo no contiene una copia de seguridad de la aplicación.",
     "Файл/импорт": "Archivo/import",
@@ -23268,6 +23795,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "фитнес-тренажёр FTMS": "entrenadores de fitness FTMS",
     "Фокус": "Focus",
     "Фокусы тренировок": "Trucos de capacitación",
+    "Фоновая обработка": "El tratamiento de fondo",
     "Фоновая работа": "Trabajo de fondo",
     "Фоновый анализ": "Análisis de fondo",
     "Форма": "Formulario",
@@ -23407,18 +23935,19 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "(*?(?:\\s?:referes*lainorma) [[:=-]?\\s*([<>]?\\s*\\d+(?:[\\.,]\\d+)?(?:\\s*[-]\\s*\\d+(?:[\\.,]\\d+)?)?",
     "(?:\\s+(?:референс|норма|reference)?\\s*([<>]?\\s*\\d+(?:[,.]\\d+)?(?:\\s*[-–]\\s*\\d+(?:[,.]\\d+)?)?))?":
         "(?:\\s+(?:reference della norma di riferimento)?\\s([<>?s*\\d+(?:[,.]\\d+)?(?:\\s*[-]\\s*\\d+(?:[,.]\\d+)?)?",
+    "(?:^|\\s)(?:в|на)\\s+([01]?\\d|2[0-3])(?:\\s*(?:час[а-яё]*|ч))?(?=\\s|":
+        "(?: si trova) (: si trova) (: si trova) (: si trova) (: si trova) (: si trova) (: si trova) (: si trova) (: si trova) (: si trova) (: si trova) (: si trova) (: si trova) (: si trova) (: si trova) (: si trova) (: si trova) (: si trova) (: si trova) (: si trova) (: si trova) (: si trova) (: si trova) (: si trova) (: si trova) (: si trova) (: si trova) (: si trova) (: si trova) (: si trova) (: si trova) (: si trova) (: si trova) (: si trova) (: si trova) (: si trova) (: si trova) (: si trova) (: si trova) (: si trova) (: si trova) (: si trova) (: si trova) (: si trova) (: si trova) (: si trova) (: si trova) (: si trova) (: si trova) (si) (si) (si) (",
+    "(?:^|\\s)через\\s+(\\d{1,3})\\s*(минут[а-яё]*|мин|час[а-яё]*|ч)(?=\\s|":
+        "(?: si trova) attraverso il tempo?",
     "(?:анализ|показатель|результат(?:\\s+анализа)?)\\s+([a-zа-яё][a-zа-яё0-9 ()+._-]{1,60}?)\\s*[:=-]?\\s*([<>]?\\s*\\d+(?:[\\.,]\\d+)?)\\s*":
         "(analisi del poligono?:resultato?:?:?:?:s\\s+analisi)?)\\s+([a-za-ya-yo][a-za-yayo0-9 () ++._-]{1,60}?)\\s*[:=-]?\\s*([<>]?\\s*\\d+(?:[\\.,]\\d+)?)\\s*",
     "(?:белок|protein|протеин|б)\\D{0,10}(\\d{1,3})":
         "Protein (che non è proteina)",
-    "(?:будильник|разбуди|подъ[её]м).*?(?:в|на)?\\s*((?:[01]?\\d|2[0-3])[:\\.]\\d{2})":
-        "\"Sciglia di un'altra persona\".",
+    "(?:будильник|разбуди|подъ[её]м)": "•:svegliatore (svegliare)",
     "(?:вес|масса|weight)\\s*(?:сегодня|now)?\\s*[:=-]?\\s*(\\d{2,3}(?:[\\.,]\\d)?)\\s*(?:кг|kg)?\\b":
         "(?:: peso del peso di cibo) \\s*(?: oggi è ora? \\s*[:=-]?\\s*(\\d{2,3}(?:[\\.,]\\d)?) \\s*(?:",
-    "(?:выпил[а-яё]*|добав[а-яё]*|запиш[а-яё]*|water).*?(\\d+(?:[\\.,]\\d+)?)\\s*(мл|ml|л|l)(?![a-zа-яё])":
-        "?::bevi[a-yao]*dive addosso[a-yao] ([a-yao]*divezzando[a-yao]*divezzando]).*??\\d+?:[\\.,]\\d+)?)\\s*\\lml",
-    "(?:гемоглоб|глюкоз|холестерин|ферритин|референс|ммоль/л|мг/дл|анализ крови)":
-        "(hemoglobina di glucosio di glucosio di glucosa di glucosa di glucosa di glucosa di glucosa di glucosa di glucosa di glucosa di glucosa di glucosa di glucosa di glucosa di glucosa di glucosa di glucosa di glucosa di glucosa di glucosa di glucosa di glucosa di glucosa di glucosa di glucosa di glucosa di glucosa di glucosa di glucosa di glucosa di glucosa di glucosa di glucosa di glucosa di glucosa di glucosa di glucosa di glucosa di glucosa di glucosa di glucosa di glucosa di glucosa di glucosa di glucosa di glucosa di glucosa di glucosa di glucosa di glucosa di glucosa di glucosa di glucosa di glucosa di glucosa di glucosa di glucosa di glucosa di glucosa di glucosa di glucosa di glucosa di gluc",
+    "(?:выпил[а-яё]*|добав[а-яё]*|запиш[а-яё]*|укаж[а-яё]*|вод[а-яё]*|water).*?(\\d+(?:[\\.,]\\d+)?)\\s*(мл|ml|миллилитр[а-яё]*|л|l|литр[а-яё]*|стакан[а-яё]*)(?![a-zа-яё])":
+        "?::bevi[a-yao] di addosso[a-yao] (a-yao* to-yao] di riscrivere[a-yao] di usare[a-yao] di usare[a-yao] di usare[a-yao] di usare[a-yao] di usare[a-yao] di usare l'acqua di riserva).*?????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????",
     "(?:глюкоз[а-яё]*|сахар[а-яё]*\\s+кров[а-яё]*|glucose)\\s*[:=-]?\\s*(\\d{1,3}(?:[\\.,]\\d+)?)":
         "(?:glucose[a-yao]*di glucosio[a-yao]*\\s+sanguine[a-yao]*di glucose)\\s*[:=-]?\\s*(\\d{1,3}(?:[\\.,]\\d+)?)",
     "(?:давлен[а-яё]*|pressure)\\s*[:=-]?\\s*(\\d{2,3})\\s*[/\\\\]\\s*(\\d{2,3})(?:\\s+(?:пульс|pulse)\\s*(\\d{2,3}))?":
@@ -23437,15 +23966,12 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "(?:калории|calories)\\D{0,12}(\\d{2,4})": "(?:calorie di cioccolato)",
     "(?:качеств[а-яё]*|оценк[а-яё]*)\\s*(?:сна)?\\s*[:=-]?\\s*([1-5])":
         "(?:cattivezza[a-yao]* di ritiro[a-yao]*)\\s*(?:sno)?\\s*[:=-]?\\s*([1-5])",
-    "(?:ккал|калори|белк|жир|углевод|состав|пищевая ценность)":
-        "•:ccalcallcallor (ccalcallor) (ccalcallor) (ccalcallor) (ccalcallor) (ccalcallor) (ccalcallor) (ccalcallor) (ccalcallor) (ccalcallor) (ccalcallor) (ccalcallor) (ccalcallor) (ccalcallor) (ccalcallor) (callor) (callor) (callor) (callor) (callor) (callor) (callor) (callor) (callor) (callor) (callor) (callor) (callor) (callor) (callor) (callor) (callor) (callor) (callor) (callor) (callor) (callor)))",
     "(?:клетчатка|пищевые волокна|fibre|fiber)\\D{0,12}(\\d{1,3}(?:[,.]\\d+)?)":
         "(cella di fibra di filamento)",
     "(?:масса|вес|порция|net weight|serving)\\D{0,12}(\\d{1,4})\\s*(?:г|g)":
         "•: massa del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso del peso",
     "(?:на|per)\\s*100\\s*(?:г|g)": "(a: per saperlo)",
-    "(?:напомни|напоминание|remind).*?(\\d{1,2})[:\\.](\\d{2})":
-        "(?: ricorda la tua memoria di quando hai perso la tua memoria).*?",
+    "(?:напомни|напоминание|remind)": "(: ricordare la tua memoria)",
     "(?:по\\s+[^.;,]{0,25}\\s+)?\\d+\\s*раз(?:а|у|)\\s+(?:в|за)\\s+(?:день|сутки)":
         "? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ?",
     "(?:поставь|создай|заведи|добавь|разбуди(?:\\s+меня)?|будильник|подъ[её]м)":
@@ -23454,6 +23980,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
         ":reference (norma di riferimento)\\D{0,12}([\\d,.]+ ?[-] ?[\\d,.]+)",
     "(?:сахара|сахар|sugars?|из них сахара)\\D{0,12}(\\d{1,3}(?:[,.]\\d+)?)":
         "Di cui di loro di zucchero?",
+    "(?:сколько|покажи|какой|какое|текущ[а-яё]*|итого)":
+        "(: quanto significa mostrare il suo valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di valore di",
     "(?:соль|salt)\\D{0,10}(\\d{1,3}(?:[,.]\\d+)?)":
         "(?:salto di rosso)\\D{0,10}(\\d{1,3}(?:[,.]\\d+)?)",
     "(?:спал[а-яё]*|сон|sleep).*?(\\d{1,2}(?:[\\.,]\\d+)?)\\s*(?:ч(?:ас(?:а|ов)?)?|hours?|h)(?![a-zа-яё])":
@@ -23462,8 +23990,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "(?:spial[a-yao]*) risponde alla somnolenza).*?",
     "(?:съел[а-яё]*|выпил[а-яё]*|запиш[а-яё]*\\s+(?:еду|при[её]м пищи)|добав[а-яё]*\\s+(?:еду|блюдо))\\s+(.+?)\\s+(\\d{1,4})\\s*(?:ккал|kcal)(?![a-zа-яё])":
         "?:se ne beveva (s-a-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya-ya",
-    "(?:таблет|капсул|принимать|назначен|рецепт|дозиров)":
-        "(tablette di anti-dosivo?: prendere con destinazione anti-dosivo di anti-dosivo)",
+    "(?:съел[а-яё]*|поел[а-яё]*|перекусил[а-яё]*|выпил[а-яё]*|добав[а-яё]*\\s+(?:еду|блюдо)|запиш[а-яё]*\\s+(?:что\\s+)?(?:я\\s+)?(?:съел[а-яё]*|поел[а-яё]*))\\s+(.+)":
+        "Ha mangiato a-ia-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-o-",
     "(?:таблетк[а-яё]*|капсул[а-яё]*|раствор[а-яё]*|сироп[а-яё]*|суспензи[а-яё]*|":
         "(?:tablettik[a-yao]*ka to-sipsul[a-yao] to-si-sortur[a-yao] to-si-si-rop[a-yao] to-si-sospensi[a-yao] to-si-sortur* to-si-sortur",
     "(?:температур[а-яё]*|temperature)\\s*[:=-]?\\s*(3[4-9]|4[0-2])(?:[\\.,](\\d))?":
@@ -23471,8 +23999,24 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "(?:тренировк[а-яё]*|пробежал[а-яё]*|бегал[а-яё]*|занимал[а-яё]*).*?(\\d{1,3})\\s*(?:мин|минут)":
         "(?:trenerivoc[a-yao]*di-guido corso[a-yao]*di-guido corso[a-yao]*di-guido occupato[a-yao]*).*?\\d{1,3})\\s*(?:minuto",
     "(?:углеводы|carbs|у)\\D{0,10}(\\d{1,3})": "(carboidrati?:carbs?:carbs)",
+    "(?<![a-zа-яё])(?:в|на)\\s*\\d{1,2}(?:[:\\.]\\d{2})?(?![a-zа-яё0-9])":
+        "(a-z-ya-yo) ? ? (a-z-ya-yo0-9])",
+    "(?<![a-zа-яё])(?:в|на)\\s*\\d{1,2}(?:[:\\.]\\d{2})?(?:\\s*(?:час[а-яё]*|ч))?(?![a-zа-яё0-9])":
+        "(a-z-ya-yo) (a-z-a-ya-yo) (a-z-a-ya-yo) (a-z-a-ya-yo) (a-z-a-ya-yo) (a-z-a-ya-yo) (a-z-a-ya-yo) (a-z-a-ya-yo) (a-z-a-yo) (a-z-a-yo) (a-z-ya-yo) (a-z-a-yo) (a-z-ya-yo) (a-z-a-yo) (a-z-ya-yo) (a-z-a-yo) (a-z-a-yo) (a-z-a-yo) (a-z-a-yo) (a-z-a-yo) (a-z-yo) (a-z-yo) (a-z-yo) (a-z-yo) (a-z-yo) (a-z-yo) (a-z-yo) (a-yo) (a-z-yo)",
+    "(?<![a-zа-яё])(?:каждый день|ежедневно|по будням|по выходным|сегодня|завтра|послезавтра)(?![a-zа-яё])":
+        "<![a-z-a-yayo]) ??:ogni giorno di quando?",
+    "(?<![a-zа-яё])(?:не дай уснуть|не заснуть|не уснул)(?![a-zа-яё])":
+        "Non lasciarti addormentare, non lasciarti addormentare.",
+    "(?<![a-zа-яё])(?:с|и)?\\s*(?:проверкой|контролем)\\s+(?:активности|бодрствования)(?![a-zа-яё])":
+        "(a-z-ya-yo) (a-z-a-ya-yo) (a-z-a-ya-yo) (a-z-a-ya-yo) (a-z-a-ya-yo) (a-z-a-ya-yo) (a-z-a-ya-yo) (a-z-a-ya-yo) (a-z-ya-yo) (a-z-ya-yo) (a-z-ya-yo) (a-z-ya-yo) (a-z-ya-yo) (a-z-ya-yo) (a-z-ya-yo) (a-ya-yo) (a-ya-yo) (a-ya-yo) (a-ya-yo) (a-ya-yo) (a-ya-yo) (a-ya-yo) (a-yo) (a-yo) (a-yo) (a-yo) (a-yo) (a-yo) (a-yo) (a-yo) (a-yo) (a-yo) (a-yo) (a",
+    "(?<![a-zа-яё])(?:сегодня|только что)(?![a-zа-яё])":
+        "(A-Z-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-",
+    "(?<![a-zа-яё])через\\s+\\d+\\s*(?:минут[а-яё]*|мин|час[а-яё]*|ч)(?![a-zа-яё])":
+        "<![a-z-a-yayo]) attraverso\\s+\\d+\\s*(?:minuto (?[a-yayo]*tobeliminariquando[a-yayo]*tobechin) ????[a-z-a-yayo])",
     "(\\d+(?:[,.]\\d+)?)\\s*(?:ммоль/л|мг/дл|г/л|нг/мл|мед/л|ме/л|%)":
         "(\\d+(?:[,.]\\d+)?) \\s*(?:mol/l'azionismo/dl'azionismo/l'azionismo/l'azionismo/l'azionismo/l'azionismo/l'azionismo/l'azionismo/l'azionismo/l'azionismo/l'azionismo/l'azionismo/l'azionismo/l'azionismo/l'azionismo/l'azionismo/l'azionismo/l'azionismo/l'azionismo/l'azionismo/l'azionismo/l'azionismo/l'azionismo/l'azionismo/l'azionismo/l'azionismo/l'azionismo/l'azionismo/l'azionismo/l'azionismo/l'azionismo/l'azionismo/l'azionismo/l'azionismo/l'azionismo/l'azionismo/l'azionismo/l'azionismo/l'azion",
+    "(\\d+(?:[\\.,]\\d+)?)\\s*(мл|ml|миллилитр[а-яё]*|л|l|литр[а-яё]*|стакан[а-яё]*)(?![a-zа-яё]).*?(?:вод[а-яё]*|выпил[а-яё]*|добав[а-яё]*|запиш[а-яё]*|water)":
+        "(\\d+(?:\\.,]\\d+)?)\\s*(l'a-l'a-l'a-l'a-l'a-l'a-l'a-l'a-l'a-l'a-l'a-l*a-l*a-l*a-l*a-l*a-l*a-l*a-l*a-l*a-l*a-l*a-l*a-l*a-l*a-l*a-l*a-l*a-l*a-l*a-l*a-l*a-l*a-l*a-l*a-l*a-l*a-l*a-l*a-l*a-l*a-l*a-l*a-l*a-l*a-l*a-l*a-l*a-l*a-l*a-l*a-l*a-l*a-l*a-l*a-l*a-l*a-a-l*a-l*a",
     "(\\d{1,3}(?:[\\.,]\\d+)?)\\s*(?:км|km)":
         "(\\d{1,3}(?:[\\.,]\\d+)?)\\s*(km?:",
     "(\\d{1,4})\\s*(?:г|g)\\b": "- Non è vero.",
@@ -23488,6 +24032,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "(ммоль/л|мкмоль/л|мг/дл|мг/л|г/л|г/дл|мкг/л|нг/мл|пг/мл|мед/л|ме/л|ед/л|mmol/l|umol/l|µmol/l|mg/dl|mg/l|g/l|g/dl|µg/l|ug/l|ng/ml|pg/ml|iu/l|u/l|10\\^?[*x×]?\\d+/л|фл|fl|пг|pg|%)":
         "(il/l'immobile/l'immobile/l'immobile/l'immobile/l'immobile/l'immobile/l'immobile/l'immobile/l'immobile/l'immobile/l'immobile/l'immobile/l'immobile/l'immobile/l'immobile/l'immobile/l'immobile/l'immobile/l'immobile/l'immobile/l'immobile/l'immobile/l'immobile/l'immobile/l'immobile/l'immobile/l'immobile/l'immobile/l'immobile/l'immobile/l'immobile/l'immobile/l'immobile/l'immobile/l'immobile/l'immobile/l'immobile/l'immobile/l'immobile/l'immobile/l'immobile/l'immobile/",
     "). Дозировку я не изменяю.": "Non cambierò il dosaggio.",
+    "); используется приблизительное системное расписание.":
+        "); si utilizza un calendario di sistema approssimativo.",
     ")} · день": "giorno",
     ")}. Отложите тренировку; при резком ухудшении или опасных признаках обратитесь за неотложной помощью.":
         "(Istruzioni) - Rallenta l'allenamento, e se avrai gravi sintomi o sintomi pericolosi, richiedi aiuto immediato.",
@@ -23518,8 +24064,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     ", цель": ", obiettivo",
     ". Добавил их на проверку; после подтверждения приложение создаст расписание и напоминания. Дозировки автоматически не меняются.":
         "- Li ho aggiunti per la verifica, e dopo averlo confermato, l'app crea un programma e un promemoria.",
-    ". Изменения применятся после подтверждения.":
-        "Le modifiche sono applicate dopo la conferma.",
     ". Не используйте распознанные назначения до сверки с оригиналом.":
         "Non utilizzare le destinazioni riconosciute prima di confrontarle con l'originale.",
     ". Невозможные скачки координат отфильтрованы.":
@@ -23569,6 +24113,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     ": не удалось разобрать": ": non riuscito a capire",
     ": осталось": "- Restiamo",
     ": пакет короче заявленного": ": un pacchetto più breve del richiesto",
+    ": проверка бодрствования": ": controllo di vigilita '",
     ": характеристика не найдена": ": non è stato trovato",
     "; выбран ближайший расчётный конец цикла сна.":
         "Si sceglie la meta più vicina al termine del ciclo del sonno.",
@@ -23586,22 +24131,23 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "[^a-zа-яё0-9]+": "[^a-z-a-ya0-9]+",
     "[a-zа-яё]*\\s*[:=-]?\\s*(\\d{1,3}(?:[\\.,]\\d+)?)\\s*(?:г|g)?":
         "[a-z-a-yayo]*\\s*[:=-]?\\s*(\\d{1,3}(?:[\\.,]\\d+)?)\\s*(?:g gus?",
-    "\\b(?:в|на)\\s*\\d{1,2}[:\\.]\\d{2}\\b":
-        "\\b(?:in lingua)\\s*\\d{1,2}[:\\.]\\d{2}\\b",
     "\\b(гемоглобин|ферритин|холестерин|триглицериды|креатинин|мочевина|билирубин|алт|аст|ттг|витамин\\s+[a-zа-яё0-9]+|с-?реактивный\\s+белок)\\s*[:=-]?\\s*([<>]?\\s*\\d+(?:[\\.,]\\d+)?)\\s*":
         "B) Hemooglobina di anti-inflammatori di lesterina di anti-inflammatori di anti-inflammatori di anti-inflammatori di anti-inflammatori di anti-inflammatori di anti-inflammatori di anti-inflammatori di anti-inflammatori di anti-inflammatori di anti-inflammatori di anti-inflammatori di anti-inflammatori di anti-inflammatori di anti-inflammatori di anti-inflammatori di anti-inflammatori di anti-inflammatori di anti-inflammatori di anti-inflammatori di anti-inflammatori di anti-inflammatori di anti-inflammatori di anti-inflammatori di anti-inflammatori di anti-inflammatori di anti-inflammatori di anti-inflammatori di anti-inflammatori di anti-inflammatori di anti-inflammatori di anti-inflammatori di anti-inflammatori di anti-inflammatori di anti-inflammatori",
-    "\\d+(?:[\\.,]\\d+)?\\s*(?:мг|мкг|мл|ме|ед\\.)":
-        "- Non è vero. - Non è vero.",
     "\\d+(?:[\\.,]\\d+)?\\s*(?:мкг|мг|г|мл|ед\\.?|ме)":
         "- Non è vero. - Non è vero.",
     "\\d+(?:[\\.,]\\d+)?\\s*(?:мкг|мг|г|мл|ед\\.?|ме|iu|mcg|mg|ml)(?![a-zа-яё])":
         "D+(?:[\\]\\d+)?\\s*??:mg c'è stato un'intera serie di recensioni?",
+    "\\d+(?:[\\.,]\\d+)?\\s*(?:мл|л|литр|стакан)":
+        "- Non è vero. - Non è vero.",
     "\\d+\\s*(?:дн(?:я|ей|ь)?|сут(?:ок|ки)?|недел[а-яё]*|месяц[а-яё]*)(?![а-яё])":
         "La settimana di settimana è il mese di settimana.",
+    "\\d{1,4}\\s*(?:ккал|kcal)": "- Non è vero.",
     "^(?:врач\\s+)?(?:мне\\s+)?(?:назначил(?:а|и)?|назначение|рецепт|принимать)\\s*[:\\-]?\\s*":
         "^(?: medico\\s+)?(?:me\\s+)?(?: ha nominato un medico?",
     "^(?:как|что|почему|зачем|когда|где|можно\\s+ли|расскажи|объясни|проанализируй|how|what|why|when|where|can\\s+i)\\b":
         "Come fare per capire cosa hai fatto per capire cosa hai fatto per capire quando hai fatto per capire dove puoi farlo, o per capire cosa hai fatto per capire cosa hai fatto per capire dove puoi farlo",
+    "^(?:что\\s+)?(?:я\\s+)?(?:съел[а-яё]*|поел[а-яё]*|перекусил[а-яё]*)\\s+":
+        "↑: cosa? ?: me? ? ? ? ? ? ? ? ? mangiò?",
     "^[^a-zа-яё]+": "^[^a-z-a-yao]+",
     "^\\*\\*(?:Answer|Ответ):\\*\\*\\s*": "- Risposta:",
     "^\\s*(?:КОМАНДА|COMMAND)\\s*:\\s*": "Come si fa a fare?",
@@ -23674,7 +24220,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "UUID характеристики записи": "Caratteristiche UUID del record",
     "Vault был восстановлен из безопасного начального состояния.":
         "Vault è stato ripristinato da uno stato iniziale sicuro.",
-    "Vision-анализ недоступен:": "Non è disponibile l' analisi visiva:",
     "°C · высота": "°C · altezza",
     "· вес": "peso",
     "· визуальная оценка": "· valutazione visiva",
@@ -23702,9 +24247,13 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "» перед выполнением.": "prima di eseguire.",
     "», интенсивность": ", intensità",
     "». Извлечённый текст:": ". Testo estratto:",
+    "». Калории и Б/Ж/У оставлены пустыми; добавьте порцию или уточните данные, когда они известны.":
+        "Calorie e B/G/U sono lasciati vuoti; aggiungere una porzione o accertare i dati quando sono noti.",
     "». Перед продолжением рекомендуется сделать копию текущих данных.":
         "? Prima di continuare, si consiglia di fare una copia dei dati attuali.",
     "». Текст для анализа не найден.": ". Non si trova il testo per l'analisi.",
+    "». Уведомления о приёме будут планироваться по курсу препарата.":
+        ". Le notifiche di ricezione saranno pianificate per il corso del farmaco.",
     "август": "Agosto",
     "Автозапись GPS/GLONASS:": "Autorecording GPS/GLONASS:",
     "Автозапуск": "Avtoavviato",
@@ -23729,6 +24278,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "активное движение": "movimento attivo",
     "Активность": "Attività",
     "Активность и вода": "Attività e acqua",
+    "Активность после подъёма не подтверждена. Откройте приложение и отключите сигнал.":
+        "Non si conferma l'attività dopo l'ascensione.",
     "Активность хорошая: шаги уже закрывают базовую цель дня.":
         "L'attività è buona: i passi chiudono già l'obiettivo di base della giornata.",
     "активные калории": "calorie",
@@ -23788,6 +24339,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "без документа": "carta",
     "Без жёстких ограничений: можно добавить спокойную прогулку и оценивать недельный баланс.":
         "Senza restrizioni rigide: è possibile aggiungere una passeggiata tranquilla e valutare l'equilibrio settimanale.",
+    "без контроля бодрствования": "senza controllo di veglia",
     "без лекарства": "drogato",
     "Без ограничений": "Nessuna restrizione.",
     "без ограничений": "senza limiti",
@@ -23869,6 +24421,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "В профиле нет координат города.":
         "Non c'è nessuna coordinata della città nel profilo.",
     "В пути, мин": "Sto arrivando, mio.",
+    "в расписание «": "nel programma",
     "В списке есть антикоагулянт: взаимодействие нужно проверить у врача или фармацевта.":
         "L'anticoagulant è presente nella lista: deve essere controllato dal medico o dal farmacista.",
     "В тренировках отмечалась боль: будущую нагрузку стоит снизить.":
@@ -23904,9 +24457,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "велотренажёр": "formatore",
     "вероятно в руках": "Probabilmente nelle mani.",
     "вероятно используется": "probabilmente usato",
-    "Версия 1.8.1+10 · создатель: Редин Максим Юрьевич · info@thebestmks.ru":
-        "Versione 1.8.1+10 · creatore: Reddin Maksim Jurevich · info@thebestmks.ru",
-    "Версия: 1.8.1+10": "Versione: 1.8.1+10",
+    "Версия 1.8.2+11 · создатель: Редин Максим Юрьевич · info@thebestmks.ru":
+        "Versione 1.8.2+11 · creatore: Reddin Maksim Jürievich · info@thebestmks.ru",
+    "Версия: 1.8.2+11": "Versione: 1.8.2+11",
     "Вес": "Peso.",
     "вес": "peso",
     "Вес порции и пищевая ценность являются ориентировочной оценкой класса блюда. Проверьте их перед подтверждением.":
@@ -23947,6 +24500,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Внесено голосом или командой помощника; условия измерения не указаны.":
         "Presto da una voce o da un comando di assistente; non sono indicate le condizioni di misura.",
     "Внесено командой помощника.": "- L'ha portato il team dell'assistente.",
+    "Внесено помощником без количества и нутриентов; значения не выдумывались.":
+        "Introdotto dall'assistente senza quantità e nutrienti; i valori non sono stati inventati.",
     "внесённая калорийность заметно выше основного обмена, но недельный баланс и активность важнее одного дня.":
         "la caloria che ci viene fornita è notevolmente superiore al metabolismo principale, ma il rapporto settimanale e l'attività sono più importanti di un giorno.",
     "внесённая калорийность низкая относительно основного обмена; возможно, дневник заполнен не полностью.":
@@ -24017,6 +24572,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "вт": "Volt",
     "Вторник": "Martedì.",
     "вторник": "Martedì",
+    "Вчера ·": "- Ieri ...",
     "вчера уже была тяжёлая тренировка": "E' stata una pratica dura ieri.",
     "Вы": "Tu.",
     "Выберите вариант": "Scegli un'opzione",
@@ -24204,6 +24760,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Для чего применяется": "Per cosa viene utilizzato",
     "Дневник питания, БЖУ, рецепты и ручное подтверждение фото":
         "Diario nutrizionale, BJU, ricette e foto di conferma manuale",
+    "Дневник по датам": "Diario per le date",
     "Дневник самочувствия без диагнозов и назначений":
         "Diario di salute senza diagnosi e appuntamenti",
     "Дневник сна": "Diario di sonno",
@@ -24221,6 +24778,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "До ориентира": "Al punto di riferimento",
     "добав": "aggiunta",
     "Добавил": "- E' stato aggiunto.",
+    "Добавил время": "Ho aggiunto tempo .",
     "Добавить": "Aggiungi",
     "Добавить в дневник": "Aggiungi al diario",
     "Добавить врача или клинику": "Aggiungere un medico o una clinica",
@@ -24370,6 +24928,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Завершить": "Completo.",
     "Завершить и сохранить": "Completo e mantenere",
     "зависит от пола и возраста": "a seconda del sesso e dell'età",
+    "завтра": "Domani",
     "завтрак": "colazione",
     "Загружаем локальный сейф здоровья":
         "Scarica la cassaforte sanitaria locale",
@@ -24447,6 +25006,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "Chiediamo il permesso e cerchiamo i dispositivi.",
     "Запрещено системой; откройте системные настройки":
         "Proibito dal sistema , apri le impostazioni del sistema",
+    "Запрос обрабатывается в фоне":
+        "La richiesta viene elaborata in background",
     "Запрос пользователя:": "Richiesta dell' utente:",
     "Запросить разрешение повторно": "Richiedere il permesso",
     "Запросить разрешения и синхронизировать":
@@ -24487,9 +25048,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "из-за холода выбран домашний вариант с более длинной разминкой":
         "A causa del freddo è stata scelta una casa con una distillazione più lunga",
     "избегать задержки дыхания": "Aspetta.",
-    "Извлечённый текст:": "Testo estratto:",
     "Измените запрос или добавьте тег в карточку документа.":
         "Modificare la richiesta o aggiungere un tag alla scheda del documento.",
+    "Изменить": "Modifica",
     "Изменить симптом": "Cambiare il sintomo",
     "Изменить сон": "Cambia il sonno.",
     "измерения не найдены": "non sono stati trovati i parametri",
@@ -24619,6 +25180,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Ккал": "Kal.",
     "ккал": "Calcolo",
     "ккал · Б/Ж/У": "kcal · B/G/U",
+    "ккал · расход": "kcal · spesa",
+    "ккал · шаги": "cal · passi",
     "Ккал еды": "Calorie cibo",
     "ккал за сутки": "calorie",
     "ккал, активность": "cal, attività",
@@ -24675,6 +25238,10 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Контекст дома и работы": "Context di casa e lavoro",
     "Контекст телефона": "Il contesto del telefono",
     "Контекст телефона:": "Context del telefono:",
+    "контролем активности": "controllare l'attività",
+    "контроль активности": "Controllo dell'attività",
+    "Контроль бодрствования": "Controllo di vigilanza",
+    "контроль бодрствования": "controllo di vigilanza",
     "контроль лекарств": "farmacia",
     "Координаты": "Coordinatori",
     "Координаты используются только на устройстве для определения контекста.":
@@ -24704,7 +25271,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Курс:": "Corso:",
     "Күнтізбе": "kuntizbe",
     "л": "I",
-    "л · калории": "k calorie",
+    "л · питание": "l · alimentazione",
+    "л воды.": "- L'acqua.",
     "л, шаги": "L, passi",
     "л.": "- No, non lo so.",
     "л. Пейте небольшими порциями, если врач не ограничил жидкость.":
@@ -24800,6 +25368,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "мигрень": "emicrania",
     "Микрофон и голосовой ввод": "Microfono e voce",
     "мили": "miglia",
+    "миллилитр": "1 millilitro",
     "мин": "miniera",
     "мин ·": "miniera",
     "мин · перенос доступен": "Trasferimento miniera disponibile",
@@ -24859,10 +25428,10 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "|fish |milk |milk |cheese cheese |chicken |beef |fish |egg |milk |cheese",
     "На весь экран": "Su tutto lo schermo",
     "на ночь": "per la notte.",
-    "На проверку добавлено записей:": "È stato aggiunto il seguente:",
     "на работе": "al lavoro",
     "На ручную проверку добавлено показателей:":
         "Al controllo manuale sono stati aggiunti i seguenti indicatori:",
+    "на сегодня": "per oggi",
     "на сегодня запланировано:": "per oggi è previsto:",
     "набор силы": "forza",
     "нагруз": "carico carico",
@@ -24970,8 +25539,10 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "нг/мл": "ng/ml",
     "не выбрано": "non selezionato",
     "не выбраны": "non selezionato",
+    "не дай уснуть": "Non lasciarti addormentare",
     "не задана": "non è stato inserito",
     "не задано": "non è stato inserito",
+    "не заснуть": "Non dormire",
     "Не извлечено:": "Non recuperato:",
     "не компенсируйте еду голоданием; выберите спокойную прогулку и вернитесь к обычному плану.":
         "non compensare il cibo con il fame; scegliete una passeggiata tranquilla e tornate al vostro normale piano.",
@@ -25035,6 +25606,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "не указано в контексте. В конце укажи уверенность: высокая, средняя или низкая.":
         "Non è indicato nel contesto. Alla fine, indicate la sicurezza: alta, media o bassa.",
     "Не указаны": "Non indicato",
+    "не уснул": "Non è addormentato.",
     "Не установлена; доступен быстрый режим и установка в разделе «Помощник».":
         "Non è installato; è disponibile il modo e l'installazione veloci nella sezione Assistente.",
     "Не хватает данных:": "Mancano dati:",
@@ -25126,7 +25698,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Обновить контекст": "Raggiornare il contesto",
     "Обновить результаты поиска": "Aggiorna i risultati della ricerca",
     "Обновлено устройство:": "Dispositivo aggiornato:",
-    "Обрабатываю локально...": "- La sto lavorando a livello locale.",
     "обсудите с врачом:": "discutete con il medico:",
     "обсудить": "discutere",
     "Обсудить план с помощником": "Discutere il piano con l'assistente",
@@ -25150,6 +25721,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "Restrizioni, riabilitazione, medico, documenti",
     "Ограничения:": "Limitazioni:",
     "ограничить бег": "correre",
+    "один раз": "Una volta",
     "один сигнал": "un segnale",
     "одыш": "senza fiato",
     "одышка": "senza fiato",
@@ -25237,7 +25809,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Отмечено сегодня": "Celebrato oggi",
     "отмечено сегодня": "anno",
     "Отправить": "Manda.",
-    "Отправлено изображение:": "Immagine inviata:",
     "Отпуск": "Vacanze",
     "отпуск": "lasciare",
     "Отпуск не запланирован": "Vacanze non previste",
@@ -25301,6 +25872,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "перенесённая болезнь": "malattia",
     "переохлаждение": "Ipotermia",
     "Пересадок": "Trapianto",
+    "Период контроля, мин": "Periodo di controllo, min",
     "Периодически проверять локальные напоминания и расписание без отправки данных в сеть":
         "Verificare periodicamente i ricordi locali e il calendario senza inviare dati alla rete",
     "Персональная проверка": "Controllo personale",
@@ -25351,9 +25923,11 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "пн": "stagno",
     "пн, вт, ср, чт, пт":
         "Signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor, signor",
+    "по будням": "per settimana",
     "по внесённым данным допустима обычная плановая нагрузка с контролем самочувствия.":
         "Per quanto riguarda i dati inseriti, è consentito un normale impegno di pianificazione con controllo del proprio stato di salute.",
     "По внесённым приёмам пищи:": "Per le assunzioni alimentari:",
+    "по выходным": "per il fine settimana",
     "по геолокации": "geolocalizzato",
     "по дням недели": "settimanale settimanale",
     "По какое число": "Che numero?",
@@ -25372,12 +25946,18 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Побочные эффекты и реакции": "Effetti collaterali e reazioni",
     "Побочные эффекты:": "Effetti collaterali:",
     "Повседневная активность": "Attività quotidiane",
+    "Повтор": "Ripetizione",
     "повторений": "ripetizione",
     "Повторите PIN": "Ripeti il PIN.",
     "Повторно запрашивать PIN или биометрию для чувствительных документов":
         "Richiesta PIN o biometrica per documenti sensibili",
+    "Повторять сигнал при отсутствии движения после подъёма.":
+        "Ripetere il segnale se non si fa movimento dopo l'ascesa.",
     "Повторяющиеся симптомы:": "Sintomi ricorrenti:",
     "Повышает масштаб интерфейса": "Aumenta la scala dell'interfaccia",
+    "Погода временно недоступна": "Il tempo è temporaneamente impossibile",
+    "Погода временно недоступна. Климатический профиль продолжает работать локально.":
+        "Il clima è temporaneamente in sospeso, il profilo climatico continua a funzionare localmente.",
     "Погода и климат": "Tempo e clima",
     "Погода недоступна": "Tempo inaccessibile",
     "Погода подходит для обычной нагрузки с учётом самочувствия.":
@@ -25505,6 +26085,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "последние симптомы:": "I sintomi più recenti:",
     "последняя запись сна:": "l'ultima registrazione del sonno:",
     "Последняя запись:": "L'ultima registrazione:",
+    "послезавтра": "dopo domani",
     "постав": "- Settiamo",
     "Постепенное пробуждение": "Risveglio graduale",
     "потер": "maglione",
@@ -25516,6 +26097,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Предупреждение": "Avvertenza",
     "Предупреждения": "Avvertenze",
     "Препарат": "Il farmaco",
+    "препарат": "farmaco",
     "препаратов, принято сегодня": "farmaci, oggi",
     "Препараты": "Droghe",
     "Препараты не распознаны. Проверьте качество снимка или добавьте лекарство вручную.":
@@ -25530,7 +26112,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Приготовление": "Preparazione",
     "прием": "ricezione",
     "Прикреплённый файл не найден": "Non è stato trovato il file attaccato",
-    "Приложен файл:": "Il file è stato aggiunto:",
     "приложение открыто": "Applicativo aperto",
     "Приложение работает без браслета: вес, сон, шаги, еда и тренировки можно вводить вручную.":
         "L'applicazione funziona senza un braccialetto: peso, sonno, passi, cibo e allenamenti possono essere inseriti manualmente.",
@@ -25563,10 +26144,12 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Проверить симптомы": "Controllare i sintomi",
     "Проверить снова": "Controllo di nuovo",
     "Проверить уведомление": "Verificare l' avviso",
+    "проверка активности": "controllo dell'attività",
     "Проверка назначения": "Verifica del compito",
     "Проверка недоступна:": "Non è possibile verificare:",
     "проверка разрешений": "ammissibile",
     "Проверка распознавания": "Verifica riconoscimento",
+    "проверкой активности": "verificando l'attività",
     "Проверь лекарства и остатки": "Controllare farmaci e residui",
     "Проверьте аллерген в дневнике": "Controlla l'allergene nel diario",
     "Проверьте белок и полноту дневника":
@@ -25592,6 +26175,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "controllate i pasti che non si mangiano e non riducete drasticamente la vostra dieta senza un esperto.",
     "Проверяем доступность...": "Controllare la disponibilità...",
     "Проверяем локальную модель...": "Controlliamo il modello locale...",
+    "проверяй активность": "controllare l'attività",
+    "проверяй бодрствование": "controllare il tempo di vigilanza",
+    "Проверять через, мин": "Controllare attraverso, min",
     "прогулки": "passeggiata",
     "Продолжить": "Continua.",
     "Продолжить тренировку": "Continua la formazione",
@@ -25690,6 +26276,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Расстояние, км": "Distanza, km",
     "раствор": "Soluzione",
     "растяж": "Tensione",
+    "расход": "- il costo",
     "Расчёт по данным профиля и сегодняшним отметкам.":
         "Calcolo secondo i dati del profilo e i segni di oggi.",
     "расчётная готовность": "preparazione del calcolo",
@@ -25827,9 +26414,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Сегодня важнее восстановление. Не тренируйтесь через боль, температуру или резкое ухудшение самочувствия.":
         "Non si deve allenare per dolore, febbre o grave deterioramento del proprio stato di salute.",
     "Сегодня дежурство": "Oggi il turno",
+    "Сегодня записано": "Oggi è stato registrato",
     "сегодня отмечен тревожный симптом или высокая интенсивность жалобы.":
         "Oggi si registra un sintomo di allarme o una forte intensità di lamentela.",
-    "сегодня.": "- Oggi.",
     "Сегодня: сон": "Oggi: un sonno",
     "Сейчас активен режим поездки: при ночной дороге, смене часового пояса или недосыпе нагрузка автоматически считается восстановительной.":
         "Ora la modalità di viaggio è attiva: con la guida notturna, cambiando il fuso orario o la mancanza di sonno, il carico viene automaticamente considerato restaurativo.",
@@ -25837,12 +26424,15 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "сентябрь": "Settembre",
     "Сервер модели вернул код": "Il server del modello ha restituito il codice",
     "Сервис": "Servizio",
+    "Сервис погоды временно вернул ошибку. Повторная попытка будет выполнена автоматически.":
+        "Il servizio meteorologico ha riportato un errore temporaneo.",
+    "Сервис погоды не ответил вовремя. Климатический профиль продолжает работать локально.":
+        "Il servizio meteorologico non ha risposto in tempo e il profilo climatico continua a funzionare localmente.",
     "Сетевое видео отключено офлайн-режимом":
         "Il video di rete è stato disattivato offline",
     "Сетевое изображение скрыто": "Immagine di rete nascosto",
     "Сетевые данные отключены режимом «Полностью офлайн». Климатический профиль продолжает работать.":
         "I dati di rete sono disabilitati dalla modalità “Fullly offline”. Il profilo climatico continua a funzionare.",
-    "Сжимаю и анализирую локально...": "Prendo e analizzo localmente...",
     "сил": "forza",
     "силовая": "potenza",
     "Силовая тренировка по инвентарю":
@@ -26011,6 +26601,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "срочных пунктов; начните с них.":
         "I punti di emergenza, cominciate da loro.",
     "стабильно": "stabilmente",
+    "стакан": "un bicchiere",
     "Стандартные GATT-сервисы читаются автоматически. Для закрытых или редких устройств добавьте UUID вручную.":
         "I servizi del GATT standard sono letti automaticamente. Per dispositivi chiusi o rari, aggiungere UUID manualmente.",
     "стандартный": "standard",
@@ -26109,6 +26700,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Точность": "precisione",
     "точность GPS": "precisione GPS",
     "Точные будильники": "Scaldanti precisi",
+    "Точные будильники недоступны (":
+        "Gli allarmi precisi non sono disponibili (",
     "тошнота": "nausea",
     "травма": "trauma",
     "Травмы в течение жизни": "Traumi nel corso della vita",
@@ -26243,6 +26836,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Файл в защищённом хранилище:": "File in archivio protetto:",
     "Файл в медицинском сейфе не найден":
         "Non è stato trovato il file nella cassaforte medica",
+    "Файл вложения не найден": "Non è stato trovato il file di inserimento",
     "Файл не содержит резервную копию приложения.":
         "Il file non contiene una copia di backup dell'applicazione.",
     "Файл/импорт": "File/importazione",
@@ -26259,6 +26853,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "фитнес-тренажёр FTMS": "fitness-trenaggeri FTMS",
     "Фокус": "Focus",
     "Фокусы тренировок": "Trucchi di allenamento",
+    "Фоновая обработка": "La trasformazione di fondo",
     "Фоновая работа": "Lavorare sullo sfondo",
     "Фоновый анализ": "Analisi di sfondo",
     "Форма": "Forma",
@@ -26397,18 +26992,19 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "(*?(?:\\s?:referes* de normas) [[:=-]?\\s*([<>]?\\s*\\d+(?:[\\.,]\\d+)?(?:\\s*[-]\\s*\\d+(?:[\\.,]\\d+)?)?",
     "(?:\\s+(?:референс|норма|reference)?\\s*([<>]?\\s*\\d+(?:[,.]\\d+)?(?:\\s*[-–]\\s*\\d+(?:[,.]\\d+)?)?))?":
         "(?:\\s+(?:referência da norma de referência da língua)?\\s([<>?s*\\d+(?:[,.]\\d+)?(?:\\s*[-]\\s*\\d+(?:[,.]\\d+)?)?",
+    "(?:^|\\s)(?:в|на)\\s+([01]?\\d|2[0-3])(?:\\s*(?:час[а-яё]*|ч))?(?=\\s|":
+        "(?: já já já foi) ? ? em \"D\" ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ?",
+    "(?:^|\\s)через\\s+(\\d{1,3})\\s*(минут[а-яё]*|мин|час[а-яё]*|ч)(?=\\s|":
+        "(?: já estou a falar) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em alemão) (em inglês) (em alemão) (em alemão) (em alemão) (em alemão) (em alemão) (em alemão) (em alemão) (em alemão) (em alemão) (em alemão) (em alemão) (em alemão) (em alemão) (em alemão) (em alemão) (em alemão) (em alemão) (em alem",
     "(?:анализ|показатель|результат(?:\\s+анализа)?)\\s+([a-zа-яё][a-zа-яё0-9 ()+._-]{1,60}?)\\s*[:=-]?\\s*([<>]?\\s*\\d+(?:[\\.,]\\d+)?)\\s*":
         "(análise do indicador de resposta?:resultado?:?:?:?:?: \\s+análise)?)\\s+([a-zâ-ya-yo][a-zâ-yayo0-9 () ++_-]{1,60}?)\\s*[:=-]?\\s*([<>]\\s*\\d+(?:[\\.,]\\d+)?)\\s*",
     "(?:белок|protein|протеин|б)\\D{0,10}(\\d{1,3})":
         "Protein (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (B) (",
-    "(?:будильник|разбуди|подъ[её]м).*?(?:в|на)?\\s*((?:[01]?\\d|2[0-3])[:\\.]\\d{2})":
-        "O despertador é o despertador de uma explosão de luz.",
+    "(?:будильник|разбуди|подъ[её]м)": "?:despertador dizer (despertador)",
     "(?:вес|масса|weight)\\s*(?:сегодня|now)?\\s*[:=-]?\\s*(\\d{2,3}(?:[\\.,]\\d)?)\\s*(?:кг|kg)?\\b":
         "(?:peso de massa de leite) \\s*(?:hoje estava agora)?\\s*[:=-]?\\s*(\\d{2,3}(?:[\\.,]\\d)?) \\s*(?:kgs?",
-    "(?:выпил[а-яё]*|добав[а-яё]*|запиш[а-яё]*|water).*?(\\d+(?:[\\.,]\\d+)?)\\s*(мл|ml|л|l)(?![a-zа-яё])":
-        "?:bebeu[a-yao] a sua adição (a-yao-yao) (ouvia-se a sua inscrição) *?",
-    "(?:гемоглоб|глюкоз|холестерин|ферритин|референс|ммоль/л|мг/дл|анализ крови)":
-        "(hemoglobina de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glucose de glu",
+    "(?:выпил[а-яё]*|добав[а-яё]*|запиш[а-яё]*|укаж[а-яё]*|вод[а-яё]*|water).*?(\\d+(?:[\\.,]\\d+)?)\\s*(мл|ml|миллилитр[а-яё]*|л|l|литр[а-яё]*|стакан[а-яё]*)(?![a-zа-яё])":
+        "*: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *: *",
     "(?:глюкоз[а-яё]*|сахар[а-яё]*\\s+кров[а-яё]*|glucose)\\s*[:=-]?\\s*(\\d{1,3}(?:[\\.,]\\d+)?)":
         "(?:glucose[a-ia]* da glúcose[a-ia]*\\s+sangue[a-ia]* da glúcose)\\s*[:=-]?\\s*(\\d{1,3}(?:[\\.,]\\d+)?)",
     "(?:давлен[а-яё]*|pressure)\\s*[:=-]?\\s*(\\d{2,3})\\s*[/\\\\]\\s*(\\d{2,3})(?:\\s+(?:пульс|pulse)\\s*(\\d{2,3}))?":
@@ -26427,15 +27023,13 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "(?:калории|calories)\\D{0,12}(\\d{2,4})": "(?:calorias de sais)",
     "(?:качеств[а-яё]*|оценк[а-яё]*)\\s*(?:сна)?\\s*[:=-]?\\s*([1-5])":
         "(?:qualidades[a-ia]* da avaliação[a-ia]*)\\s*(?:sna)?\\s*[:=-]?\\s*([1-5])",
-    "(?:ккал|калори|белк|жир|углевод|состав|пищевая ценность)":
-        "•:cálcálcálcálor (cálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálcálc",
     "(?:клетчатка|пищевые волокна|fibre|fiber)\\D{0,12}(\\d{1,3}(?:[,.]\\d+)?)":
         "(celular de fibras de alimentação)",
     "(?:масса|вес|порция|net weight|serving)\\D{0,12}(\\d{1,4})\\s*(?:г|g)":
         "Massas de dados (ver tela de dados)",
     "(?:на|per)\\s*100\\s*(?:г|g)": "(em espanhol: para dizer)",
-    "(?:напомни|напоминание|remind).*?(\\d{1,2})[:\\.](\\d{2})":
-        "(?: lembrou-se da lembrança do remembramento do remembramento).*?",
+    "(?:напомни|напоминание|remind)":
+        "(?: lembrou-se de quando lembro-se de quando lembro-se de quando lembro-me)",
     "(?:по\\s+[^.;,]{0,25}\\s+)?\\d+\\s*раз(?:а|у|)\\s+(?:в|за)\\s+(?:день|сутки)":
         "? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ?",
     "(?:поставь|создай|заведи|добавь|разбуди(?:\\s+меня)?|будильник|подъ[её]м)":
@@ -26444,6 +27038,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "?:referência (norma de referência) \\D{0,12}([\\d,.]+ ?[-] ?[\\d,.]+)",
     "(?:сахара|сахар|sugars?|из них сахара)\\D{0,12}(\\d{1,3}(?:[,.]\\d+)?)":
         "É o que é o açúcar?",
+    "(?:сколько|покажи|какой|какое|текущ[а-яё]*|итого)":
+        "(?: quanto você pode mostrar que você está com a sua própria experiência)",
     "(?:соль|salt)\\D{0,10}(\\d{1,3}(?:[,.]\\d+)?)":
         "(?:sal também) \\D{0,10}(\\d{1,3}(?:[,.]\\d+)?)",
     "(?:спал[а-яё]*|сон|sleep).*?(\\d{1,2}(?:[\\.,]\\d+)?)\\s*(?:ч(?:ас(?:а|ов)?)?|hours?|h)(?![a-zа-яё])":
@@ -26452,8 +27048,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "(?:dormido[a-yao]*) Descanse de dormir).*?(\\d{1,2}[:\\.]\\d{2})\\s*(?:doar[-])\\s*(\\d{1,2})[:\\.]\\d{2})",
     "(?:съел[а-яё]*|выпил[а-яё]*|запиш[а-яё]*\\s+(?:еду|при[её]м пищи)|добав[а-яё]*\\s+(?:еду|блюдо))\\s+(.+?)\\s+(\\d{1,4})\\s*(?:ккал|kcal)(?![a-zа-яё])":
         "?:se comia* e bebeu* e bebeu* e comeu* e comeu* e comeu* e comeu* e comeu* e comeu* e comeu* e comeu* e comeu* e comeu* e comeu* e comeu* e comeu* e comeu* e comeu* e comeu* e comeu* e comeu* e comeu* e comeu* e comeu* e comeu* e comeu* e comeu* e comeu* e comeu* e comeu* e comeu* e comeu* e comeu* e comeu* e comeu* e comeu* e comeu* e comeu* e comeu* e comeu* e comeu* e comeu* e comeu* e comeu* e comeu* e comeu* e comeu* e comeu* e comeu* e comeu* e comeu* e comeu* e comeu* e comeu* e comeu* e comeu* e comeu* e* comeu* e* comeu* e* comeu* e* e* comeu* e* e*",
-    "(?:таблет|капсул|принимать|назначен|рецепт|дозиров)":
-        "(tableta de anti-inflamatório?: tomar a presença de uma receita de anti-inflamatório)",
+    "(?:съел[а-яё]*|поел[а-яё]*|перекусил[а-яё]*|выпил[а-яё]*|добав[а-яё]*\\s+(?:еду|блюдо)|запиш[а-яё]*\\s+(?:что\\s+)?(?:я\\s+)?(?:съел[а-яё]*|поел[а-яё]*))\\s+(.+)":
+        "Comido (a-yao) e-baixo (a-yao-yao) (a-yao-yao) (a-yao-yao) (a-yao-yao) (a-yao) (a-yao) (a-yao) (a-yao) (a-yao) (a-yao) (a-yao) (a-yao) (a-yao) (a-yao) (a-yao) (a-yao) (a-yao) (a-yao) (a-yao) (a-yao) (a-yao) (a-yao) (a-yao) (a-yao) (a-yao) (a-yao) (a-yao) (a-yao) (a-yao) (a-yao) (a-yao) (a-yao) (a-yao) (a-yao) (a-yao) (a-yao) (a-yao) (a-yao) (a-",
     "(?:таблетк[а-яё]*|капсул[а-яё]*|раствор[а-яё]*|сироп[а-яё]*|суспензи[а-яё]*|":
         "(?:tabletc[a-yao]*ca ação[a-yao]*dição[a-yao]*dição[a-yao]*dição[a-yao]*dição[a-yao]*dição[a-yao]*dição[a-yao]*dição[a-yao]*dição[a-yao]*dição[a-yao]*dição[a-yao]*dição[a-yao]*dição[a-yao]*dição[a-yao]*dição[a-yao]*dição[a-yao]*dição[a-yao]*dição*dição*dição*dição*dição*dição*dição*dição*dição*dição*dição*dição*dição*dição*dição*dição*dição*dição*dição*dição*dição*dição*dição*dição*dição*dição*dição*dição*dição*dição",
     "(?:температур[а-яё]*|temperature)\\s*[:=-]?\\s*(3[4-9]|4[0-2])(?:[\\.,](\\d))?":
@@ -26461,8 +27057,24 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "(?:тренировк[а-яё]*|пробежал[а-яё]*|бегал[а-яё]*|занимал[а-яё]*).*?(\\d{1,3})\\s*(?:мин|минут)":
         "(?:trenagem[a-yao]*dive-se-de-corrê[a-yao]*dive-se-de-corrê[a-yao]*dive-se-de-corrê[a-yao]*).*?\\d{1,3})\\s*(?:minuta para dar uma olhada)",
     "(?:углеводы|carbs|у)\\D{0,10}(\\d{1,3})": "(Carboidratos?:carbs?:carbs)",
+    "(?<![a-zа-яё])(?:в|на)\\s*\\d{1,2}(?:[:\\.]\\d{2})?(?![a-zа-яё0-9])":
+        "<![a-z-yao]) ? ? em (?a) \\s\\d{1,2} ??:[:\\.]\\d{2} ? ? ??![a-z-yao0-9])",
+    "(?<![a-zа-яё])(?:в|на)\\s*\\d{1,2}(?:[:\\.]\\d{2})?(?:\\s*(?:час[а-яё]*|ч))?(?![a-zа-яё0-9])":
+        "(Ao contrário, a sua história é muito mais interessante, mas não é muito mais fácil.",
+    "(?<![a-zа-яё])(?:каждый день|ежедневно|по будням|по выходным|сегодня|завтра|послезавтра)(?![a-zа-яё])":
+        "<![a-zâ-yaō]) ((?:cada dia de deu-se (?diariamente deu-se em dias de folga em dias de folga)",
+    "(?<![a-zа-яё])(?:не дай уснуть|не заснуть|не уснул)(?![a-zа-яё])":
+        "Não deixe dormir a minha mãe. Não deixe dormir a minha mãe.",
+    "(?<![a-zа-яё])(?:с|и)?\\s*(?:проверкой|контролем)\\s+(?:активности|бодрствования)(?![a-zа-яё])":
+        "(A-Z-Z-Y-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-",
+    "(?<![a-zа-яё])(?:сегодня|только что)(?![a-zа-яё])":
+        "(A-Z-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-Y-",
+    "(?<![a-zа-яё])через\\s+\\d+\\s*(?:минут[а-яё]*|мин|час[а-яё]*|ч)(?![a-zа-яё])":
+        "<![a-z-a-yayo]) através \\s+\\d+\\s*(?:minuto (?[a-yayo]*a-a-min-a-si-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s-s",
     "(\\d+(?:[,.]\\d+)?)\\s*(?:ммоль/л|мг/дл|г/л|нг/мл|мед/л|ме/л|%)":
         "(\\d+(?:[,.]\\d+)?) \\s*(?:mol/l da lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua lua",
+    "(\\d+(?:[\\.,]\\d+)?)\\s*(мл|ml|миллилитр[а-яё]*|л|l|литр[а-яё]*|стакан[а-яё]*)(?![a-zа-яё]).*?(?:вод[а-яё]*|выпил[а-яё]*|добав[а-яё]*|запиш[а-яё]*|water)":
+        "(??[a-a-a-a-a-a-a-a-a-a-a-a-a]).*??:?::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::",
     "(\\d{1,3}(?:[\\.,]\\d+)?)\\s*(?:км|km)":
         "(\\d{1,3}(?:[\\.,]\\d+)?)\\s*(km?:",
     "(\\d{1,4})\\s*(?:г|g)\\b": "Não é o que eu quero.",
@@ -26478,6 +27090,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "(ммоль/л|мкмоль/л|мг/дл|мг/л|г/л|г/дл|мкг/л|нг/мл|пг/мл|мед/л|ме/л|ед/л|mmol/l|umol/l|µmol/l|mg/dl|mg/l|g/l|g/dl|µg/l|ug/l|ng/ml|pg/ml|iu/l|u/l|10\\^?[*x×]?\\d+/л|фл|fl|пг|pg|%)":
         "(em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês) (em inglês)",
     "). Дозировку я не изменяю.": "Não vou alterar a dose.",
+    "); используется приблизительное системное расписание.":
+        "); utiliza-se o cronograma sistemático aproximado.",
     ")} · день": "dia",
     ")}. Отложите тренировку; при резком ухудшении или опасных признаках обратитесь за неотложной помощью.":
         "Retire o treino; em caso de agravamento acentuado ou sinais de perigo, procure ajuda imediata.",
@@ -26508,8 +27122,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     ", цель": ", objectivo",
     ". Добавил их на проверку; после подтверждения приложение создаст расписание и напоминания. Дозировки автоматически не меняются.":
         "Adicionou para verificação, depois de confirmar, o aplicativo vai criar um cronograma e lembretes.",
-    ". Изменения применятся после подтверждения.":
-        "As alterações serão aplicadas após a confirmação.",
     ". Не используйте распознанные назначения до сверки с оригиналом.":
         "Não utilize as designações reconhecidas até que as compare com a original.",
     ". Невозможные скачки координат отфильтрованы.":
@@ -26559,6 +27171,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     ": не удалось разобрать": ": não conseguiu resolver",
     ": осталось": "- Não .",
     ": пакет короче заявленного": ": um pacote mais curto do que o declarado",
+    ": проверка бодрствования": ": verificação de vigília",
     ": характеристика не найдена": ": não encontrou a descrição",
     "; выбран ближайший расчётный конец цикла сна.":
         "O final do ciclo de sono é o mais próximo.",
@@ -26576,21 +27189,23 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "[^a-zа-яё0-9]+": "[^a-z-a-ya0-9]+",
     "[a-zа-яё]*\\s*[:=-]?\\s*(\\d{1,3}(?:[\\.,]\\d+)?)\\s*(?:г|g)?":
         "[a-zá-yayo]*\\s*[:=-]?\\s*(\\d{1,3}(?:[\\.,]\\d+)?)\\s*(?:g densg)?",
-    "\\b(?:в|на)\\s*\\d{1,2}[:\\.]\\d{2}\\b":
-        "\\b(?: em \"B\"\\s*\\d{1,2}[:\\.]\\d{2}\\b",
     "\\b(гемоглобин|ферритин|холестерин|триглицериды|креатинин|мочевина|билирубин|алт|аст|ттг|витамин\\s+[a-zа-яё0-9]+|с-?реактивный\\s+белок)\\s*[:=-]?\\s*([<>]?\\s*\\d+(?:[\\.,]\\d+)?)\\s*":
         "b(hemoglobina de anti-inflamatório anti-inflamatório anti-inflamatório anti-inflamatório anti-inflamatório anti-inflamatório anti-inflamatório anti-inflamatório anti-inflamatório anti-inflamatório anti-inflamatório anti-inflamatório anti-inflamatório anti-inflamatório anti-inflamatório anti-inflamatório anti-inflamatório anti-inflamatório anti-inflamatório anti-inflamatório anti-inflamatório anti-inflamatório anti-inflamatório anti-inflamatório anti-inflamatório anti-inflamatório anti-inflamatório anti-inflamatório anti-inflamatório anti-inflamatório anti-inflamatório anti-inflamatório anti-inflamatório anti-inflamatório anti-inflamatório anti-inflamatório anti-inflamatório anti-inflamatório anti-inflamatório anti-inflamatório anti-inflamatório anti-inflamatório anti-inflamatório anti-inflamatório anti-inflamatório anti-inflamatório anti-inflamatório anti-inflamatório anti-inflamatório anti-inflamat",
-    "\\d+(?:[\\.,]\\d+)?\\s*(?:мг|мкг|мл|ме|ед\\.)": "Não é o que eu quero.",
     "\\d+(?:[\\.,]\\d+)?\\s*(?:мкг|мг|г|мл|ед\\.?|ме)":
         "Não é o que eu quero dizer.",
     "\\d+(?:[\\.,]\\d+)?\\s*(?:мкг|мг|г|мл|ед\\.?|ме|iu|mcg|mg|ml)(?![a-zа-яё])":
         "D+(?:[\\]\\d+)?\\s*??:mg ação de um sistema de dados de dados de um sistema de dados de dados de um sistema de dados de dados de um sistema de dados de dados de um sistema de dados de dados de um sistema de dados de dados de um sistema de dados de dados de um sistema de dados de dados de um sistema de dados de dados de dados de um sistema de dados de dados de dados de um sistema de dados de dados de dados de um sistema de dados de dados de dados de um sistema de dados de dados de dados de dados de um sistema de dados de dados de dados de dados de um sistema de dados de dados de dados de dados de dados de dados de dados de um sistema de dados de dados de dados de dados de dados de dados de dados de dados de dados de dados de dados de dados de dados de dados de dados de dados de dados de dados de dados de dados de dados de dados de dados de dados de dados de dados de dados de dados de dados de dados de dados de dados de dados de dados de dados de dados de dados de dados de dados de dados de dados de dados de dados de dados de dados de dados de dados de dados de dados de dados de",
+    "\\d+(?:[\\.,]\\d+)?\\s*(?:мл|л|литр|стакан)":
+        "\\d+(?:[\\]\\d+)?s*(?:mstl\\kan)",
     "\\d+\\s*(?:дн(?:я|ей|ь)?|сут(?:ок|ки)?|недел[а-яё]*|месяц[а-яё]*)(?![а-яё])":
         "\\d+\\s\\dn ddddddd?:são da mesma forma que os outros?",
+    "\\d{1,4}\\s*(?:ккал|kcal)": "- Não, não.",
     "^(?:врач\\s+)?(?:мне\\s+)?(?:назначил(?:а|и)?|назначение|рецепт|принимать)\\s*[:\\-]?\\s*":
         "↑ \"Doutor\"? \"Doutor\"? \"Doutor\"? \"Doutor\"? \"Doutor\"? \"Doutor\"? \"Doutor\"? \"Doutor\"? \"Doutor\"? \"Doutor\"? \"Doutor\"? \"Doutor\"? \"Doutor\"? \"Doutor\"? \"Doutor\"? \"Doutor\"? \"Doutor\"? \"Doutor\"? \"Doutor\"? \"Doutor\"? \"Doutor\"? \"Doutor\"? \"Doutor\"? \"Doutor\"? \"Doutor\"? \"Doutor\"? \"Doutor\"? \"Doutor\"? \"Doutor\"? \"Doutor\"? \"Doutor\"? \"Doutor\"? \"Doutor\"? \"Doutor\"? \"Doutor\"? \"Doutor\"? \"Doutor\"? \"Doutor\"? \"Doutor\"? \"Doutor\"? \"Doutor\"? \"Doutor\"? \"Doutor\"? \"Doutor\"? \"Doutor\"? \"Doutor\"? \"Doutor\"? \"Doutor\"? \"Doutor\"? \"Doutor\"? \"Doutor\" \"Doutor\"? \"Doutor\" \"Doutor\" \"Doutor\"? \"Doutor\" \"Doutor\" \"Doutor\" \"Doutor\" \"Doutor\" \"Doutor\" \"Doutor\" \"Doutor\" \"Do",
     "^(?:как|что|почему|зачем|когда|где|можно\\s+ли|расскажи|объясни|проанализируй|how|what|why|when|where|can\\s+i)\\b":
         "Como é que você pode fazer isso quando você pode fazer isso? Explique-me como é que você pode fazer isso.",
+    "^(?:что\\s+)?(?:я\\s+)?(?:съел[а-яё]*|поел[а-яё]*|перекусил[а-яё]*)\\s+":
+        "↑: \"O que é que eu quero\"?: \"Eu quero comer\".",
     "^[^a-zа-яё]+": "↑[^a-z-a-ya-yo]+",
     "^\\*\\*(?:Answer|Ответ):\\*\\*\\s*": "- Não, não. - Não, não.",
     "^\\s*(?:КОМАНДА|COMMAND)\\s*:\\s*": "Como é que é que é?",
@@ -26662,7 +27277,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "UUID характеристики записи": "Características UUID do registo",
     "Vault был восстановлен из безопасного начального состояния.":
         "O cofre foi restaurado de um estado inicial seguro.",
-    "Vision-анализ недоступен:": "Não está disponível:",
     "°C · высота": "°C · altitude",
     "· вес": "peso",
     "· визуальная оценка": "· avaliação visual",
@@ -26690,9 +27304,13 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "» перед выполнением.": "Antes de ser executado.",
     "», интенсивность": ", intensidade",
     "». Извлечённый текст:": ". O texto extraído:",
+    "». Калории и Б/Ж/У оставлены пустыми; добавьте порцию или уточните данные, когда они известны.":
+        "Calorias e B/J/U são deixadas vazias; adicione a porção ou especifique os dados quando forem conhecidos.",
     "». Перед продолжением рекомендуется сделать копию текущих данных.":
         "? Antes de continuar, recomenda-se fazer uma cópia dos dados atuais.",
     "». Текст для анализа не найден.": ". Não há texto para análise.",
+    "». Уведомления о приёме будут планироваться по курсу препарата.":
+        ". As notificações de admissão serão planejadas pelo curso do medicamento.",
     "август": "Agosto",
     "Автозапись GPS/GLONASS:": "Gravação automática de GPS/GLONASS:",
     "Автозапуск": "Atividade de arranque automático",
@@ -26717,6 +27335,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "активное движение": "movimento ativo",
     "Активность": "Actividade",
     "Активность и вода": "Atividade e água",
+    "Активность после подъёма не подтверждена. Откройте приложение и отключите сигнал.":
+        "A atividade após a ascensão não foi confirmada.",
     "Активность хорошая: шаги уже закрывают базовую цель дня.":
         "Atividade é boa: os passos já encerram o objetivo básico do dia.",
     "активные калории": "caloria",
@@ -26776,6 +27396,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "без документа": "sem papel",
     "Без жёстких ограничений: можно добавить спокойную прогулку и оценивать недельный баланс.":
         "Sem restrições rígidas: você pode adicionar uma caminhada tranquila e avaliar o equilíbrio semanal.",
+    "без контроля бодрствования": "sem controle de vigília",
     "без лекарства": "sem droga",
     "Без ограничений": "Sem restrições.",
     "без ограничений": "ilimitadamente",
@@ -26856,6 +27477,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "В профиле нет координат города.":
         "Não há coordenadas da cidade no perfil.",
     "В пути, мин": "A caminho, meu.",
+    "в расписание «": "no cronograma",
     "В списке есть антикоагулянт: взаимодействие нужно проверить у врача или фармацевта.":
         "A lista tem um anticoagulante: a interação deve ser verificada com um médico ou farmacêutico.",
     "В тренировках отмечалась боль: будущую нагрузку стоит снизить.":
@@ -26890,9 +27512,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "велотренажёр": "treinador",
     "вероятно в руках": "Provavelmente em mãos.",
     "вероятно используется": "provavelmente usado",
-    "Версия 1.8.1+10 · создатель: Редин Максим Юрьевич · info@thebestmks.ru":
-        "Versão 1.8.1+10 · criador: Reden Maxim Yuriyovich · info@thebestmks.ru",
-    "Версия: 1.8.1+10": "Versão: 1.8.1+10",
+    "Версия 1.8.2+11 · создатель: Редин Максим Юрьевич · info@thebestmks.ru":
+        "Versão 1.8.2+11 · criador: Reden Maxim Yuriyovich · info@thebestmks.ru",
+    "Версия: 1.8.2+11": "Versão: 1.8.2+11",
     "Вес": "Peso.",
     "вес": "peso",
     "Вес порции и пищевая ценность являются ориентировочной оценкой класса блюда. Проверьте их перед подтверждением.":
@@ -26932,6 +27554,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Внесено голосом или командой помощника; условия измерения не указаны.":
         "Introdução por voz ou comando de assistente; condições de medição não indicadas.",
     "Внесено командой помощника.": "Foi levado pelo Comando de Auxiliares.",
+    "Внесено помощником без количества и нутриентов; значения не выдумывались.":
+        "Introduzido por um ajudante sem quantidade e nutrientes; os valores não foram inventados.",
     "внесённая калорийность заметно выше основного обмена, но недельный баланс и активность важнее одного дня.":
         "A quantidade de calorias que recebi significativamente mais do que a quantidade de metabolismo, mas o equilíbrio semanal e a atividade são mais importantes do que um dia.",
     "внесённая калорийность низкая относительно основного обмена; возможно, дневник заполнен не полностью.":
@@ -27000,6 +27624,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "вт": "volt",
     "Вторник": "Terça-feira.",
     "вторник": "terça-feira",
+    "Вчера ·": "Ontem ...",
     "вчера уже была тяжёлая тренировка": "Ontem foi um treino difícil.",
     "Вы": "Você.",
     "Выберите вариант": "Escolha uma opção",
@@ -27187,6 +27812,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Для чего применяется": "Para que é utilizado",
     "Дневник питания, БЖУ, рецепты и ручное подтверждение фото":
         "Diário nutricional, BJU, receitas e foto de confirmação manual",
+    "Дневник по датам": "Diário de datas",
     "Дневник самочувствия без диагнозов и назначений":
         "Diário de saúde sem diagnósticos e consultas",
     "Дневник сна": "Diário do sono",
@@ -27204,6 +27830,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "До ориентира": "Ao ponto de referência",
     "добав": "adição",
     "Добавил": "Adicionado",
+    "Добавил время": "- Mais tempo .",
     "Добавить": "Adicionar",
     "Добавить в дневник": "Adicionar ao diário",
     "Добавить врача или клинику": "Adicionar um médico ou clínica",
@@ -27354,6 +27981,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Завершить": "Completo.",
     "Завершить и сохранить": "Completar e manter",
     "зависит от пола и возраста": "dependendo do sexo e idade",
+    "завтра": "amanhã.",
     "завтрак": "pequeno-almoço",
     "Загружаем локальный сейф здоровья": "Baixe o cofre de saúde local",
     "Загруженный GGUF повреждён.": "O GGUF carregado está danificado.",
@@ -27430,6 +28058,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "Pedimos permissão e procuramos dispositivos.",
     "Запрещено системой; откройте системные настройки":
         "Proibido pelo sistema; abre as configurações do sistema",
+    "Запрос обрабатывается в фоне": "A consulta é processada em segundo plano",
     "Запрос пользователя:": "Pergunta do usuário:",
     "Запросить разрешение повторно": "Repear a solicitação de autorização",
     "Запросить разрешения и синхронизировать":
@@ -27470,9 +28099,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "из-за холода выбран домашний вариант с более длинной разминкой":
         "por causa do frio , escolhido uma casa com uma moldagem mais longa",
     "избегать задержки дыхания": "Esperar",
-    "Извлечённый текст:": "O texto extraído é:",
     "Измените запрос или добавьте тег в карточку документа.":
         "Altere o pedido ou adicione uma etiqueta ao cartão do documento.",
+    "Изменить": "Mudança",
     "Изменить симптом": "Mudar o sintoma",
     "Изменить сон": "Muda o teu sono.",
     "измерения не найдены": "Não encontrou medidas",
@@ -27602,6 +28231,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Ккал": "Kal",
     "ккал": "bezerro",
     "ккал · Б/Ж/У": "kcal · B/J/U",
+    "ккал · расход": "ccal · gasto",
+    "ккал · шаги": "kcal · passos",
     "Ккал еды": "Alimentos para calorias",
     "ккал за сутки": "caloria",
     "ккал, активность": "Cal, atividade",
@@ -27658,6 +28289,10 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Контекст дома и работы": "O contexto da casa e do trabalho",
     "Контекст телефона": "Contexto do telefone",
     "Контекст телефона:": "Contexto do telefone:",
+    "контролем активности": "Controle da atividade",
+    "контроль активности": "Controle da atividade",
+    "Контроль бодрствования": "Controle de vigília",
+    "контроль бодрствования": "Controle de vigília",
     "контроль лекарств": "medicamentos",
     "Координаты": "Coordenadores",
     "Координаты используются только на устройстве для определения контекста.":
@@ -27687,7 +28322,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Курс:": "Curso:",
     "Күнтізбе": "kuntizbe",
     "л": "l",
-    "л · калории": "k calorias",
+    "л · питание": "l · alimentação",
+    "л воды.": "- Não, não.",
     "л, шаги": "L, passos",
     "л.": "L.",
     "л. Пейте небольшими порциями, если врач не ограничил жидкость.":
@@ -27782,6 +28418,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "мигрень": "migrânea",
     "Микрофон и голосовой ввод": "Microfone e entrada vocal",
     "мили": "milhas",
+    "миллилитр": "Milílitro",
     "мин": "mina",
     "мин ·": "mina",
     "мин · перенос доступен": "Transferência de mina disponível",
@@ -27841,10 +28478,10 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "carne peixe leite leite queijo queijo",
     "На весь экран": "Para o ecrã inteiro",
     "на ночь": "pela noite.",
-    "На проверку добавлено записей:": "A verificação foi adicionada:",
     "на работе": "No trabalho",
     "На ручную проверку добавлено показателей:":
         "Para a verificação manual , foram adicionados os seguintes indicadores:",
+    "на сегодня": "para hoje",
     "на сегодня запланировано:": "Para hoje , planejado:",
     "набор силы": "força",
     "нагруз": "carga",
@@ -27950,8 +28587,10 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "нг/мл": "ng/ml",
     "не выбрано": "não selecionado",
     "не выбраны": "não selecionado",
+    "не дай уснуть": "Não me deixes dormir.",
     "не задана": "Não foi indicado",
     "не задано": "Não foi indicado",
+    "не заснуть": "Não adormeça.",
     "Не извлечено:": "Não recuperado:",
     "не компенсируйте еду голоданием; выберите спокойную прогулку и вернитесь к обычному плану.":
         "Não compensem a comida com fome; escolham uma caminhada tranquila e voltem ao seu plano normal.",
@@ -28011,6 +28650,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "не указано в контексте. В конце укажи уверенность: высокая, средняя или низкая.":
         "Não é indicado no contexto. No final, digam a confiança: alta, média ou baixa.",
     "Не указаны": "Não indicado",
+    "не уснул": "Não dormiu.",
     "Не установлена; доступен быстрый режим и установка в разделе «Помощник».":
         "Não está instalado; está disponível o modo rápido e a instalação na secção Assistente.",
     "Не хватает данных:": "Não há dados:",
@@ -28101,7 +28741,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Обновить контекст": "Atualizar o contexto",
     "Обновить результаты поиска": "Atualizar os resultados da pesquisa",
     "Обновлено устройство:": "Dispositivo actualizado:",
-    "Обрабатываю локально...": "- Procurando localmente...",
     "обсудите с врачом:": "discussão com o seu médico:",
     "обсудить": "discutir",
     "Обсудить план с помощником": "Discutir o plano com o assistente",
@@ -28125,6 +28764,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "Restrições, reabilitação, médico, documentos",
     "Ограничения:": "Limitações:",
     "ограничить бег": "correr para baixo",
+    "один раз": "Uma vez.",
     "один сигнал": "Um sinal",
     "одыш": "falta de ar",
     "одышка": "falta de ar",
@@ -28212,7 +28852,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Отмечено сегодня": "Celebrado hoje",
     "отмечено сегодня": "anotado",
     "Отправить": "Enviar.",
-    "Отправлено изображение:": "Enviado:",
     "Отпуск": "Férias",
     "отпуск": "sair",
     "Отпуск не запланирован": "Férias não programadas",
@@ -28276,6 +28915,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "перенесённая болезнь": "doença",
     "переохлаждение": "hipotermia",
     "Пересадок": "Transplante",
+    "Период контроля, мин": "Período de controlo, min.",
     "Периодически проверять локальные напоминания и расписание без отправки данных в сеть":
         "Verificar as lembranças locais e o cronograma de forma periódica sem enviar dados para a rede",
     "Персональная проверка": "Verificação pessoal",
@@ -28324,9 +28964,11 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Пн": "pn",
     "пн": "lagoa",
     "пн, вт, ср, чт, пт": "Pn, vt, sr, cht, pt",
+    "по будням": "por semana",
     "по внесённым данным допустима обычная плановая нагрузка с контролем самочувствия.":
         "Os dados introduzidos permitem uma carga planejada normal com controlo de saúde.",
     "По внесённым приёмам пищи:": "Por ingestões de alimentos:",
+    "по выходным": "No fim de semana",
     "по геолокации": "geolocalizado",
     "по дням недели": "semanalmente",
     "По какое число": "Que número?",
@@ -28345,12 +28987,18 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Побочные эффекты и реакции": "Efeitos secundários e reacções",
     "Побочные эффекты:": "Efeitos secundários:",
     "Повседневная активность": "Atividade diária",
+    "Повтор": "Repetição",
     "повторений": "repetição",
     "Повторите PIN": "Repita o PIN.",
     "Повторно запрашивать PIN или биометрию для чувствительных документов":
         "Solicitar novamente PIN ou biometria para documentos sensíveis",
+    "Повторять сигнал при отсутствии движения после подъёма.":
+        "Repete o sinal quando não houver movimento após a elevação.",
     "Повторяющиеся симптомы:": "Sintomas recorrentes:",
     "Повышает масштаб интерфейса": "Aumenta a escala da interface",
+    "Погода временно недоступна": "O tempo está temporariamente inacessível .",
+    "Погода временно недоступна. Климатический профиль продолжает работать локально.":
+        "O clima está a ser bloqueado, o perfil climático continua a funcionar localmente.",
     "Погода и климат": "Tempo e clima",
     "Погода недоступна": "Tempo inacessível",
     "Погода подходит для обычной нагрузки с учётом самочувствия.":
@@ -28477,6 +29125,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "последние симптомы:": "Os últimos sintomas:",
     "последняя запись сна:": "A última gravação do sono:",
     "Последняя запись:": "Última gravação:",
+    "послезавтра": "No dia seguinte.",
     "постав": "- O que é isso ?",
     "Постепенное пробуждение": "Despertar gradualmente",
     "потер": "camisola",
@@ -28488,6 +29137,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Предупреждение": "Atenção",
     "Предупреждения": "- Avertências",
     "Препарат": "A droga",
+    "препарат": "O medicamento",
     "препаратов, принято сегодня": "medicamentos tomados hoje",
     "Препараты": "Drogas",
     "Препараты не распознаны. Проверьте качество снимка или добавьте лекарство вручную.":
@@ -28502,7 +29152,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Приготовление": "Preparação",
     "прием": "recepção",
     "Прикреплённый файл не найден": "Não encontrou o arquivo associado",
-    "Приложен файл:": "Ficheiro de correio:",
     "приложение открыто": "Aplicação aberta",
     "Приложение работает без браслета: вес, сон, шаги, еда и тренировки можно вводить вручную.":
         "O aplicativo funciona sem pulseira: peso, sono, passos, comida e exercícios podem ser inseridos manualmente.",
@@ -28536,10 +29185,12 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Проверить симптомы": "Verifique os sintomas",
     "Проверить снова": "Verificar novamente",
     "Проверить уведомление": "Verificar o aviso",
+    "проверка активности": "Verificação de atividade",
     "Проверка назначения": "Verificação de destino",
     "Проверка недоступна:": "Não está disponível:",
     "проверка разрешений": "permitir",
     "Проверка распознавания": "Verificação de reconhecimento",
+    "проверкой активности": "Verificação de atividade",
     "Проверь лекарства и остатки": "Verificar medicamentos e resíduos",
     "Проверьте аллерген в дневнике": "Verifique o alergênio no diário.",
     "Проверьте белок и полноту дневника":
@@ -28565,6 +29216,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "Verifique as refeições que não recebem e não reduzir drasticamente a sua dieta sem um especialista.",
     "Проверяем доступность...": "Verificando disponibilidade...",
     "Проверяем локальную модель...": "Vamos verificar o modelo local...",
+    "проверяй активность": "Verifique a atividade",
+    "проверяй бодрствование": "Verifique o seu estado de vigília",
+    "Проверять через, мин": "Verificar através, min",
     "прогулки": "andar",
     "Продолжить": "Continua.",
     "Продолжить тренировку": "Continuar a formação",
@@ -28663,6 +29317,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Расстояние, км": "Distância, km",
     "раствор": "solução",
     "растяж": "Estiramento",
+    "расход": "O gasto",
     "Расчёт по данным профиля и сегодняшним отметкам.":
         "Cálculo de acordo com os dados do perfil e as marcas de hoje.",
     "расчётная готовность": "Preparação de cálculo",
@@ -28801,9 +29456,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Сегодня важнее восстановление. Не тренируйтесь через боль, температуру или резкое ухудшение самочувствия.":
         "Hoje, a recuperação é mais importante, não se exercite por causa de dor, temperatura ou deterioração acentuada.",
     "Сегодня дежурство": "Hoje, está na turma.",
+    "Сегодня записано": "Hoje foi gravado.",
     "сегодня отмечен тревожный симптом или высокая интенсивность жалобы.":
         "O que é que se passa hoje é um sintoma de alarme ou uma alta intensidade de reclamação.",
-    "сегодня.": "- Não, hoje.",
     "Сегодня: сон": "Hoje: sonho",
     "Сейчас активен режим поездки: при ночной дороге, смене часового пояса или недосыпе нагрузка автоматически считается восстановительной.":
         "Agora o modo de viagem está ativo: com a condução noturna, mudando o fuso horário ou falta de sono, a carga é automaticamente considerada restauradora.",
@@ -28811,12 +29466,15 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "сентябрь": "Setembro",
     "Сервер модели вернул код": "O servidor do modelo devolveu o código",
     "Сервис": "Serviço",
+    "Сервис погоды временно вернул ошибку. Повторная попытка будет выполнена автоматически.":
+        "O Serviço Meteorológico devolveu o erro temporariamente e a tentativa de repetição será automática.",
+    "Сервис погоды не ответил вовремя. Климатический профиль продолжает работать локально.":
+        "O serviço meteorológico não respondeu a tempo e o perfil climático continua a funcionar localmente.",
     "Сетевое видео отключено офлайн-режимом":
         "O vídeo da rede está desligado no modo offline",
     "Сетевое изображение скрыто": "Imagem de rede oculta",
     "Сетевые данные отключены режимом «Полностью офлайн». Климатический профиль продолжает работать.":
         "Os dados da rede são desativados pelo modo \"Fully offline\". O perfil climático continua a funcionar.",
-    "Сжимаю и анализирую локально...": "Comprei e analisei localmente...",
     "сил": "força",
     "силовая": "potência",
     "Силовая тренировка по инвентарю": "Formação de força no inventário",
@@ -28986,6 +29644,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "срочных пунктов; начните с них.":
         "Os pontos de urgência, comece com eles.",
     "стабильно": "estável",
+    "стакан": "um copo",
     "Стандартные GATT-сервисы читаются автоматически. Для закрытых или редких устройств добавьте UUID вручную.":
         "Os serviços normalizados do GATT são lidos automaticamente. Para dispositivos fechados ou raros, adicione UUID manualmente.",
     "стандартный": "padrão",
@@ -29085,6 +29744,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Точность": "precisão",
     "точность GPS": "GPS de precisão",
     "Точные будильники": "Despertadores precisos",
+    "Точные будильники недоступны (": "Não há acessórios precisos (",
     "тошнота": "náuseas",
     "травма": "trauma",
     "Травмы в течение жизни": "Traumas durante a vida",
@@ -29220,6 +29880,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Файл в защищённом хранилище:": "Arquivo no arquivo protegido:",
     "Файл в медицинском сейфе не найден":
         "Não encontrou o arquivo no cofre médico",
+    "Файл вложения не найден": "Não encontrou o arquivo de inserção",
     "Файл не содержит резервную копию приложения.":
         "O arquivo não contém uma cópia de backup do aplicativo.",
     "Файл/импорт": "Ficheiro/importação",
@@ -29236,6 +29897,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "фитнес-тренажёр FTMS": "Fim de fitness FTMS",
     "Фокус": "Foco",
     "Фокусы тренировок": "Truques de treino",
+    "Фоновая обработка": "O tratamento de fundo",
     "Фоновая работа": "Trabalho de fundo",
     "Фоновый анализ": "Análise de fundo",
     "Форма": "Forma",
@@ -29375,17 +30037,18 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "(*?(?:\\s*s?:referes taimane)?:[:=-]?\\s*([<>]?\\s*\\d+(?:[\\.,]\\d+)?(?:\\s*[-]\\s*\\d+(?:[\\.,]\\d+)?)?",
     "(?:\\s+(?:референс|норма|reference)?\\s*([<>]?\\s*\\d+(?:[,.]\\d+)?(?:\\s*[-–]\\s*\\d+(?:[,.]\\d+)?)?))?":
         "(?:\\s+(?:reference de la normale de la référence)?\\s([<>?s*\\d+(?:[,.]\\d+)?(?:\\s*[-]\\s*\\d+(?:[,.]\\d+)?)??",
+    "(?:^|\\s)(?:в|на)\\s+([01]?\\d|2[0-3])(?:\\s*(?:час[а-яё]*|ч))?(?=\\s|":
+        "(?: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出演: 出",
+    "(?:^|\\s)через\\s+(\\d{1,3})\\s*(минут[а-яё]*|мин|час[а-яё]*|ч)(?=\\s|":
+        "(?: ne demek oluyor? * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *",
     "(?:анализ|показатель|результат(?:\\s+анализа)?)\\s+([a-zа-яё][a-zа-яё0-9 ()+._-]{1,60}?)\\s*[:=-]?\\s*([<>]?\\s*\\d+(?:[\\.,]\\d+)?)\\s*":
         "(Analyse du point ?:resultat?:?:?:?:s\\s+analysis)?)\\s+([a-zâ-ya-yo][a-zâ-yayo0-9 () ++._-]{1,60}?)\\s*[:=-]?\\s*([<>]?\\s*\\d+(?:[\\.,]\\d+)?)\\s*",
     "(?:белок|protein|протеин|б)\\D{0,10}(\\d{1,3})": "•:protein (bkz: protin)",
-    "(?:будильник|разбуди|подъ[её]м).*?(?:в|на)?\\s*((?:[01]?\\d|2[0-3])[:\\.]\\d{2})":
-        "* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *",
+    "(?:будильник|разбуди|подъ[её]м)": "Çıkartıcı: (dönüştürme)",
     "(?:вес|масса|weight)\\s*(?:сегодня|now)?\\s*[:=-]?\\s*(\\d{2,3}(?:[\\.,]\\d)?)\\s*(?:кг|kg)?\\b":
         "(?:vezli bir masa) \\s*(?:bu gün ne zaman? \\s*[:=-]?\\s*(\\d{2,3}(?:[\\.,]\\d)?) \\s*(?:kıkıkıkıkıkıkıkıkıkıkıkık)?\\b",
-    "(?:выпил[а-яё]*|добав[а-яё]*|запиш[а-яё]*|water).*?(\\d+(?:[\\.,]\\d+)?)\\s*(мл|ml|л|l)(?![a-zа-яё])":
-        "*: * içtiğim* * içtiğim* * içtiğim* * içtiğim* * içtiğim* * içtiğim* * içtiğim* * içtiğim* * içtiğim* * içtiğim* * içtiğim* * içtiğim* * içtiğim* * içtiğim* * içtiğim* * içtiğim* * içtiğim* * içtiğim* * içtiğim* * içtiğim* * içtiğim* * içtiğim* * içtiğim* * içtiğim* * içtiğim* * içtiğim* * içtiğim* * içtiğim* * içtiğim* * içtiğim* * içtiğim* * içtiğim* * içtiğim* * içtiğim* * içtiğim* * içtiğim* * içtiğim* * içtiğim* * içtiğim* * içtiğim* * içtiğim* * içtiğim* * içtiğim* * içtiğim* * içtiğim* * içtiğim* * içtiğim* * içti * içti * içtiğim* * * * * * * *",
-    "(?:гемоглоб|глюкоз|холестерин|ферритин|референс|ммоль/л|мг/дл|анализ крови)":
-        "(hemoglobin ile ilgili olarak, hemoglucose ile ilgili olarak, hemoglucose ile ilgili olarak, hemoglucose ile ilgili olarak, hemoglucose ile ilgili olarak, hemoglucose ile ilgili olarak, hemoglucose ile ilgili olarak, hemoglucose ile ilgili olarak, hemoglucose ile ilgili olarak, hemoglucose ile ilgili olarak, hemoglucose ile ilgili olarak, hemoglucose ile ilgili olarak, hemoglucose ile ilgili olarak, hemoglucose ile ilgili olarak, hemoglucose ile ilgili olarak, hemoglucose ile ilgili olarak, hemoglucose ile ilgili olarak, hemoglucose ile ilgili olarak, hemoglucose ile ilgili olarak, hemoglucose ile ilgili olarak, hemoglucose ile ilgili olarak, hemoglucose ile ilgili olarak, hemoglucose ile ilgili olarak, hemoglucose ile ilgili olarak, hemoglucose ile ilgili olarak, hemoglucose ile ilgili olarak, hemoglucose ile ilgili olarak, hemoglucose ile ilgili olarak, hemoglucose ile ilgili olarak, hemoglucose ile ilgili olarak, hemoglucose ile ilgili olarak, hemoglucose ile ilgili olarak",
+    "(?:выпил[а-яё]*|добав[а-яё]*|запиш[а-яё]*|укаж[а-яё]*|вод[а-яё]*|water).*?(\\d+(?:[\\.,]\\d+)?)\\s*(мл|ml|миллилитр[а-яё]*|л|l|литр[а-яё]*|стакан[а-яё]*)(?![a-zа-яё])":
+        "*: (a-yayo) * (a-yayo) * (a-yayo) * (a-yayo) * (a-yayo) * (a-yayo) * (a-yayo) * (a-yayo) * (a-yayo) * (a-yayo) * (a-yayo) * (a-yayo) * (a-yayo) * (a-yayo) * (a-yayo) * (a-yayo) * (a-yayo) * (a-yayo) * (a-ya-yo) * (a-ya-yo) * (a-ya-yo) * (a-ya-yo) * (a-ya-yo) * (a-ya-yo) * (a-ya-yo) * (a-ya-yo) * (a-ya-yo) * (a-ya-yo) * (a-ya-yo) * (a-ya-yo) * (a-ya-yo) * (a-ya-yo) * (a-yo) * (a-ya-yo) * (",
     "(?:глюкоз[а-яё]*|сахар[а-яё]*\\s+кров[а-яё]*|glucose)\\s*[:=-]?\\s*(\\d{1,3}(?:[\\.,]\\d+)?)":
         "(?:glucose[a-ya]* deri (a-ya) * kan** deri (a-ya) * glucose* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *",
     "(?:давлен[а-яё]*|pressure)\\s*[:=-]?\\s*(\\d{2,3})\\s*[/\\\\]\\s*(\\d{2,3})(?:\\s+(?:пульс|pulse)\\s*(\\d{2,3}))?":
@@ -29404,16 +30067,13 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "(?:калории|calories)\\D{0,12}(\\d{2,4})": "(?:kaloriler)",
     "(?:качеств[а-яё]*|оценк[а-яё]*)\\s*(?:сна)?\\s*[:=-]?\\s*([1-5])":
         "(?:kalites[a-yayo]*diyeo değer[a-yayo]*)\\s*(?:suna)?\\s*[:=-]?\\s*([1-5])",
-    "(?:ккал|калори|белк|жир|углевод|состав|пищевая ценность)":
-        "•kkalı (kkalı) (kkalı) (kkalı) (kkalı) (kkalı) (kkalı) (kkalı) (kkalı) (kkalı) (kkalı) (kkalı) (kkalı) (kkalı) (kkalı) (kkalı) (kkalı) (kkalı) (kkalı) (kkalı) (kkalı) (kkalı) (kkalı) (kkalı) (kkalı) (kkalı) (kkalı) (kkalı) (kkalı) (kkalı) (k) (k) (k) (k) (k) (k) (k) (k) (k) (k) (k) (k) (k) (k) (k) (k) (k) (k) (k) (k) (k) (k) (k) (k) (k) (k) (k) (k) (k) (k) (k)))",
     "(?:клетчатка|пищевые волокна|fibre|fiber)\\D{0,12}(\\d{1,3}(?:[,.]\\d+)?)":
         "(Büyük bir hücre, bir yumurta, bir yumurta, bir yumurta, bir yumurta, bir yumurta, bir yumurta, bir yumurta, bir yumurta, bir yumurta, bir yumurta, bir yumurta, bir yumurta, bir yumurta, bir yumurta, bir yumurta, bir yumurta, bir yumurta, bir yumurta, bir yumurta, bir yumurta, bir yumurta, bir yumurta, bir yumurta, bir yumurta, bir yumurta, bir yumurta, bir yumurta, bir yumurta, bir yumurta, bir yumurta, bir yumurta, bir yumurta, bir yumurta, bir yumurta, bir yumurta, bir yumurta, bir yumurta, bir yumurta, bir yumurta, bir yumurta, bir yumurta, bir yumurta, bir yumurta, bir yumurta, bir yumurta, bir yumurta, bir yumurta, bir yumurta, bir yumurta, bir y",
     "(?:масса|вес|порция|net weight|serving)\\D{0,12}(\\d{1,4})\\s*(?:г|g)":
         "* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *",
     "(?:на|per)\\s*100\\s*(?:г|g)":
         "(?: için) \\*100\\s*s?: d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d",
-    "(?:напомни|напоминание|remind).*?(\\d{1,2})[:\\.](\\d{2})":
-        "(?: hatırladığım bir şey hatırladığım bir şey hatırladığım bir şey hatırladığım bir şey.)",
+    "(?:напомни|напоминание|remind)": "(?: hatırladın mı hatırladın mı)",
     "(?:по\\s+[^.;,]{0,25}\\s+)?\\d+\\s*раз(?:а|у|)\\s+(?:в|за)\\s+(?:день|сутки)":
         "- Ne? - Ne? - Ne? - Ne? - Ne? - Ne? - Ne?",
     "(?:поставь|создай|заведи|добавь|разбуди(?:\\s+меня)?|будильник|подъ[её]м)":
@@ -29422,6 +30082,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
         ":reference (norma olan reference) \\D{0,12}([\\d,.]+ ?[-] ?[\\d,.]+)",
     "(?:сахара|сахар|sugars?|из них сахара)\\D{0,12}(\\d{1,3}(?:[,.]\\d+)?)":
         "Şekerlerden bir kısmını da içerir.",
+    "(?:сколько|покажи|какой|какое|текущ[а-яё]*|итого)":
+        "(?: ne kadar dahi gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdiğini gösterdi",
     "(?:соль|salt)\\D{0,10}(\\d{1,3}(?:[,.]\\d+)?)":
         "(?: tuzlu olan) \\D{0,10}(\\d{1,3}(?:[,.]\\d+)?)",
     "(?:спал[а-яё]*|сон|sleep).*?(\\d{1,2}(?:[\\.,]\\d+)?)\\s*(?:ч(?:ас(?:а|ов)?)?|hours?|h)(?![a-zа-яё])":
@@ -29430,8 +30092,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "(?: uyku[a-yayo]*) zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman zaman",
     "(?:съел[а-яё]*|выпил[а-яё]*|запиш[а-яё]*\\s+(?:еду|при[её]м пищи)|добав[а-яё]*\\s+(?:еду|блюдо))\\s+(.+?)\\s+(\\d{1,4})\\s*(?:ккал|kcal)(?![a-zа-яё])":
         "*: (a-yayo) *dişi içti* (a-yayo) *dişi yazısı* *s+(: (a-yayo) *dişi yazısı* *dişi yazısı* *dişi yazısı* *dişi yazısı* *dişi yazısı* *dişi yazısı* *dişi yazısı* *dişi yazısı* *dişi yazısı* *dişi yazısı* *dişi yazısı* *dişi yazısı* *dişi yazısı* *dişi yazısı* *dişi yazısı* *dişi yazısı* *dişi yazısı* *dişi yazısı* *dişi yazısı* *dişi yazısı* *dişi yazısı* *dişi yazısı* *dişi yazısı* *dişi yazısı* *dişi yazısı* *dişi yazısı* *dişi yazısı* *dişi yazısı* *dişi yazısı*dişi yazısı* *dişi yazısı* *dişi yazısı*dişi yazısı* *dişi yazısı*dişi yazısı*dişi yazısı*dişi yazısı* *",
-    "(?:таблет|капсул|принимать|назначен|рецепт|дозиров)":
-        "(tablet için reçete alın):",
+    "(?:съел[а-яё]*|поел[а-яё]*|перекусил[а-яё]*|выпил[а-яё]*|добав[а-яё]*\\s+(?:еду|блюдо)|запиш[а-яё]*\\s+(?:что\\s+)?(?:я\\s+)?(?:съел[а-яё]*|поел[а-яё]*))\\s+(.+)":
+        "Bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir de bir",
     "(?:таблетк[а-яё]*|капсул[а-яё]*|раствор[а-яё]*|сироп[а-яё]*|суспензи[а-яё]*|":
         "(?:tabletek[a-ya]ka]diyosupsul[a-ya]diyosur[a-ya]diyosur[a-ya]diyosurup[a-ya]diyosuspenzi[a-ya]diyosur*diyosur",
     "(?:температур[а-яё]*|temperature)\\s*[:=-]?\\s*(3[4-9]|4[0-2])(?:[\\.,](\\d))?":
@@ -29439,8 +30101,23 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "(?:тренировк[а-яё]*|пробежал[а-яё]*|бегал[а-яё]*|занимал[а-яё]*).*?(\\d{1,3})\\s*(?:мин|минут)":
         "(?:trenirovk[a-yayo]*dişi kaçtı[a-yayo]*dişi koştu[a-yayo]*dişi kaçtı[a-yayo]*).*?",
     "(?:углеводы|carbs|у)\\D{0,10}(\\d{1,3})": "(Karbondeler?:carbs?:u)",
+    "(?<![a-zа-яё])(?:в|на)\\s*\\d{1,2}(?:[:\\.]\\d{2})?(?![a-zа-яё0-9])":
+        "<![a-z-yayo]) ??:a (?a*a) \\s\\d{1,2}(?:[:\\.]\\d{2})?(?![a-z-yayo0-9])",
+    "(?<![a-zа-яё])(?:в|на)\\s*\\d{1,2}(?:[:\\.]\\d{2})?(?:\\s*(?:час[а-яё]*|ч))?(?![a-zа-яё0-9])":
+        "Bu da bir diğer büyük bir artış.",
+    "(?<![a-zа-яё])(?:каждый день|ежедневно|по будням|по выходным|сегодня|завтра|послезавтра)(?![a-zа-яё])":
+        "Her gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir gün bir",
+    "(?<![a-zа-яё])(?:не дай уснуть|не заснуть|не уснул)(?![a-zа-яё])":
+        "Uyumayacağım, uyumamayacağım.",
+    "(?<![a-zа-яё])(?:с|и)?\\s*(?:проверкой|контролем)\\s+(?:активности|бодрствования)(?![a-zа-яё])":
+        "Bu, bir diğer sorun. Bu, bir diğer sorun.",
+    "(?<![a-zа-яё])(?:сегодня|только что)(?![a-zа-яё])": "Bugün sadece ne var?",
+    "(?<![a-zа-яё])через\\s+\\d+\\s*(?:минут[а-яё]*|мин|час[а-яё]*|ч)(?![a-zа-яё])":
+        "<![a-z-a-yayo]) üzerinden \\s+\\d+\\s*(?:minute[a-yayo] (?*a-z-a-yayo]*",
     "(\\d+(?:[,.]\\d+)?)\\s*(?:ммоль/л|мг/дл|г/л|нг/мл|мед/л|ме/л|%)":
         "(\\d+(?:[,.]\\d+)?) \\s*(?:mold/l ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç ç",
+    "(\\d+(?:[\\.,]\\d+)?)\\s*(мл|ml|миллилитр[а-яё]*|л|l|литр[а-яё]*|стакан[а-яё]*)(?![a-zа-яё]).*?(?:вод[а-яё]*|выпил[а-яё]*|добав[а-яё]*|запиш[а-яё]*|water)":
+        "* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *",
     "(\\d{1,3}(?:[\\.,]\\d+)?)\\s*(?:км|km)":
         "(\\d{1,3}(?:[\\.,]\\d+)?)\\s*(km?:",
     "(\\d{1,4})\\s*(?:г|g)\\b": "Bu da bir şey.",
@@ -29457,6 +30134,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "(ммоль/л|мкмоль/л|мг/дл|мг/л|г/л|г/дл|мкг/л|нг/мл|пг/мл|мед/л|ме/л|ед/л|mmol/l|umol/l|µmol/l|mg/dl|mg/l|g/l|g/dl|µg/l|ug/l|ng/ml|pg/ml|iu/l|u/l|10\\^?[*x×]?\\d+/л|фл|fl|пг|pg|%)":
         "(mülüm/mümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümümüm",
     "). Дозировку я не изменяю.": "- Doseyi değiştiremem.",
+    "); используется приблизительное системное расписание.":
+        "); yaklaşık sistemli bir zamanlama kullanılır.",
     ")} · день": "gün gün gün",
     ")}. Отложите тренировку; при резком ухудшении или опасных признаках обратитесь за неотложной помощью.":
         "Eğitiminizi erteleyin; ciddi bir bozukluk veya tehlikeli belirtiler varsa acil yardım isteyin.",
@@ -29486,8 +30165,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     ", цель": ", hedef",
     ". Добавил их на проверку; после подтверждения приложение создаст расписание и напоминания. Дозировки автоматически не меняются.":
         "- Kontrol için ekledi. - Dosyayı onayladıktan sonra bir program ve hatırlatma oluşturur.",
-    ". Изменения применятся после подтверждения.":
-        "Değişiklikler onaylandıktan sonra uygulanır.",
     ". Не используйте распознанные назначения до сверки с оригиналом.":
         "- Orijinal ile karşılaştırmadan tanımlanmış amaçları kullanmayın.",
     ". Невозможные скачки координат отфильтрованы.":
@@ -29536,6 +30213,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     ": не удалось разобрать": ": çözülemedi",
     ": осталось": ": kaldı",
     ": пакет короче заявленного": ": bildirilen paketten kısa",
+    ": проверка бодрствования": "Uyanık kalmayı kontrol etmek",
     ": характеристика не найдена": ": tanımlamadı",
     "; выбран ближайший расчётный конец цикла сна.":
         "Uyku döngüsünün en yakın hesaplama sonu seçilir.",
@@ -29553,21 +30231,23 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "[^a-zа-яё0-9]+": "[^a-z-a-ya0-9]+",
     "[a-zа-яё]*\\s*[:=-]?\\s*(\\d{1,3}(?:[\\.,]\\d+)?)\\s*(?:г|g)?":
         "[a-zá-yayo]*\\s*[:=-]?\\s*(\\d{1,3}(?:[\\.,]\\d+)?)\\s*(?:g densg)?",
-    "\\b(?:в|на)\\s*\\d{1,2}[:\\.]\\d{2}\\b":
-        "# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #",
     "\\b(гемоглобин|ферритин|холестерин|триглицериды|креатинин|мочевина|билирубин|алт|аст|ттг|витамин\\s+[a-zа-яё0-9]+|с-?реактивный\\s+белок)\\s*[:=-]?\\s*([<>]?\\s*\\d+(?:[\\.,]\\d+)?)\\s*":
         "Hemoglobinlerin bir kısmı olan ferritinlerin bir kısmı olan trigliseridlerin bir kısmı olan kreatinin bir kısmı olan bir kısmı olan bir kısmı olan bir kısmı olan bir kısmı olan bir kısmı olan bir kısmı olan bir kısmı olan bir kısmı olan bir kısmı olan bir kısmı olan bir kısmı olan bir kısmı olan bir kısmı olan bir kısmı olan bir kısmı olan bir kısmı olan bir kısmı olan bir kısmı olan bir kısmı olan bir kısmı olan bir kısmı olan bir kısmı olan bir kısmı olan bir kısmı olan bir kısmı olan bir kısmı olan bir kısmı olan bir kısmı olan bir kısmı olan bir kısmı olan bir kısmı olan bir kısmı olan bir kısmı olan bir kısmı olan bir kısmı olan bir kısmı olan bir kısmı olan bir kısmı olan bir kısmı olan bir kısmı olan bir kısmı olan bir kısmı olan bir kısmı olan bir kısmı olan bir kısmı olan bir kısmı olan bir kısmı olan bir kısmı olan bir diğer bir kısmı olan bir kısmı olan bir kısmı olan bir kısmı olan bir diğer bir kısmı olan bir diğer bir kısmı olan bir kısmı olan bir diğer bir kısmı olan bir diğer diğerinden daha da da bulunmaktadır.",
-    "\\d+(?:[\\.,]\\d+)?\\s*(?:мг|мкг|мл|ме|ед\\.)": "- Ne? - Ne? - Ne? - Ne?",
     "\\d+(?:[\\.,]\\d+)?\\s*(?:мкг|мг|г|мл|ед\\.?|ме)":
         "- Ne? - Ne? - Ne? - Ne?",
     "\\d+(?:[\\.,]\\d+)?\\s*(?:мкг|мг|г|мл|ед\\.?|ме|iu|mcg|mg|ml)(?![a-zа-яё])":
         "D+(?:[\\]\\d+)?\\s*(?:mk, m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m m",
+    "\\d+(?:[\\.,]\\d+)?\\s*(?:мл|л|литр|стакан)":
+        "# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #",
     "\\d+\\s*(?:дн(?:я|ей|ь)?|сут(?:ок|ки)?|недел[а-яё]*|месяц[а-яё]*)(?![а-яё])":
         "# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #",
+    "\\d{1,4}\\s*(?:ккал|kcal)": "- Ne? - Ne?",
     "^(?:врач\\s+)?(?:мне\\s+)?(?:назначил(?:а|и)?|назначение|рецепт|принимать)\\s*[:\\-]?\\s*":
         "Bu yüzden, bu ilaçın kullanımı için bir ilaç daha kullanmak gerekir.",
     "^(?:как|что|почему|зачем|когда|где|можно\\s+ли|расскажи|объясни|проанализируй|how|what|why|when|where|can\\s+i)\\b":
         "Nasıl bir şey yapılırsa ne yapılırsa ne yapılırsa ne yapılırsa ne yapılırsa ne yapılırsa ne yapılırsa ne yapılırsa ne yapılırsa ne yapılırsa ne yapılırsa ne yapılırsa ne yapılırsa ne yapılırsa ne yapılırsa ne yapılırsa ne yapılırsa ne yapılırsa ne yapılırsa ne yapılırsa ne yapılırsa ne yapılırsa ne yapılırsa ne yapılırsa ne yapılırsa ne yapılırsa ne yapılırsa ne yapılırsa ne yapılırsa ne yapılırsa ne yapılırsa ne yapılırsa ne yapılırsa ne yapılırsa ne yapılırsa ne yapılırsa ne yapılırsa ne yapılırsa ne yapılırsa ne yapılırsa ne yapılırsa ne yapılırsa yapılırsa ne yapılırsa yapılırsa yapılırsa yapılırsa yapılırsa yapılırsa yapılırsa yapılırsa yapılırsa yapılırsa yapılırsa yapılırsa yapılırsa yapılırsa yapılırsa yapılırsa yapılırsa yapılırsa yapılırsa yapılırsa yapılırsa yapılırsa yapılırsa yapılırsa yapılırsa yapılırsa yapılırsa",
+    "^(?:что\\s+)?(?:я\\s+)?(?:съел[а-яё]*|поел[а-яё]*|перекусил[а-яё]*)\\s+":
+        "* Neyi? * Neyi? * Neyi? * Neyi? * Neyi? * Neyi? * Neyi? * Neyi? * Neyi? * Neyi? * Neyi? * Neyi? * Neyi? * Neyi? * Neyi? * Neyi? * Neyi? * Neyi? * Neyi? * Neyi? * Neyi? * Neyi? * Neyi? * Neyi? * Neyi? * Neyi? * Neyi? * Neyi? * Neyi? * Neyi? * Neyi? * Neyi? * Neyi? * Neyi? * Neyi? * Neyi? * Neyi? * Neyi? * Neyi? * Neyi? * Neyi? * Neyi? * Neyi? * Neyi? * Neyi? * Neyi? * Neyi? * Neyi? * Neyi? * Neyi? * Neyi? * Neyi? * Neyi? * Neyi? * Neyi* * Neyi* * Neyi* * Neyi* * Neyi* * * Neyi* * * * * * * * * * * * * * *",
     "^[^a-zа-яё]+": "^[^a-z-a-yayo]+",
     "^\\*\\*(?:Answer|Ответ):\\*\\*\\s*":
         "# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #",
@@ -29640,7 +30320,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "UUID характеристики записи": "UUID kayıtlarının özellikleri",
     "Vault был восстановлен из безопасного начального состояния.":
         "Vault güvenli bir ilk devletten restore edilmiştir.",
-    "Vision-анализ недоступен:": "Vision analiz kullanılamıyor:",
     "°C · высота": "°C · yükseklik",
     "· вес": "ağırlık ağırlığı ağırlık ağırlığı",
     "· визуальная оценка": "· Görsel değerlendirme",
@@ -29669,9 +30348,13 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "» перед выполнением.": "Yapmadan önce.",
     "», интенсивность": ", yoğunluk",
     "». Извлечённый текст:": ". Kaydedilen metin:",
+    "». Калории и Б/Ж/У оставлены пустыми; добавьте порцию или уточните данные, когда они известны.":
+        "Kaloriler ve B/J/U boş bırakılır; bir miktar ekleyin veya bildikleri zaman verileri doğrulayın.",
     "». Перед продолжением рекомендуется сделать копию текущих данных.":
         "Devam etmeden önce, mevcut verilerin bir kopyasını yapmak önerilir.",
     "». Текст для анализа не найден.": ". Analiz için bir metin bulunamadı.",
+    "». Уведомления о приёме будут планироваться по курсу препарата.":
+        ". İçecek bildirimler ilaç kursuna göre planlanır.",
     "август": "Ağustos Ağustos Ağustos Ağustos Ağustos",
     "Автозапись GPS/GLONASS:": "Autorecording GPS/GLONASS:",
     "Автозапуск": "Otomatik Başlatma",
@@ -29697,6 +30380,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "активное движение": "aktif hareket",
     "Активность": "Aktivite Faaliyetleri",
     "Активность и вода": "Aktivite ve Su",
+    "Активность после подъёма не подтверждена. Откройте приложение и отключите сигнал.":
+        "İndirdikten sonra etkinlik doğrulanmadı.",
     "Активность хорошая: шаги уже закрывают базовую цель дня.":
         "Eğlence iyi bir şey: adımlar günümüzün temel amacını kapatıyor.",
     "активные калории": "kalori",
@@ -29757,6 +30442,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "без документа": "kağıtsız kağıt",
     "Без жёстких ограничений: можно добавить спокойную прогулку и оценивать недельный баланс.":
         "Katı kısıtlamalar olmadan: Sessiz bir yürüyüş ekleyebilir ve haftalık dengeyi değerlendirebilirsiniz.",
+    "без контроля бодрствования": "Uyanık kalmak kontrolü olmadan",
     "без лекарства": "İlaçsız uyuşturucu",
     "Без ограничений": "Hiçbir kısıtlama yok.",
     "без ограничений": "sınırsız",
@@ -29838,6 +30524,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "в пределах референса": "Referans içinde",
     "В профиле нет координат города.": "Profilde şehir koordinatları yok.",
     "В пути, мин": "Bu arada, benimki.",
+    "в расписание «": "Zamanlama için",
     "В списке есть антикоагулянт: взаимодействие нужно проверить у врача или фармацевта.":
         "Bu listede antikoagulant var. Bu etkileşimi bir doktordan veya bir eczacıdan kontrol etmeniz gerekir.",
     "В тренировках отмечалась боль: будущую нагрузку стоит снизить.":
@@ -29872,9 +30559,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "велотренажёр": "eğitmen eğitmen",
     "вероятно в руках": "Muhtemelen ellerinde.",
     "вероятно используется": "muhtemelen kullanılıyor",
-    "Версия 1.8.1+10 · создатель: Редин Максим Юрьевич · info@thebestmks.ru":
-        "Sürüm 1.8.1+10 · yaratıcı: Redin Maksim Yuriyoviç · info@thebestmks.ru",
-    "Версия: 1.8.1+10": "Sürüm: 1.8.1+10",
+    "Версия 1.8.2+11 · создатель: Редин Максим Юрьевич · info@thebestmks.ru":
+        "Versiyon 1.8.2+11 · yaratıcı: Redin Maksim Yuriyoviç · info@thebestmks.ru",
+    "Версия: 1.8.2+11": "Sürüm: 1.8.2+11",
     "Вес": "Ağırlık.",
     "вес": "ağırlık ağırlığı ağırlık ağırlığı",
     "Вес порции и пищевая ценность являются ориентировочной оценкой класса блюда. Проверьте их перед подтверждением.":
@@ -29915,6 +30602,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Внесено голосом или командой помощника; условия измерения не указаны.":
         "Ses veya yardımcı komut tarafından alınmıştır; ölçüm koşulları belirtilmemiştir.",
     "Внесено командой помощника.": "Yardımcı komutu tarafından getirildi.",
+    "Внесено помощником без количества и нутриентов; значения не выдумывались.":
+        "Bir yardımcı tarafından miktarı ve besinleri olmayan bir şekilde getirildi; değerler uydurulmadı.",
     "внесённая калорийность заметно выше основного обмена, но недельный баланс и активность важнее одного дня.":
         "Bu, kalorinin büyük miktarda kalorinin büyük miktarda olduğu anlamına gelir. Ama haftalık denge ve aktivite bir günden daha önemlidir.",
     "внесённая калорийность низкая относительно основного обмена; возможно, дневник заполнен не полностью.":
@@ -29983,6 +30672,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "вт": "volt volt volt",
     "Вторник": "Salı.",
     "вторник": "Salı günü",
+    "Вчера ·": "Dün ...",
     "вчера уже была тяжёлая тренировка": "Dün zor bir uygulamaydı.",
     "Вы": "Siz.",
     "Выберите вариант": "Bir seçenek seçin",
@@ -30171,6 +30861,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Для чего применяется": "Ne için kullanılır",
     "Дневник питания, БЖУ, рецепты и ручное подтверждение фото":
         "Beslenme günlüğü, BJU, tarifler ve manuel Onay fotoğrafı",
+    "Дневник по датам": "Tarihler Günlüğü",
     "Дневник самочувствия без диагнозов и назначений":
         "Tanık ve randevular olmadan sağlığın Günlüğü",
     "Дневник сна": "Uyku günlüğü",
@@ -30188,6 +30879,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "До ориентира": "Yere",
     "добав": "ekleme",
     "Добавил": "Eklemiş",
+    "Добавил время": "Zamanımı arttırdım .",
     "Добавить":
         "Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add Add",
     "Добавить в дневник": "Güne Ekle",
@@ -30339,6 +31031,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Завершить": "Tamam.",
     "Завершить и сохранить": "Tamam ve korumak",
     "зависит от пола и возраста": "Cinsiyete ve yaşına bağlı olarak",
+    "завтра": "Yarın.",
     "завтрак": "Kahvaltı kahvaltı",
     "Загружаем локальный сейф здоровья": "Yerel sağlığı güvenli indirin",
     "Загруженный GGUF повреждён.": "GGUF yüklenmiş.",
@@ -30414,6 +31107,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "İzin talep ediyoruz ve cihazlara bakıyoruz.",
     "Запрещено системой; откройте системные настройки":
         "Sistem tarafından yasaklandı; sistem ayarlarını aç",
+    "Запрос обрабатывается в фоне": "Arama Arkaplanında İşlenir",
     "Запрос пользователя:": "Kullanıcı sorusu:",
     "Запросить разрешение повторно": "İzin İstekleri",
     "Запросить разрешения и синхронизировать": "İstek izni ve senkronize",
@@ -30454,9 +31148,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "из-за холода выбран домашний вариант с более длинной разминкой":
         "Soğuktan dolayı daha uzun bir süredir çamaşır kesilen ev seçimi yapıldı .",
     "избегать задержки дыхания": "Keep off",
-    "Извлечённый текст:": "Kayıt:",
     "Измените запрос или добавьте тег в карточку документа.":
         "İstekyi değiştirin veya belge kartına bir etiket ekleyin.",
+    "Изменить": "Değiştir",
     "Изменить симптом": "semptomu değiştirin",
     "Изменить сон": "Uykunuzu değiştirin.",
     "измерения не найдены": "Ölçümler bulunamadı",
@@ -30586,6 +31280,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Ккал": "Kal Kal Kal",
     "ккал": "lf",
     "ккал · Б/Ж/У": "kkal · B/J/U",
+    "ккал · расход": "kcal · harcama",
+    "ккал · шаги": "adımlar",
     "Ккал еды": "Calorie food",
     "ккал за сутки": "kalori",
     "ккал, активность": "kkal, aktiflik",
@@ -30641,6 +31337,10 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Контекст дома и работы": "Ev ve iş bağlamı",
     "Контекст телефона": "Telefon İçin Konekst",
     "Контекст телефона:": "Telefonun bağlamı:",
+    "контролем активности": "etkinliği kontrol etmek",
+    "контроль активности": "etkinlik kontrolü",
+    "Контроль бодрствования": "Uyanık kalmayı kontrol etmek",
+    "контроль бодрствования": "Uyanık kalmayı kontrol etmek",
     "контроль лекарств": "ilaç ilacı",
     "Координаты": "Koordinatörleri",
     "Координаты используются только на устройстве для определения контекста.":
@@ -30670,7 +31370,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Курс:": "Ders:",
     "Күнтізбе": "kuntizbe",
     "л": "l l",
-    "л · калории": "K kalori",
+    "л · питание": "l · beslenme",
+    "л воды.": "Suyla.",
     "л, шаги": "L, adımlar",
     "л.": "- Evet.",
     "л. Пейте небольшими порциями, если врач не ограничил жидкость.":
@@ -30768,6 +31469,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "мигрень": "Migren",
     "Микрофон и голосовой ввод": "Mikrofon ve Ses Girişi",
     "мили": "mil mil mil mil mil",
+    "миллилитр": "Millitre",
     "мин": "benimki",
     "мин ·": "benimki",
     "мин · перенос доступен": "Mine transferi mevcut",
@@ -30829,10 +31531,10 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "et |fish |milk |milk |cheese peynir |chicken |beef |fish |egg |milk |cheese",
     "На весь экран": "Tüm Ekran",
     "на ночь": "Geceye kadar.",
-    "На проверку добавлено записей:": "Kontrol için yazılar eklendi:",
     "на работе": "İşyerinde",
     "На ручную проверку добавлено показателей:":
         "El kontrolüne şu göstergeler eklendi:",
+    "на сегодня": "Bugün için",
     "на сегодня запланировано:": "Bugün için planlanmıştır:",
     "набор силы": "güç kuvvet kuvveti",
     "нагруз": "yük yük yük yük yük yük yük",
@@ -30937,8 +31639,10 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "нг/мл": "ng / ml",
     "не выбрано": "Seçilmedi",
     "не выбраны": "Seçilmedi",
+    "не дай уснуть": "Uyumama izin verme.",
     "не задана": "belirtilmemiş",
     "не задано": "belirtilmemiş",
+    "не заснуть": "Uyumayacağım.",
     "Не извлечено:": "Tamamlanmamış değil:",
     "не компенсируйте еду голоданием; выберите спокойную прогулку и вернитесь к обычному плану.":
         "Yiyecekten dolayı açlıktan ödünç almayın; sakin bir yürüyüş seçin ve planınıza geri dönün.",
@@ -30990,6 +31694,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "не указано в контексте. В конце укажи уверенность: высокая, средняя или низкая.":
         "Bu konektüel olarak belirtilmemiş. Sonunda yüksek, orta veya düşük güven belirtin.",
     "Не указаны": "Gösterilmemiş",
+    "не уснул": "Uyumadım.",
     "Не установлена; доступен быстрый режим и установка в разделе «Помощник».":
         "Kurulmamış; hızlı mod ve Yardımcı bölümünde kurulum mevcut.",
     "Не хватает данных:": "Veriler eksik:",
@@ -31080,7 +31785,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Обновить контекст": "Anlaşmayı Yeniden Değiştir",
     "Обновить результаты поиска": "Güncelleme arama sonuçları",
     "Обновлено устройство:": "Güncelleme cihazı:",
-    "Обрабатываю локально...": "Yerel olarak işliyor...",
     "обсудите с врачом:": "Doktorunuzla konuşun:",
     "обсудить": "Tartışma",
     "Обсудить план с помощником": "Planı yardımcı ile konuşun",
@@ -31104,6 +31808,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "Tartışmalar, rehabilitasyon, doktor, belgeler",
     "Ограничения:": "Sınırlamalar:",
     "ограничить бег": "down down",
+    "один раз": "Bir kere.",
     "один сигнал": "Tek sinyal",
     "одыш": "Nefessızlık",
     "одышка": "Nefessızlık",
@@ -31192,7 +31897,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Отмечено сегодня": "Bugün kutlandı",
     "отмечено сегодня": "not not not not not not not",
     "Отправить": "Gönder.",
-    "Отправлено изображение:": "Resim gönderildi:",
     "Отпуск": "Tatil Tatil",
     "отпуск": "ayrılalım",
     "Отпуск не запланирован": "Tatil Planlanmamış",
@@ -31255,6 +31959,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "перенесённая болезнь": "Hastalığı Hastalığı",
     "переохлаждение": "hipothermia",
     "Пересадок": "Transplantasyon",
+    "Период контроля, мин": "Kontrol süresi, min",
     "Периодически проверять локальные напоминания и расписание без отправки данных в сеть":
         "Yerel hatırlatmaları ve programları düzenli olarak kontrol edin .",
     "Персональная проверка": "Kişisel Kontrol",
@@ -31304,9 +32009,11 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Пн": "pn",
     "пн": "Havuz",
     "пн, вт, ср, чт, пт": "Dönüşümün son kısmı.",
+    "по будням": "Haftalar boyunca",
     "по внесённым данным допустима обычная плановая нагрузка с контролем самочувствия.":
         "Bu verilere göre, normal planlı yük ve sağlık kontrolü uygulanabilir.",
     "По внесённым приёмам пищи:": "Yemeklerin içeriği:",
+    "по выходным": "Hafta sonları",
     "по геолокации": "geolocated",
     "по дням недели":
         "haftalık haftalık haftalık haftalık haftalık haftalık haftalık haftalık",
@@ -31327,13 +32034,19 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Побочные эффекты и реакции": "Side etkileri ve tepkileri",
     "Побочные эффекты:": "Side etkileri:",
     "Повседневная активность": "Günlük faaliyetler",
+    "Повтор": "Tekrarlayın",
     "повторений":
         "Tekrar tekrar tekrar tekrar tekrar tekrar tekrar tekrar tekrar tekrar tekrar tekrar tekrar tekrar tekrar tekrar tekrar tekrar tekrar tekrar tekrar tekrar tekrar tekrar tekrar tekrar tekrar tekrar tekrar tekrar tekrar tekrar tekrar tekrar tekrar tekrar tekrar tekrar tekrar tekrar tekrar tekrar tekrar tekrar tekrar tekrar tekrar tekrar tekrar",
     "Повторите PIN": "PIN'i tekrarlayın.",
     "Повторно запрашивать PIN или биометрию для чувствительных документов":
         "Hassas belgeler için PIN veya biyometrikler",
+    "Повторять сигнал при отсутствии движения после подъёма.":
+        "Yükseltikten sonra hareketsiz olduğunda sinyal tekrarlanmalıdır.",
     "Повторяющиеся симптомы:": "Mevcut semptomlar:",
     "Повышает масштаб интерфейса": "arayüzün boyutunu artırır",
+    "Погода временно недоступна": "Hava durumu geçici olarak açık .",
+    "Погода временно недоступна. Климатический профиль продолжает работать локально.":
+        "Hava durumu geçici olarak kötüye gitti. İklim profili yerel olarak çalışmaya devam ediyor.",
     "Погода и климат": "Hava ve iklim",
     "Погода недоступна": "Hava Durumu erişilemez",
     "Погода подходит для обычной нагрузки с учётом самочувствия.":
@@ -31459,6 +32172,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "последние симптомы:": "Son belirtiler:",
     "последняя запись сна:": "Son uyku kaydı:",
     "Последняя запись:": "Son kayıt:",
+    "послезавтра": "- Yarın.",
     "постав": "Yapıştır",
     "Постепенное пробуждение": "Notual uyanış",
     "потер": "terer",
@@ -31470,6 +32184,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Предупреждение": "Uyarı Uyarı Uyarı Uyarı",
     "Предупреждения": "Uyarılar",
     "Препарат": "İlaç ilacı",
+    "препарат": "ilaç",
     "препаратов, принято сегодня": "Bugün aldığım ilaçlar",
     "Препараты": "İlaçlar",
     "Препараты не распознаны. Проверьте качество снимка или добавьте лекарство вручную.":
@@ -31484,7 +32199,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Приготовление": "Hazırlık hazırlığı",
     "прием": "Kabul",
     "Прикреплённый файл не найден": "Bağlanmış dosya bulunamadı",
-    "Приложен файл:": "Dosya eklenmiş:",
     "приложение открыто": "Uygulama Açık",
     "Приложение работает без браслета: вес, сон, шаги, еда и тренировки можно вводить вручную.":
         "Uygulama bir bilezik olmadan çalışır: ağırlık, uyku, adımlar, yiyecek ve egzersizler manuel olarak girilebilir.",
@@ -31519,10 +32233,12 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Проверить симптомы": "Belirtileri kontrol edin",
     "Проверить снова": "Tekrar kontrol edelim.",
     "Проверить уведомление": "Uyarıyı Kontrol Et",
+    "проверка активности": "etkinlik kontrolü",
     "Проверка назначения": "Görevden Geçir",
     "Проверка недоступна:": "Kontrol edilmiyor:",
     "проверка разрешений": "İzin verme izni",
     "Проверка распознавания": "Tanık çek",
+    "проверкой активности": "etkinliği kontrol etmek",
     "Проверь лекарства и остатки": "İlaçları ve kalıntıları kontrol edin",
     "Проверьте аллерген в дневнике": "Günlükte alerjini kontrol edin .",
     "Проверьте белок и полноту дневника":
@@ -31548,6 +32264,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "Yemek yemeyi kaçırmış olduğunuzu kontrol edin ve uzman olmadan beslenmenizi keskin bir şekilde azaltmayın.",
     "Проверяем доступность...": "Kullanılabilirliği kontrol edin...",
     "Проверяем локальную модель...": "Yerel modelleri kontrol ediyoruz...",
+    "проверяй активность": "etkinliği kontrol edin",
+    "проверяй бодрствование": "Uyanık kalmayı kontrol edin",
+    "Проверять через, мин": "Geçer, dakika",
     "прогулки": "yürüyüş yürüyüş",
     "Продолжить": "Devam et.",
     "Продолжить тренировку": "Sürekli eğitime devam et",
@@ -31645,6 +32364,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Расстояние, км": "Mesafe, km",
     "раствор": "Çözüm",
     "растяж": "Çekim",
+    "расход":
+        "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -",
     "Расчёт по данным профиля и сегодняшним отметкам.":
         "Profil verilerine ve bugünün işaretlerine göre hesaplamak.",
     "расчётная готовность": "hesaplama hazırlığı",
@@ -31784,9 +32505,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Сегодня важнее восстановление. Не тренируйтесь через боль, температуру или резкое ухудшение самочувствия.":
         "Bugün iyileşme daha önemlidir. Ağrı, sıcaklık veya ciddi bir sağlık bozukluğu nedeniyle egzersiz yapmayın.",
     "Сегодня дежурство": "Bugün görev",
+    "Сегодня записано": "Bugün kayıtlı.",
     "сегодня отмечен тревожный симптом или высокая интенсивность жалобы.":
         "Bugün bir endişe belirti veya yüksek bir şikayet yoğunluğu belirtildi.",
-    "сегодня.": "Bugün.",
     "Сегодня: сон": "Bugün: Uyku",
     "Сейчас активен режим поездки: при ночной дороге, смене часового пояса или недосыпе нагрузка автоматически считается восстановительной.":
         "Şimdi seyahat modu aktif: gece sürüşü, zaman bölgesini değiştirmek veya uyku eksikliği ile, yük otomatik olarak restoratif olarak kabul edilir.",
@@ -31794,12 +32515,15 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "сентябрь": "Eylül Eylül Eylül",
     "Сервер модели вернул код": "Model sunucusu kodu geri verdi",
     "Сервис": "Servis Servisi",
+    "Сервис погоды временно вернул ошибку. Повторная попытка будет выполнена автоматически.":
+        "Hava durumu servisinin bir süreliğine bir hata döndüğü için tekrar deneme otomatik olarak yapılacaktır.",
+    "Сервис погоды не ответил вовремя. Климатический профиль продолжает работать локально.":
+        "Hava durumu servisinin cevabı zamanında gelmedi.",
     "Сетевое видео отключено офлайн-режимом":
         "Ağ video offline olarak kapatıldı",
     "Сетевое изображение скрыто": "Ağ Görüntüsü Gizli",
     "Сетевые данные отключены режимом «Полностью офлайн». Климатический профиль продолжает работать.":
         "Ağ verileri “Tam olarak çevrimdışı” modu tarafından devre dışı bırakılır. İklim profili çalışmaya devam ediyor.",
-    "Сжимаю и анализирую локально...": "Yerel olarak inceleme yapıyorum.",
     "сил": "güç kuvvet kuvveti",
     "силовая": "Güç gücü",
     "Силовая тренировка по инвентарю": "envanter eğitimi",
@@ -31965,6 +32689,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Срочно:": "Acil bir şekilde:",
     "срочных пунктов; начните с них.": "Acil noktaları; başlayın.",
     "стабильно": "bıçakla bıçakla",
+    "стакан": "Bir bardak",
     "Стандартные GATT-сервисы читаются автоматически. Для закрытых или редких устройств добавьте UUID вручную.":
         "Standart GATT hizmetleri otomatik olarak okunur. Kapalı veya nadir cihazlar için UUID manuel ekleyin.",
     "стандартный": "Standart",
@@ -32065,6 +32790,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Точность": "Hassasiyet",
     "точность GPS": "GPS doğruluğu",
     "Точные будильники": "Tam Uyarıcılar",
+    "Точные будильники недоступны (": "Tam alarmlar kullanılamıyor (",
     "тошнота": "Duymak",
     "травма": "Travma travma travma travma",
     "Травмы в течение жизни": "Yaşamın Yalanları",
@@ -32194,6 +32920,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Файл анализа:": "Analiz dosyası:",
     "Файл в защищённом хранилище:": "Korunmuş bir depoda bulunan dosya:",
     "Файл в медицинском сейфе не найден": "Tıbbi Sef Dosyası bulunamadı",
+    "Файл вложения не найден": "Ekleme Dosyası bulunamadı",
     "Файл не содержит резервную копию приложения.":
         "Dosya uygulamanın yedek bir kopyasını içermez.",
     "Файл/импорт": "Dosya/import",
@@ -32210,6 +32937,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "фитнес-тренажёр FTMS": "FTMS fitness-trenajörleri",
     "Фокус": "Focus Focus Focus",
     "Фокусы тренировок": "Eğitim hileleri",
+    "Фоновая обработка": "Arkaplan İşleme",
     "Фоновая работа": "Arkaplan Çalışmaları",
     "Фоновый анализ": "Arkaplan Analizi",
     "Форма":
@@ -32352,17 +33080,18 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "(*?(?:\\s?:referes*lainorma) [:=-]?\\s*([<>]?\\s*\\d+(?:[\\.,]\\d+)?(?:\\s*[-]\\s*\\d+(?:[\\.,]\\d+)?)?",
     "(?:\\s+(?:референс|норма|reference)?\\s*([<>]?\\s*\\d+(?:[,.]\\d+)?(?:\\s*[-–]\\s*\\d+(?:[,.]\\d+)?)?))?":
         "(?:\\s+(?:reference of the norm of reference)?\\s([<>]?s*\\d+(?:[,.]\\d+)?(?:\\s*[-]\\s*\\d+(?:[,.]\\d+)?)??",
+    "(?:^|\\s)(?:в|на)\\s+([01]?\\d|2[0-3])(?:\\s*(?:час[а-яё]*|ч))?(?=\\s|":
+        "(?: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이리야: 이",
+    "(?:^|\\s)через\\s+(\\d{1,3})\\s*(минут[а-яё]*|мин|час[а-яё]*|ч)(?=\\s|":
+        "(?: 이시^\\s)",
     "(?:анализ|показатель|результат(?:\\s+анализа)?)\\s+([a-zа-яё][a-zа-яё0-9 ()+._-]{1,60}?)\\s*[:=-]?\\s*([<>]?\\s*\\d+(?:[\\.,]\\d+)?)\\s*":
         "(분석이시구표?:결과?: 이시구+분석)?) \\s+([a-zа-ya-yo][a-zа-ya-yo0-9 () ++_-]{1,60}?) \\s*[:=-]?\\s*([<>]?\\s*\\d+(?:[\\.,]\\d+)?) \\s*",
     "(?:белок|protein|протеин|б)\\D{0,10}(\\d{1,3})": ":성 단백질 (성 단백질)",
-    "(?:будильник|разбуди|подъ[её]м).*?(?:в|на)?\\s*((?:[01]?\\d|2[0-3])[:\\.]\\d{2})":
-        ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::",
+    "(?:будильник|разбуди|подъ[её]м)": "?:발생기 (발생기)",
     "(?:вес|масса|weight)\\s*(?:сегодня|now)?\\s*[:=-]?\\s*(\\d{2,3}(?:[\\.,]\\d)?)\\s*(?:кг|kg)?\\b":
         "(?:중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중량) (중",
-    "(?:выпил[а-яё]*|добав[а-яё]*|запиш[а-яё]*|water).*?(\\d+(?:[\\.,]\\d+)?)\\s*(мл|ml|л|l)(?![a-zа-яё])":
-        "::: (아-야오) *이용 (아-야오) *이용 (아-야오) *이용 (아-야오) *이용 (아-야오) *이용 (아-야오) *이용 (아-야오) *이용 (아-야오) *이용 (아-야오) *이용 (아-야오) *이용 (아-야오) *이용 (아-야오) *이용 (아-야오) *이용 (아-야오) *이용 (아-야오) *이용 (아-야오) *이용 (아-야오) *이용 (아-야오) *이용 (아-야오) *이용 (아-야오) *이용 (아-야오) *이용 (아-야오) *이용 (아-야오) *이용 (아-야오) *이용) *이용 (아-야오) *이용) *",
-    "(?:гемоглоб|глюкоз|холестерин|ферритин|референс|ммоль/л|мг/дл|анализ крови)":
-        "(혈혈구성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈관성 혈",
+    "(?:выпил[а-яё]*|добав[а-яё]*|запиш[а-яё]*|укаж[а-яё]*|вод[а-яё]*|water).*?(\\d+(?:[\\.,]\\d+)?)\\s*(мл|ml|миллилитр[а-яё]*|л|l|литр[а-яё]*|стакан[а-яё]*)(?![a-zа-яё])":
+        ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::",
     "(?:глюкоз[а-яё]*|сахар[а-яё]*\\s+кров[а-яё]*|glucose)\\s*[:=-]?\\s*(\\d{1,3}(?:[\\.,]\\d+)?)":
         "(?:??구리코스[아-야오]*가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가루가",
     "(?:давлен[а-яё]*|pressure)\\s*[:=-]?\\s*(\\d{2,3})\\s*[/\\\\]\\s*(\\d{2,3})(?:\\s+(?:пульс|pulse)\\s*(\\d{2,3}))?":
@@ -32379,15 +33108,12 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "(?:калории|calories)\\D{0,12}(\\d{2,4})": "(?:칼로리 소모가)",
     "(?:качеств[а-яё]*|оценк[а-яё]*)\\s*(?:сна)?\\s*[:=-]?\\s*([1-5])":
         "(?:자질[아-야오]*이용평가를[아-야오]*) \\s*(?:잠)?\\s*[:=-]?\\s*([1-5])",
-    "(?:ккал|калори|белк|жир|углевод|состав|пищевая ценность)":
-        ": 어 어 (어 어) 어 어 (어) 어 (어) 어",
     "(?:клетчатка|пищевые волокна|fibre|fiber)\\D{0,12}(\\d{1,3}(?:[,.]\\d+)?)":
         "(??",
     "(?:масса|вес|порция|net weight|serving)\\D{0,12}(\\d{1,4})\\s*(?:г|g)":
         "(중량수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산수산",
     "(?:на|per)\\s*100\\s*(?:г|g)": "(??:에 대해) \\*100\\s*s?:",
-    "(?:напомни|напоминание|remind).*?(\\d{1,2})[:\\.](\\d{2})":
-        "(?:·····························································································································································································································································",
+    "(?:напомни|напоминание|remind)": "(?:기억할 때 기억할 때)",
     "(?:по\\s+[^.;,]{0,25}\\s+)?\\d+\\s*раз(?:а|у|)\\s+(?:в|за)\\s+(?:день|сутки)":
         "[:po\\s+[^.;,]{0,25}\\s+)?",
     "(?:поставь|создай|заведи|добавь|разбуди(?:\\s+меня)?|будильник|подъ[её]м)":
@@ -32396,6 +33122,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "::reference (어본어: ··) \\D{0,12}([\\d,.]+ ?[-] ?[\\d,.]+)",
     "(?:сахара|сахар|sugars?|из них сахара)\\D{0,12}(\\d{1,3}(?:[,.]\\d+)?)":
         "설탕을 먹으면 설탕이 되죠?",
+    "(?:сколько|покажи|какой|какое|текущ[а-яё]*|итого)": "(?: 얼마나 많은 것을 보여주는가?",
     "(?:соль|salt)\\D{0,10}(\\d{1,3}(?:[,.]\\d+)?)":
         "(?:盐的盐) \\D{0,10}(\\d{1,3}(?:[,.]\\d+)?)",
     "(?:спал[а-яё]*|сон|sleep).*?(\\d{1,2}(?:[\\.,]\\d+)?)\\s*(?:ч(?:ас(?:а|ов)?)?|hours?|h)(?![a-zа-яё])":
@@ -32404,8 +33131,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "(?:잠들[아-야오]*) 소니 sleep).*?(\\d{1,2}[:\\.](\\d{2})\\s*(?:d[-])\\s*(\\d{1,2})[:\\.]\\d{2})",
     "(?:съел[а-яё]*|выпил[а-яё]*|запиш[а-яё]*\\s+(?:еду|при[её]м пищи)|добав[а-яё]*\\s+(?:еду|блюдо))\\s+(.+?)\\s+(\\d{1,4})\\s*(?:ккал|kcal)(?![a-zа-яё])":
         "::[아-야오]*가 술 마셨[아-야오] (*가 술]*가 술]*가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가 술+가+가+가+가+가+가+가+가+가+가+가+가+가+가+가+가",
-    "(?:таблет|капсул|принимать|назначен|рецепт|дозиров)":
-        "(약품 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전 처방전",
+    "(?:съел[а-яё]*|поел[а-яё]*|перекусил[а-яё]*|выпил[а-яё]*|добав[а-яё]*\\s+(?:еду|блюдо)|запиш[а-яё]*\\s+(?:что\\s+)?(?:я\\s+)?(?:съел[а-яё]*|поел[а-яё]*))\\s+(.+)":
+        "[아-야오] 이리오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오오",
     "(?:таблетк[а-яё]*|капсул[а-яё]*|раствор[а-яё]*|сироп[а-яё]*|суспензи[а-яё]*|":
         "(?:tabletk[a-yao]*가구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구",
     "(?:температур[а-яё]*|temperature)\\s*[:=-]?\\s*(3[4-9]|4[0-2])(?:[\\.,](\\d))?":
@@ -32414,8 +33141,23 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "(?: 트레이닝크[아-야오]*가구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구구",
     "(?:углеводы|carbs|у)\\D{0,10}(\\d{1,3})":
         "(탄소?:carbs?:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs:carbs",
+    "(?<![a-zа-яё])(?:в|на)\\s*\\d{1,2}(?:[:\\.]\\d{2})?(?![a-zа-яё0-9])":
+        "<![a-z-yao]) ? ? ?a (?a*a) \\s\\d{1,2} ??:[:\\.]\\d{2} ?????[a-za-yao0-9])",
+    "(?<![a-zа-яё])(?:в|на)\\s*\\d{1,2}(?:[:\\.]\\d{2})?(?:\\s*(?:час[а-яё]*|ч))?(?![a-zа-яё0-9])":
+        "<![a-yao] ? ?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a?a",
+    "(?<![a-zа-яё])(?:каждый день|ежедневно|по будням|по выходным|сегодня|завтра|послезавтра)(?![a-zа-яё])":
+        "<![a-za-yayo]) ((?:매일 이치에 (?매일 이치에)",
+    "(?<![a-zа-яё])(?:не дай уснуть|не заснуть|не уснул)(?![a-zа-яё])":
+        "[아-자-야오] ♪ ♪ 잠들지 못하게 ♪",
+    "(?<![a-zа-яё])(?:с|и)?\\s*(?:проверкой|контролем)\\s+(?:активности|бодрствования)(?![a-zа-яё])":
+        "<![a-z-yao]) ?:a (?a-a-yao)?s?:?:s:a+kontrol)",
+    "(?<![a-zа-яё])(?:сегодня|только что)(?![a-zа-яё])": "<![a-z-yayo])",
+    "(?<![a-zа-яё])через\\s+\\d+\\s*(?:минут[а-яё]*|мин|час[а-яё]*|ч)(?![a-zа-яё])":
+        "<![a-z-a-yao]) 을 통해 (?[a-yao]*이시민이시[a-yao]*이시) (?[a-z-a-yao])",
     "(\\d+(?:[,.]\\d+)?)\\s*(?:ммоль/л|мг/дл|г/л|нг/мл|мед/л|ме/л|%)":
         "(\\d+(?:[,.]\\d+)?) \\s*(?:mol/l 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이 이",
+    "(\\d+(?:[\\.,]\\d+)?)\\s*(мл|ml|миллилитр[а-яё]*|л|l|литр[а-яё]*|стакан[а-яё]*)(?![a-zа-яё]).*?(?:вод[а-яё]*|выпил[а-яё]*|добав[а-яё]*|запиш[а-яё]*|water)":
+        "(?? d+ ?:\\.,]\\d+)?) \\s* (?? ) \\s* (?? ) \\s* (?? ) \\s* (??) \\s* (??) \\s* (??) \\s* (??) \\s* (??) \\s* (??) \\s* (??) \\s* (??) \\s* (??) \\s* (??) \\s* (??) \\s* (??) \\s* (??) \\s* (??) \\s* (??) \\s* (??) \\s* (??) \\s* (??) \\s* (??) \\s* (??) \\s* (??) \\s* (??) \\s* (??) \\s* (??) \\s* (??) \\s* (??) \\s* (??) \\s* (??) \\s* (??) \\s* (??)",
     "(\\d{1,3}(?:[\\.,]\\d+)?)\\s*(?:км|km)":
         "(\\d{1,3}(?:[\\.,]\\d+)?)\\s*(km?:",
     "(\\d{1,4})\\s*(?:г|g)\\b": "(\\d{1,4}\\s*(?:g)",
@@ -32431,6 +33173,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "(ммоль/л|мкмоль/л|мг/дл|мг/л|г/л|г/дл|мкг/л|нг/мл|пг/мл|мед/л|ме/л|ед/л|mmol/l|umol/l|µmol/l|mg/dl|mg/l|g/l|g/dl|µg/l|ug/l|ng/ml|pg/ml|iu/l|u/l|10\\^?[*x×]?\\d+/л|фл|fl|пг|pg|%)":
         "(이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하 '이하",
     "). Дозировку я не изменяю.": "저는 복용량을 변경하지 않습니다.",
+    "); используется приблизительное системное расписание.":
+        "); 대략적인 시스템 스케줄을 사용한다.",
     ")} · день": "일 시",
     ")}. Отложите тренировку; при резком ухудшении или опасных признаках обратитесь за неотложной помощью.":
         "훈련은 지연하고, 급격한 악화 또는 위험 증상이라면 긴급한 도움을 요청하십시오.",
@@ -32458,7 +33202,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     ", цель": ", 목적",
     ". Добавил их на проверку; после подтверждения приложение создаст расписание и напоминания. Дозировки автоматически не меняются.":
         "확인을 위해 추가했습니다. 확인을 한 후에 앱은 일정과 상기서를 만들 것입니다. 복용량은 자동으로 변경되지 않습니다.",
-    ". Изменения применятся после подтверждения.": "변경 사항은 확인된 후 적용됩니다.",
     ". Не используйте распознанные назначения до сверки с оригиналом.":
         "- 원래와 비교하기 전까지 알아낸 용도를 사용하지 마십시오.",
     ". Невозможные скачки координат отфильтрованы.":
@@ -32506,6 +33249,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     ": не удалось разобрать": ": 풀 수 없습니다",
     ": осталось": ": 남아있어요",
     ": пакет короче заявленного": ": 신청된 것보다 짧은 패키지",
+    ": проверка бодрствования": ": 깨어 있는 상태를 확인",
     ": характеристика не найдена": ": 성격을 찾을 수 없습니다",
     "; выбран ближайший расчётный конец цикла сна.":
         "잠의 주기의 가장 가까운 계산 끝을 선택합니다.",
@@ -32520,22 +33264,23 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "[^a-zа-яё0-9]+": "[자-자-야0-9]+",
     "[a-zа-яё]*\\s*[:=-]?\\s*(\\d{1,3}(?:[\\.,]\\d+)?)\\s*(?:г|g)?":
         "[a-zá-yao]*\\s*[:=-]?\\s*(\\d{1,3}??:[\\.,]\\d+)?)\\s*(?:g g)?",
-    "\\b(?:в|на)\\s*\\d{1,2}[:\\.]\\d{2}\\b":
-        "\\b(?:이번번번) \\s*\\d{1,2}[:\\.]\\d{2}\\b",
     "\\b(гемоглобин|ферритин|холестерин|триглицериды|креатинин|мочевина|билирубин|алт|аст|ттг|витамин\\s+[a-zа-яё0-9]+|с-?реактивный\\s+белок)\\s*[:=-]?\\s*([<>]?\\s*\\d+(?:[\\.,]\\d+)?)\\s*":
         "b(hemoglobin 이퍼틴 이레스테린 이 트리글리제리드 이크레이티닌 이모차빈 이빌리루빈 이алт 이아스트 이비타민 +[a-zaa-yayo0-9]+ 이스-?레액티브 s+백) s*[:=-]?s*([<>?s*\\d+(?:[\\.,]\\d+)?)",
-    "\\d+(?:[\\.,]\\d+)?\\s*(?:мг|мкг|мл|ме|ед\\.)":
-        "[중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고]",
     "\\d+(?:[\\.,]\\d+)?\\s*(?:мкг|мг|г|мл|ед\\.?|ме)":
         "[중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고] [중고",
     "\\d+(?:[\\.,]\\d+)?\\s*(?:мкг|мг|г|мл|ед\\.?|ме|iu|mcg|mg|ml)(?![a-zа-яё])":
         "d+(?:[\\]\\d+)?s*?:mk,mg mg mg mg mg mg mg mg mg mg mg mg mg mg mg mg mg mg mg mg mg mg mg mg mg mg mg mg mg mg mg mg mg mg mg mg mg mg mg mg mg mg mg mg mg mg mg mg mg mg mg mg mg mg mg mg mg mg mg mg",
+    "\\d+(?:[\\.,]\\d+)?\\s*(?:мл|л|литр|стакан)":
+        "+(?:[\\]\\d+)?s*(?:mstal\\kan)",
     "\\d+\\s*(?:дн(?:я|ей|ь)?|сут(?:ок|ки)?|недел[а-яё]*|месяц[а-яё]*)(?![а-яё])":
         "+\\s\\s*ddn:이미에이미에이미에이미에이미에이미에이미에이미에이미에이미에이미에이미에이미에이미에이미에이미에이미에이미에이미에이미에이미에이미에이미에이미에이미에이미에이미에이미에이미에이미에이미에이미에이미에이미에이미에이미에이미에이미에이미에이미에이미에이미에이미에이미에이미에이미에이미에이미에이미에이미에이미에이미에이미에이미에이미에미에미에미에미에미에미에미에미에미에미에미에미에미에미에미에미에미에미에미에미",
+    "\\d{1,4}\\s*(?:ккал|kcal)": "- 어 어",
     "^(?:врач\\s+)?(?:мне\\s+)?(?:назначил(?:а|и)?|назначение|рецепт|принимать)\\s*[:\\-]?\\s*":
         "[제곱근] [제곱근] [제곱근] [제곱근] [제곱근] [제곱근] [제곱근] [제곱근] [제곱근] [제곱근] [제곱근] [제곱근] [제곱근] [제곱근] [제곱근] [제곱근] [제곱근] [제곱근] [제곱근] [제곱근] [제곱근] [제곱근] [제곱근] [제곱근] [제곱근] [제곱근] [제곱근] [제곱근] [제곱근] [제곱근] [제곱근] [제곱근] [제곱근] [제곱근] [제곱근] [제곱근]] [제곱근] [제곱근] [제곱근]] [제곱근] ] [제곱근] [제곱근] ] [제곱근] ] [제곱근] ] [제곱근] ] [제곱근] [제곱근] ] [제곱근] [제곱근] ] [",
     "^(?:как|что|почему|зачем|когда|где|можно\\s+ли|расскажи|объясни|проанализируй|how|what|why|when|where|can\\s+i)\\b":
         "[이러한 것] [이러한 것] [이러한 것] [이러한 것] [이러한 것] [이러한 것] [이러한 것] [이러한 것] [이러한 것] [이러한 것] [이러한 것] [이러한 것] [이러한 것] [이러한 것] [이러한 것] [이러한 것] [이러한 것] [이러한 것] [이러한 것] [이러한 것] [이러한 것] [이러한 것] [이러한 것] [이러한 것] [이러한 것] [이러한 것] [이러한 것] [이러한 것] [이러한 것] [이러한 것] [이러한 것] [이러한 것] [이러한 것] [이러한 것] [이러한 것] [이러한 것] [이러한 것]",
+    "^(?:что\\s+)?(?:я\\s+)?(?:съел[а-яё]*|поел[а-яё]*|перекусил[а-яё]*)\\s+":
+        "[아-야오] *이리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리아리",
     "^[^a-zа-яё]+": "^[^a-z-a-yao]+",
     "^\\*\\*(?:Answer|Ответ):\\*\\*\\s*":
         "# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #",
@@ -32605,7 +33350,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "UUID характеристики записи": "기록의 UUID 특성",
     "Vault был восстановлен из безопасного начального состояния.":
         "Vault는 안전한 초기 상태로 복원되었습니다.",
-    "Vision-анализ недоступен:": "비전 분석이 불가능:",
     "°C · высота": "°C · 높이가",
     "· вес": "무게",
     "· визуальная оценка": "· 시각적 평가",
@@ -32633,9 +33377,13 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "» перед выполнением.": "실행하기 전에",
     "», интенсивность": ", 강도",
     "». Извлечённый текст:": ". 이 문서는 다음과 같다.",
+    "». Калории и Б/Ж/У оставлены пустыми; добавьте порцию или уточните данные, когда они известны.":
+        ". 칼로리와 B/J/U는 빈 상태로 남겨두고 있습니다. 분량을 추가하거나 데이터가 알려진 경우를 정해 보세요.",
     "». Перед продолжением рекомендуется сделать копию текущих данных.":
         "? 계속하기 전에, 그것은 현재 자료의 사본을 만들기 위하여 추천됩니다.",
     "». Текст для анализа не найден.": ". 분석 문서는 발견되지 않았습니다.",
+    "». Уведомления о приёме будут планироваться по курсу препарата.":
+        ". 복용에 대한 통보는 약물의 과정에 따라 계획됩니다.",
     "август": "8 월",
     "Автозапись GPS/GLONASS:": "GPS / GLONASS:",
     "Автозапуск": "자동 시작",
@@ -32659,6 +33407,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "активное движение": "활발한 움직임",
     "Активность": "- 연혁",
     "Активность и вода": "활동과 물",
+    "Активность после подъёма не подтверждена. Откройте приложение и отключите сигнал.":
+        "승강 후 활동은 확인되지 않았습니다. 앱을 열고 신호를 끄세요.",
     "Активность хорошая: шаги уже закрывают базовую цель дня.":
         "활동은 좋은데, 그 단계들은 이미 하루의 기본 목표를 닫아버립니다.",
     "активные калории": "열량",
@@ -32717,6 +33467,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "без документа": "종이없는",
     "Без жёстких ограничений: можно добавить спокойную прогулку и оценивать недельный баланс.":
         "엄밀한 제한 없이: 당신은 조용한 도보를 추가하고 주간 균형을 평가할 수 있습니다.",
+    "без контроля бодрствования": "깨어있는 상태에서 통제를 받지 않고",
     "без лекарства": "마약없는",
     "Без ограничений": "제한 없음.",
     "без ограничений": "제한 없음",
@@ -32793,6 +33544,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "в пределах референса": "참고 사항",
     "В профиле нет координат города.": "프로파일에는 도시 좌표가 없습니다.",
     "В пути, мин": "길에서 내.",
+    "в расписание «": "일정에",
     "В списке есть антикоагулянт: взаимодействие нужно проверить у врача или фармацевта.":
         "이 목록에는 항혈관신경제가 있습니다. 의사나 약국에서 검증해야 합니다.",
     "В тренировках отмечалась боль: будущую нагрузку стоит снизить.":
@@ -32825,9 +33577,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "велотренажёр": "회사 소개",
     "вероятно в руках": "아마 손에 있을 것 같네요",
     "вероятно используется": "아마도 사용되고 있는",
-    "Версия 1.8.1+10 · создатель: Редин Максим Юрьевич · info@thebestmks.ru":
-        "버전 1.8.1+10 · 창작자: 레딘 맥시민 유리비치 · info@thebestmks.ru",
-    "Версия: 1.8.1+10": "버전: 1.8.1+10",
+    "Версия 1.8.2+11 · создатель: Редин Максим Юрьевич · info@thebestmks.ru":
+        "버전 1.8.2+11 · 창작자: 레딘 맥시민 유리비치 · info@thebestmks.ru",
+    "Версия: 1.8.2+11": "버전: 1.8.2+11",
     "Вес": "무게.",
     "вес": "무게",
     "Вес порции и пищевая ценность являются ориентировочной оценкой класса блюда. Проверьте их перед подтверждением.":
@@ -32866,6 +33618,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Внесено голосом или командой помощника; условия измерения не указаны.":
         "음성이나 보조의 명령에 의해 입력된 것; 측정 조건은 표시되지 않았습니다.",
     "Внесено командой помощника.": "부사팀이 가져온 것입니다.",
+    "Внесено помощником без количества и нутриентов; значения не выдумывались.":
+        "보조자가 수와 영양분을 가지고 있지 않은 채로 가져왔고, 그 값은 만들어지지 않았습니다.",
     "внесённая калорийность заметно выше основного обмена, но недельный баланс и активность важнее одного дня.":
         "칼로리가 섭취하는 것은 주요 교류보다 훨씬 높지만, 주간 균형과 활동은 하루보다 더 중요합니다.",
     "внесённая калорийность низкая относительно основного обмена; возможно, дневник заполнен не полностью.":
@@ -32932,6 +33686,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "вт": "볼트",
     "Вторник": "화요일.",
     "вторник": "화요일",
+    "Вчера ·": "어제 ·",
     "вчера уже была тяжёлая тренировка": "어제 힘든 일이었습니다.",
     "Вы": "이름 *",
     "Выберите вариант": "옵션 선택",
@@ -33114,6 +33869,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Для чего применяется": "사용 목적",
     "Дневник питания, БЖУ, рецепты и ручное подтверждение фото":
         "영양 일기, BJU, 조리법 및 수동 확인 사진",
+    "Дневник по датам": "날짜 일기",
     "Дневник самочувствия без диагнозов и назначений": "진단 및 약속없이 건강의 일기",
     "Дневник сна": "수면 일기",
     "Дневники и ручной ввод продолжают работать. Включить локальный анализ можно в настройках.":
@@ -33129,6 +33885,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "До ориентира": "랜드마크",
     "добав": "추가",
     "Добавил": "추가",
+    "Добавил время": "시간 더",
     "Добавить": "기타",
     "Добавить в дневник": "일기에 추가",
     "Добавить врача или клинику": "의사 또는 클리닉 추가",
@@ -33275,6 +34032,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Завершить": "지원하다",
     "Завершить и сохранить": "완료 및 유지",
     "зависит от пола и возраста": "성별 및 연령에 따라",
+    "завтра": "내일",
     "завтрак": "아침 식사",
     "Загружаем локальный сейф здоровья": "지역 보건 안전 다운로드",
     "Загруженный GGUF повреждён.": "로드된 GGUF는 손상되었습니다.",
@@ -33344,6 +34102,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Запомнить текущую точку как работу": "현재 포인트를 작업으로 기억",
     "Запрашиваем разрешения и ищем устройства...": "우리는 권한을 요청하고 장치를 찾습니다.",
     "Запрещено системой; откройте системные настройки": "시스템에서 금지; 시스템 설정을 열",
+    "Запрос обрабатывается в фоне": "검색은 배경으로 처리됩니다",
     "Запрос пользователя:": "사용자 요청:",
     "Запросить разрешение повторно": "허가증을 다시 요청",
     "Запросить разрешения и синхронизировать": "요청 권한 및 동기화",
@@ -33381,9 +34140,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "из-за холода выбран домашний вариант с более длинной разминкой":
         "추운 날씨 때문에 더 긴 구부러기가 있는 가정용 버전을 선택했습니다",
     "избегать задержки дыхания": "공지사항",
-    "Извлечённый текст:": "이 문서는",
     "Измените запрос или добавьте тег в карточку документа.":
         "요청을 변경하거나 문서 카드에 태그를 추가합니다.",
+    "Изменить": "변경",
     "Изменить симптом": "symptom 변경",
     "Изменить сон": "수면을 변경하십시오.",
     "измерения не найдены": "측정값은 발견되지 않았습니다",
@@ -33507,6 +34266,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Ккал": "언어: 영어",
     "ккал": "뚱 베어",
     "ккал · Б/Ж/У": "kкал · B/J/U",
+    "ккал · расход": "kcal · 지출",
+    "ккал · шаги": "kcal · 단계",
     "Ккал еды": "Calorie 음식",
     "ккал за сутки": "열량",
     "ккал, активность": "kcal, 활동",
@@ -33560,6 +34321,10 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Контекст дома и работы": "집과 직장의 맥락",
     "Контекст телефона": "전화의 맥락",
     "Контекст телефона:": "전화 문맥:",
+    "контролем активности": "활동 통제",
+    "контроль активности": "활동 통제",
+    "Контроль бодрствования": "깨어 있는 상태를 통제하는 것",
+    "контроль бодрствования": "깨어있는 것을 통제",
     "контроль лекарств": "약물 치료",
     "Координаты": "협력업체",
     "Координаты используются только на устройстве для определения контекста.":
@@ -33586,7 +34351,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Курс:": "코스:",
     "Күнтізбе": "뚱 베어",
     "л": "₢ 킹",
-    "л · калории": "k 칼로리",
+    "л · питание": "l · 식용",
+    "л воды.": "물로",
     "л, шаги": "L의 단계",
     "л.": "이리 오리",
     "л. Пейте небольшими порциями, если врач не ограничил жидкость.":
@@ -33675,6 +34441,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "мигрень": "뚱 베어",
     "Микрофон и голосовой ввод": "마이크와 음성 입력",
     "мили": "여행 정보",
+    "миллилитр": "밀리리터",
     "мин": "이름 *",
     "мин ·": "이름 *",
     "мин · перенос доступен": "광산 이동 가능",
@@ -33731,9 +34498,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "고기 | 생선 | 밀크 | 밀크 | 치즈 | 간장 | 간장 | 간장 | 계란 | 밀크 | 간장",
     "На весь экран": "전체 화면으로",
     "на ночь": "밤에도",
-    "На проверку добавлено записей:": "확인에 다음 항목이 추가되었습니다:",
     "на работе": "직장에서",
     "На ручную проверку добавлено показателей:": "수동 검사에 다음과 같은 지표가 추가되었습니다 .",
+    "на сегодня": "오늘에 대한",
     "на сегодня запланировано:": "오늘에 예정되어 있습니다.",
     "набор силы": "힘 힘",
     "нагруз": "로드 중 ...",
@@ -33826,8 +34593,10 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "нг/мл": "ng/ml의",
     "не выбрано": "선택 없음",
     "не выбраны": "선택 없음",
+    "не дай уснуть": "잠들지 마세요",
     "не задана": "지정되지 않은",
     "не задано": "입력되지 않은",
+    "не заснуть": "잠들지 않아",
     "Не извлечено:": "복구되지 않음:",
     "не компенсируйте еду голоданием; выберите спокойную прогулку и вернитесь к обычному плану.":
         "음식을 굶어먹는 것에 대가하지 말고 조용한 산책을 선택하고 일상으로 돌아가세요.",
@@ -33876,6 +34645,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "не указано в контексте. В конце укажи уверенность: высокая, средняя или низкая.":
         "맥락에서 표시되지 않은 경우, 그 다음에는 높은, 중간, 낮은 확신을 표시합니다.",
     "Не указаны": "표시되지 않았습니다",
+    "не уснул": "잠들지 않았어",
     "Не установлена; доступен быстрый режим и установка в разделе «Помощник».":
         "설치되지 않았습니다.  보조에서 빠른 모드와 설치가 가능합니다.",
     "Не хватает данных:": "데이터 부족:",
@@ -33961,7 +34731,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Обновить контекст": "문맥을 업데이트",
     "Обновить результаты поиска": "검색 결과",
     "Обновлено устройство:": "업데이트된 장치:",
-    "Обрабатываю локально...": "로컬로 처리하고 있어요",
     "обсудите с врачом:": "의사와 함께 다음을 논의하세요:",
     "обсудить": "이름 *",
     "Обсудить план с помощником": "계획에 대해 보조자와 논의",
@@ -33984,6 +34753,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Ограничения, реабилитация, врач, документы": "제한, 재활, 의사, 문서",
     "Ограничения:": "제한:",
     "ограничить бег": "지원하다",
+    "один раз": "한 번",
     "один сигнал": "하나의 신호",
     "одыш": "관내 시설",
     "одышка": "관내 시설",
@@ -34069,7 +34839,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Отмечено сегодня": "오늘 축하",
     "отмечено сегодня": "이름 *",
     "Отправить": "이름 *",
-    "Отправлено изображение:": "이미지가 전송되었습니다",
     "Отпуск": "뚱 베어",
     "отпуск": "뚱 베어",
     "Отпуск не запланирован": "예약 취소",
@@ -34130,6 +34899,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "перенесённая болезнь": "뚱 베어",
     "переохлаждение": "카테고리",
     "Пересадок": "관련 기사",
+    "Период контроля, мин": "통제 기간, 미네",
     "Периодически проверять локальные напоминания и расписание без отправки данных в сеть":
         "네트워크에 데이터를 보내지 않고 로컬 상기 및 일정을 주기적으로 확인합니다",
     "Персональная проверка": "개인 검증",
@@ -34175,9 +34945,11 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Пн": "뚱 베어",
     "пн": "이름 *",
     "пн, вт, ср, чт, пт": "신, 신, 신, 신, 신, 신",
+    "по будням": "주간",
     "по внесённым данным допустима обычная плановая нагрузка с контролем самочувствия.":
         "입력된 자료에 따르면, 건강 관리와 함께 일반적인 계획적인 부하가 허용됩니다.",
     "По внесённым приёмам пищи:": "음식의 섭취량에 따라:",
+    "по выходным": "주말에",
     "по геолокации": "사이트 맵",
     "по дням недели": "주 메뉴",
     "По какое число": "어떤 번호?",
@@ -34196,12 +34968,18 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Побочные эффекты и реакции": "부작용 및 반응",
     "Побочные эффекты:": "부작용:",
     "Повседневная активность": "일상적인 활동",
+    "Повтор": "반복",
     "повторений": "반복",
     "Повторите PIN": "PIN을 반복합니다.",
     "Повторно запрашивать PIN или биометрию для чувствительных документов":
         "민감한 문서를 위한 Re-request PIN 또는 biometrics",
+    "Повторять сигнал при отсутствии движения после подъёма.":
+        "승강 후 움직이지 않는 시그널을 반복한다.",
     "Повторяющиеся симптомы:": "재발견:",
     "Повышает масштаб интерфейса": "인터페이스의 스케일 증가",
+    "Погода временно недоступна": "날씨가 일시적으로 무력",
+    "Погода временно недоступна. Климатический профиль продолжает работать локально.":
+        "날씨는 일시적으로 무력화되고 기후 프로파일은 계속 작동합니다.",
     "Погода и климат": "날씨와 기후",
     "Погода недоступна": "날씨 접근 가능",
     "Погода подходит для обычной нагрузки с учётом самочувствия.":
@@ -34319,6 +35097,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "последние симптомы:": "마지막 증상:",
     "последняя запись сна:": "마지막 잠 기록:",
     "Последняя запись:": "마지막 기록:",
+    "послезавтра": "내일은",
     "постав": "설정",
     "Постепенное пробуждение": "연락처",
     "потер": "▸ 소녀",
@@ -34330,6 +35109,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Предупреждение": "제품정보",
     "Предупреждения": "경고",
     "Препарат": "마약",
+    "препарат": "약",
     "препаратов, принято сегодня": "오늘 복용한 약",
     "Препараты": "약국",
     "Препараты не распознаны. Проверьте качество снимка или добавьте лекарство вручную.":
@@ -34344,7 +35124,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Приготовление": "(주)",
     "прием": "환영",
     "Прикреплённый файл не найден": "연결된 파일은 찾을 수 없습니다",
-    "Приложен файл:": "파일 부착:",
     "приложение открыто": "응용 프로그램이 열립니다",
     "Приложение работает без браслета: вес, сон, шаги, еда и тренировки можно вводить вручную.":
         "앱은 팔찌없이 작동합니다 : 무게, 수면, 단계, 음식 및 운동은 수동으로 입력 할 수 있습니다.",
@@ -34376,10 +35155,12 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Проверить симптомы": "증상 확인",
     "Проверить снова": "다시 확인해봐",
     "Проверить уведомление": "알림을 확인",
+    "проверка активности": "활동 검진",
     "Проверка назначения": "목적지 확인",
     "Проверка недоступна:": "확인이 불가능:",
     "проверка разрешений": "회사 소개",
     "Проверка распознавания": "인증 확인",
+    "проверкой активности": "활동 확인",
     "Проверь лекарства и остатки": "의약품 및 잔류물 검사",
     "Проверьте аллерген в дневнике": "알레르기 항원을 일기에서 확인하세요",
     "Проверьте белок и полноту дневника": "단백질과 일기 전체성을 확인하세요",
@@ -34401,6 +35182,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "간략한 식량을 확인하고 전문가가 없으면 급격히 식량을 줄이지 마십시오.",
     "Проверяем доступность...": "자주 묻는 질문",
     "Проверяем локальную модель...": "로컬 모델을 확인하고...",
+    "проверяй активность": "활동 여부를 확인",
+    "проверяй бодрствование": "깨어 있는 상태를 확인해 보세요",
+    "Проверять через, мин": "확인, 미니",
     "прогулки": "오시는 길",
     "Продолжить": "계속.",
     "Продолжить тренировку": "교육 계속",
@@ -34494,6 +35278,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Расстояние, км": "거리, km",
     "раствор": "용액",
     "растяж": "뻗어",
+    "расход": "비용",
     "Расчёт по данным профиля и сегодняшним отметкам.": "프로필 데이터와 오늘 표에 따라 계산.",
     "расчётная готовность": "계산 준비",
     "расчётный основной обмен:": "계산 기본 교환:",
@@ -34627,9 +35412,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Сегодня важнее восстановление. Не тренируйтесь через боль, температуру или резкое ухудшение самочувствия.":
         "더 중요한 것은 회복이 아니라 통증이나 열이나 급격한 건강 악화로 운동하지 않는 것입니다.",
     "Сегодня дежурство": "오늘 경무",
+    "Сегодня записано": "오늘 녹음",
     "сегодня отмечен тревожный симптом или высокая интенсивность жалобы.":
         "오늘, 불안 증상이나 고도의 불평이 나타났습니다.",
-    "сегодня.": "오늘 밤",
     "Сегодня: сон": "오늘: 꿈",
     "Сейчас активен режим поездки: при ночной дороге, смене часового пояса или недосыпе нагрузка автоматически считается восстановительной.":
         "이제 여행 모드는 활성적입니다 : 야간 운전, 시간대를 변경하거나 수면 부족으로로드가 자동으로 회복되기 때문입니다.",
@@ -34637,11 +35422,14 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "сентябрь": "9 월",
     "Сервер модели вернул код": "모델 서버에서 코드를 반환",
     "Сервис": "제품정보",
+    "Сервис погоды временно вернул ошибку. Повторная попытка будет выполнена автоматически.":
+        "기상청은 일시적으로 오류를 복원했습니다. 다시 시도하면 자동으로 실행됩니다.",
+    "Сервис погоды не ответил вовремя. Климатический профиль продолжает работать локально.":
+        "기상정보원이 정해진 시간에 응답하지 않고, 기후 프로파일도 계속 작동하고 있습니다.",
     "Сетевое видео отключено офлайн-режимом": "온라인 비디오가 오프라인으로 차단되었습니다",
     "Сетевое изображение скрыто": "네트워크 이미지가 숨겨져 있습니다",
     "Сетевые данные отключены режимом «Полностью офлайн». Климатический профиль продолжает работать.":
         "네트워크 데이터는 “Fullly 오프라인” 모드로 비활성화됩니다. 기후 프로파일은 계속 작동합니다.",
-    "Сжимаю и анализирую локально...": "- 내 위치에서 압축하고 분석하고...",
     "сил": "힘 힘",
     "силовая": "힘 힘",
     "Силовая тренировка по инвентарю": "기업의 강점 교육",
@@ -34800,6 +35588,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Срочно:": "긴급한:",
     "срочных пунктов; начните с них.": "긴급한 요건을 시작하세요.",
     "стабильно": "안정된",
+    "стакан": "잔",
     "Стандартные GATT-сервисы читаются автоматически. Для закрытых или редких устройств добавьте UUID вручную.":
         "표준 GATT 서비스는 자동적으로 읽습니다. 닫히거나 희소한 장치를 위해, 수동으로 UUID를 추가하십시오.",
     "стандартный": "표준",
@@ -34894,6 +35683,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Точность": "제품정보",
     "точность GPS": "GPS 정확성",
     "Точные будильники": "정확한 경각기",
+    "Точные будильники недоступны (": "정확한 경각기들은 사용할 수 없습니다.",
     "тошнота": "뚱 베어",
     "травма": "이름 *",
     "Травмы в течение жизни": "평생의 상처",
@@ -35019,6 +35809,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Файл в защищённом хранилище:": "보호된 저장소 파일:",
     "Файл в медицинском сейфе не найден":
         "의료용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용용",
+    "Файл вложения не найден": "입력 파일은 찾을 수 없습니다",
     "Файл не содержит резервную копию приложения.":
         "파일은 응용 프로그램의 백업 복사본을 포함하지 않습니다.",
     "Файл/импорт": "파일/import",
@@ -35035,6 +35826,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "фитнес-тренажёр FTMS": "FTMS 체육 운동기",
     "Фокус": "주요 특징",
     "Фокусы тренировок": "훈련 트릭",
+    "Фоновая обработка": "배경 처리",
     "Фоновая работа": "배경 작업",
     "Фоновый анализ": "배경 분석",
     "Форма": "이름 *",
@@ -35167,17 +35959,18 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "(*?(?:\\s?:referes*lainorma) [:=-]?\\s*([<>]?\\s*\\d+(?:[\\.,]\\d+)?(?:\\s*[-]\\s*\\d+(?:[\\.,]\\d+)?)?",
     "(?:\\s+(?:референс|норма|reference)?\\s*([<>]?\\s*\\d+(?:[,.]\\d+)?(?:\\s*[-–]\\s*\\d+(?:[,.]\\d+)?)?))?":
         "(?:\\s+(?:reference of the norm of reference)?\\s([<>?s*\\d+(?:[,.]\\d+)?(?:\\s*[-]\\s*\\d+(?:[,.]\\d+)?)?",
+    "(?:^|\\s)(?:в|на)\\s+([01]?\\d|2[0-3])(?:\\s*(?:час[а-яё]*|ч))?(?=\\s|":
+        "(?: نـارك: نـارك: نـارك: نـارك: نـارك: نـارك: نـارك: نـارك: نـارك: نـارك: نـارك: نـارك: نـارك: نـارك: نـارك: نـارك: نـارك: نـارك: نـارك: نـارك: نـارك: نـارك: نـارك: نـارك: نـارك: نـارك: نـارك: نـارك: نـارك: نـارك: نـارك: نـارك: نـارك: نـارك: نـارك: نـارك: نـارك: نـارك: نـارك: نـارك: نـارك: نـارك: نـارك: نـارك: نـارك: نـارك: نـارك: نـارك: نـارك: نـارك: نـار",
+    "(?:^|\\s)через\\s+(\\d{1,3})\\s*(минут[а-яё]*|мин|час[а-яё]*|ч)(?=\\s|":
+        "(?: إشارة إلى أنّه لا يزال يُمكن أن يُمكن أن يُمكنك أن تُعَدّي (إشارة إلى أنّه لا يُمكنك أن تُعَدّي)",
     "(?:анализ|показатель|результат(?:\\s+анализа)?)\\s+([a-zа-яё][a-zа-яё0-9 ()+._-]{1,60}?)\\s*[:=-]?\\s*([<>]?\\s*\\d+(?:[\\.,]\\d+)?)\\s*":
         "(تحليلات النتائج: النتيجة: ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟ ؟",
     "(?:белок|protein|протеин|б)\\D{0,10}(\\d{1,3})": "البروتين: (بروتين)",
-    "(?:будильник|разбуди|подъ[её]м).*?(?:в|на)?\\s*((?:[01]?\\d|2[0-3])[:\\.]\\d{2})":
-        "؟::استيقظ الطاقة النفسية؟",
+    "(?:будильник|разбуди|подъ[её]м)": "؟:فيقة أنواع التفجير (فيقة الإفجاع)",
     "(?:вес|масса|weight)\\s*(?:сегодня|now)?\\s*[:=-]?\\s*(\\d{2,3}(?:[\\.,]\\d)?)\\s*(?:кг|kg)?\\b":
         "هل هذا يعني أنّه ليس من المفترض أن يكون من المفترض أن يكون من المفترض أن يكون من المفترض أن يكون من المفترض أن يكون من المفترض أن يكون من المفترض أن يكون من المفترض أن يكون من المفترض أن يكون من المفترض أن يكون من المفترض أن يكون من المفترض أن يكون من المفترض أن يكون من المفترض أن يكون من المفترض أن يكون من المفترض أن يكون من المفترض أن يكون من المفترض أن يكون من المفترض أن يكون من المفترض أن يكون من المفترض أن يكون من المفترض أن يكون من المفترض أن يكون من المفترض أن يكون من المفترض أن يكون من المفترض أن يكون من المفترض أن يكون من المفترض أن يكون من المفترض أن يكون من المفترض أن يكون من المفترض أن يكون من المفترض أن يكون من المفترض أن يكون من المفترض أن يكون من المفترض أن يكون من المفترض أن يكون من المفترض أن يكون من المفترض أن يكون من المفترض أن يكون من المفترض أن يكون من المفترض أن يكون من المفترض أن يكون من المفترض أن يكون من المفترض أن يكون من المفترض أن يكون من المفترض أن يكون من المفترض أن يكون من المفترض أن يكون من المفترض أن يكون من المفترض",
-    "(?:выпил[а-яё]*|добав[а-яё]*|запиш[а-яё]*|water).*?(\\d+(?:[\\.,]\\d+)?)\\s*(мл|ml|л|l)(?![a-zа-яё])":
-        "::شربت[أ-يائو]*إضافة[أ-يائو] (إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة",
-    "(?:гемоглоб|глюкоз|холестерин|ферритин|референс|ммоль/л|мг/дл|анализ крови)":
-        "(الدم: (الدم: (الدم: (الدم: (الدم: (الدم: (الدم: (الدم: (الدم: (الدم: (الدم: (الدم: (الدم: (الدم: (الدم: (الدم: (الدم: (الدم: (الدم: (الدم: (الدم: (الدم: (الدم: (الدم: (الدم: (الدم: (الدم: (الدم:)))))",
+    "(?:выпил[а-яё]*|добав[а-яё]*|запиш[а-яё]*|укаж[а-яё]*|вод[а-яё]*|water).*?(\\d+(?:[\\.,]\\d+)?)\\s*(мл|ml|миллилитр[а-яё]*|л|l|литр[а-яё]*|стакан[а-яё]*)(?![a-zа-яё])":
+        "::شربت[أ-يا] مدام*إضافة[أ-يا] (أ-يا*إضافة]*إضافة[أ-يا]إضافة[أ-يا]إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*إضافة*",
     "(?:глюкоз[а-яё]*|сахар[а-яё]*\\s+кров[а-яё]*|glucose)\\s*[:=-]?\\s*(\\d{1,3}(?:[\\.,]\\d+)?)":
         "(?::glucose[a-yao]* من الدم[a-yao]*\\s+دم[a-yao]* من الدم glucose)\\s*[:=-]?\\s*(\\d{1,3}(?:[\\.,]\\d+)?)",
     "(?:давлен[а-яё]*|pressure)\\s*[:=-]?\\s*(\\d{2,3})\\s*[/\\\\]\\s*(\\d{2,3})(?:\\s+(?:пульс|pulse)\\s*(\\d{2,3}))?":
@@ -35197,15 +35990,12 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "(?:كالوريا من السعرات الحرارية)",
     "(?:качеств[а-яё]*|оценк[а-яё]*)\\s*(?:сна)?\\s*[:=-]?\\s*([1-5])":
         "(?:الجودات[أ-يوه]*التأثير[أ-يوه]*)\\s*(?:ن؟\\s*[:=-]?\\s*([1-5])",
-    "(?:ккал|калори|белк|жир|углевод|состав|пищевая ценность)":
-        "::كمالة الـققيم (قيمة الـقيمة الـقيمة الـقيمة الـقيمة الـقيمة الـقيمة الـقيمة الـقيمة الـقيمة الـقيمة الـقيمة الـقيمة الـقيمة الـقيمة الـقيمة الـقيمة الـقيمة الـقيمة الـقيمة الـقيمة الـقيمة الـقيمة الـقيمة الـقيمة الـقيمة الـقيمة الـقيمة الـقيمة الـقيمة الـقيمة الـقيمة الـقيمة الـقيمة الـقيمة الـقيمة الـقيمة الـقيمة الـقيمة الـقيمة الـقيمة الـقيمة",
     "(?:клетчатка|пищевые волокна|fibre|fiber)\\D{0,12}(\\d{1,3}(?:[,.]\\d+)?)":
         "(أو: خلية من ألياف التغذية)",
     "(?:масса|вес|порция|net weight|serving)\\D{0,12}(\\d{1,4})\\s*(?:г|g)":
         "::مجموعة من الوزن (نسبة من الوزن من الوزن من الوزن)",
     "(?:на|per)\\s*100\\s*(?:г|g)": "(لـ (ص) \\*100\\s*:",
-    "(?:напомни|напоминание|remind).*?(\\d{1,2})[:\\.](\\d{2})":
-        "(تذكرين ما حدث؟",
+    "(?:напомни|напоминание|remind)": "(تذكرين)",
     "(?:по\\s+[^.;,]{0,25}\\s+)?\\d+\\s*раз(?:а|у|)\\s+(?:в|за)\\s+(?:день|сутки)":
         "هل أنت بخير؟ هل أنت بخير؟",
     "(?:поставь|создай|заведи|добавь|разбуди(?:\\s+меня)?|будильник|подъ[её]м)":
@@ -35214,6 +36004,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "::رِفَرَنس (رِفَرَنس) \\D{0,12}([\\d،.]+ ?[-] ?[\\d،.]+)",
     "(?:сахара|сахар|sugars?|из них сахара)\\D{0,12}(\\d{1,3}(?:[,.]\\d+)?)":
         "السكر: السكر من السكر؟",
+    "(?:сколько|покажи|какой|какое|текущ[а-яё]*|итого)":
+        "(كيف يمكن أن يكون ذلك؟",
     "(?:соль|salt)\\D{0,10}(\\d{1,3}(?:[,.]\\d+)?)":
         "(?:ملح نيم) \\D{0,10}(\\d{1,3}(?:[,.]\\d+)?)",
     "(?:спал[а-яё]*|сон|sleep).*?(\\d{1,2}(?:[\\.,]\\d+)?)\\s*(?:ч(?:ас(?:а|ов)?)?|hours?|h)(?![a-zа-яё])":
@@ -35222,8 +36014,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "(?:نوم[أ-يائيو]*) يُمكن أن يُنزل).*؟",
     "(?:съел[а-яё]*|выпил[а-яё]*|запиш[а-яё]*\\s+(?:еду|при[её]м пищи)|добав[а-яё]*\\s+(?:еду|блюдо))\\s+(.+?)\\s+(\\d{1,4})\\s*(?:ккал|kcal)(?![a-zа-яё])":
         ":أكل[أ-ياى]*إشرب[أ-ياى]*إشرب[أ-ياى]*إشرب[أ-ياى]*إشرب[أ-ياى]*إشرب[أ-ياى]*إشرب[أ-ياى]*إشرب[أ-ياى]*إشرب[أ-ياى]*إشرب[أ-ياى]*إشرب[أ-ياى]*إشرب[أ-ياى]*إشرب[أ-ياى]*إشرب[أ-ياى]*إشرب[أ-ياى]*إشرب[أ-ياى]*إشرب[أ-ياى]*إشرب[أ-ياى]*إشرب[أ-ياى]*إشرب[أ-ياى]*إشرب[أ-ياى]*إشرب[أ-ياى]*إشرب[أ-ياى]*إشرب[أ-ياى]*إشرب[أ-ياى]*",
-    "(?:таблет|капсул|принимать|назначен|рецепт|дозиров)":
-        "(جوائزة تقييم الدواء:",
+    "(?:съел[а-яё]*|поел[а-яё]*|перекусил[а-яё]*|выпил[а-яё]*|добав[а-яё]*\\s+(?:еду|блюдо)|запиш[а-яё]*\\s+(?:что\\s+)?(?:я\\s+)?(?:съел[а-яё]*|поел[а-яё]*))\\s+(.+)":
+        "*أكل* *أكل* *أكل* *أكل* *أكل* *أكل* *أكل* *أكل* *أكل* *أكل* *أكل* *أكل* *أكل* *أكل* *أكل* *أكل* *أكل* *أكل* *أكل* *أكل* *أكل* *أكل* *أكل* *أكل* *أكل* *أكل* *أكل* *أكل* *أكل* *أكل* *أكل* *أكل* *أكل* *أكل* *أكل* *أكل****************************************************************************************************************",
     "(?:таблетк[а-яё]*|капсул[а-яё]*|раствор[а-яё]*|сироп[а-яё]*|суспензи[а-яё]*|":
         "(::تابلتك[أ-يوه]*ك إصطحاب[أ-يوه]*إصطحاب[أ-يوه]*إصطحاب[أ-يوه]*إصطحاب[أ-يوه]*إصطحاب[أ-يوه]*إصطحاب[أ-يوه]*إصطحاب[أ-يوه]",
     "(?:температур[а-яё]*|temperature)\\s*[:=-]?\\s*(3[4-9]|4[0-2])(?:[\\.,](\\d))?":
@@ -35231,8 +36023,24 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "(?:тренировк[а-яё]*|пробежал[а-яё]*|бегал[а-яё]*|занимал[а-яё]*).*?(\\d{1,3})\\s*(?:мин|минут)":
         "(?:تدريبك[أ-يوه]*إدراك الركض[أ-يوه]*إدراك الركض[أ-يوه]*إدراك[أ-يوه]*).*?",
     "(?:углеводы|carbs|у)\\D{0,10}(\\d{1,3})": "(الكهربائيود?:carbs?:",
+    "(?<![a-zа-яё])(?:в|на)\\s*\\d{1,2}(?:[:\\.]\\d{2})?(?![a-zа-яё0-9])":
+        "<![a-z-yayo]) ?: في (?a*a) \\s\\d{1,2}(?:[:\\.]\\d{2} ؟(?![a-z-yayo0-9])",
+    "(?<![a-zа-яё])(?:в|на)\\s*\\d{1,2}(?:[:\\.]\\d{2})?(?:\\s*(?:час[а-яё]*|ч))?(?![a-zа-яё0-9])":
+        "(<![a-a-yao]) :a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a:a",
+    "(?<![a-zа-яё])(?:каждый день|ежедневно|по будням|по выходным|сегодня|завтра|послезавтра)(?![a-zа-яё])":
+        "<![a-za-yayo]) ((?:كل يوم من يوم الإثنين (?كل يوم من يوم الإثنين)",
+    "(?<![a-zа-яё])(?:не дай уснуть|не заснуть|не уснул)(?![a-zа-яё])":
+        "لا تدعني أنام",
+    "(?<![a-zа-яё])(?:с|и)?\\s*(?:проверкой|контролем)\\s+(?:активности|бодрствования)(?![a-zа-яё])":
+        "<![a-z-yao]) :a (?a-a-a-yao)?s?::بالتحقق من الإشرافات) :a-a-a-yao)",
+    "(?<![a-zа-яё])(?:сегодня|только что)(?![a-zа-яё])":
+        "((![a-z-yayo]) ((:هنا اليوم فقط ما) ((?![a-z-yayo])",
+    "(?<![a-zа-яё])через\\s+\\d+\\s*(?:минут[а-яё]*|мин|час[а-яё]*|ч)(?![a-zа-яё])":
+        "<![a-z-a-yayo]) من خلال \\s+\\d+\\s*(?:منته (?[a-yayo]*إصطدامين إصطدامات[a-yayo]*إصطدامات) ((([a-z-a-yayo])",
     "(\\d+(?:[,.]\\d+)?)\\s*(?:ммоль/л|мг/дл|г/л|нг/мл|мед/л|ме/л|%)":
         "(\\d+(?:[,.]\\d+)?) \\s*(?:مول/لإصدار/لإصدار/لإصدار/لإصدار/لإصدار/لإصدار/لإصدار/لإصدار)",
+    "(\\d+(?:[\\.,]\\d+)?)\\s*(мл|ml|миллилитр[а-яё]*|л|l|литр[а-яё]*|стакан[а-яё]*)(?![a-zа-яё]).*?(?:вод[а-яё]*|выпил[а-яё]*|добав[а-яё]*|запиш[а-яё]*|water)":
+        "* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *",
     "(\\d{1,3}(?:[\\.,]\\d+)?)\\s*(?:км|km)":
         "(\\d{1,3}(?:[\\.,]\\d+)?)\\s*(?:km",
     "(\\d{1,4})\\s*(?:г|g)\\b":
@@ -35249,6 +36057,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "(ммоль/л|мкмоль/л|мг/дл|мг/л|г/л|г/дл|мкг/л|нг/мл|пг/мл|мед/л|ме/л|ед/л|mmol/l|umol/l|µmol/l|mg/dl|mg/l|g/l|g/dl|µg/l|ug/l|ng/ml|pg/ml|iu/l|u/l|10\\^?[*x×]?\\d+/л|фл|fl|пг|pg|%)":
         "(ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل/ميل",
     "). Дозировку я не изменяю.": "لا أغير الجرعة",
+    "); используется приблизительное системное расписание.":
+        "يستخدم جدول النظام التالي.",
     ")} · день": "اليوم",
     ")}. Отложите тренировку; при резком ухудшении или опасных признаках обратитесь за неотложной помощью.":
         "(تأجيل التدريب، وإذا كان هناك تفاقم حاد أو علامات خطيرة، اطلب المساعدة الطارئة.",
@@ -35278,8 +36088,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     ", цель": "، الهدف",
     ". Добавил их на проверку; после подтверждения приложение создаст расписание и напоминания. Дозировки автоматически не меняются.":
         ". إضافته للتحقق بعد التأكيد ستقوم التطبيق بإنشاء جدول وتذكيرات .",
-    ". Изменения применятся после подтверждения.":
-        ". سيتم تطبيق التغييرات بعد التأكيد.",
     ". Не используйте распознанные назначения до сверки с оригиналом.":
         "لا تستخدموا المستخدمات التي تم التعرف عليها قبل مقارنةها بالصيغة الأصلية",
     ". Невозможные скачки координат отфильтрованы.":
@@ -35328,6 +36136,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     ": не удалось разобрать": ": لم يتمكن من تفكير",
     ": осталось": ": بقيت",
     ": пакет короче заявленного": ": حزمة أقصر من المعلن",
+    ": проверка бодрствования": ": فحص الإيقاع",
     ": характеристика не найдена": ": لم يتم العثور على الميزة",
     "; выбран ближайший расчётный конец цикла сна.":
         "اختيروا أقرب نهاية حسابية لدورة النوم.",
@@ -35344,22 +36153,23 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "[^a-zа-яё0-9]+": "[^a-z-a-ya0-9]+",
     "[a-zа-яё]*\\s*[:=-]?\\s*(\\d{1,3}(?:[\\.,]\\d+)?)\\s*(?:г|g)?":
         "[a-z-a-yayo]*\\s*[:=-]?\\s*(\\d{1,3}(?:[\\.,]\\d+)?)\\s*(?:g",
-    "\\b(?:в|на)\\s*\\d{1,2}[:\\.]\\d{2}\\b":
-        "\\b(?:في البيان) \\s*\\d{1,2}[:\\.]\\d{2}\\b",
     "\\b(гемоглобин|ферритин|холестерин|триглицериды|креатинин|мочевина|билирубин|алт|аст|ттг|витамин\\s+[a-zа-яё0-9]+|с-?реактивный\\s+белок)\\s*[:=-]?\\s*([<>]?\\s*\\d+(?:[\\.,]\\d+)?)\\s*":
         "البمغلبين المختلفة من الفيرين المختلفة من الفيرين المختلفة من الفيرين المختلفة من الفيرين المختلفة من الفيرين المختلفة من الفيرين المختلفة من الفيرين المختلفة من الفيرين المختلفة من الفيرين المختلفة من الفيرين المختلفة من الفيرين المختلفة من الفيرين المختلفة من الفيرين المختلفة من الفيرين المختلفة من الفيرين المختلفة من الفيرين المختلفة من الفيرين المختلفة من الفيرين المختلفة من الفيرين المختلفة من الفيرين المختلفة من الفيرين المختلفة من الفيرين المختلفة من الفيرين المختلفة من الفيرين المختلفة من الفيرين المختلفة من الفيرين المختلفة من الفيرين المختلفة من الفيرين المختلفة من الفيرين المختلفة من الفيرين المختلفة من الفيرين المخت",
-    "\\d+(?:[\\.,]\\d+)?\\s*(?:мг|мкг|мл|ме|ед\\.)":
-        "هل هذا صحيح؟ هل هذا صحيح؟",
     "\\d+(?:[\\.,]\\d+)?\\s*(?:мкг|мг|г|мл|ед\\.?|ме)":
         "هل هذا صحيح؟ هل هذا صحيح؟",
     "\\d+(?:[\\.,]\\d+)?\\s*(?:мкг|мг|г|мл|ед\\.?|ме|iu|mcg|mg|ml)(?![a-zа-яё])":
         "هل هذا صحيح؟ هل هذا صحيح؟ هل هذا صحيح؟",
+    "\\d+(?:[\\.,]\\d+)?\\s*(?:мл|л|литр|стакан)":
+        "\\d+(?:[\\]\\d+)? s*(?:مستعد\\مكان)",
     "\\d+\\s*(?:дн(?:я|ей|ь)?|сут(?:ок|ки)?|недел[а-яё]*|месяц[а-яё]*)(?![а-яё])":
         "\\d+\\s\\dn:يَسْتَحِقُّونَ: يَسْتَحِقُّونَ: يَسْتَحِقُّونَ: يَسْتَحِقُّونَ: يَسْتَحِقُّونَ: يَسْتَحِقُّونَ: يَسْتَحِقُّونَ: يَسْتَحِقُّونَ: يَسْتَحِقُّونَ: يَسْتَحِقُّونَ: يَسْتَحِقُّونَ: يَسْتَحِقُّونَ: يَسْتَحِقُّونَ: يَسْتَحِقُّونَ: يَسْتَحِقُّونَ: يَسْتَحِقُّونَ: يَسْتَحِقُونَ: يَسْتَحِقُونَ: يَسْتَحِقُونُ",
+    "\\d{1,4}\\s*(?:ккал|kcal)": "هل هذا صحيح؟",
     "^(?:врач\\s+)?(?:мне\\s+)?(?:назначил(?:а|и)?|назначение|рецепт|принимать)\\s*[:\\-]?\\s*":
         "هل وصفتني؟ هل وصفتني؟",
     "^(?:как|что|почему|зачем|когда|где|можно\\s+ли|расскажи|объясни|проанализируй|how|what|why|when|where|can\\s+i)\\b":
         "كيف يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُمكن أن يُ يتم ذلك",
+    "^(?:что\\s+)?(?:я\\s+)?(?:съел[а-яё]*|поел[а-яё]*|перекусил[а-яё]*)\\s+":
+        "↑: ماذا؟: ماذا؟: ماذا؟: ماذا؟: ماذا؟: ماذا؟: ماذا؟",
     "^[^a-zа-яё]+": "^[^a-z-a-yayo]+",
     "^\\*\\*(?:Answer|Ответ):\\*\\*\\s*": "هل هناك رد؟",
     "^\\s*(?:КОМАНДА|COMMAND)\\s*:\\s*": "-كمانت)",
@@ -35430,7 +36240,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "UUID характеристики записи": "خصائص السجل",
     "Vault был восстановлен из безопасного начального состояния.":
         "تم إعادة القبو من حالة أولية آمنة",
-    "Vision-анализ недоступен:": "لا يمكن تحليل رؤية:",
     "°C · высота": "°C · ارتفاع",
     "· вес": "الوزن",
     "· визуальная оценка": "· التقييم المرئي",
@@ -35458,9 +36267,13 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "» перед выполнением.": "قبل الإنجاز",
     "», интенсивность": "، كثافة",
     "». Извлечённый текст:": ". النص المستمد:",
+    "». Калории и Б/Ж/У оставлены пустыми; добавьте порцию или уточните данные, когда они известны.":
+        "السعرات الحرارية والبج/بج/ب خالية، أضف جزءًا أو تحديد البيانات عندما تكون معروفة.",
     "». Перед продолжением рекомендуется сделать копию текущих данных.":
         "? Before continuing, it is recommended to make a copy of the current data.",
     "». Текст для анализа не найден.": ". لا يوجد نص للتحليل.",
+    "». Уведомления о приёме будут планироваться по курсу препарата.":
+        "سيتم تخطيط إشعارات الإقرارات على أساس دورة الدواء.",
     "август": "آب/أغسطس",
     "Автозапись GPS/GLONASS:": "نظام تحديد المواقع/GLONASS:",
     "Автозапуск": "إطلاق السيارات",
@@ -35485,6 +36298,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "активное движение": "الحركة النشطة",
     "Активность": "النشاط",
     "Активность и вода": "النشاط والماء",
+    "Активность после подъёма не подтверждена. Откройте приложение и отключите сигнал.":
+        "لا يوجد أي إثبات بعد الارتفاع، افتح التطبيق وطفئ الإشارة",
     "Активность хорошая: шаги уже закрывают базовую цель дня.":
         "النشاط جيد: الخطوات تُغلق بالفعل الهدف الأساسي للنهار.",
     "активные калории": "سعر الصرف",
@@ -35544,6 +36359,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "без документа": "ورقية",
     "Без жёстких ограничений: можно добавить спокойную прогулку и оценивать недельный баланс.":
         "بدون قيود صارمة يمكنك أن تضيف مشية هادئة وتقيم التوازن الأسبوعي",
+    "без контроля бодрствования": "بدون مراقبة الإيقاع",
     "без лекарства": "المخدرات",
     "Без ограничений": "لا قيود",
     "без ограничений": "بلا حدود",
@@ -35623,6 +36439,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "в пределах референса": "ضمن الإطار المرجعي",
     "В профиле нет координат города.": "لا توجد إحداثيات المدينة في الملف",
     "В пути, мин": "في الطريق، لي.",
+    "в расписание «": "في الجدول الزمني",
     "В списке есть антикоагулянт: взаимодействие нужно проверить у врача или фармацевта.":
         "هناك مضاد للاضطربات الجذعية في القائمة، يجب أن تتمكن من التفاعل مع الطبيب أو الصيدلي.",
     "В тренировках отмечалась боль: будущую нагрузку стоит снизить.":
@@ -35657,9 +36474,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "велотренажёр": "مدرب",
     "вероятно в руках": "ربما في يدي",
     "вероятно используется": "ربما تستخدم",
-    "Версия 1.8.1+10 · создатель: Редин Максим Юрьевич · info@thebestmks.ru":
-        "الإصدار 1.8.1+10 · المبدع: ريدين ماكسيم يوريفيخ · info@thebestmks.ru",
-    "Версия: 1.8.1+10": "الإصدار: 1.8.1+10",
+    "Версия 1.8.2+11 · создатель: Редин Максим Юрьевич · info@thebestmks.ru":
+        "الإصدار 1.8.2+11 · المبدع: ريدين ماكسيم يوريفيخ · info@thebestmks.ru",
+    "Версия: 1.8.2+11": "الإصدار: 1.8.2+11",
     "Вес": "حسناً",
     "вес": "الوزن",
     "Вес порции и пищевая ценность являются ориентировочной оценкой класса блюда. Проверьте их перед подтверждением.":
@@ -35700,6 +36517,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Внесено голосом или командой помощника; условия измерения не указаны.":
         "أُدخلت بواسطة صوت أو قيادة مساعد؛ لم يتم تحديد شروط القياس.",
     "Внесено командой помощника.": "تم إدخالها من قبل فريق المساعدين",
+    "Внесено помощником без количества и нутриентов; значения не выдумывались.":
+        "أُدخلت من قبل المساعد دون عدد أو غذاء؛ ولم يتم اختراعه.",
     "внесённая калорийность заметно выше основного обмена, но недельный баланс и активность важнее одного дня.":
         "السعرات الحرارية التي تُدخل في هذا النظام أعلى بكثير من التناوب الرئيسي، لكن التوازن الأسبوعي والنشاط أكثر أهمية من اليوم الواحد.",
     "внесённая калорийность низкая относительно основного обмена; возможно, дневник заполнен не полностью.":
@@ -35766,6 +36585,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "вт": "فولت",
     "Вторник": "الثلاثاء",
     "вторник": "الثلاثاء",
+    "Вчера ·": "... البارحة",
     "вчера уже была тяжёлая тренировка": "لقد كانت ممارسة صعبة بالأمس",
     "Вы": "أنت",
     "Выберите вариант": "اختيار خيار",
@@ -35951,6 +36771,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Для чего применяется": "ما الذي يستخدم له",
     "Дневник питания, БЖУ, рецепты и ручное подтверждение фото":
         "مذكرات التغذية، BJU، الوصفات والتصوير اليدوي",
+    "Дневник по датам": "مذكرات التاريخ",
     "Дневник самочувствия без диагнозов и назначений":
         "تاريخ الصحة بدون تشخيص وتعيينات",
     "Дневник сна": "مذكرات النوم",
@@ -35968,6 +36789,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "До ориентира": "إلى العلامة",
     "добав": "إضافة",
     "Добавил": "إضافة",
+    "Добавил время": "إضافة الوقت",
     "Добавить": "مضافا إليها",
     "Добавить в дневник": "تضاف إلى المذكرة",
     "Добавить врача или клинику": "يضاف طبيب أو عيادة",
@@ -36116,6 +36938,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Завершить": "اكتمل",
     "Завершить и сохранить": "اكتمالها وصيانتها",
     "зависит от пола и возраста": "حسب نوع الجنس والعمر",
+    "завтра": "غداً",
     "завтрак": "الفطور",
     "Загружаем локальный сейф здоровья": "تحميل السلامة الصحية المحلية",
     "Загруженный GGUF повреждён.": "إن جهاز GGUF المحمول قد تلف",
@@ -36188,6 +37011,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "نطلب الإذن ونبحث عن الأجهزة",
     "Запрещено системой; откройте системные настройки":
         "محظور من النظام؛ افتح إعدادات النظام",
+    "Запрос обрабатывается в фоне": "يتم معالجة الاستفسار في الخلفية",
     "Запрос пользователя:": "استفسار المستخدم:",
     "Запросить разрешение повторно": "اطلب الإذن مرة أخرى",
     "Запросить разрешения и синхронизировать": "طلب الإذن ومزامنة",
@@ -36227,9 +37051,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "из-за холода выбран домашний вариант с более длинной разминкой":
         "بسبب البرد ، تم اختيار الإصدار المنزلي مع إزالة أطول",
     "избегать задержки дыхания": "توقف",
-    "Извлечённый текст:": "النص المستمع:",
     "Измените запрос или добавьте тег в карточку документа.":
         "تغيير الطلب أو إضافة علامة إلى بطاقة الوثيقة.",
+    "Изменить": "تغيير",
     "Изменить симптом": "تغيير الأعراض",
     "Изменить сон": "غير نومك.",
     "измерения не найдены": "لم يتم العثور على القياسات",
@@ -36356,6 +37180,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Ккал": "كال",
     "ккал": "عيار",
     "ккал · Б/Ж/У": "ككال · ب/ج/و",
+    "ккал · расход": "كمال · نفقات",
+    "ккал · шаги": "كمال خطوات",
     "Ккал еды": "طعام كالوري",
     "ккал за сутки": "سعر الصرف",
     "ккал, активность": "الكال، النشاط",
@@ -36411,6 +37237,10 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Контекст дома и работы": "سياق المنزل والعمل",
     "Контекст телефона": "سياق الهاتف",
     "Контекст телефона:": "السياق الهاتف:",
+    "контролем активности": "مراقبة النشاط",
+    "контроль активности": "مراقبة النشاط",
+    "Контроль бодрствования": "مراقبة الاستيقاظ",
+    "контроль бодрствования": "مراقبة الإستيقظ",
     "контроль лекарств": "الأدوية",
     "Координаты": "المنسقون",
     "Координаты используются только на устройстве для определения контекста.":
@@ -36439,7 +37269,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Курс:": "بالطبع",
     "Күнтізбе": "kuntizbe",
     "л": "l",
-    "л · калории": "السعرات الحرارية",
+    "л · питание": "ل · التغذية",
+    "л воды.": "-إنه ماء",
     "л, шаги": "L, steps",
     "л.": "(إل)",
     "л. Пейте небольшими порциями, если врач не ограничил жидкость.":
@@ -36532,6 +37363,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "мигрень": "migraine",
     "Микрофон и голосовой ввод": "الميكروفون و المدخل الصوتي",
     "мили": "الأميال",
+    "миллилитр": "الميليتر",
     "мин": "الألغام",
     "мин ·": "الألغام",
     "мин · перенос доступен": "نقل الألغام",
@@ -36590,9 +37422,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "اللحوم ?",
     "На весь экран": "على الشاشة بأكملها",
     "на ночь": "في الليل",
-    "На проверку добавлено записей:": "إضافة إدخال:",
     "на работе": "في العمل",
     "На ручную проверку добавлено показателей:": "إضافة إلى التحقق اليدوي:",
+    "на сегодня": "اليوم",
     "на сегодня запланировано:": "ومن المقرر أن يكون اليوم:",
     "набор силы": "القوة",
     "нагруз": "الحمولة",
@@ -36700,8 +37532,10 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "нг/мл": "ng/ml",
     "не выбрано": "غير مختار",
     "не выбраны": "غير مختار",
+    "не дай уснуть": "لا تدعني أنام",
     "не задана": "غير محددة",
     "не задано": "غير مسجل",
+    "не заснуть": "لا تنام",
     "Не извлечено:": "لم تسترد:",
     "не компенсируйте еду голоданием; выберите спокойную прогулку и вернитесь к обычному плану.":
         "لا تعوضوا الطعام عن طريق العجز، اختروا رحلة هادئة، وعودوا إلى خطةكم العادية.",
@@ -36752,6 +37586,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "не указано в контексте. В конце укажи уверенность: высокая, средняя или низкая.":
         "لا يُذكر في السياق. في نهاية القصة، ضع ثقة: عالية، متوسط، أو منخفضة.",
     "Не указаны": "غير مذكورة",
+    "не уснул": "لم ينام",
     "Не установлена; доступен быстрый режим и установка в разделе «Помощник».":
         "لم يتم تثبيتها، هناك وضع سريع وتثبيت في قسم المساعد",
     "Не хватает данных:": "لا يوجد بيانات:",
@@ -36839,7 +37674,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Обновить контекст": "إعادة إصدار السياق",
     "Обновить результаты поиска": "آخر نتائج البحث",
     "Обновлено устройство:": "جهاز مستكمل:",
-    "Обрабатываю локально...": "أنا أعمل محلياً",
     "обсудите с врачом:": "من فضلكم ، أبحثوا عن:",
     "обсудить": "مناقشة",
     "Обсудить план с помощником": "مناقشة الخطة مع المساعد",
@@ -36863,6 +37697,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "القيود، وإعادة التأهيل، والطبيب، والوثائق",
     "Ограничения:": "الحدود:",
     "ограничить бег": "اركض",
+    "один раз": "مرة واحدة",
     "один сигнал": "إشارة واحدة",
     "одыш": "الأنفاس",
     "одышка": "الأنفاس",
@@ -36950,7 +37785,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Отмечено сегодня": "احتفال اليوم",
     "отмечено сегодня": "لوحظ",
     "Отправить": "أرسل",
-    "Отправлено изображение:": "تم إرسال صورة:",
     "Отпуск": "الشواغر",
     "отпуск": "الإجازة",
     "Отпуск не запланирован": "غير مقرر",
@@ -37012,6 +37846,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "перенесённая болезнь": "المرض",
     "переохлаждение": "انخفاض الحرارة",
     "Пересадок": "الزرع",
+    "Период контроля, мин": "فترة مراقبة، أوقات",
     "Периодически проверять локальные напоминания и расписание без отправки данных в сеть":
         "التحقق من التذكيرات المحلية والجدول الزمني بشكل دوري دون إرسال البيانات إلى الشبكة",
     "Персональная проверка": "التحقق الشخصي",
@@ -37059,9 +37894,11 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Пн": "Pn",
     "пн": "البركة",
     "пн, вт, ср, чт, пт": "سَيَدْعُو",
+    "по будням": "في الأسبوع",
     "по внесённым данным допустима обычная плановая нагрузка с контролем самочувствия.":
         "وفقًا للبيانات المقدمة، يُسمح بتحكم الصحة.",
     "По внесённым приёмам пищи:": "حسب تناول الطعام:",
+    "по выходным": "في عطلة نهاية الأسبوع",
     "по геолокации": "Geolocated",
     "по дням недели": "أسبوعيا",
     "По какое число": "أي رقم؟",
@@ -37080,12 +37917,18 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Побочные эффекты и реакции": "الآثار الجانبية وردود الفعل",
     "Побочные эффекты:": "الآثار الجانبية:",
     "Повседневная активность": "النشاط اليومي",
+    "Повтор": "أكرر",
     "повторений": "التكرار",
     "Повторите PIN": "كرر PIN.",
     "Повторно запрашивать PIN или биометрию для чувствительных документов":
         "Rerequest PIN or biometrics for sensitive documents",
+    "Повторять сигнал при отсутствии движения после подъёма.":
+        "إعادة الإشارة بعد عدم وجود حركة بعد الارتفاع",
     "Повторяющиеся симптомы:": "الأعراض المتكررة:",
     "Повышает масштаб интерфейса": "زيادة حجم الوصلة البينية",
+    "Погода временно недоступна": "الطقس غير متاح مؤقتا",
+    "Погода временно недоступна. Климатический профиль продолжает работать локально.":
+        "الطقس غير متوفر مؤقتًا، ويتمّ إعادة تشغيل المناخ المحليّ.",
     "Погода и климат": "الطقس والمناخ",
     "Погода недоступна": "Weather inaccess",
     "Погода подходит для обычной нагрузки с учётом самочувствия.":
@@ -37209,6 +38052,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "последние симптомы:": "الأعراض الأخيرة:",
     "последняя запись сна:": "آخر تسجيل من النوم:",
     "Последняя запись:": "آخر تسجيل:",
+    "послезавтра": "بعد الغد",
     "постав": "أضع",
     "Постепенное пробуждение": "الاستيقاظ التدريجي",
     "потер": "سترة",
@@ -37220,6 +38064,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Предупреждение": "تحذير",
     "Предупреждения": "تحذيرات",
     "Препарат": "المخدرات",
+    "препарат": "الدواء",
     "препаратов, принято сегодня": "من دواء اليوم",
     "Препараты": "المخدرات",
     "Препараты не распознаны. Проверьте качество снимка или добавьте лекарство вручную.":
@@ -37234,7 +38079,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Приготовление": "التحضير",
     "прием": "الاستقبال",
     "Прикреплённый файл не найден": "لم يتم العثور على الملف المرفق",
-    "Приложен файл:": "الملف المرفق:",
     "приложение открыто": "التطبيق مفتوح",
     "Приложение работает без браслета: вес, сон, шаги, еда и тренировки можно вводить вручную.":
         "The app works without a bracelet: weight, sleep, steps, food and workouts can be entered manually.",
@@ -37267,10 +38111,12 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Проверить симптомы": "تحقق من الأعراض",
     "Проверить снова": "-أفحصها مرة أخرى",
     "Проверить уведомление": "التحقق من الإخطار",
+    "проверка активности": "التحقق من النشاط",
     "Проверка назначения": "التحقق من المقصود",
     "Проверка недоступна:": "لا يمكن التحقق من:",
     "проверка разрешений": "السماح",
     "Проверка распознавания": "التحقق من الاعتراف",
+    "проверкой активности": "التحقق من النشاط",
     "Проверь лекарства и остатки": "فحص الأدوية والمخلفات",
     "Проверьте аллерген в дневнике": "تحقق من الحساسية في دفترك اليومي",
     "Проверьте белок и полноту дневника": "تحقق من البروتين وملء المذكرة",
@@ -37294,6 +38140,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "تحقق من تناول الطعام الذي تُغيب عن تناوله، ولا تقلل من تناولك بشكل كبير دون وجود خبير.",
     "Проверяем доступность...": "التحقق من توافر...",
     "Проверяем локальную модель...": "نحن نختبر النموذج المحلي",
+    "проверяй активность": "تحقق من النشاط",
+    "проверяй бодрствование": "تفقدوا مستواه",
+    "Проверять через, мин": "التحقق من خلال، من",
     "прогулки": "المشي",
     "Продолжить": "أكمل",
     "Продолжить тренировку": "مواصلة التدريب",
@@ -37391,6 +38240,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Расстояние, км": "المسافة، كيلومترات",
     "раствор": "محلول",
     "растяж": "التمديد",
+    "расход": "النفقات",
     "Расчёт по данным профиля и сегодняшним отметкам.":
         "الحساب وفقاً للبيانات وعلامات اليوم",
     "расчётная готовность": "استعداد الحساب",
@@ -37528,9 +38378,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Сегодня важнее восстановление. Не тренируйтесь через боль, температуру или резкое ухудшение самочувствия.":
         "اليوم، إنّه أكثر أهمية من ذلك، لا تتمرّن بسبب الألم أو الحرارة أو التدهور المفاجئ.",
     "Сегодня дежурство": "اليوم، الجوار",
+    "Сегодня записано": "اليوم، تم تسجيل",
     "сегодня отмечен тревожный симптом или высокая интенсивность жалобы.":
         "اليوم، هناك علامة تحديد أو شدة الشكوى.",
-    "сегодня.": "اليوم",
     "Сегодня: сон": "اليوم: النوم",
     "Сейчас активен режим поездки: при ночной дороге, смене часового пояса или недосыпе нагрузка автоматически считается восстановительной.":
         "وطريقة السفر الآن نشطة: مع القيادة الليلية، أو تغيير المنطقة الزمنية أو عدم النوم، يُعتبر الحمل تلقائياً إعادة تأهيل.",
@@ -37538,12 +38388,15 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "сентябрь": "أيلول/سبتمبر",
     "Сервер модели вернул код": "خادم النموذج أعاد الرمز",
     "Сервис": "الخدمات",
+    "Сервис погоды временно вернул ошибку. Повторная попытка будет выполнена автоматически.":
+        "خدمة الطقس أعادت خطأ مؤقتًا، ستجري محاولة أخرى تلقائيًا.",
+    "Сервис погоды не ответил вовремя. Климатический профиль продолжает работать локально.":
+        "خدمة الطقس لم ترد في الوقت المناسب، ووضع المناخ يواصل العمل محلياً",
     "Сетевое видео отключено офлайн-режимом":
         "أغلقت شريط الشبكة في وضع غير متصل",
     "Сетевое изображение скрыто": "صورة شبكة مخفية",
     "Сетевые данные отключены режимом «Полностью офлайн». Климатический профиль продолжает работать.":
         "وتُعوق البيانات الشبكية باستخدام أسلوب &quot; فوللي خارج الشبكة &quot; . The climate profile continues to work.",
-    "Сжимаю и анализирую локально...": "أضعها في محيطي",
     "сил": "القوة",
     "силовая": "الطاقة",
     "Силовая тренировка по инвентарю": "التدريب القوي على المخزون",
@@ -37705,6 +38558,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Срочно:": "-أجل",
     "срочных пунктов; начните с них.": "نقاط الطوارئ، ابدأ بها.",
     "стабильно": "طعن",
+    "стакан": "كوب",
     "Стандартные GATT-сервисы читаются автоматически. Для закрытых или редких устройств добавьте UUID вручную.":
         "وتُقرأ الخدمات القياسية للغات بصورة تلقائية. لأجهزة مغلقة أو نادرة، يضاف UUID يدويا.",
     "стандартный": "المعتاد",
@@ -37800,6 +38654,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Точность": "الدقة",
     "точность GPS": "دقة GPS",
     "Точные будильники": "أجهزة الإيقاع الدقيقة",
+    "Точные будильники недоступны (": "إنذارات دقيقة غير متوفرة (",
     "тошнота": "الغثيان",
     "травма": "الصدمات النفسية",
     "Травмы в течение жизни": "الإصابة أثناء الحياة",
@@ -37926,6 +38781,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Файл в защищённом хранилище:": "الملف في مخزن محمّن:",
     "Файл в медицинском сейфе не найден":
         "لم يتم العثور على الملف في الخزنة الطبية",
+    "Файл вложения не найден": "لا يمكن العثور على ملف الإدخال",
     "Файл не содержит резервную копию приложения.":
         "ولا يتضمن الملف نسخة احتياطية من الطلب.",
     "Файл/импорт": "الملف/الوارد",
@@ -37942,6 +38798,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "фитнес-тренажёр FTMS": "متدربين رياضيات FTMS",
     "Фокус": "التركيز",
     "Фокусы тренировок": "خدع التدريب",
+    "Фоновая обработка": "معالجة الخلفية",
     "Фоновая работа": "العمل في الخلفية",
     "Фоновый анализ": "تحليل الخلفية",
     "Форма": "Form",
@@ -38078,17 +38935,18 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "(*?(?:\\s?:referes* taimnorma) [[:=-]?\\s*([<>]?\\s*\\d+(?:[\\.,]\\d+)?(?:\\s*[-]\\s*\\d+(?:[\\.,]\\d+)?)?",
     "(?:\\s+(?:референс|норма|reference)?\\s*([<>]?\\s*\\d+(?:[,.]\\d+)?(?:\\s*[-–]\\s*\\d+(?:[,.]\\d+)?)?))?":
         "(?:\\s+(?:reference of the norm of reference)?\\s([<>?s*\\d+(?:[,.]\\d+)?(?:\\s*[-]\\s*\\d+(?:[,.]\\d+)?)??",
+    "(?:^|\\s)(?:в|на)\\s+([01]?\\d|2[0-3])(?:\\s*(?:час[а-яё]*|ч))?(?=\\s|":
+        "(?: निशाः: [विवरण] ] ([01]?s] ([0-3]) ([0-3]) ([] ] ([] ] ] ([] ] ([] ]) ([] ]) ([] ] ([] ] ([] ] ] ([] ] ] ] ([] ] ] ([] ] ]) ([ ] ] ([ ] ] ] ([ ] ] ] ([ ] ] ] ([ ] ] ] ] ([ ] ] ] ] ([ ] ] ] ] ([ ] ] ] ([ ] ] ] ] ([ ] ] ] ] ([ ] ] ] ( ] ] ] ( ] ] ( ] ] ( ] ] ( ] ] ( ] ( ] ( ] ] ( ] ( ] ( ] ( ] ( ] ( ] ( ] ( ] ] ( ] ( ] ( ]) ( ( ] ( ] ( ] ( ] ( ( ]) ( ( ( ] ( ( ( ]) ( ( ( ( ( ]) ( ( ( ( ( ()) ( ( ( ( ()) ( ( ( ()) ( ( ( ( ()) ( ()) ( ( ()) ( ()) ( ()) ())",
+    "(?:^|\\s)через\\s+(\\d{1,3})\\s*(минут[а-яё]*|мин|час[а-яё]*|ч)(?=\\s|":
+        "(?:",
     "(?:анализ|показатель|результат(?:\\s+анализа)?)\\s+([a-zа-яё][a-zа-яё0-9 ()+._-]{1,60}?)\\s*[:=-]?\\s*([<>]?\\s*\\d+(?:[\\.,]\\d+)?)\\s*":
         "(विश्लेषण वक्त संकेतकः?:रिजल्टाट?:?:बीन\\s+विश्लेषण)?)\\s+([a-za-ya-yo][a-za-ya-yo0-9 () ++._-]{1,60}?)\\s*[:=-]?\\s*([<>]?\\s*\\d+(?:[\\.,]\\d+)?)\\s*",
     "(?:белок|protein|протеин|б)\\D{0,10}(\\d{1,3})": ":प्रोटेक नहीं है",
-    "(?:будильник|разбуди|подъ[её]м).*?(?:в|на)?\\s*((?:[01]?\\d|2[0-3])[:\\.]\\d{2})":
-        "::उत्कासनकर्ता के लिए जागृत होना (उत्कासन)",
+    "(?:будильник|разбуди|подъ[её]м)": "जागना (उद्धार)",
     "(?:вес|масса|weight)\\s*(?:сегодня|now)?\\s*[:=-]?\\s*(\\d{2,3}(?:[\\.,]\\d)?)\\s*(?:кг|kg)?\\b":
         "(?:वेस के लिए) s*(?:आज के लिए?",
-    "(?:выпил[а-яё]*|добав[а-яё]*|запиш[а-яё]*|water).*?(\\d+(?:[\\.,]\\d+)?)\\s*(мл|ml|л|l)(?![a-zа-яё])":
-        ":: पीया[a-yao]*दादाबा[a-yao] (*बियाजापश[a-yao]*दादाबा पानी) *?",
-    "(?:гемоглоб|глюкоз|холестерин|ферритин|референс|ммоль/л|мг/дл|анализ крови)":
-        "(हेमोग्लोब एग्लोक्साइड एग्लोक्साइड एग्लोक्साइड एग्लोक्साइड एग्लोक्साइड एग्लोक्साइड एग्लोक्साइड एग्लोक्साइड एग्लोक्साइड एग्लोक्साइड एग्लोक्साइड एग्लोक्साइड एग्लोक्साइड एग्लोक्साइड एग्लोक्साइड एग्लोक्साइड एग्लोक्साइड एग्लोक्साइड एग्लोक्साइड एग्लोक्साइड एग्लोक्साइड एग्लोक्साइड एग्लोक्साइड एग्लोक्साइड एग्लोक्साइड एग्लोक्साइड एग्लोक्साइड एग्लोक्साइड एग्लोक्साइड एग्लोक्साइड एग्लोक्साइड एग्लोक्साइड एग्लोक्साइड एग्लोक्साइड एग्लोक्साइड एग्लोक्साइड एग्लोक्साइड एग्लोक्साइड एग्लोक्साइड एग्लोक्साइड एग्लोक्साइड एग्लो",
+    "(?:выпил[а-яё]*|добав[а-яё]*|запиш[а-яё]*|укаж[а-яё]*|вод[а-яё]*|water).*?(\\d+(?:[\\.,]\\d+)?)\\s*(мл|ml|миллилитр[а-яё]*|л|l|литр[а-яё]*|стакан[а-яё]*)(?![a-zа-яё])":
+        ":: पीया[ए-या]*बदला[ए-या] (अ-या*बदला]*बदला[ए-या]बदला[ए-या]बदला[ए-या]बदला[ए-या]बदला[ए-या]बदला*बदला*बदला*बदला*बदला*बदला*बदला*बदला*बदला*बदला*बदला*बदला*बदला*बदला*बदला*बदला*बदला*बदला*बदला*बदला*बदला*बदला*बदला*बदला*बदला*बदला*बदला*बदला*बदला*बदला*बदला*बदला*बदला*बदला*बदला*बदला*बदला*बदला*बदला*ब*बदला*ब*बदला*ब*ब*ब*बदला*ब*ब*ब*ब*ब",
     "(?:глюкоз[а-яё]*|сахар[а-яё]*\\s+кров[а-яё]*|glucose)\\s*[:=-]?\\s*(\\d{1,3}(?:[\\.,]\\d+)?)":
         "(?:ग्लूकोज[ए-या]* सेक्सी[ए-या]* सेक्सी[ए-या]* सेक्सी[ए-या]* सेक्सी[ए-या]* सेक्सी[ए-या]?",
     "(?:давлен[а-яё]*|pressure)\\s*[:=-]?\\s*(\\d{2,3})\\s*[/\\\\]\\s*(\\d{2,3})(?:\\s+(?:пульс|pulse)\\s*(\\d{2,3}))?":
@@ -38107,16 +38965,13 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "(?:калории|calories)\\D{0,12}(\\d{2,4})": "(?: कैलोरी के साथ कैलोरी)",
     "(?:качеств[а-яё]*|оценк[а-яё]*)\\s*(?:сна)?\\s*[:=-]?\\s*([1-5])":
         "(?:गुणों[ए-या]* की तुलना में मूल्य[ए-या]*)\\s*(?:स्ना)?\\s*[:=-]?\\s*([1-5])",
-    "(?:ккал|калори|белк|жир|углевод|состав|пищевая ценность)":
-        ":ककल केकलोरी (ककलोरी केकलोरी केकलोरी केकलोरी केकलोरी केकलोरी केकलोरी केकलोरी केकलोरी केकलोरी केकलोरी केकलोरी केकलोरी केकलोरी केकलोरी केकलोरी केकलोरी केकलोरी केकलोरी केकलोरी केकलोरी केकलोरी केकलोरी केकलोरी केकलोरी केकलोरी केकलोरी केकलोरी केकलोरी केकलोरी केकलोरी केकलोरी केकलोरी केकलोरी केकलोरी केकलोरी केकलोरी केकलोरी केकलोरी केकलोरी केकलोरी केकलोरी केकलोरी केकरोरी केकरोरी केकलोरी केकरोरी केकरी",
     "(?:клетчатка|пищевые волокна|fibre|fiber)\\D{0,12}(\\d{1,3}(?:[,.]\\d+)?)":
         "(कक्षिकाओं के लिए) (कक्षिकाओं के लिए) (कक्षिकाओं के लिए) (कक्षिकाओं के लिए) (कक्षिकाओं के लिए) (कक्षिकाओं के लिए) (कक्षिकाओं के लिए) (कक्षिकाओं के लिए) (कक्षिकाओं के लिए) (कक्षिकाओं के लिए) (कक्षिकाओं के लिए) (कक्षिकाओं के लिए) (कक्षिकाओं के लिए) (कक्षिकाओं के लिए) (कक्षिकाओं के लिए) (कक्षिकाओं के लिए) (कक्षिकाओं के लिए) (कक्षिकाओं के लिए) (कक्षिकाओं के लिए) (कक्षिकाओं के लिए) (कक्षिकाओं के लिए) (कक्षिकाओं के लिए) (कक्षिकाओं के लिए) (कक्षिकाओं के लिए) (कक्षिकाओं के लिए) (कक्षिकाओं के लिए) (कक्षिकाओं के लिए) (कक्षिकाओं के लिए) (कक्षिकाओं के लिए) (कक्षिकाओं के लिए) (कक्षिकाओं के लिए) (कक्षिकाओं के लिए",
     "(?:масса|вес|порция|net weight|serving)\\D{0,12}(\\d{1,4})\\s*(?:г|g)":
         "(वजन द्रव्यमान के साथ)",
     "(?:на|per)\\s*100\\s*(?:г|g)":
         "(के लिए): (के लिए): (के लिए): (के लिए): (के लिए): (के लिए): (के लिए): (के लिए): (के लिए): (के लिए): (के लिए): (के लिए): (के लिएः)",
-    "(?:напомни|напоминание|remind).*?(\\d{1,2})[:\\.](\\d{2})":
-        "(?:याद है कि क्या आप याद करते हैं?",
+    "(?:напомни|напоминание|remind)": "(?:याद रखिये",
     "(?:по\\s+[^.;,]{0,25}\\s+)?\\d+\\s*раз(?:а|у|)\\s+(?:в|за)\\s+(?:день|сутки)":
         "? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ?",
     "(?:поставь|создай|заведи|добавь|разбуди(?:\\s+меня)?|будильник|подъ[её]м)":
@@ -38125,6 +38980,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
         ":reference (रमन के लिए) \\D{0,12}([\\d,.]+ ?[-] ?[\\d,.]+)",
     "(?:сахара|сахар|sugars?|из них сахара)\\D{0,12}(\\d{1,3}(?:[,.]\\d+)?)":
         "?:साखर के लिए (सगर) ?",
+    "(?:сколько|покажи|какой|какое|текущ[а-яё]*|итого)":
+        "(:: कितना बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो बोलो",
     "(?:соль|salt)\\D{0,10}(\\d{1,3}(?:[,.]\\d+)?)":
         "(?:लवण में यह भी) \\D{0,10}(\\d{1,3}(?:[,.]\\d+)?)",
     "(?:спал[а-яё]*|сон|sleep).*?(\\d{1,2}(?:[\\.,]\\d+)?)\\s*(?:ч(?:ас(?:а|ов)?)?|hours?|h)(?![a-zа-яё])":
@@ -38133,7 +38990,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "(?:slept[a-yao]*) समय में सोते हुए. *?(\\d{1,2}[:\\.](\\d{2})\\s*(?:download[-])\\s*(\\d{1,2})[:\\.]\\d{2})",
     "(?:съел[а-яё]*|выпил[а-яё]*|запиш[а-яё]*\\s+(?:еду|при[её]м пищи)|добав[а-яё]*\\s+(?:еду|блюдо))\\s+(.+?)\\s+(\\d{1,4})\\s*(?:ккал|kcal)(?![a-zа-яё])":
         ":[ए-याया]*दास पीया[ए-याया]*दासपिस[ए-या]**\\s+(:[ए-या]पिसि] के लिए खानाबदोश[ए-या]***:[ए-या]+:[ए-या]+:[ए-या]+:[ए-या]+:[ए-या]+:[ए-या]+:[ए-या]+:[ए-या]]]",
-    "(?:таблет|капсул|принимать|назначен|рецепт|дозиров)": "(टैबलेट के लिए):",
+    "(?:съел[а-яё]*|поел[а-яё]*|перекусил[а-яё]*|выпил[а-яё]*|добав[а-яё]*\\s+(?:еду|блюдо)|запиш[а-яё]*\\s+(?:что\\s+)?(?:я\\s+)?(?:съел[а-яё]*|поел[а-яё]*))\\s+(.+)":
+        "[अ-याया] ईद-ए-यै* ईद-ए-यै* ईद-ए-यै* ईद-ए-यै* ईद-ए-यै* ईद-ए-यै* ईद-ए-यै* ईद-ए-यै* ईद-ए-यै* ईद-ए-यै* ईद-ए-यै* ईद-ए-यै* ईद-ए-यै* ईद-ए-यै* ईद-ए-यै* ईद-ए-यै* ईद-ए-यै* ईद-ए-यै* ईद-ए-यै* ईद-ए-यै* ईद-ए-यै* ईद-ए-यै* ईद-ए-यै* ईद-ए-यै* ईद-ए-यै* ईद-ए-यै* ईद-ए-यै* ईद-ए-यै* ईद-ए-यै* ईद-यै* ईद-य* ईद-य* ई",
     "(?:таблетк[а-яё]*|капсул[а-яё]*|раствор[а-яё]*|сироп[а-яё]*|суспензи[а-яё]*|":
         "(?:टैब्लेटक[ए-या]क]क]क]क]क]क]क]क]क]क]क]क]क]क]क]क]क]क]क]क]क]क]क]क]क]क]क]क",
     "(?:температур[а-яё]*|temperature)\\s*[:=-]?\\s*(3[4-9]|4[0-2])(?:[\\.,](\\d))?":
@@ -38142,8 +39000,23 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "(?:प्रशिक्षणक[ए-या]*बड़े हुए[ए-या]*बड़े हुए[ए-या]*बड़े हुए[ए-या]*बड़े हुए[ए-या]*बड़े हुए[ए-या]*बड़े हुए[ए-या]*बड़े हुए[ए-या]*बड़े हुए[ए-या]*बड़े हुए**) **?",
     "(?:углеводы|carbs|у)\\D{0,10}(\\d{1,3})":
         "(कार्बोहाइड्रोजन?:carbs?:carbs)",
+    "(?<![a-zа-яё])(?:в|на)\\s*\\d{1,2}(?:[:\\.]\\d{2})?(?![a-zа-яё0-9])":
+        "<![a-za-yao]) ? ? ? ? ? (?a*a) \\s\\d{1,2} ? ? ? ?",
+    "(?<![a-zа-яё])(?:в|на)\\s*\\d{1,2}(?:[:\\.]\\d{2})?(?:\\s*(?:час[а-яё]*|ч))?(?![a-zа-яё0-9])":
+        "<![a-ya-yo]) ? ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?a ?",
+    "(?<![a-zа-яё])(?:каждый день|ежедневно|по будням|по выходным|сегодня|завтра|послезавтра)(?![a-zа-яё])":
+        "<![a-za-yayo]) ((?:हर दिन की ओर से (?हर दिन की ओर से)",
+    "(?<![a-zа-яё])(?:не дай уснуть|не заснуть|не уснул)(?![a-zа-яё])":
+        "<![a-za-yayo]) : मुझे नींद न आने दो",
+    "(?<![a-zа-яё])(?:с|и)?\\s*(?:проверкой|контролем)\\s+(?:активности|бодрствования)(?![a-zа-яё])":
+        "(अ-जा-जा-जा-जा) (अ-जा-जा-जा) (अ-जा-जा-जा) (अ-जा-जा-जा-जा) (अ-जा-जा-जा-जा) (अ-जा-जा-जा-जा-जा) (अ-जा-जा-जा-जा-जा-जा) (अ-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा-जा",
+    "(?<![a-zа-яё])(?:сегодня|только что)(?![a-zа-яё])": "<![a-z-yayo])",
+    "(?<![a-zа-яё])через\\s+\\d+\\s*(?:минут[а-яё]*|мин|час[а-яё]*|ч)(?![a-zа-яё])":
+        "<![a-z-a-yao]) के माध्यम से\\s+\\d+\\s*(?:मिनेट (?[a-yao]*बुनना यह भी है कि समय[a-yao]*बुनना है) ?",
     "(\\d+(?:[,.]\\d+)?)\\s*(?:ммоль/л|мг/дл|г/л|нг/мл|мед/л|ме/л|%)":
         "(\\d+(?:[,.]\\d+)?) \\s*(?:mol/ल ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने ने",
+    "(\\d+(?:[\\.,]\\d+)?)\\s*(мл|ml|миллилитр[а-яё]*|л|l|литр[а-яё]*|стакан[а-яё]*)(?![a-zа-яё]).*?(?:вод[а-яё]*|выпил[а-яё]*|добав[а-яё]*|запиш[а-яё]*|water)":
+        "([\\d+(?:\\.,]\\d+)?)\\s*(ml ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई ई",
     "(\\d{1,3}(?:[\\.,]\\d+)?)\\s*(?:км|km)": "(\\d{1,3}(?:[\\.,]\\d+)?)\\s*(?",
     "(\\d{1,4})\\s*(?:г|g)\\b": "(\\d{1,4}\\s*(?:g)",
     "(\\d{2,4})\\s*(?:ккал|kcal)": "{pos (192,4}}\\s*(?} (कॉल से)",
@@ -38159,6 +39032,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "(ммоль/л|мкмоль/л|мг/дл|мг/л|г/л|г/дл|мкг/л|нг/мл|пг/мл|мед/л|ме/л|ед/л|mmol/l|umol/l|µmol/l|mg/dl|mg/l|g/l|g/dl|µg/l|ug/l|ng/ml|pg/ml|iu/l|u/l|10\\^?[*x×]?\\d+/л|фл|fl|пг|pg|%)":
         "(मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉली/मॉ",
     "). Дозировку я не изменяю.": "मैं खुराक में बदलाव नहीं करता।",
+    "); используется приблизительное системное расписание.":
+        "); अनुमानित प्रणाली अनुसूची का उपयोग किया जाता है।",
     ")} · день": "दिन",
     ")}. Отложите тренировку; при резком ухудшении или опасных признаках обратитесь за неотложной помощью.":
         ") } प्रशिक्षण को टालें; यदि आप अचानक गंभीर या खतरनाक लक्षण देख रहे हैं तो आपातकालीन सहायता की तलाश करें।",
@@ -38188,8 +39063,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     ", цель": ", उद्देश्य",
     ". Добавил их на проверку; после подтверждения приложение создаст расписание и напоминания. Дозировки автоматически не меняются.":
         ". इनको चेक करने के लिए जोड़ा गया; पुष्टि के बाद ऐप एक शेड्यूल और अनुस्मारक बनाएगा. खुराक स्वचालित रूप से नहीं बदलती है.",
-    ". Изменения применятся после подтверждения.":
-        ". परिवर्तन पुष्टि के बाद लागू होंगे।",
     ". Не используйте распознанные назначения до сверки с оригиналом.":
         ". मूल के साथ तुलना करने तक पहचानने योग्य उद्देश्यों का उपयोग न करें.",
     ". Невозможные скачки координат отфильтрованы.":
@@ -38240,6 +39113,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     ": не удалось разобрать": ": नहीं समझा सका",
     ": осталось": "शेषः",
     ": пакет короче заявленного": ": घोषित से छोटा पैकेज",
+    ": проверка бодрствования": ": जागने की जांच",
     ": характеристика не найдена": ": विशेषता नहीं मिली",
     "; выбран ближайший расчётный конец цикла сна.":
         "नींद चक्र का निकटतम गणना अंत चुना गया है।",
@@ -38257,22 +39131,24 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "[^a-zа-яё0-9]+": "[^a-z-a-ya0-9]+",
     "[a-zа-яё]*\\s*[:=-]?\\s*(\\d{1,3}(?:[\\.,]\\d+)?)\\s*(?:г|g)?":
         "[a-z-a-yayo]*\\s*[:=-]?\\s*(\\d{1,3}(?:[\\.,]\\d+)?)\\s*(?:g",
-    "\\b(?:в|на)\\s*\\d{1,2}[:\\.]\\d{2}\\b":
-        "\\b(?:उद्धार) \\s*\\d{1,2}[:\\.]\\d{2}\\b",
     "\\b(гемоглобин|ферритин|холестерин|триглицериды|креатинин|мочевина|билирубин|алт|аст|ттг|витамин\\s+[a-zа-яё0-9]+|с-?реактивный\\s+белок)\\s*[:=-]?\\s*([<>]?\\s*\\d+(?:[\\.,]\\d+)?)\\s*":
         "hb(हेमोग्लोबिन बीनफेरिटिन बीनलेस्टरिन बीनत्रिग्लिसेरिन बीनक्रिएटिन बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीनर बीन",
-    "\\d+(?:[\\.,]\\d+)?\\s*(?:мг|мкг|мл|ме|ед\\.)":
-        "\\d+(?:[\\.,]\\d+)?\\s*(?:мг|мкг|мл|ме|ед\\.)",
     "\\d+(?:[\\.,]\\d+)?\\s*(?:мкг|мг|г|мл|ед\\.?|ме)":
         "\\d+(?:[\\.,]\\d+)?\\s*(?:мкг|мг|г|мл|ед\\.?|ме)",
     "\\d+(?:[\\.,]\\d+)?\\s*(?:мкг|мг|г|мл|ед\\.?|ме|iu|mcg|mg|ml)(?![a-zа-яё])":
         "\\d+(?:[\\.,]\\d+)?\\s*(?:мкг|мг|г|мл|ед\\.?|ме|iu|mcg|mg|ml)(?![a-zа-яё])",
+    "\\d+(?:[\\.,]\\d+)?\\s*(?:мл|л|литр|стакан)":
+        "d+(?:[\\]\\d+)?s*(?:mstal\\kan)",
     "\\d+\\s*(?:дн(?:я|ей|ь)?|сут(?:ок|ки)?|недел[а-яё]*|месяц[а-яё]*)(?![а-яё])":
         "d+\\s\\s*dn :ये हैं? ?ये हैं? ?ये हैं?",
+    "\\d{1,4}\\s*(?:ккал|kcal)":
+        "{C:\u00240000FF}{C:\u00240000FF}{C:\u00240000FF}{C:\u00240000FF}{C:\u00240000FF}{C:\u00240000FF}{C:\u00240000FF}{C:\u00240000FF}{C:\u00240000FF}{C:\u00240000FF}{C:\u00240000FF}{C:\u00240000FF}{C:\u00240000FF}{C:\u00240000FF}{C:\u00240000FF}{C:\u00240000FF}{C:\u00240000FF}{C:\u00240000FF}{C:\u00240000FF}{C:\u00240000FF}{C:\u00240000FF}{C:\u00240000FF}{C:\u00240000FF}{C:\u00240000FF}{C:\u00240000FF}{C:\u00240000FF}{C:\u00240000FF}{C:\u00240000FF}{C:\u00240000FF}{C:\u00240000FF}{C:\u00240000FF}{C:\u0024000FF}{C:\u0024000FF}{C:\u00240000FF}{C:\u0024000FF}{C:\u0024000FFFFFFFFFF",
     "^(?:врач\\s+)?(?:мне\\s+)?(?:назначил(?:а|и)?|назначение|рецепт|принимать)\\s*[:\\-]?\\s*":
         "^(?: डॉक्टर\\s+)?(?:मेरे\\s+)?(?:पहले ही लिख दिया था?",
     "^(?:как|что|почему|зачем|когда|где|можно\\s+ли|расскажи|объясни|проанализируй|how|what|why|when|where|can\\s+i)\\b":
         "^(?:क्योंकि जब भी हो सके तो कैसे हो सकता है जब भी हो सके तो कैसे हो सकता है जब भी हो सके तो कैसे हो सकता है जब भी हो सकता है तो बताओ कि कैसे हो सकता है",
+    "^(?:что\\s+)?(?:я\\s+)?(?:съел[а-яё]*|поел[а-яё]*|перекусил[а-яё]*)\\s+":
+        "^(?:क्या? ? ? ? ? ? ? ? ? ? ? ? ? खाया?",
     "^[^a-zа-яё]+": "^[^a-z-a-yao]+",
     "^\\*\\*(?:Answer|Ответ):\\*\\*\\s*":
         "# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #",
@@ -38345,7 +39221,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "UUID характеристики записи": "रिकॉर्ड की UUID विशेषताओं",
     "Vault был восстановлен из безопасного начального состояния.":
         "वॉल्ट को एक सुरक्षित प्रारंभिक अवस्था से बहाल किया गया है।",
-    "Vision-анализ недоступен:": "Vision- विश्लेषण उपलब्ध नहीं हैः",
     "°C · высота": "°C · ऊंचाई",
     "· вес": "वजन",
     "· визуальная оценка": "· दृश्य मूल्यांकन",
@@ -38373,9 +39248,13 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "» перед выполнением.": "निष्पादन से पहले।",
     "», интенсивность": ", तीव्रता",
     "». Извлечённый текст:": ". उद्धृत पाठ:",
+    "». Калории и Б/Ж/У оставлены пустыми; добавьте порцию или уточните данные, когда они известны.":
+        ". कैलोरी और बी/जे/यू खाली छोड़ दी गई हैं; एक हिस्से को जोड़ें या डेटा को स्पष्ट करें जब वे ज्ञात हों।",
     "». Перед продолжением рекомендуется сделать копию текущих данных.":
         "जारी रखने से पहले, वर्तमान डेटा की एक प्रति बनाने की सिफारिश की जाती है।",
     "». Текст для анализа не найден.": ". विश्लेषण के लिए कोई पाठ नहीं मिला.",
+    "». Уведомления о приёме будут планироваться по курсу препарата.":
+        ". प्राप्ति के बारे में सूचनाएं दवा के पाठ्यक्रम के अनुसार योजनाबद्ध की जाएंगी।",
     "август": "अगस्त",
     "Автозапись GPS/GLONASS:": "Autorecording GPS / GLONASS:",
     "Автозапуск": "ऑटो स्टार्ट",
@@ -38400,6 +39279,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "активное движение": "सक्रिय आंदोलन",
     "Активность": "गतिविधि",
     "Активность и вода": "सक्रियता और पानी",
+    "Активность после подъёма не подтверждена. Откройте приложение и отключите сигнал.":
+        "जब तक आप उठते हैं, सक्रियता की पुष्टि नहीं हुई है।",
     "Активность хорошая: шаги уже закрывают базовую цель дня.":
         "सक्रियता अच्छी है: कदम पहले से ही दिन के मूल उद्देश्य को बंद कर देते हैं।",
     "активные калории": "कैलोरी",
@@ -38459,6 +39340,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "без документа": "पेपरलेस",
     "Без жёстких ограничений: можно добавить спокойную прогулку и оценивать недельный баланс.":
         "कठोर प्रतिबंध के बिना: आप एक शांत चलना जोड़ सकते हैं और साप्ताहिक संतुलन का मूल्यांकन कर सकते हैं।",
+    "без контроля бодрствования": "जागने की निगरानी के बिना",
     "без лекарства": "निर्दोष",
     "Без ограничений": "कोई प्रतिबंध नहीं।",
     "без ограничений": "असीम",
@@ -38538,6 +39420,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "В профиле нет координат города.":
         "प्रोफ़ाइल में शहर का कोई निर्देशांक नहीं है।",
     "В пути, мин": "रास्ते में, मेरा।",
+    "в расписание «": "तालिका में",
     "В списке есть антикоагулянт: взаимодействие нужно проверить у врача или фармацевта.":
         "सूची में एक एंटीकोएग्युलेन्ट है, और आप इसे डॉक्टर या फार्मासिस्ट से जांच सकते हैं।",
     "В тренировках отмечалась боль: будущую нагрузку стоит снизить.":
@@ -38572,9 +39455,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "велотренажёр": "ट्रेनर",
     "вероятно в руках": "शायद हाथों में",
     "вероятно используется": "शायद इस्तेमाल किया जाता है",
-    "Версия 1.8.1+10 · создатель: Редин Максим Юрьевич · info@thebestmks.ru":
-        "संस्करण 1.8.1+10 · निर्माता: रेदीन मैक्सिम युरीविच · info@thebestmks.ru",
-    "Версия: 1.8.1+10": "संस्करणः 1.8.1+10",
+    "Версия 1.8.2+11 · создатель: Редин Максим Юрьевич · info@thebestmks.ru":
+        "संस्करण 1.8.2+11 · निर्माता: रेदीन मैक्सिम यरियेविच · info@thebestmks.ru",
+    "Версия: 1.8.2+11": "संस्करणः 1.8.2+11",
     "Вес": "वजन।",
     "вес": "वजन",
     "Вес порции и пищевая ценность являются ориентировочной оценкой класса блюда. Проверьте их перед подтверждением.":
@@ -38615,6 +39498,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Внесено голосом или командой помощника; условия измерения не указаны.":
         "आवाज या सहायक के आदेश द्वारा दर्ज किया गया; माप की शर्तें नहीं बताई गई हैं।",
     "Внесено командой помощника.": "सहायक टीम द्वारा लाया गया।",
+    "Внесено помощником без количества и нутриентов; значения не выдумывались.":
+        "एक सहायक द्वारा संख्या और पोषक तत्वों के बिना लाया गया; कोई मान नहीं बनाया गया था।",
     "внесённая калорийность заметно выше основного обмена, но недельный баланс и активность важнее одного дня.":
         "कैलोरी की मात्रा मुख्य रूप से एक दिन से अधिक है, लेकिन सप्ताह का संतुलन और गतिविधि एक दिन से अधिक है।",
     "внесённая калорийность низкая относительно основного обмена; возможно, дневник заполнен не полностью.":
@@ -38682,6 +39567,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "вт": "वोल्ट",
     "Вторник": "मंगलवार।",
     "вторник": "मंगलवार",
+    "Вчера ·": "कल ·",
     "вчера уже была тяжёлая тренировка": "यह आज एक कठिन अभ्यास था।",
     "Вы": "आप",
     "Выберите вариант": "विकल्प चुनें",
@@ -38868,6 +39754,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Для чего применяется": "किस उद्देश्य के लिए उपयोग किया जाता है",
     "Дневник питания, БЖУ, рецепты и ручное подтверждение фото":
         "पोषण डायरी, BJU, व्यंजनों और मैनुअल पुष्टिकरण तस्वीर",
+    "Дневник по датам": "दिनांकों का दिनचर्या",
     "Дневник самочувствия без диагнозов и назначений":
         "निदान और नियुक्तियों के बिना स्वास्थ्य की डायरी",
     "Дневник сна": "नींद डायरी",
@@ -38885,6 +39772,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "До ориентира": "लैंडमार्क के लिए",
     "добав": "जोड़ें",
     "Добавил": "जोड़ा गया",
+    "Добавил время": "समय बढ़ाया",
     "Добавить": "जोड़ें",
     "Добавить в дневник": "डायरी में जोड़ें",
     "Добавить врача или клинику": "डॉक्टर या क्लिनिक जोड़ें",
@@ -39033,6 +39921,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Завершить": "पूरा करना",
     "Завершить и сохранить": "पूरा करना",
     "зависит от пола и возраста": "लैंगिक और उम्र के आधार पर",
+    "завтра": "कल",
     "завтрак": "नाश्ता",
     "Загружаем локальный сейф здоровья":
         "स्थानीय स्वास्थ्य सुरक्षित डाउनलोड करें",
@@ -39108,6 +39997,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "हम अनुमति मांगते हैं और उपकरणों की तलाश करते हैं।",
     "Запрещено системой; откройте системные настройки":
         "सिस्टम द्वारा प्रतिबंधित; सिस्टम सेटिंग्स खोलें",
+    "Запрос обрабатывается в фоне": "पृष्ठभूमि में प्रसंस्करण",
     "Запрос пользователя:": "उपयोगकर्ता का प्रश्नः",
     "Запросить разрешение повторно": "अनुमति पुनः प्राप्त करें",
     "Запросить разрешения и синхронизировать": "अनुरोध अनुमति और सिंक्रनाइज़",
@@ -39147,9 +40037,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "из-за холода выбран домашний вариант с более длинной разминкой":
         "ठंड के कारण घर का विकल्प अधिक समय तक डिस्टिल्ड किया गया",
     "избегать задержки дыхания": "बंद करना",
-    "Извлечённый текст:": "यहाँ से निकाला गया पाठ हैः",
     "Измените запрос или добавьте тег в карточку документа.":
         "अनुरोध बदलें या दस्तावेज़ कार्ड में एक टैग जोड़ें।",
+    "Изменить": "बदलना",
     "Изменить симптом": "लक्षण बदलें",
     "Изменить сон": "अपनी नींद बदलें।",
     "измерения не найдены": "माप नहीं मिला",
@@ -39278,6 +40168,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Ккал": "कला",
     "ккал": "बछड़ा",
     "ккал · Б/Ж/У": "कक · बी/जी/यू",
+    "ккал · расход": "kcal · व्यय",
+    "ккал · шаги": "कक · कदम",
     "Ккал еды": "Calorie भोजन",
     "ккал за сутки": "कैलोरी",
     "ккал, активность": "कक, सक्रियता",
@@ -39334,6 +40226,10 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Контекст дома и работы": "घर और काम का संदर्भ",
     "Контекст телефона": "फ़ोन का संदर्भ",
     "Контекст телефона:": "फ़ोन का संदर्भः",
+    "контролем активности": "गतिविधि नियंत्रण",
+    "контроль активности": "गतिविधि का नियंत्रण",
+    "Контроль бодрствования": "जागने का नियंत्रण",
+    "контроль бодрствования": "जागने की निगरानी",
     "контроль лекарств": "दवा",
     "Координаты": "समन्वयक",
     "Координаты используются только на устройстве для определения контекста.":
@@ -39363,7 +40259,8 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Курс:": "पाठ्यक्रम:",
     "Күнтізбе": "kuntizbe",
     "л": "l",
-    "л · калории": "K कैलोरी",
+    "л · питание": "l · भोजन",
+    "л воды.": "पानी से।",
     "л, шаги": "एल, कदम",
     "л.": "ल.",
     "л. Пейте небольшими порциями, если врач не ограничил жидкость.":
@@ -39458,6 +40355,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "мигрень": "माइग्रेन",
     "Микрофон и голосовой ввод": "माइक्रोफोन और आवाज की प्रविष्टि",
     "мили": "मील",
+    "миллилитр": "मिलीलीटर",
     "мин": "मेरा",
     "мин ·": "मेरा",
     "мин · перенос доступен": "माइन ट्रांसफर उपलब्ध",
@@ -39517,10 +40415,10 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "Мова Englishالعربية中文(简体)中文(漢字)NederlandsSuomiFrançaisDeutschहिन्दी; हिंदीMagyarItaliano日本語한국어Bahasa MelayuPortuguêsRomânăРусскийEspañolTürkçeУкраїнськаTiếng Việt",
     "На весь экран": "पूरी स्क्रीन पर",
     "на ночь": "रात के लिए",
-    "На проверку добавлено записей:": "जाँच करने के लिए रिकॉर्ड जोड़ा गया हैः",
     "на работе": "काम पर",
     "На ручную проверку добавлено показателей:":
         "मैन्युअल जांच के लिए निम्नलिखित संकेत जोड़े गए हैंः",
+    "на сегодня": "आज के लिए",
     "на сегодня запланировано:": "आज के लिए योजना बनाई गई हैः",
     "набор силы": "शक्ति",
     "нагруз": "भार",
@@ -39629,8 +40527,10 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "нг/мл": "ng/ml",
     "не выбрано": "नहीं चुना",
     "не выбраны": "नहीं चुना",
+    "не дай уснуть": "नींद न आने दे",
     "не задана": "निर्दिष्ट नहीं",
     "не задано": "नहीं दर्ज किया गया",
+    "не заснуть": "नींद न लें",
     "Не извлечено:": "नहीं बरामद:",
     "не компенсируйте еду голоданием; выберите спокойную прогулку и вернитесь к обычному плану.":
         "भोजन के बदले में भूख न खाएं; शांत घूमना चुनें और अपने सामान्य कार्यक्रम पर वापस जाएं।",
@@ -39683,6 +40583,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "не указано в контексте. В конце укажи уверенность: высокая, средняя или низкая.":
         "अंत में, उच्च, मध्यम या निम्न आत्मविश्वास को इंगित करें।",
     "Не указаны": "नहीं दिखाया गया",
+    "не уснул": "नींद नहीं आई",
     "Не установлена; доступен быстрый режим и установка в разделе «Помощник».":
         "स्थापित नहीं है;  सहायक सेक्शन में त्वरित मोड और स्थापना उपलब्ध है।",
     "Не хватает данных:": "डेटा नहीं मिलाः",
@@ -39771,7 +40672,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Обновить контекст": "संदर्भ को अपडेट करें",
     "Обновить результаты поиска": "खोज परिणाम अद्यतन करें",
     "Обновлено устройство:": "अद्यतन उपकरण:",
-    "Обрабатываю локально...": "मैं स्थानीय रूप से...",
     "обсудите с врачом:": "डॉक्टर से बात करें:",
     "обсудить": "चर्चा",
     "Обсудить план с помощником": "योजना पर सहायक के साथ चर्चा करें",
@@ -39795,6 +40695,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "प्रतिबंध, पुनर्वास, डॉक्टर, दस्तावेजों",
     "Ограничения:": "सीमाएँ:",
     "ограничить бег": "नीचे",
+    "один раз": "एक बार",
     "один сигнал": "एक सिग्नल",
     "одыш": "साँस लेना",
     "одышка": "साँस लेना",
@@ -39882,7 +40783,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Отмечено сегодня": "आज मनाया गया",
     "отмечено сегодня": "नोट",
     "Отправить": "भेजें।",
-    "Отправлено изображение:": "छवि भेजी गईः",
     "Отпуск": "छुट्टी",
     "отпуск": "छुट्टी",
     "Отпуск не запланирован": "छुट्टी नहीं निर्धारित",
@@ -39946,6 +40846,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "перенесённая болезнь": "बीमारी",
     "переохлаждение": "हाइपोथर्मिया",
     "Пересадок": "प्रत्यारोपण",
+    "Период контроля, мин": "नियंत्रण अवधि, मिन",
     "Периодически проверять локальные напоминания и расписание без отправки данных в сеть":
         "स्थानीय अनुस्मारक और समय सारिणी को समय-समय पर जाँचें",
     "Персональная проверка": "व्यक्तिगत जांच",
@@ -39994,9 +40895,11 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Пн": "पीएन",
     "пн": "तालाब",
     "пн, вт, ср, чт, пт": "प, व, स्, च, पु",
+    "по будням": "सप्ताह के दिन",
     "по внесённым данным допустима обычная плановая нагрузка с контролем самочувствия.":
         "प्रविष्ट किए गए डेटा के अनुसार सामान्य योजनाबद्ध भार स्व-स्वास्थ्य नियंत्रण के साथ अनुमत है।",
     "По внесённым приёмам пищи:": "भोजन के लिए दिए गए सेवन के अनुसारः",
+    "по выходным": "सप्ताहांत के दौरान",
     "по геолокации": "जियोलोकेटेड",
     "по дням недели": "साप्ताहिक",
     "По какое число": "क्या संख्या?",
@@ -40015,12 +40918,18 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Побочные эффекты и реакции": "साइड इफेक्ट और प्रतिक्रियाओं",
     "Побочные эффекты:": "साइड इफेक्ट:",
     "Повседневная активность": "दैनिक गतिविधि",
+    "Повтор": "दोहराएँ",
     "повторений": "दोहराव",
     "Повторите PIN": "पिन दोहराएं।",
     "Повторно запрашивать PIN или биометрию для чувствительных документов":
         "संवेदनशील दस्तावेजों के लिए फिर से खोज पिन या बॉयोमीट्रिक",
+    "Повторять сигнал при отсутствии движения после подъёма.":
+        "जब उठने के बाद कोई आंदोलन न हो तो संकेत दोहराएं।",
     "Повторяющиеся симптомы:": "आवर्तक लक्षण:",
     "Повышает масштаб интерфейса": "इंटरफ़ेस के पैमाने को बढ़ाता है",
+    "Погода временно недоступна": "मौसम अस्थायी रूप से अनुपलब्ध है",
+    "Погода временно недоступна. Климатический профиль продолжает работать локально.":
+        "मौसम अस्थायी रूप से अनुपलब्ध है। जलवायु प्रोफाइल स्थानीय रूप से काम करना जारी रखता है।",
     "Погода и климат": "मौसम और जलवायु",
     "Погода недоступна": "मौसम दुर्गम",
     "Погода подходит для обычной нагрузки с учётом самочувствия.":
@@ -40147,6 +41056,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "последние симптомы:": "अंतिम लक्षणः",
     "последняя запись сна:": "नींद का अंतिम रिकॉर्डः",
     "Последняя запись:": "अंतिम रिकॉर्डः",
+    "послезавтра": "कल के बाद",
     "постав": "सेट करें",
     "Постепенное пробуждение": "क्रमिक जागरण",
     "потер": "स्वेटर",
@@ -40158,6 +41068,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Предупреждение": "चेतावनी",
     "Предупреждения": "चेतावनी",
     "Препарат": "दवा",
+    "препарат": "दवा",
     "препаратов, принято сегодня": "आज के लिए",
     "Препараты": "दवा",
     "Препараты не распознаны. Проверьте качество снимка или добавьте лекарство вручную.":
@@ -40172,7 +41083,6 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Приготовление": "तैयारी",
     "прием": "स्वागत",
     "Прикреплённый файл не найден": "संलग्न फ़ाइल नहीं मिली",
-    "Приложен файл:": "फ़ाइल जोड़ी गई हैः",
     "приложение открыто": "एप्लिकेशन खुला है",
     "Приложение работает без браслета: вес, сон, шаги, еда и тренировки можно вводить вручную.":
         "ऐप बिना किसी ब्रेसलेट के काम करता है: वजन, नींद, कदम, भोजन और वर्कआउट मैन्युअल रूप से दर्ज किए जा सकते हैं।",
@@ -40205,10 +41115,12 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Проверить симптомы": "लक्षणों की जांच करें",
     "Проверить снова": "फिर से जाँचें",
     "Проверить уведомление": "सूचना की जाँच करें",
+    "проверка активности": "गतिविधि की जांच",
     "Проверка назначения": "नियत की जाँच",
     "Проверка недоступна:": "जाँच नहीं हो पायीः",
     "проверка разрешений": "अनुमति देना",
     "Проверка распознавания": "मान्यता जांच",
+    "проверкой активности": "सक्रियता की जांच",
     "Проверь лекарства и остатки": "दवाओं और अवशेषों की जाँच करें",
     "Проверьте аллерген в дневнике": "डायरी में एलर्जी की जाँच करें",
     "Проверьте белок и полноту дневника": "प्रोटीन और पूर्णता की जाँच करें",
@@ -40234,6 +41146,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
         "बिना किसी विशेषज्ञ के अपने आहार में भारी कमी न करें।",
     "Проверяем доступность...": "उपलब्धता की जाँच...",
     "Проверяем локальную модель...": "हम स्थानीय मॉडल की जांच कर रहे हैं...",
+    "проверяй активность": "सक्रियता की जांच करें",
+    "проверяй бодрствование": "जागते रहना",
+    "Проверять через, мин": "के माध्यम से जाँच करें, मिन",
     "прогулки": "चलना",
     "Продолжить": "जारी रखें",
     "Продолжить тренировку": "प्रशिक्षण",
@@ -40332,6 +41247,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Расстояние, км": "दूरी, km",
     "раствор": "समाधान",
     "растяж": "खिंचाव",
+    "расход": "व्यय",
     "Расчёт по данным профиля и сегодняшним отметкам.":
         "प्रोफ़ाइल डेटा और आज के अंक के अनुसार गणना।",
     "расчётная готовность": "गणना की तत्परता",
@@ -40470,9 +41386,9 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Сегодня важнее восстановление. Не тренируйтесь через боль, температуру или резкое ухудшение самочувствия.":
         "आज, यह ठीक होने के लिए अधिक महत्वपूर्ण है। दर्द, तापमान या अचानक खराब होने के कारण व्यायाम न करें।",
     "Сегодня дежурство": "आज की ड्यूटी",
+    "Сегодня записано": "आज रिकॉर्ड किया गया",
     "сегодня отмечен тревожный симптом или высокая интенсивность жалобы.":
         "आज आप में कोई चिंताजनक लक्षण या शिकायत की तीव्रता है।",
-    "сегодня.": "आज ही।",
     "Сегодня: сон": "आजः नींद",
     "Сейчас активен режим поездки: при ночной дороге, смене часового пояса или недосыпе нагрузка автоматически считается восстановительной.":
         "अब यात्रा मोड सक्रिय है: रात ड्राइविंग के साथ, समय क्षेत्र बदलने या नींद की कमी के साथ, लोड को स्वचालित रूप से बहाल माना जाता है।",
@@ -40480,13 +41396,15 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "сентябрь": "सितंबर",
     "Сервер модели вернул код": "मॉडल सर्वर कोड लौटाया",
     "Сервис": "सेवा",
+    "Сервис погоды временно вернул ошибку. Повторная попытка будет выполнена автоматически.":
+        "मौसम विभाग ने अस्थायी रूप से त्रुटि वापस कर दी है।",
+    "Сервис погоды не ответил вовремя. Климатический профиль продолжает работать локально.":
+        "मौसम विभाग ने समय पर प्रतिक्रिया नहीं दी है, जलवायु प्रोफाइल स्थानीय रूप से काम करना जारी रखता है।",
     "Сетевое видео отключено офлайн-режимом":
         "ऑफ़लाइन मोड से नेटवर्क वीडियो बंद है",
     "Сетевое изображение скрыто": "नेटवर्क छवि छिपी हुई है",
     "Сетевые данные отключены режимом «Полностью офлайн». Климатический профиль продолжает работать.":
         "नेटवर्क डेटा \"पूरी तरह से ऑफ़लाइन\" मोड द्वारा अक्षम है। जलवायु प्रोफ़ाइल काम जारी रहती है।",
-    "Сжимаю и анализирую локально...":
-        "मैं स्थानीय रूप से संपीड़न और विश्लेषण कर रहा हूं...",
     "сил": "शक्ति",
     "силовая": "शक्ति",
     "Силовая тренировка по инвентарю": "सूची पर शक्ति प्रशिक्षण",
@@ -40651,6 +41569,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Срочно:": "तत्काल:",
     "срочных пунктов; начните с них.": "आपातकालीन बिंदुओं के साथ शुरू करें।",
     "стабильно": "चुपचाप",
+    "стакан": "गिलास",
     "Стандартные GATT-сервисы читаются автоматически. Для закрытых или редких устройств добавьте UUID вручную.":
         "मानक GATT सेवाओं को स्वचालित रूप से पढ़ा जाता है। बंद या दुर्लभ उपकरणों के लिए, मैन्युअल रूप से UUID जोड़ें।",
     "стандартный": "मानक",
@@ -40746,6 +41665,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Точность": "परिशुद्धता",
     "точность GPS": "GPS सटीकता",
     "Точные будильники": "सटीक जागृत",
+    "Точные будильники недоступны (": "सटीक ब्यूटी नहीं है (",
     "тошнота": "मतली",
     "травма": "आघात",
     "Травмы в течение жизни": "जीवन भर की चोटें",
@@ -40876,6 +41796,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "Файл анализа:": "विश्लेषण फ़ाइलः",
     "Файл в защищённом хранилище:": "संरक्षित भंडारण में फ़ाइलः",
     "Файл в медицинском сейфе не найден": "मेडिकल सेफ में फ़ाइल नहीं मिली",
+    "Файл вложения не найден": "सम्मिलन फ़ाइल नहीं मिली",
     "Файл не содержит резервную копию приложения.":
         "फ़ाइल में एप्लिकेशन की बैकअप प्रतिलिपि नहीं होती है।",
     "Файл/импорт": "फ़ाइल/आयात",
@@ -40892,6 +41813,7 @@ const generatedUiTranslations = <String, Map<String, String>>{
     "фитнес-тренажёр FTMS": "FTMS फिटनेस-ट्रेनेजर",
     "Фокус": "फोकस",
     "Фокусы тренировок": "प्रशिक्षण",
+    "Фоновая обработка": "पृष्ठभूमि प्रसंस्करण",
     "Фоновая работа": "पृष्ठभूमि कार्य",
     "Фоновый анализ": "पृष्ठभूमि विश्लेषण",
     "Форма": "फॉर्म",

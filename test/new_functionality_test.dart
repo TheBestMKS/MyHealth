@@ -5,6 +5,7 @@ import 'package:my_health/src/model.dart';
 import 'package:my_health/src/notification_service.dart';
 import 'package:my_health/src/repository.dart';
 import 'package:my_health/src/unit_format.dart';
+import 'package:my_health/src/wakefulness_monitor_service.dart';
 
 void main() {
   test('persists the detailed climate profile without losing UTF-8 text', () {
@@ -42,6 +43,27 @@ void main() {
     ]);
   });
 
+  test('wakefulness checks cover the configured window at fixed intervals', () {
+    final target = DateTime(2026, 9, 24, 7);
+
+    expect(wakefulnessCheckTimes(target, 20, 5), [
+      DateTime(2026, 9, 24, 7, 5),
+      DateTime(2026, 9, 24, 7, 10),
+      DateTime(2026, 9, 24, 7, 15),
+      DateTime(2026, 9, 24, 7, 20),
+    ]);
+    expect(motionConfirmsWakefulness(0.8, 0), isTrue);
+    expect(motionConfirmsWakefulness(0.1, 0), isFalse);
+    expect(
+      wakefulnessMonitorCheckTimes(
+        DateTime(2026, 9, 24, 7, 6),
+        DateTime(2026, 9, 24, 7, 20),
+        5,
+      ),
+      [DateTime(2026, 9, 24, 7, 11), DateTime(2026, 9, 24, 7, 16)],
+    );
+  });
+
   test('persists active calories in daily metrics', () {
     final metric = DailyMetrics.empty(
       '2026-07-13',
@@ -51,6 +73,65 @@ void main() {
 
     expect(restored.activeCalories, 486);
     expect(restored.steps, 8120);
+  });
+
+  test('fills missed days with resting calories and keeps prior entries', () {
+    final seed = HealthAppState.seed();
+    final oldDay = DailyMetrics.empty(
+      '2026-09-20',
+    ).copyWith(steps: 4321, waterLiters: 1.4, activeCalories: 220);
+    final state = seed.copyWith(
+      profile: seed.profile.copyWith(
+        birthDate: '1990-05-12',
+        heightCm: 180,
+        weightKg: 80,
+        gender: 'мужчина',
+      ),
+      today: oldDay,
+      dailyHistory: [oldDay],
+    );
+
+    final rolled = state.rollForwardDailyTimeline(DateTime(2026, 9, 24, 12));
+    final dates = rolled.dailyHistory.map((item) => item.date).toSet();
+
+    expect(
+      dates,
+      containsAll(<String>{
+        '2026-09-20',
+        '2026-09-21',
+        '2026-09-22',
+        '2026-09-23',
+        '2026-09-24',
+      }),
+    );
+    expect(rolled.metricsFor('2026-09-20').steps, 4321);
+    expect(
+      rolled.metricsFor('2026-09-21').restingCalories,
+      rolled.basalCaloriesForDate(DateTime(2026, 9, 21)),
+    );
+    expect(
+      rolled.today.restingCalories,
+      closeTo(rolled.basalCaloriesForDate(DateTime(2026, 9, 24)) / 2, 1),
+    );
+  });
+
+  test('edits and serializes a previous day without changing today', () {
+    final seed = HealthAppState.seed();
+    final today = DailyMetrics.empty('2026-09-24').copyWith(steps: 9000);
+    final yesterday = DailyMetrics.empty(
+      '2026-09-23',
+    ).copyWith(restingCalories: 1700);
+    final state = seed.copyWith(today: today, dailyHistory: [today, yesterday]);
+    final edited = state.updateMetricsFor(
+      '2026-09-23',
+      yesterday.copyWith(waterLiters: 2.1, calories: 2050),
+    );
+    final restored = HealthAppState.fromJson(edited.toJson());
+
+    expect(restored.today.steps, 9000);
+    expect(restored.metricsFor('2026-09-23').waterLiters, 2.1);
+    expect(restored.metricsFor('2026-09-23').calories, 2050);
+    expect(restored.metricsFor('2026-09-23').restingCalories, 1700);
   });
 
   test('date parser rejects impossible dates instead of rolling them over', () {
@@ -139,6 +220,12 @@ void main() {
       vibrationEnabled: false,
       gradualWakeEnabled: true,
       gradualWakeMinutes: 7,
+      wakefulnessCheckEnabled: true,
+      wakefulnessWindowMinutes: 45,
+      wakefulnessInactivityMinutes: 6,
+      lastWakefulnessConfirmedDate: '2026-07-13',
+      wakefulnessMonitorStartedAt: '2026-07-13T07:00:00.000',
+      wakefulnessLastActivityAt: '2026-07-13T07:08:00.000',
     );
 
     final restored = AlarmGroup.fromJson(alarm.toJson());
@@ -146,6 +233,37 @@ void main() {
     expect(restored.vibrationEnabled, isFalse);
     expect(restored.gradualWakeEnabled, isTrue);
     expect(restored.gradualWakeMinutes, 7);
+    expect(restored.wakefulnessCheckEnabled, isTrue);
+    expect(restored.wakefulnessWindowMinutes, 45);
+    expect(restored.wakefulnessInactivityMinutes, 6);
+    expect(restored.lastWakefulnessConfirmedDate, '2026-07-13');
+    expect(restored.wakefulnessMonitorStartedAt, '2026-07-13T07:00:00.000');
+    expect(restored.wakefulnessLastActivityAt, '2026-07-13T07:08:00.000');
+  });
+
+  test('keeps completed day resting calories stable after profile changes', () {
+    final seed = HealthAppState.seed();
+    final first = seed
+        .copyWith(
+          profile: seed.profile.copyWith(
+            birthDate: '1990-01-01',
+            heightCm: 180,
+            weightKg: 80,
+            gender: 'мужской',
+          ),
+        )
+        .rollForwardDailyTimeline(DateTime(2026, 7, 13, 23, 59));
+    final nextDay = first.rollForwardDailyTimeline(DateTime(2026, 7, 14, 12));
+    final completedCalories = nextDay.metricsFor('2026-07-13').restingCalories;
+    final changedProfile = nextDay
+        .copyWith(profile: nextDay.profile.copyWith(weightKg: 120))
+        .rollForwardDailyTimeline(DateTime(2026, 7, 14, 13));
+
+    expect(
+      changedProfile.metricsFor('2026-07-13').restingCalories,
+      completedCalories,
+    );
+    expect(changedProfile.today.date, '2026-07-14');
   });
 
   test('shift alarm follows a structured work and rest cycle', () {

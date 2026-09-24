@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:window_manager/window_manager.dart';
 
 import 'date_input.dart';
+import 'assistant_background_service.dart';
 import 'error_log_service.dart';
 import 'localization.dart';
 import 'location_catalog.dart';
@@ -17,6 +18,7 @@ import 'repository.dart';
 import 'runtime_service.dart';
 import 'screens.dart' hide Text;
 import 'vault_unlock_screen.dart';
+import 'wakefulness_monitor_service.dart';
 import 'widgets.dart';
 import 'world_city_database.dart';
 
@@ -36,6 +38,8 @@ class _MyHealthAppState extends State<MyHealthApp>
   Object? _loadError;
   bool _unlocked = false;
   bool _closingWindow = false;
+  Timer? _dailyTimelineTimer;
+  Future<void> _saveTail = Future<void>.value();
   final _navigatorKey = GlobalKey<NavigatorState>();
 
   @override
@@ -44,17 +48,30 @@ class _MyHealthAppState extends State<MyHealthApp>
     WidgetsBinding.instance.addObserver(this);
     if (_isDesktop) windowManager.addListener(this);
     _load();
+    _dailyTimelineTimer = Timer.periodic(
+      const Duration(minutes: 5),
+      (_) => _refreshDailyTimeline(),
+    );
   }
 
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     if (_isDesktop) windowManager.removeListener(this);
+    _dailyTimelineTimer?.cancel();
+    AssistantBackgroundService.instance.unbind();
+    unawaited(WakefulnessMonitorService.instance.stop(cancelChecks: false));
+    WakefulnessMonitorService.instance.unbind();
     super.dispose();
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed ||
+        state == AppLifecycleState.paused ||
+        state == AppLifecycleState.hidden) {
+      _refreshDailyTimeline();
+    }
     if ((state == AppLifecycleState.paused ||
             state == AppLifecycleState.hidden) &&
         _state?.settings.pinEnabled == true &&
@@ -69,18 +86,28 @@ class _MyHealthAppState extends State<MyHealthApp>
       if (!mounted) {
         return;
       }
-      final normalized =
+      final normalizedSettings =
           loaded.settings.pinEnabled && loaded.settings.pinHash.isEmpty
           ? loaded.copyWith(
               settings: loaded.settings.copyWith(pinEnabled: false),
             )
           : loaded;
+      final normalized = normalizedSettings.rollForwardDailyTimeline();
       setState(() {
         _state = normalized;
         _unlocked = !normalized.settings.pinEnabled;
       });
+      AssistantBackgroundService.instance.bind(
+        readState: () => _state!,
+        writeState: _update,
+      );
+      WakefulnessMonitorService.instance.bind(
+        readState: () => _state!,
+        writeState: _update,
+      );
       unawaited(AppRuntimeService.instance.apply(normalized.settings));
       unawaited(HealthNotificationService.instance.sync(normalized));
+      _persist(normalized);
     } catch (error, stackTrace) {
       await ErrorLogService.instance.recordError(
         error,
@@ -94,14 +121,49 @@ class _MyHealthAppState extends State<MyHealthApp>
         _loadError = error;
         _state = HealthAppState.seed();
       });
+      AssistantBackgroundService.instance.bind(
+        readState: () => _state!,
+        writeState: _update,
+      );
+      WakefulnessMonitorService.instance.bind(
+        readState: () => _state!,
+        writeState: _update,
+      );
     }
   }
 
   void _update(HealthAppState state) {
-    setState(() => _state = state);
-    unawaited(widget.repository.save(state));
-    unawaited(AppRuntimeService.instance.apply(state.settings));
-    unawaited(HealthNotificationService.instance.sync(state));
+    if (!mounted) return;
+    final normalized = state.rollForwardDailyTimeline();
+    setState(() => _state = normalized);
+    _persist(normalized);
+    unawaited(AppRuntimeService.instance.apply(normalized.settings));
+    unawaited(HealthNotificationService.instance.sync(normalized));
+  }
+
+  void _refreshDailyTimeline() {
+    final state = _state;
+    if (state == null) return;
+    final normalized = state.rollForwardDailyTimeline();
+    if (normalized.today.date == state.today.date &&
+        normalized.today.restingCalories == state.today.restingCalories &&
+        normalized.dailyHistory.length == state.dailyHistory.length) {
+      return;
+    }
+    if (mounted) setState(() => _state = normalized);
+    _persist(normalized);
+  }
+
+  void _persist(HealthAppState state) {
+    _saveTail = _saveTail.then((_) => widget.repository.save(state)).catchError(
+      (Object error, StackTrace stackTrace) async {
+        await ErrorLogService.instance.recordError(
+          error,
+          stackTrace,
+          source: 'Application state persistence',
+        );
+      },
+    );
   }
 
   bool get _isDesktop =>
@@ -308,8 +370,10 @@ class _MyHealthShellState extends State<MyHealthShell> {
     final payload = notifier.value;
     if (payload == null || payload.isEmpty) return;
     notifier.value = null;
-    if (payload.startsWith('alarm:')) {
-      final rawAlarm = payload.substring('alarm:'.length);
+    if (payload.startsWith('alarm:') || payload.startsWith('wakecheck:')) {
+      final wakefulnessCheck = payload.startsWith('wakecheck:');
+      final prefix = wakefulnessCheck ? 'wakecheck:' : 'alarm:';
+      final rawAlarm = payload.substring(prefix.length);
       final occurrence = RegExp(
         r'^(.*):(\d{4}-\d{2}-\d{2})$',
       ).firstMatch(rawAlarm);
@@ -321,7 +385,12 @@ class _MyHealthShellState extends State<MyHealthShell> {
       if (alarm != null) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           if (mounted) {
-            showAlarmChallenge(context, alarm, dateKey: dateKey);
+            showAlarmChallenge(
+              context,
+              alarm,
+              dateKey: dateKey,
+              wakefulnessCheck: wakefulnessCheck,
+            );
           }
         });
       }
@@ -436,8 +505,59 @@ class _MyHealthShellState extends State<MyHealthShell> {
               ),
             Expanded(
               child: Stack(
+                fit: StackFit.expand,
                 children: [
                   Positioned.fill(child: body),
+                  ValueListenableBuilder<AssistantBackgroundStatus>(
+                    valueListenable: AssistantBackgroundService.instance.status,
+                    builder: (context, status, child) {
+                      if (!status.busy) return const SizedBox.shrink();
+                      return Positioned(
+                        left: 12,
+                        right: 12,
+                        bottom: 12,
+                        child: Material(
+                          elevation: 3,
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.surfaceContainerHigh,
+                          borderRadius: BorderRadius.circular(8),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 14,
+                              vertical: 10,
+                            ),
+                            child: Row(
+                              children: [
+                                const SizedBox(
+                                  width: 18,
+                                  height: 18,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                  ),
+                                ),
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: LocalizedText(
+                                    status.label.isEmpty
+                                        ? 'Фоновая обработка'
+                                        : status.label,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                                if (status.queued > 0)
+                                  Pill(
+                                    label: '+${status.queued}',
+                                    icon: Icons.queue_outlined,
+                                  ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
                   if (widget.loadError != null)
                     Positioned(
                       left: 16,

@@ -8,7 +8,7 @@ param(
 
 $ErrorActionPreference = "Stop"
 $root = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
-$version = "1.8.1"
+$version = "1.8.2"
 $dist = Join-Path $root "dist\$version"
 $modelName = "qwen3.5-0.8b-ablate-e2-opus46-postopus-runtime.Q4_K_M.gguf"
 $projectorName = "mmproj-Qwen3.5-0.8B-F16.gguf"
@@ -54,6 +54,16 @@ function Resolve-InnoCompiler {
     return ""
 }
 
+function Remove-ReleaseDirectory([string]$Path) {
+    if (-not (Test-Path -LiteralPath $Path)) { return }
+    $resolvedDist = [IO.Path]::GetFullPath($dist).TrimEnd('\') + '\'
+    $resolvedTarget = [IO.Path]::GetFullPath($Path)
+    if (-not $resolvedTarget.StartsWith($resolvedDist, [StringComparison]::OrdinalIgnoreCase)) {
+        throw "Refusing to remove a directory outside the release folder: $resolvedTarget"
+    }
+    Remove-Item -LiteralPath $resolvedTarget -Recurse -Force
+}
+
 function Copy-WindowsRelease([string]$Edition, [string]$Slug) {
     $source = Join-Path $root "build\windows\x64\runner\Release"
     $target = Join-Path $dist "MyHealth-Windows-$Slug-$version"
@@ -62,7 +72,7 @@ function Copy-WindowsRelease([string]$Edition, [string]$Slug) {
     if (-not $resolvedTarget.StartsWith($resolvedDist, [StringComparison]::OrdinalIgnoreCase)) {
         throw "Refusing to replace a directory outside the release folder: $resolvedTarget"
     }
-    if (Test-Path -LiteralPath $target) { Remove-Item -LiteralPath $target -Recurse -Force }
+    Remove-ReleaseDirectory $target
     Copy-Item -LiteralPath $source -Destination $target -Recurse
     $zip = "$target.zip"
     if (Test-Path -LiteralPath $zip) { Remove-Item -LiteralPath $zip -Force }
@@ -76,6 +86,7 @@ function Copy-WindowsRelease([string]$Edition, [string]$Slug) {
     } else {
         Write-Warning "Inno Setup is not installed; the portable ZIP was still created."
     }
+    Remove-ReleaseDirectory $target
 }
 
 function Copy-AndroidRelease([string]$Slug) {
@@ -116,6 +127,8 @@ function Build-Edition([string]$Edition, [string]$Slug, [bool]$Bundled) {
 Assert-Model $modelPath
 Assert-Model $projectorPath
 New-Item -ItemType Directory -Path $dist -Force | Out-Null
+Remove-ReleaseDirectory (Join-Path $dist "MyHealth-Windows-Full-Qwen3.5-0.8B-$version")
+Remove-ReleaseDirectory (Join-Path $dist "MyHealth-Windows-Lite-No-Model-$version")
 if (-not $LiteOnly) {
     Build-Edition "Full + Qwen3.5 0.8B" "Full-Qwen3.5-0.8B" $true
 }
